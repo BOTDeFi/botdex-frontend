@@ -1,0 +1,44 @@
+@import 'src/styles/vars';
+.recent-txs {
+  &__err {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 30px;
+    margin-top: 25px;
+    &-text {
+      max-width: 290px;
+    }
+    &-btn {
+      width: 100%;
+      max-width: 145px;
+      margin-top: 30px;
+    }
+  }
+  &__scroll {
+    margin-top: 25px;
+  }
+  &__close {
+    cursor: pointer;
+  }
+  &__item {
+    background: $gray-l;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px 20px 17px;
+    border-radius: 4px;
+    & + & {
+      margin-top: 10px;
+    }
+    &-box {
+      margin-top: 16px;
+      & + & {
+        padding-top: 16px;
+        border-top: 1px solid #e0e0e0;
+      }
+    }
+    &-currency {
+      &-img {
+        width: 30px;
+        margin-left: 11px;
+      }
+    }
+  }
+}

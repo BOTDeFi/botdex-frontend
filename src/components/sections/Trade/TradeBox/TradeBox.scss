@@ -1,0 +1,39 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+.trade-box {
+  padding: 30px;
+  margin-top: 40px;
+
+  @include b(extramobile) {
+    padding: 20px;
+  }
+
+  &__title {
+    width: fit-content;
+  }
+  &__subtitle {
+    margin-top: 12px;
+    img {
+      display: block;
+      margin-left: 6px;
+    }
+  }
+  &__box {
+    &-top {
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+  &__icon {
+    & + & {
+      margin-left: 25px;
+    }
+  }
+  &__back {
+    transform: rotate(90deg);
+    margin-right: 12px;
+    width: 12px;
+  }
+}

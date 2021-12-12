@@ -1,0 +1,12 @@
+@import 'src/styles/vars';
+
+.section {
+  &__header {
+    padding: 27px 32px;
+    background: $bg-gradient;
+  }
+
+  &__body {
+    padding: 20px;
+  }
+}

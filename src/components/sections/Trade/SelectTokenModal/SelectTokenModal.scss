@@ -1,0 +1,27 @@
+.m-select-token {
+  &__content {
+    padding: 20px;
+  }
+  &__item {
+    cursor: pointer;
+    & + & {
+      margin-top: 25px;
+    }
+    img {
+      margin-right: 11px;
+      max-width: 40px;
+      max-height: 40px;
+      width: 100%;
+    }
+  }
+  &__search {
+    margin: 25px 0 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  &__manage {
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+  }
+}

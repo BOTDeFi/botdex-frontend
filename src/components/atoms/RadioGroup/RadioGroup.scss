@@ -1,0 +1,33 @@
+@import 'src/styles/vars';
+.r-group {
+  background: $gray-l;
+  border: 1px solid rgba(black, 0.1);
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 4px;
+  &__btn {
+    height: auto;
+    border-radius: 12px;
+    line-height: unset;
+    border: none;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.5);
+    padding: 11px 16px;
+    text-align: center;
+    &:first-child,
+    &:last-child {
+      border-radius: 12px;
+      border: none;
+    }
+    &:not(:first-child)::before {
+      display: none;
+    }
+    &:hover {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  .ant-radio-button-wrapper-checked {
+    background: $yellow !important;
+    color: $black !important;
+  }
+}

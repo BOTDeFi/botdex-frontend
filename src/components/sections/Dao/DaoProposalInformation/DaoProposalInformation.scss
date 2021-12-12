@@ -1,0 +1,24 @@
+.additional-information {
+  &__content-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+
+  &__content-col {
+  }
+
+  &__option-name {
+    flex: 0 0 35%;
+  }
+
+  &__option-value {
+    flex: 0 0 65%;
+    color: black;
+  }
+
+  &__link-icon {
+    margin-left: 5px;
+    width: 16px;
+  }
+}

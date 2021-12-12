@@ -1,0 +1,9 @@
+.collectibles {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  &__content {
+    margin-top: 60px;
+    margin: 60px -9px 0;
+    flex-wrap: wrap;
+  }
+}

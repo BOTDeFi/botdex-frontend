@@ -1,0 +1,96 @@
+@import '../../../styles/mixins/media';
+@import '../../../styles/vars';
+
+.header {
+  display: none;
+  height: 72px;
+  box-shadow: $shadow;
+  border-radius: 0px 0px 14px 14px;
+  padding: 0 22px;
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 10;
+
+  @include b(tablet) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-logo {
+  }
+
+  &-burger {
+    height: 16px;
+    width: 30px;
+    position: relative;
+    cursor: pointer;
+
+    &__line {
+      position: absolute;
+      background-color: $black;
+      height: 1px;
+      width: 100%;
+      transition: 0.4s ease;
+
+      &--1 {
+        top: 0;
+      }
+      &--2 {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &--3 {
+        bottom: 0;
+      }
+    }
+
+    &--active {
+      .header-burger__line {
+        &--1 {
+          top: 50%;
+          transform: rotate(225deg) translateY(-50%);
+        }
+        &--2 {
+          opacity: 0;
+          transform: rotate(405deg);
+        }
+        &--3 {
+          top: 50%;
+          transform: rotate(-45deg) translateY(-50%);
+        }
+      }
+    }
+  }
+}
+
+// menu-mobile
+
+// TODO: fix min-width to bb
+.menu-mob {
+  // @media (min-width: 1024px) {
+  //   display: none !important;
+  // }
+  padding-top: 102px;
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transition: 0.4s ease;
+
+  &--active {
+    left: 0;
+    .menu {
+      left: 0;
+    }
+  }
+
+  .header-mob__connect {
+    width: 85% !important;
+    margin: 0px auto 20px;
+  }
+}

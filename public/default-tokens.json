@@ -1,0 +1,32 @@
+[
+  {
+    "address": "0x426EBD1856E8dB98c3E1e79262a6615f9F6c61a0",
+    "decimals": "18",
+    "name": "ugabuga",
+    "symbol": "UGBG"
+  },
+  {
+    "address": "0x7118aFA5c6CBab828f0D9a529c62E89d282DF9e4",
+    "decimals": "18",
+    "name": "avoooooooga",
+    "symbol": "AVOOG"
+  },
+  {
+    "address": "0x91cBB701FF4Ada146C3EDfaBd48d2744f1913fA0",
+    "decimals": "18",
+    "name": "zuzu",
+    "symbol": "ZUZU"
+  },
+  {
+    "address": "0x64d12278C8f81f3C71820112F0b5443301854F74",
+    "decimals": "18",
+    "name": "booooooo",
+    "symbol": "BOO"
+  },
+  {
+    "address": "0x568EE75009950B15e9e91a9A99DedF749f3AcBBf",
+    "decimals": "18",
+    "name": "something",
+    "symbol": "SMTH"
+  }
+]

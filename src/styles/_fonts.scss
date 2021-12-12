@@ -1,0 +1,4 @@
+@import './mixins/main';
+
+@include font-face('Lato', '../assets/fonts/Lato-Regular', normal);
+@include font-face('Lato', '../assets/fonts/Lato-Bold', 700);

@@ -1,0 +1,26 @@
+@import 'src/styles/vars';
+.m-winning-tickets {
+  &__content {
+    padding: 30px;
+  }
+  &__title {
+    margin-bottom: 25px;
+    span + span {
+      display: block;
+      margin-left: 8px;
+    }
+  }
+  &__item {
+    background: $gray-l;
+    padding: 15px 30px 10px;
+    & + & {
+      margin-top: 10px;
+    }
+    &-btn {
+      margin: 20px auto 0;
+    }
+  }
+  &__btn {
+    margin: 30px auto 0;
+  }
+}

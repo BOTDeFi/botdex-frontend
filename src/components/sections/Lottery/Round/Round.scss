@@ -1,0 +1,69 @@
+@import 'src/styles/vars';
+.lottery-round {
+  padding: 30px 30px 35px;
+  &__date {
+    margin-top: 12px;
+  }
+  &__box {
+    border-top: 1px solid #e0e0e0;
+  }
+  &__numbers {
+    margin-top: 30px;
+    padding-top: 20px;
+    &-title {
+      margin-bottom: 25px;
+    }
+  }
+  &__total {
+    margin-top: 20px;
+    padding-top: 20px;
+    &-title {
+      margin-bottom: 10px;
+    }
+    &-img {
+      width: 85px;
+    }
+    &-coins {
+      margin: 0 15px 0 5px;
+      &-name {
+        margin-bottom: -8px;
+      }
+    }
+  }
+  &__statistic {
+    margin-top: 20px;
+    padding-top: 25px;
+    &-burned {
+      padding: 0 31px;
+      margin-top: 23px;
+    }
+    &-row {
+      padding: 18px 31px;
+      background: $gray-l;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 30px;
+      display: grid;
+      grid-template-columns: 50px 60px 66px;
+      justify-content: space-between;
+      & + & {
+        margin-top: 6px;
+      }
+      div {
+        white-space: nowrap;
+        &:last-of-type {
+          text-align: right;
+        }
+      }
+      &-head {
+        padding-top: 0;
+        background: transparent;
+        padding-bottom: 0;
+        border: none;
+      }
+    }
+  }
+  &__btn {
+    min-width: 215px;
+    margin: 30px auto 0;
+  }
+}

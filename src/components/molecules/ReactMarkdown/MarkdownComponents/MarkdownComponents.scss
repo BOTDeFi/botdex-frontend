@@ -1,0 +1,55 @@
+@import 'src/styles/vars';
+
+.markdown-components {
+  &__title {
+    padding-bottom: 5px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: inherit;
+  }
+
+  &__text {
+    font-size: 16px;
+  }
+
+  &__table {
+    margin-bottom: 16px;
+    margin-top: 16px;
+    width: 100%;
+
+    td,
+    th {
+      padding: 8px;
+    }
+  }
+
+  &__list {
+    margin-bottom: 16px;
+    margin-top: 16px;
+
+    li {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__pre {
+    margin-bottom: 16px;
+    margin-top: 16px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  &__blockquote {
+    padding-left: 5px;
+    border-left: 3px solid $yellow;
+  }
+}
+
+ul.markdown-components__list {
+  list-style-type: disc;
+}
+
+ol.markdown-components__list {
+  list-style-type: decimal;
+}

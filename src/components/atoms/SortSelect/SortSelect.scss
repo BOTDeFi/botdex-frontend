@@ -1,0 +1,45 @@
+@import 'src/styles/vars';
+.s-sort {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+  min-width: 185px;
+  .ant-select-selector {
+    background: $gray-l !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(black, 0.1) !important;
+    overflow: hidden;
+    border-radius: 12px !important;
+    padding: 11px 15px !important;
+    height: auto !important;
+  }
+  .ant-select-selection-item {
+    // padding-right: 47px !important;
+    padding-right: 0px !important;
+  }
+  .ant-select-arrow {
+    top: 50%;
+    right: 16px;
+  }
+}
+.ant-select-dropdown {
+  background: #f9f9f9 !important;
+  border: 1px solid rgba(black, 0.1) !important;
+  overflow: hidden;
+  border-radius: 12px !important;
+  padding: 0 !important;
+}
+.ant-select-item {
+  font-weight: 500;
+  font-size: 16px;
+  padding: 10px;
+  line-height: 19px;
+  &-option {
+    transition: 0s;
+    &-active {
+      color: white;
+      background: $yellow !important;
+    }
+  }
+}

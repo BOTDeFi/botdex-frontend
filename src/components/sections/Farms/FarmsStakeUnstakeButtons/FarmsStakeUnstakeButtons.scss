@@ -1,0 +1,8 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+.farms-stake-unstake-buttons {
+  & > :first-child {
+    margin-right: 10px;
+  }
+}

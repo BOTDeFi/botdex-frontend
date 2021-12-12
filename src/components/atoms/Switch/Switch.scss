@@ -1,0 +1,87 @@
+@import 'src/styles/vars';
+.switch {
+  height: 21px;
+  border: 0.8px solid transparent;
+  width: 38px;
+  min-width: unset;
+  background: #dedede;
+  &:focus {
+    box-shadow: none;
+  }
+  & + * {
+    margin-left: 10px;
+  }
+  .ant-switch {
+    &-handle {
+      width: 21px;
+      height: 21px;
+      top: -1px;
+      border: 0.8px solid transparent;
+      border-radius: 50%;
+      background: #c7c7c7;
+      left: -1px;
+      &::before {
+        background: #c7c7c7;
+        border-radius: 50%;
+      }
+    }
+  }
+  &.ant-switch {
+    &-checked {
+      background: $yellow;
+      border-color: $yellow;
+    }
+    &-checked .ant-switch-handle {
+      left: calc(100% - 21px + 1px) !important;
+      border-color: $yellow;
+      &::before {
+        background: #fff;
+      }
+    }
+  }
+  &-purple {
+    &.ant-switch {
+      &-checked {
+        background: $yellow-d;
+        border-color: transparent;
+      }
+      &-checked .ant-switch-handle {
+        left: calc(100% - 21px + 1px) !important;
+        border-color: $yellow;
+        &::before {
+          background: $yellow;
+        }
+      }
+    }
+  }
+  &-white-purple {
+    &.ant-switch {
+      &-checked {
+        background: white;
+        border-color: transparent;
+      }
+      &-checked .ant-switch-handle {
+        left: calc(100% - 21px + 1px) !important;
+        border-color: $yellow;
+        &::before {
+          background: $yellow;
+        }
+      }
+    }
+  }
+  &-bg {
+    height: 35px;
+    width: 61px;
+    .ant-switch {
+      &-handle {
+        top: 6px;
+        left: 5px;
+      }
+    }
+    &.ant-switch {
+      &-checked .ant-switch-handle {
+        left: calc(100% - 21px - 5px) !important;
+      }
+    }
+  }
+}

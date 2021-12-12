@@ -1,0 +1,82 @@
+@import '../vars';
+
+// breakpoints without borders
+@mixin b($point) {
+  @if $point==desktop {
+    @media (max-width: $mediaWidthLaptop) {
+      @content;
+    }
+  } @else if $point==tablet {
+    @media (max-width: $mediaWidthDesktop) {
+      @content;
+    }
+  } @else if $point==mobile {
+    @media (max-width: $mediaWidthTablet) {
+      @content;
+    }
+  } @else if $point==extramobile {
+    @media (max-width: $mediaWidthMobile) {
+      @content;
+    }
+  } @else if $point==mobile3x {
+    @media only screen and (-webkit-min-device-pixel-ratio: 3),
+      only screen and (min-resolution: 3dppx),
+      only screen and (min-resolution: 350dpi) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $point + 'px') {
+      @content;
+    }
+  }
+}
+
+// breakpoints with borders
+@mixin bb($point, $point2: 0) {
+  @if $point==desktop {
+    @media (max-width: $mediaWidthLaptop) and (min-width: $mediaWidthDesktop) {
+      @content;
+    }
+  } @else if $point==tablet {
+    @media (max-width: $mediaWidthDesktop) and (min-width: $mediaWidthTablet) {
+      @content;
+    }
+  } @else if $point==mobile {
+    @media (max-width: $mediaWidthTablet) and (min-width: $mediaWidthMobile) {
+      @content;
+    }
+  } @else if $point==extramobile {
+    @media (max-width: $mediaWidthMobile) and (min-width: 320px) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $point + 'px') and (min-width: $point2 + 'px') {
+      @content;
+    }
+  }
+}
+
+// breakpoints with borders and screen
+@mixin bbs($point, $point2: 0) {
+  @if $point==desktop {
+    @media screen and (max-width: $mediaWidthLaptop) and (min-width: $mediaWidthDesktop) {
+      @content;
+    }
+  } @else if $point==tablet {
+    @media screen and (max-width: $mediaWidthDesktop) and (min-width: $mediaWidthTablet) {
+      @content;
+    }
+  } @else if $point==mobile {
+    @media screen and (max-width: $mediaWidthTablet) and (min-width: $mediaWidthMobile) {
+      @content;
+    }
+  } @else if $point==endmobile {
+    @media screen and(max-width: $mediaWidthMobile) and (min-width: 320px) {
+      @content;
+    }
+  } @else {
+    @media screen and (max-width: $point + 'px') and (min-width: $point2 + 'px') {
+      @content;
+    }
+  }
+}

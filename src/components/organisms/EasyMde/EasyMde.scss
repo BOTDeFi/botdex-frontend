@@ -1,0 +1,27 @@
+@import 'src/styles/vars';
+
+.EasyMDEContainer .CodeMirror {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.CodeMirror-code {
+  color: $black;
+}
+
+.editor-toolbar {
+  padding: 0;
+  border: none;
+
+  a,
+  button {
+    color: $black;
+
+    &:hover,
+    &.active {
+      background-color: $bg-gradient;
+      border: none;
+    }
+  }
+}

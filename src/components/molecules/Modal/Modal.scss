@@ -1,0 +1,18 @@
+.modal {
+  overflow: hidden;
+  padding-bottom: 0;
+  border-radius: 20px;
+  box-shadow: 0px 12px 40px rgba(85, 32, 142, 0.25);
+  .ant-modal-close {
+    top: 5px;
+    right: 5px;
+    &-x {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .ant-modal-body {
+    padding: 0;
+  }
+}

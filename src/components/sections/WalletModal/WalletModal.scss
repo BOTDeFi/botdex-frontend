@@ -1,0 +1,31 @@
+.m-wallet {
+  &__content {
+    padding: 20px;
+  }
+  &__title {
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(black, 0.1);
+    margin-bottom: 10px;
+  }
+  &__box {
+    border-bottom: 1px solid rgba(black, 0.1);
+    border-top: 1px solid rgba(black, 0.1);
+    padding: 20px 0;
+    margin: 20px 0;
+  }
+  &__item {
+    width: fit-content;
+    & + & {
+      margin-top: 20px;
+    }
+    img {
+      margin-right: 5px;
+    }
+  }
+  &__btn {
+    margin: 0 auto;
+    span {
+      margin-left: 10px;
+    }
+  }
+}

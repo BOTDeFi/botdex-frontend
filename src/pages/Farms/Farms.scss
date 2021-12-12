@@ -1,0 +1,31 @@
+@import 'src/styles/mixins/media.scss';
+
+$desktop-menu-width: 240px;
+$default-horizontal-padding: 48px;
+$default-vertical-padding: 22px;
+
+.farms {
+  padding: {
+    top: $default-vertical-padding;
+    right: $default-horizontal-padding;
+    bottom: $default-vertical-padding;
+    left: $default-horizontal-padding + $desktop-menu-width;
+  }
+
+  @include b(tablet) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &__i-contr {
+    grid-template-columns: 0.5fr 1.5fr;
+
+    @include b(tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__content {
+    margin: 40px 0 0;
+  }
+}

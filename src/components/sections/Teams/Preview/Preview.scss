@@ -1,0 +1,15 @@
+@import 'src/styles/vars';
+.teams-preview {
+  background-color: $yellow-d;
+  border-radius: 40px;
+  padding: 40px 47px 55px;
+  background-image: url(../../../../assets/img/sections/teams/bg.jpg);
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  position: relative;
+  background-size: 100% 100%;
+  &__subtitle {
+    max-width: 400px;
+    margin-top: 15px;
+  }
+}

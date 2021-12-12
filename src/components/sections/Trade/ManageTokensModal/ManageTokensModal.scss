@@ -1,0 +1,76 @@
+@import 'src/styles/vars';
+.m-manage-tokens {
+  &__content {
+    padding: 20px 20px 30px 20px;
+  }
+  &__title {
+    width: fit-content;
+    margin-bottom: 20px;
+    img {
+      transform: rotate(90deg);
+      width: 12px;
+      margin-right: 12px;
+      margin-top: -2px;
+    }
+  }
+  &__info {
+    margin-top: 10px;
+  }
+  &__radio {
+    width: 100%;
+    display: grid;
+    margin: 20px 0 30px;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+  }
+  &__item {
+    margin-top: 30px;
+    padding: 9px 10px;
+    background: $gray-l;
+    border-radius: 30px;
+    transition: 0.3s;
+    min-height: 80px;
+    &.active {
+      background: $yellow-s-l;
+    }
+    & + & {
+      margin-top: 10px;
+    }
+    &-logo {
+      width: 41px;
+      margin-right: 17px;
+    }
+    &-title {
+      margin-bottom: 6px;
+      max-width: 195px;
+    }
+  }
+  &__text {
+    margin-top: 20px;
+  }
+  &__scroll {
+    margin-top: 30px;
+  }
+  &__token {
+    margin-top: 20px;
+    padding: 0 20px;
+    & + & {
+      margin-top: 20px;
+    }
+    &-imported {
+      margin-top: 20px;
+    }
+    &-delete {
+      margin-right: 25px;
+      img {
+        width: 15px;
+      }
+    }
+    &-open {
+      margin-top: -2px;
+    }
+    &-img {
+      margin-right: 10px;
+    }
+  }
+}

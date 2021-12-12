@@ -1,0 +1,210 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+@import '../styles';
+
+.pools-table-row {
+  position: relative;
+
+  & + & {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      height: 1px;
+      width: calc(100% - 100px);
+      background: #eaeaea;
+
+      @include b(tablet) {
+        width: 100%;
+      }
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: $columns;
+    grid-column-gap: 20px;
+    align-items: center;
+    padding: 35px 30px;
+    cursor: pointer;
+
+    @include b(tablet) {
+      grid-template-columns: $columns-tablet;
+      padding: 20px 20px 20px 10px;
+    }
+  }
+
+  &__extra-text {
+    display: none;
+  }
+
+  &__currencies {
+    &-item {
+      width: 42px;
+      height: 42px;
+      margin-right: 13px;
+
+      &-image {
+        width: inherit;
+        height: inherit;
+      }
+    }
+  }
+
+  &__recent-profit {
+    @include b(tablet) {
+      // span {
+      //   color: #000 !important;
+      // }
+    }
+
+    &-value {
+      // white-space: nowrap;
+    }
+  }
+
+  &__apr {
+    @include b(tablet) {
+      &_button {
+        display: none;
+      }
+    }
+  }
+
+  &__item {
+    &--mob {
+      display: none;
+      transition: 0.4s ease;
+
+      &_active {
+        transform: rotate(-180deg);
+      }
+    }
+
+    &:last-of-type {
+      text-align: right;
+
+      @include b(1120) {
+        span {
+          visibility: hidden;
+          opacity: 0;
+          width: 0;
+        }
+
+        svg {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &-img {
+      &-info {
+        margin-top: -2px;
+        margin-left: 9px;
+      }
+    }
+  }
+
+  &__buttons {
+    @include b(tablet) {
+      grid-row: 1;
+    }
+  }
+
+  &__details {
+    padding: 10px 30px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+
+    @include b(tablet) {
+      grid-template-columns: 1fr;
+      grid-auto-flow: row dense;
+      padding: 8px 10px;
+    }
+
+    &-links {
+      width: fit-content;
+
+      &-item {
+        // width: fit-content;
+        margin-bottom: 15px;
+
+        span {
+          margin-right: 7px;
+        }
+      }
+    }
+
+    &-info-popover {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+    }
+
+    &-box {
+      padding: 20px 30px 40px;
+      border-radius: 12px;
+      background: #f8f5fe;
+
+      & + & {
+        margin-left: 10px;
+      }
+
+      &-start-staking-button {
+        @include b(tablet) {
+          width: 100%;
+          padding: 17px 0;
+        }
+      }
+
+      @include b(tablet) {
+        text-align: center;
+        padding: 20px 10px;
+
+        & + & {
+          margin: 10px 0;
+        }
+      }
+    }
+
+    &-title {
+      margin-bottom: 13px;
+    }
+
+    &-staked-values-group {
+      margin-right: 10px;
+    }
+
+    &-staked-value {
+      margin-bottom: 5px;
+    }
+  }
+
+  .show-enter {
+    padding: 0px 30px;
+    max-height: 0;
+  }
+
+  .show-enter-active {
+    padding: 10px 30px;
+    max-height: 192px;
+    transition: padding 300ms, max-height 300ms;
+  }
+
+  .show-exit {
+    padding: 10px 30px;
+    max-height: 192px;
+  }
+
+  .show-exit-active {
+    padding: 0px 30px;
+    max-height: 0;
+    transition: padding 300ms, max-height 300ms;
+  }
+}

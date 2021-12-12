@@ -1,0 +1,39 @@
+.farms {
+  &-stake-unstake-modal {
+    &__content {
+      padding: 20px;
+    }
+
+    &__title {
+      margin-bottom: 60px;
+    }
+
+    &__subtitle {
+      margin-bottom: 18px;
+    }
+
+    &__currency {
+      &-icon {
+        margin-right: 5px;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    &__balance {
+      margin: 10px 0 25px;
+    }
+
+    &__btns {
+      margin: 30px 0;
+    }
+
+    &__btn {
+      width: 100%;
+
+      &-get-currency {
+        margin-top: 18px;
+      }
+    }
+  }
+}

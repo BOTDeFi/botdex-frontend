@@ -1,0 +1,50 @@
+@import 'src/styles/vars';
+.input {
+  border: none;
+  padding: 0;
+  color: #3c079d;
+  &:hover,
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+  // &-lg {
+  //   font-size: 20px;
+  //   line-height: 24px;
+  //   input::placeholder {
+  //     color: #3c079d;
+  //   }
+  // }
+  &-md {
+    font-size: 16px;
+    line-height: 19px;
+  }
+  &-lg {
+    padding: 20px 18px;
+  }
+  &-transparent {
+    background: transparent;
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: 500;
+    }
+  }
+  &-outline {
+    background: white;
+    border: 3px solid #cecece;
+    color: $gray;
+    overflow: hidden;
+    border-radius: 12px;
+    &.active {
+      background: #cecece;
+    }
+    &:hover,
+    &:focus {
+      border: 3px solid #cecece;
+      box-shadow: none !important;
+    }
+    input {
+      background: transparent;
+    }
+  }
+}

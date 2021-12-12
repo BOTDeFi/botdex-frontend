@@ -1,0 +1,16 @@
+.lottery-not-found {
+  width: 100%;
+  margin: 0 auto;
+  padding: 65px 10px;
+  svg {
+    width: 45px;
+    height: 45px;
+    path,
+    circle {
+      stroke: rgba(0, 0, 0, 0.5);
+    }
+  }
+  &__text {
+    margin-top: 20px;
+  }
+}
