@@ -13,7 +13,7 @@ export interface IwalletConnectorContext {
 }
 
 export const metamaskService = new MetamaskService({
-  testnet: 'kovan',
+  testnet: 'bsct',
   // isProduction: process.env.NODE_ENV === 'production',
 });
 
