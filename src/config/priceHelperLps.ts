@@ -14,7 +14,7 @@ const priceHelperLps: FarmConfig[] = [
   //   pid: -1,
   //   lpSymbol: 'QSD-BNB LP',
   //   lpAddresses: {
-  //     42: '0x7b3ae32eE8C532016f3E31C8941D937c59e055B9',
+  //     97: '0x7b3ae32eE8C532016f3E31C8941D937c59e055B9',
   //   },
   //   token: tokens.qsd,
   //   quoteToken: tokens.wbnb,
@@ -24,7 +24,7 @@ const priceHelperLps: FarmConfig[] = [
     pid: -1,
     lpSymbol: 'BUSD-BNB LP',
     lpAddresses: {
-      42: '0x112Dc48d876F4179627F0A29a016E6F130b07E7E',
+      97: '0x112Dc48d876F4179627F0A29a016E6F130b07E7E',
     },
     token: tokens.busd,
     quoteToken: tokens.wbnb,

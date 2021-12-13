@@ -11,7 +11,7 @@ import {
 
 export const contracts = {
   ROUTER: {
-    ADDRESS: '0x5758356b218602fF39F227205Db4A1aa07548f7a',
+    ADDRESS: '0x45C5Be5B785F6C33754CcA33c6f01A97B3FD8F25',
     ABI: [
       {
         inputs: [
@@ -354,7 +354,7 @@ export const contracts = {
     ],
   },
   FACTORY: {
-    ADDRESS: '0x0176783aa9160c8fFA7E8f31F51dFbfFD63A8b1c',
+    ADDRESS: '0xC921753FBB5F024D3c32471bF42cC1183730daBe',
     ABI: RocketFactory,
   },
   ERC20: {
@@ -805,7 +805,7 @@ export const contracts = {
     ABI: RocketPropellant,
   },
   REFINERY_VAULT: {
-    ADDRESS: '0xb0F0d907B7d4E869280A1F3cEDa4a3E8C48cE308',
+    ADDRESS: '0xE7824Ea63D9ECd72A66d5a3cD7457222Ee5a6518',
     ABI: RefineryVault,
   },
   MULTICALL: {
@@ -816,7 +816,7 @@ export const contracts = {
     ABI: SmartRefinerInitializable,
   },
   MASTER_REFINER: {
-    ADDRESS: '0x9d09e68e0BF54b12e26CeE52cA7Fda24C571e153',
+    ADDRESS: '0x151dD0BD76bFb594A1C43fA8ef37eaa0Bd26b5ab',
     ABI: MasterRefiner,
   },
 };

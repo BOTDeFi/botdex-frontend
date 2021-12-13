@@ -95,7 +95,7 @@ export interface IReceipt extends Transaction {
 
 export interface Address extends Record<string, string> {
   // [key: string]: string;
-  '42': string;
+  '97': string;
 }
 export interface Token {
   symbol: string;
