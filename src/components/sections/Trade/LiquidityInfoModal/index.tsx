@@ -117,13 +117,13 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
     >
       {info ? (
         <div className="liquidity-info__content">
-          <div className="text-yellow text-smd text-bold">Your Liquidity</div>
+          <div className="text-black text-smd text-bold">Your Liquidity</div>
           <div className="liquidity-info__title box-f-ai-c">
             <img src={UnknownImg} alt={info.token0.symbol} />
             <img src={UnknownImg} alt={info.token1.symbol} />
-            <span className="text-yellow text-smd">{`${info.token0.symbol}/${info.token1.symbol}`}</span>
+            <span className="text-black text-smd">{`${info.token0.symbol}/${info.token1.symbol}`}</span>
           </div>
-          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-yellow text-smd">
+          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
             <span>{`${info.token0.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
               <img src={UnknownImg} alt={info.token0.symbol} />
@@ -132,7 +132,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               </span>
             </div>
           </div>
-          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-yellow text-smd">
+          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
             <span>{`${info.token1.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
               <img src={UnknownImg} alt={info.token1.symbol} />
@@ -141,7 +141,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               </span>
             </div>
           </div>
-          <div className="liquidity-info__row box-f box-f-jc-sb text-yellow text-smd">
+          <div className="liquidity-info__row box-f box-f-jc-sb text-black text-smd">
             <span>Rates</span>
             <div className="text-right">
               <div>{`1 ${info.token0.symbol} = ${+(+info.token1.rate).toFixed(8)} ${
@@ -153,7 +153,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               }`}</div>
             </div>
           </div>
-          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-yellow text-smd">
+          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
             <span>Share of Pool</span>
             <span>{(+share).toFixed(5)}%</span>
           </div>
