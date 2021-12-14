@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { contracts } from '@/config';
+import { contracts, tokens as configTokens } from '@/config';
 import { walletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { IToken, ITokens } from '@/types';
@@ -106,7 +106,11 @@ const TradeWrapper = (
 
     async handleApproveTokens() {
       try {
-        if (!this.state.isAllowanceFrom && this.state.tokensData.from.token) {
+        if (
+          !this.state.isAllowanceFrom &&
+          this.state.tokensData.from.token &&
+          this.state.tokensData.from.token.symbol.toLowerCase() !== 'bnb'
+        ) {
           this.setState({
             isApproving: true,
           });
@@ -119,7 +123,11 @@ const TradeWrapper = (
             isAllowanceFrom: true,
           });
         }
-        if (!this.state.isAllowanceTo && this.state.tokensData.to.token) {
+        if (
+          !this.state.isAllowanceTo &&
+          this.state.tokensData.to.token &&
+          this.state.tokensData.to.token.symbol.toLowerCase() !== 'bnb'
+        ) {
           await this.context.metamaskService.approveToken({
             contractName: 'ERC20',
             approvedAddress: contracts.ROUTER.ADDRESS,
@@ -143,15 +151,23 @@ const TradeWrapper = (
     }
 
     async handleGetExchange(tokens: ITokens, type?: 'from' | 'to') {
+      if (!tokens.from.token || !tokens.to.token) {
+        return;
+      }
       try {
         this.setState({
           isLoadingExchange: true,
         });
+        const isFromBnb = tokens.from.token.symbol.toLowerCase() === 'bnb';
+        const isToBnb = tokens.to.token.symbol.toLowerCase() === 'bnb';
 
         const pairAddr = await this.context.metamaskService.callContractMethod(
           'FACTORY',
           'getPair',
-          [tokens.from.token?.address, tokens.to.token?.address],
+          [
+            isFromBnb ? configTokens.wbnb.address[97] : tokens.from.token?.address,
+            isToBnb ? configTokens.wbnb.address[97] : tokens.to.token?.address,
+          ],
           contracts.FACTORY.ADDRESS,
           contracts.FACTORY.ABI,
         );
@@ -345,18 +361,7 @@ const TradeWrapper = (
 
     handleChangeTokensData(tokensData: ITokens, type?: 'from' | 'to') {
       if (tokensData.from.amount === 0 || tokensData.to.amount === 0) {
-        this.setState({
-          tokensData: {
-            from: {
-              token: tokensData.from.token,
-              amount: 0,
-            },
-            to: {
-              token: tokensData.to.token,
-              amount: 0,
-            },
-          },
-        });
+        console.log(1);
       } else if (tokensData.from.token && tokensData.to.token && type) {
         this.handleGetExchange(tokensData, type);
       } else {

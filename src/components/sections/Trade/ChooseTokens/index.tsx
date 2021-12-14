@@ -63,6 +63,8 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     const [balanceFrom, setBalanceFrom] = React.useState<string>('');
     const [balanceTo, setBalanceTo] = React.useState<string>('');
 
+    const balanceInterval = React.useRef<any>(null);
+
     const handleCloseSelectTokenModal = (): void => {
       setModalVisible(false);
     };
@@ -181,7 +183,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       async (inputValue?: number | string) => {
         try {
           const promises: any[] = [];
-          if (tokenFrom?.address) {
+          if (tokenFrom?.address && tokenFrom.symbol.toLowerCase() !== 'bnb') {
             promises.push(
               metamaskService.checkTokenAllowance({
                 contractName: 'ERC20',
@@ -191,7 +193,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
               }),
             );
           }
-          if (tokenTo?.address) {
+          if (tokenTo?.address && tokenTo.symbol.toLowerCase() !== 'bnb') {
             promises.push(
               metamaskService.checkTokenAllowance({
                 contractName: 'ERC20',
@@ -203,11 +205,25 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           }
           const result = await Promise.all(promises);
 
-          if (changeTokenFromAllowance) {
+          if (
+            changeTokenFromAllowance &&
+            tokenFrom?.symbol &&
+            tokenFrom.symbol.toLowerCase() !== 'bnb'
+          ) {
             changeTokenFromAllowance(!!result[0]);
           }
-          if (changeTokenToAllowance) {
+          if (changeTokenToAllowance && tokenTo?.symbol && tokenTo.symbol.toLowerCase() !== 'bnb') {
             changeTokenToAllowance(!!result[1]);
+          }
+          if (
+            tokenFrom?.symbol &&
+            tokenFrom.symbol.toLowerCase() === 'bnb' &&
+            changeTokenFromAllowance
+          ) {
+            changeTokenFromAllowance(true);
+          }
+          if (tokenTo?.symbol && tokenTo.symbol.toLowerCase() === 'bnb' && changeTokenToAllowance) {
+            changeTokenToAllowance(true);
           }
           return result;
         } catch (err) {
@@ -230,6 +246,8 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
         metamaskService,
         tokenFrom?.address,
         tokenTo?.address,
+        tokenTo?.symbol,
+        tokenFrom?.symbol,
       ],
     );
 
@@ -326,12 +344,17 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       async (type: 'from' | 'to') => {
         try {
           if (initialTokenData[type] && initialTokenData[type].token && user.address) {
-            let balance = await metamaskService.callContractMethodFromNewContract(
-              initialTokenData[type].token?.address || '',
-              contracts.ERC20.ABI,
-              'balanceOf',
-              [user.address],
-            );
+            let balance = '0';
+            if (initialTokenData[type].token?.symbol.toLowerCase() === 'bnb') {
+              balance = await metamaskService.getEthBalance();
+            } else {
+              balance = await metamaskService.callContractMethodFromNewContract(
+                initialTokenData[type].token?.address || '',
+                contracts.ERC20.ABI,
+                'balanceOf',
+                [user.address],
+              );
+            }
 
             balance = MetamaskService.amountFromGwei(
               balance,
@@ -369,6 +392,21 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     React.useEffect(() => {
       handleCheckAllowance();
     }, [handleCheckAllowance]);
+
+    React.useEffect(() => {
+      if (!balanceInterval.current) {
+        balanceInterval.current = setInterval(() => {
+          handleGetBalance('from');
+          handleGetBalance('to');
+        }, 30000);
+      }
+
+      return () => {
+        if (balanceInterval.current) {
+          clearInterval(balanceInterval.current);
+        }
+      };
+    }, [handleGetBalance, balanceInterval]);
 
     return (
       <>

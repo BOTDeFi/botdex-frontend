@@ -69,8 +69,9 @@ const Liquidity: React.FC = observer(() => {
       value: 0.1,
     },
     txDeadline: 20,
-    txDeadlineUtc: moment.utc().add(20, 'm').valueOf(),
+    txDeadlineUtc: moment.utc().add(20, 'm').unix(),
   });
+  console.log(settings.txDeadlineUtc, 'deadline');
 
   const handleSaveSettings = (settingsObj: ISettings): void => {
     setSettings(settingsObj);

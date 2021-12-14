@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { clog, clogError } from '@/utils/logger';
+import { tokens } from '@/config';
 
 import { useWalletConnectorContext } from '../../../../services/MetamaskConnect';
 import MetamaskService from '../../../../services/web3';
@@ -58,31 +59,62 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
       try {
         if (tokensData.from.token && tokensData.to.token) {
           setLoading(true);
+          let data: any[] = [
+            tokensData.from.token?.address,
+            tokensData.to.token?.address,
+            MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token.decimals,
+            ),
+            MetamaskService.calcTransactionAmount(
+              tokensData.to.amount,
+              +tokensData.to.token.decimals,
+            ),
+            MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token.decimals,
+            ),
+            MetamaskService.calcTransactionAmount(
+              tokensData.to.amount,
+              +tokensData.to.token.decimals,
+            ),
+            user.address,
+            settings.txDeadlineUtc,
+          ];
+          let method = 'addLiquidity';
+          let value = '';
+
+          const isFromBnb = tokensData.from.token.symbol.toLowerCase() === 'bnb';
+          const isToBnb = tokensData.to.token.symbol.toLowerCase() === 'bnb';
+
+          if (isFromBnb || isToBnb) {
+            const bnbToken = isFromBnb ? tokensData.from : tokensData.to;
+            const bepToken = !isFromBnb ? tokensData.from : tokensData.to;
+            method = 'addLiquidityETH';
+
+            if (bepToken.token && bnbToken.token) {
+              data = [
+                bepToken.token?.address,
+                MetamaskService.calcTransactionAmount(bepToken.amount, +bepToken.token.decimals),
+                MetamaskService.calcTransactionAmount(bepToken.amount, +bepToken.token.decimals),
+                MetamaskService.calcTransactionAmount(bnbToken.amount, +bnbToken.token.decimals),
+                user.address,
+                settings.txDeadlineUtc,
+              ];
+              value = MetamaskService.calcTransactionAmount(
+                bnbToken.amount,
+                +bnbToken.token.decimals,
+              );
+            }
+          }
+
+          debugger;
+
           await metamaskService.createTransaction({
             contractName: 'ROUTER',
-            method: 'addLiquidity',
-            data: [
-              tokensData.from.token?.address,
-              tokensData.to.token?.address,
-              MetamaskService.calcTransactionAmount(
-                tokensData.from.amount,
-                +tokensData.from.token.decimals,
-              ),
-              MetamaskService.calcTransactionAmount(
-                tokensData.to.amount,
-                +tokensData.to.token.decimals,
-              ),
-              MetamaskService.calcTransactionAmount(
-                tokensData.from.amount,
-                +tokensData.from.token.decimals,
-              ),
-              MetamaskService.calcTransactionAmount(
-                tokensData.to.amount,
-                +tokensData.to.token.decimals,
-              ),
-              user.address,
-              settings.txDeadlineUtc,
-            ],
+            method,
+            data,
+            value,
           });
           setLoading(false);
           delete localStorage['refinery-finance-quote'];
@@ -136,6 +168,8 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             ...ex,
             share: +min,
           }));
+          const isFromBnb = tokensData.from.token.symbol.toLowerCase() === 'bnb';
+          const isToBnb = tokensData.to.token.symbol.toLowerCase() === 'bnb';
 
           metamaskService
             .callContractMethod('ROUTER', 'getAmountsOut', [
@@ -143,7 +177,10 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
                 tokensData.from.amount,
                 +tokensData.from.token.decimals,
               ),
-              [tokensData.to.token.address, tokensData.from.token.address],
+              [
+                isToBnb ? tokens.wbnb.address[97] : tokensData.to.token.address,
+                isFromBnb ? tokens.wbnb.address[97] : tokensData.from.token.address,
+              ],
             ])
             .then((res) => {
               if (tokensData.from.token) {
@@ -163,7 +200,10 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
                 tokensData.to.amount,
                 +tokensData.to.token.decimals,
               ),
-              [tokensData.from.token.address, tokensData.to.token.address],
+              [
+                isFromBnb ? tokens.wbnb.address[97] : tokensData.from.token.address,
+                isToBnb ? tokens.wbnb.address[97] : tokensData.to.token.address,
+              ],
             ])
             .then((res) => {
               if (tokensData.to.token) {

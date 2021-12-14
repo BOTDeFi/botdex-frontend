@@ -47,7 +47,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
     };
 
     const handleChangeTxDeadline = (value: number | string): void => {
-      setTxDeadlineUtc(moment.utc().add(value, 'm').valueOf());
+      setTxDeadlineUtc(moment.utc().add(value, 'm').unix());
       setTxDeadline(+value);
     };
 

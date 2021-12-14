@@ -11,7 +11,7 @@ import {
 
 export const contracts = {
   ROUTER: {
-    ADDRESS: '0x45C5Be5B785F6C33754CcA33c6f01A97B3FD8F25',
+    ADDRESS: '0x6399DB760300DB13E6c095e7880d8d896144D5a9',
     ABI: [
       {
         inputs: [
