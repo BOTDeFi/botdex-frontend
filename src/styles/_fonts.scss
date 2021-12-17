@@ -1,4 +1,5 @@
 @import './mixins/main';
 
-@include font-face('Lato', '../assets/fonts/Lato-Regular', normal);
-@include font-face('Lato', '../assets/fonts/Lato-Bold', 700);
+@include font-face('Montserrat', '../assets/fonts/Montserrat/Montserrat-Regular', 400);
+@include font-face('Montserrat', '../assets/fonts/Montserrat/Montserrat-Medium', 500);
+@include font-face('Montserrat', '../assets/fonts/Montserrat/Montserrat-Bold', 700);
