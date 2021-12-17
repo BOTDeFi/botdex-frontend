@@ -1,0 +1,61 @@
+@import 'src/styles/vars';
+
+.s-sort {
+  min-width: 185px;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+
+  color: rgba(0, 0, 0, 0.5);
+
+  .ant-select-selector {
+    padding: 11px 15px !important;
+
+    overflow: hidden;
+
+    height: auto !important;
+
+    background: $gray-l !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+  }
+
+  .ant-select-selection-item {
+    // padding-right: 47px !important;
+    padding-right: 0 !important;
+  }
+
+  .ant-select-arrow {
+    top: 50%;
+    right: 16px;
+  }
+}
+
+.ant-select-dropdown {
+  padding: 0 !important;
+
+  overflow: hidden;
+
+  background: #f9f9f9 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+.ant-select-item {
+  padding: 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+
+  &-option {
+    transition: 0s;
+
+    &-active {
+      color: #fff;
+      background: $yellow !important;
+    }
+  }
+}

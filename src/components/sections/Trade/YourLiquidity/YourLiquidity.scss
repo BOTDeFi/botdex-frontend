@@ -1,0 +1,42 @@
+@import 'src/styles/vars';
+
+.y-liquidity {
+  &__btn {
+    margin-bottom: 40px;
+
+    width: 100%;
+  }
+
+  &__box {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  &__text {
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+  }
+
+  &__item {
+    padding: 17px 24px;
+
+    background: $gray-l;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+
+    & + & {
+      margin-top: 10px;
+    }
+
+    img {
+      margin-right: 10px;
+
+      width: 32px;
+    }
+  }
+}

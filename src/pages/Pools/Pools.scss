@@ -1,0 +1,63 @@
+@import 'src/styles/vars.scss';
+@import 'src/styles/mixins/media.scss';
+
+$desktop-menu-width: 240px;
+$default-horizontal-padding: 48px;
+$default-vertical-padding: 22px;
+
+.pools {
+  padding: {
+    top: $default-vertical-padding;
+    right: $default-horizontal-padding;
+    left: $default-horizontal-padding + $desktop-menu-width;
+    bottom: $default-vertical-padding;
+  }
+
+  @include b(tablet) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  &__i-contr {
+    @include b(tablet) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__i-contr-prefix {
+    @include b(tablet) {
+      margin-bottom: 5px;
+    }
+  }
+
+  &__i-contr-button {
+    padding: 5px;
+  }
+
+  &__i-contr-icon {
+    stroke: $gray;
+
+    &_active {
+      stroke: $yellow;
+    }
+  }
+
+  &__content {
+    margin: 40px 0 0;
+
+    &-card-view {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      @include b(desktop) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include b(mobile) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+      grid-column-gap: 23px;
+      grid-row-gap: 30px;
+    }
+  }
+}

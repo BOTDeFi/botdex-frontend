@@ -1,0 +1,198 @@
+@import 'src/styles/vars';
+
+.btn {
+  padding: 20px;
+
+  display: block;
+
+  width: fit-content;
+  height: fit-content;
+
+  border: none;
+  border-radius: 12px;
+
+  &__arrow {
+    margin-left: 10px;
+  }
+
+  span {
+    transition: 0.3s;
+  }
+
+  svg {
+    transition: 0.3s;
+
+    path {
+      transition: 0.3s;
+    }
+  }
+
+  &-cold-blue {
+    color: #fff;
+    background: $cold-blue;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+
+    & > * {
+      color: #fff !important;
+    }
+
+    &:hover {
+      background: $cold-blue;
+    }
+
+    &:active,
+    &:focus {
+      background: $cold-blue;
+    }
+  }
+
+  &-sm {
+    padding: 13px 5px 14px;
+
+    min-width: 74px;
+
+    text-align: center;
+  }
+
+  &-ssm {
+    padding: 6px 18px;
+  }
+
+  &-smd {
+    padding: 10px 18px;
+  }
+
+  &-lg {
+    padding: 31px 40px;
+  }
+
+  &-lmd {
+    padding: 29.5px 35px;
+  }
+
+  &-gray {
+    background: $gray-l;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  &-outline {
+    color: #fff;
+    background: transparent;
+    border: 3px solid $cold-blue;
+
+    &:hover {
+      color: #fff;
+      border-color: $cold-blue;
+    }
+
+    &:active,
+    &:focus {
+      color: #fff;
+      border-color: $cold-blue;
+    }
+
+    &.active {
+      background: $cold-blue;
+    }
+
+    &-purple {
+      color: $black;
+      background: transparent;
+      border: 1px solid $black;
+
+      &:hover,
+      &:focus {
+        color: $black;
+        background: transparent;
+        border-color: $black;
+      }
+
+      &.active {
+        color: #fff !important;
+        background: $black;
+
+        span {
+          color: #fff !important;
+        }
+
+        svg {
+          transform: rotate(-180deg);
+
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+
+      &.noclick {
+        cursor: default;
+
+        &:active,
+        &.active {
+          color: $yellow !important;
+          background: transparent;
+
+          span {
+            color: $yellow !important;
+          }
+        }
+      }
+    }
+
+    &-green {
+      @extend .btn-outline-purple;
+      color: $green;
+      border-color: $green;
+
+      &:hover,
+      &:focus {
+        color: $green;
+        border-color: $green;
+      }
+
+      svg {
+        path {
+          stroke: $green;
+        }
+      }
+
+      &.active {
+        background: $green;
+      }
+
+      &.noclick {
+        &:active,
+        &.active {
+          color: $green !important;
+
+          span {
+            color: $green !important;
+          }
+        }
+      }
+    }
+  }
+
+  &-yellow-l {
+    color: $black;
+    background: $yellow-d;
+
+    &:hover,
+    &:focus {
+      background: $yellow-d;
+    }
+
+    span {
+      color: $black;
+    }
+  }
+
+  &[disabled] {
+    color: rgba(0, 0, 0, 0.1) !important;
+    background: rgba(197, 196, 195, 0.5);
+
+    span {
+      color: rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+}

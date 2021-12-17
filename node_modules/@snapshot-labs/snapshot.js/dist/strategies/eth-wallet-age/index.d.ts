@@ -1,0 +1,3 @@
+export declare const author = "ChaituVR";
+export declare const version = "0.1.0";
+export declare function strategy(space: any, network: any, provider: any, addresses: any, options: any): Promise<any>;

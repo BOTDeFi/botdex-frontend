@@ -1,0 +1,16 @@
+@import '../../styles/mixins/media.scss';
+
+.trade {
+  padding-top: 90px;
+  padding-left: 0;
+  padding-bottom: 90px;
+
+  background: $bg-color;
+
+  &__content {
+    padding: 10px;
+
+    width: 100%;
+    max-width: 440px;
+  }
+}

@@ -1,0 +1,132 @@
+@import '../mixins/media.scss';
+
+.box {
+  &-f {
+    display: flex;
+  }
+
+  &-f-c {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-f-jc-sb {
+    justify-content: space-between;
+  }
+
+  &-f-jc-sa {
+    justify-content: space-around;
+  }
+
+  &-f-jc-c {
+    justify-content: center;
+  }
+
+  &-f-jc-s {
+    justify-content: flex-start;
+  }
+
+  &-f-jc-e {
+    justify-content: flex-end;
+  }
+
+  &-f-ai-c {
+    display: flex;
+    align-items: center;
+  }
+
+  &-f-ai-s {
+    align-items: flex-start;
+  }
+
+  &-f-ai-e {
+    align-items: flex-end;
+  }
+
+  &-f-fd-c {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-shadow {
+    overflow: hidden;
+
+    border-radius: 12px;
+    box-shadow: $shadow;
+  }
+
+  &-yellow-l {
+    background: $yellow-l;
+  }
+
+  &-yellow-l-d {
+    background: $yellow-d;
+  }
+
+  &-yellow {
+    background: $yellow;
+  }
+
+  &-gradient {
+    background: $dark-gradient;
+  }
+
+  &-dark-grey {
+    background: $dark-grey;
+  }
+
+  &-circle {
+    border-radius: 50%;
+  }
+
+  &-white {
+    background: #fff;
+  }
+
+  &-black {
+    background: $black;
+  }
+
+  &-gray {
+    background: rgba(#c1c1c1, 0.1);
+  }
+
+  &-full {
+    width: 100%;
+  }
+
+  &-overflow-v {
+    overflow: visible;
+  }
+
+  &-pointer {
+    cursor: pointer;
+  }
+
+  &-fit {
+    width: fit-content;
+  }
+}
+
+.t-box {
+  &-b {
+    @include b(tablet) {
+      display: block;
+    }
+  }
+
+  &-none {
+    @include b(tablet) {
+      display: none;
+    }
+  }
+}
+
+.m-box {
+  &-b {
+    @include b(mobile) {
+      display: block;
+    }
+  }
+}

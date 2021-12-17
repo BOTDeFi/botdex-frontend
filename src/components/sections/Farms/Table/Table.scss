@@ -1,0 +1,31 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+@import '../styles';
+
+.farms-table {
+  margin-top: 45px;
+  padding: 35px 0;
+
+  @include b(tablet) {
+    margin-top: 30px;
+    padding: 0;
+
+    border-radius: 0 !important;
+  }
+
+  &__head {
+    position: sticky;
+    top: 20px;
+
+    margin: 0 30px;
+    padding-bottom: 14px;
+
+    display: grid;
+    align-items: center;
+
+    border-bottom: 1px solid #eaeaea;
+    grid-template-columns: $columns;
+    grid-column-gap: 20px;
+  }
+}
