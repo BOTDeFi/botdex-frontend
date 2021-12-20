@@ -1,0 +1,47 @@
+{
+  "shouldExtractLiteralValuesFromEnum": true,
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/dist/**/*"
+  ],
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "esnext",
+      "ES2015"
+    ],
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "pretty": true,
+    "removeComments": false,
+    "stripInternal": true,
+    "sourceMap": true,
+    "noImplicitThis": false,
+    "baseUrl": "./",
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "target": "es6",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

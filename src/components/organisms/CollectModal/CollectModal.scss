@@ -1,0 +1,33 @@
+.pools-collect-modal {
+  &__content {
+    padding: 20px;
+  }
+
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__radio-group {
+    margin-right: 10px;
+  }
+
+  &__profit-row {
+    margin: 20px 0 30px;
+  }
+
+  &__profit {
+  }
+
+  &__info {
+    width: 25px;
+    height: 25px;
+  }
+
+  &__btns {
+    margin: 30px 0;
+  }
+
+  &__btn {
+    width: 100%;
+  }
+}

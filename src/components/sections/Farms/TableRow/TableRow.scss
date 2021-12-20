@@ -1,0 +1,234 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+@import '../styles';
+
+.farms-table-row {
+  position: relative;
+
+  & + & {
+    &::after {
+      content: '';
+
+      position: absolute;
+      top: 0;
+      left: 50%;
+
+      display: block;
+
+      width: calc(100% - 100px);
+      height: 1px;
+
+      background: #eaeaea;
+
+      transform: translateX(-50%);
+
+      @include b(tablet) {
+        width: 100%;
+      }
+    }
+  }
+
+  &__content {
+    padding: 35px 30px;
+
+    display: grid;
+    align-items: center;
+
+    cursor: pointer;
+    grid-template-columns: $columns;
+    grid-column-gap: 20px;
+
+    @include b(tablet) {
+      padding: 20px 20px 20px 10px;
+      grid-template-columns: $columns-tablet;
+    }
+  }
+
+  &__extra-text {
+    display: none;
+  }
+
+  &__currencies {
+    &-pair {
+      margin-right: 12px;
+    }
+
+    &-pair-item {
+      width: 24px;
+      height: 24px;
+
+      &:last-child {
+        margin-left: -5px;
+      }
+    }
+  }
+
+  &__earned {
+    @include b(tablet) {
+      span {
+        color: #000 !important;
+      }
+    }
+  }
+
+  &__apr-button {
+    @include b(tablet) {
+      display: none;
+    }
+  }
+
+  &__item {
+    &--mob {
+      display: none;
+
+      transition: 0.4s ease;
+
+      &_active {
+        transform: rotate(-180deg);
+      }
+    }
+
+    &:last-of-type {
+      // margin-left: auto;
+      text-align: right;
+
+      @include b(1120) {
+        span {
+          visibility: hidden;
+
+          width: 0;
+
+          opacity: 0;
+        }
+
+        svg {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &-img {
+      &-info {
+        margin-top: -2px;
+      }
+    }
+  }
+
+  &__text {
+    margin-right: 16px;
+
+    &-md {
+      margin-right: 9px;
+    }
+  }
+
+  &__buttons {
+    @include b(tablet) {
+      grid-row: 1;
+    }
+  }
+
+  &__details {
+    padding: 10px 30px;
+
+    display: grid;
+    overflow: hidden;
+    align-items: center;
+    grid-template-columns: 1fr 3fr;
+
+    @include b(tablet) {
+      padding: 8px 10px;
+      grid-template-columns: 1fr;
+      grid-auto-flow: row dense;
+    }
+
+    &-links {
+      &-item {
+        margin-bottom: 15px;
+
+        width: fit-content;
+
+        span {
+          margin-right: 7px;
+        }
+      }
+    }
+
+    &-check {
+      padding: 1px 6px;
+
+      width: fit-content;
+
+      border: 1px solid $yellow;
+      border-radius: 40px;
+    }
+
+    &-box {
+      padding: 20px 30px 40px;
+
+      background: rgba(#fff, 0.5);
+      border-radius: 12px;
+
+      & + & {
+        margin-left: 10px;
+      }
+
+      @include b(tablet) {
+        padding: 20px 10px;
+
+        text-align: center;
+
+        .btn-yellow {
+          padding: 17px 0 !important;
+
+          width: 100% !important;
+        }
+
+        & + & {
+          margin: 10px 0;
+        }
+      }
+    }
+
+    &-title {
+      margin-bottom: 13px;
+    }
+
+    &-staked-values-group {
+      margin-right: 10px;
+    }
+
+    &-staked-value {
+      margin-bottom: 5px;
+    }
+  }
+
+  .show-enter {
+    padding: 0 30px;
+
+    max-height: 0;
+  }
+
+  .show-enter-active {
+    padding: 10px 30px;
+
+    max-height: 192px;
+
+    transition: padding 300ms, max-height 300ms;
+  }
+
+  .show-exit {
+    padding: 10px 30px;
+
+    max-height: 192px;
+  }
+
+  .show-exit-active {
+    padding: 0 30px;
+
+    max-height: 0;
+
+    transition: padding 300ms, max-height 300ms;
+  }
+}

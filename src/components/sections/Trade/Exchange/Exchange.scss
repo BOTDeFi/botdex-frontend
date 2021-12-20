@@ -1,0 +1,30 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+.exchange {
+  margin-top: 40px;
+  padding: 30px;
+
+  @include b(extramobile) {
+    padding: 20px;
+  }
+
+  &__title {
+    margin-bottom: 12px;
+  }
+
+  &__box {
+    &-top {
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+
+  &__btn {
+    margin-top: 30px;
+
+    width: 100%;
+  }
+}

@@ -1,0 +1,87 @@
+.m-import-tokens {
+  &__content {
+    padding: 20px 20px 30px;
+  }
+
+  &__title {
+    width: fit-content;
+
+    img {
+      margin-right: 12px;
+
+      width: 12px;
+
+      transform: rotate(90deg);
+    }
+  }
+
+  &__text {
+    margin-top: 25px;
+    padding: 20px;
+
+    background: linear-gradient(0deg, #fff2c6, #fff2c6);
+    border-radius: 30px;
+
+    p + p {
+      margin-top: 20px;
+    }
+  }
+
+  &__alert {
+    margin: 15px 0 20px;
+    padding: 12px 16px;
+
+    color: #c52727;
+    border: 1px solid #c52727;
+    border-radius: 30px;
+
+    img {
+      margin-right: 20px;
+
+      width: 19px;
+    }
+  }
+
+  &__token {
+    &-address {
+      display: block;
+      overflow: hidden;
+
+      max-width: 220px;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &-name {
+      margin-bottom: 6px;
+    }
+
+    &-link {
+      span {
+        margin-right: 8px;
+
+        display: block;
+      }
+    }
+  }
+
+  &__switch {
+    margin-top: 30px;
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #e0e0e0;
+
+    span {
+      margin-left: 10px;
+
+      display: block;
+    }
+  }
+
+  &__btn {
+    margin-top: 30px;
+
+    width: 100%;
+  }
+}

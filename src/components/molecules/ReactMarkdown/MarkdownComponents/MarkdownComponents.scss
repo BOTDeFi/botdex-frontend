@@ -1,0 +1,61 @@
+@import 'src/styles/vars';
+
+.markdown-components {
+  &__title {
+    padding-bottom: 5px;
+
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.1;
+
+    color: inherit;
+  }
+
+  &__text {
+    font-size: 16px;
+  }
+
+  &__table {
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    width: 100%;
+
+    td,
+    th {
+      padding: 8px;
+    }
+  }
+
+  &__list {
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    li {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__pre {
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    overflow-x: auto;
+
+    max-width: 100%;
+  }
+
+  &__blockquote {
+    padding-left: 5px;
+
+    border-left: 3px solid $yellow;
+  }
+}
+
+ul.markdown-components__list {
+  list-style-type: disc;
+}
+
+ol.markdown-components__list {
+  list-style-type: decimal;
+}

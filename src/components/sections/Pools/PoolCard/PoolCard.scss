@@ -1,0 +1,169 @@
+@import 'src/styles/vars';
+
+$card-bg-color: #f9f9f9;
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.p-card {
+  margin: 0 auto;
+
+  width: 100%;
+  max-width: 355px;
+  height: fit-content;
+
+  background-color: $card-bg-color;
+
+  &__head {
+    position: relative;
+
+    padding: 20px 18px 10px 31px;
+
+    min-height: 115px;
+
+    background: $bg-gradient;
+  }
+
+  &__title {
+    margin-bottom: 6px;
+  }
+
+  &__icons {
+    position: relative;
+
+    img {
+      width: 62px;
+    }
+
+    img + img {
+      position: absolute;
+      right: -8px;
+      bottom: -8px;
+
+      width: 32px;
+    }
+  }
+
+  &__badge {
+    &_finished {
+      position: absolute;
+      top: -7px;
+      right: -50px;
+
+      padding: 35px 45px 10px;
+
+      transform: rotate(45deg);
+    }
+  }
+
+  &__box {
+    padding: 25px 30px;
+
+    & + & {
+      border-top: 1px solid #e6e6e6;
+    }
+  }
+
+  &__footer-info-popover {
+    margin: 0 auto 0 8px;
+
+    width: 20px;
+    height: 20px;
+  }
+
+  &__apr {
+    &-percent {
+      img {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  &__unlock {
+    &-text {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__earned {
+    margin-bottom: 30px;
+
+    &-profit-value {
+      margin: 10px 0 5px;
+    }
+  }
+
+  &__staked {
+    @extend .p-card__earned;
+
+    &-value {
+      @extend .p-card__earned-profit-value;
+    }
+  }
+
+  &__details {
+    padding-top: 30px;
+
+    overflow: hidden;
+
+    &-item {
+      margin-left: auto;
+
+      & + & {
+        margin-top: 10px;
+      }
+
+      img {
+        margin-top: -2px;
+        margin-left: 5px;
+
+        width: 19px;
+      }
+    }
+  }
+
+  &__auto {
+    &-profit {
+      margin: 15px 0 30px;
+    }
+
+    &-info {
+      max-width: 50%;
+    }
+  }
+
+  .show-enter {
+    padding-top: 0;
+
+    max-height: 0;
+  }
+
+  .show-enter-active {
+    padding-top: 30px;
+
+    max-height: 132px;
+
+    transition: padding-top 300ms, max-height 300ms;
+  }
+
+  .show-exit {
+    padding-top: 30px;
+
+    max-height: 132px;
+  }
+
+  .show-exit-active {
+    padding-top: 0;
+
+    max-height: 0;
+
+    transition: padding-top 300ms, max-height 300ms;
+  }
+}

@@ -1,0 +1,58 @@
+.receive {
+  &__box {
+    margin-bottom: 20px;
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  &__item {
+    &-currency {
+      img {
+        margin-top: -2px;
+        margin-left: 11px;
+
+        width: 32px;
+      }
+    }
+  }
+
+  &__plus {
+    margin: 5px 0;
+  }
+
+  &__burned {
+    margin: 50px 0 25px;
+
+    img {
+      margin-top: -2px;
+      margin-right: 3px;
+
+      width: 32px;
+    }
+
+    & > span {
+      margin-bottom: 10px;
+
+      display: block;
+    }
+
+    span + div {
+      padding-top: 3px;
+    }
+  }
+
+  &__price {
+    &__item {
+      & + & {
+        margin-top: 18px;
+      }
+    }
+  }
+
+  &__btn {
+    margin-top: 30px;
+
+    width: 100%;
+  }
+}

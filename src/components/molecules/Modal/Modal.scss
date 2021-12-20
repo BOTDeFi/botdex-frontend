@@ -1,0 +1,24 @@
+@import 'src/styles/vars';
+
+.modal {
+  padding-bottom: 0;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  .ant-modal-close {
+    top: 5px;
+    right: 5px;
+
+    &-x {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 0;
+  }
+}

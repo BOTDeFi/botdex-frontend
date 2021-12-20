@@ -1,0 +1,26 @@
+@import 'src/styles/vars';
+
+.trade__nav {
+  padding: 5px 8px;
+
+  width: 100%;
+
+  background: $dark-grey;
+
+  &-item {
+    padding: 13px 0 14px;
+
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+    &.active {
+      color: #fff;
+      background: $purple;
+    }
+  }
+}

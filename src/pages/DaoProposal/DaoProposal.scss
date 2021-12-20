@@ -1,0 +1,169 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+$section-margin: 40px;
+$tip-color: #a1a1a1;
+$outline-color: #cecece;
+
+.dao-proposal {
+  &__wrapper {
+    padding: $section-margin;
+
+    display: flex;
+    flex-direction: row;
+
+    @include b(mobile) {
+      padding: $section-margin / 3;
+
+      flex-direction: column;
+    }
+  }
+
+  &__column {
+    &:first-child {
+      padding-right: 30px;
+
+      width: 65%;
+      flex: 0 0 65%;
+
+      @include b(mobile) {
+        padding-right: 0;
+
+        width: 100%;
+        flex: 0 0 100%;
+      }
+    }
+
+    &:last-child {
+      flex: 0 0 100% - 65%;
+
+      width: 100% - 65%;
+
+      @include b(mobile) {
+        margin-top: $section-margin;
+
+        width: 100%;
+        flex: 0 0 100%;
+      }
+    }
+  }
+
+  &__section {
+    margin-top: $section-margin;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__section-header-tip {
+    color: #000;
+  }
+
+  &__section-body {
+    padding: 30px;
+  }
+
+  &__list-wrapper {
+    padding: $section-margin;
+
+    @include b(mobile) {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+  }
+}
+
+.title-section {
+  &__field {
+    margin-bottom: 0;
+  }
+}
+
+.content-section {
+  &__field {
+    margin-bottom: 0;
+  }
+}
+
+.choices-section {
+  &__input-postfix {
+    position: absolute;
+    top: 50%;
+    left: 90%;
+
+    padding: 12px;
+
+    width: 5px;
+    height: 5px;
+
+    transform: translateY(-50%);
+
+    img {
+      width: 10px;
+    }
+  }
+
+  &__form-errors {
+    color: $red;
+  }
+
+  &__button {
+    margin-top: 20px;
+
+    width: 40%;
+  }
+}
+
+.actions-section {
+  &__input-label {
+    font-weight: 500;
+  }
+
+  &__input {
+    padding: 18px;
+
+    width: 100%;
+
+    border-radius: 20px;
+
+    &:hover {
+      border-color: $yellow;
+    }
+
+    &.ant-picker-focused {
+      border-color: $yellow;
+      box-shadow: 0 0 0 2px $yellow;
+    }
+  }
+
+  &__input-popup {
+    // button {
+    //   background-color: $yellow;
+    //   border: none;
+    //   &:hover {
+    //     background-color: $yellow;
+    //   }
+    // }
+  }
+
+  &__snapshot {
+    margin-bottom: 10px;
+  }
+
+  &__snapshot-title {
+    margin-right: 10px;
+  }
+
+  &__submit {
+    width: 100%;
+  }
+}
+
+// reset ant-design
+.ant-form-item-has-error .ant-input:focus,
+.ant-form-item-has-error .ant-input-affix-wrapper:focus,
+.ant-form-item-has-error .ant-input-focused,
+.ant-form-item-has-error .ant-input-affix-wrapper-focused {
+  border-right-width: 3px !important;
+}

@@ -1,0 +1,119 @@
+@import './reset';
+@import 'mixins/media';
+@import './fonts';
+@import './vars';
+@import './components/index.scss';
+@import './typography';
+
+html,
+body {
+  margin: 0;
+
+  height: max-content;
+  min-height: 100vh;
+
+  font-family: ReadexPro, sans-serif;
+  font-weight: 400;
+
+  color: #fff;
+
+  &.hide-scroll {
+    overflow: hidden;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
+.ref-finance {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  font-size: 16px;
+  line-height: 19px;
+  flex-grow: 2;
+
+  &__connect {
+    @include b(tablet) {
+      display: none !important;
+    }
+    position: fixed !important;
+    top: 25px;
+    right: 100px;
+  }
+}
+
+main {
+  flex-grow: 2;
+
+  padding-left: 227px;
+  @include b(tablet) {
+    padding-top: 92px !important;
+    padding-left: 0;
+  }
+}
+
+.row {
+  margin: 0 auto;
+  padding: 0 10px;
+
+  max-width: 1120px;
+
+  &-md {
+    max-width: 990px;
+  }
+
+  &-sm {
+    max-width: 705px;
+  }
+
+  &-lg {
+    max-width: 1360px;
+  }
+}
+
+.hidden {
+  display: none !important;
+
+  &-desktop {
+    display: none !important;
+    @include b('tablet') {
+      display: block !important;
+    }
+  }
+
+  &-mobile {
+    @include b('tablet') {
+      display: none !important;
+    }
+  }
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.swiper-container {
+  overflow: inherit !important;
+}
+
+.ScrollbarsCustom-Scroller {
+  margin-right: -20px !important;
+  padding-right: 25px !important;
+}
+
+a:hover {
+  color: #fff;
+}

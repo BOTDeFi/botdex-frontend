@@ -1,0 +1,178 @@
+@import 'src/styles/vars';
+
+.input-number {
+  width: 100%;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  &__box {
+    width: 100%;
+  }
+
+  &__prefix {
+    margin-right: 13px;
+  }
+
+  &:not(:only-child) {
+    input {
+      padding-right: 5px;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  input {
+    width: 100%;
+    height: auto;
+
+    border: none;
+  }
+
+  &__prefix-bottom {
+    margin: -20px 20px 15px;
+  }
+
+  &-lg {
+    &-box {
+      border-radius: 12px;
+    }
+
+    input {
+      padding: 25px 20px;
+
+      height: auto;
+
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 30px;
+    }
+  }
+
+  &-md {
+    &-box {
+      border-radius: 30px;
+    }
+
+    input {
+      padding: 20px;
+
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  &-sm {
+    &-box {
+      border-radius: 30px;
+    }
+
+    input {
+      padding: 13px 20px 14px;
+
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+
+  &-outline {
+    border: none;
+    box-shadow: none;
+
+    &:hover,
+    &:focus {
+      border: none !important;
+      border-color: transparent;
+      box-shadow: none !important;
+    }
+
+    &-box {
+      overflow: hidden;
+
+      color: #fff;
+      background: transparent;
+      border: 3px solid $cold-blue;
+
+      &.active {
+        background: $cold-blue;
+      }
+    }
+
+    input {
+      color: #fff;
+
+      background: transparent;
+    }
+  }
+
+  &-gray {
+    &-box {
+      background: $gray-l;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover,
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      background: transparent;
+    }
+  }
+
+  &-gray-field {
+    &-box {
+      background: $gray-field;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover,
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      color: #fff;
+      background: transparent;
+
+      &::placeholder {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &-white {
+    &-box {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover,
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      background: transparent;
+    }
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+
+  input[type='number'] {
+    appearance: textfield;
+  }
+
+  .ant-input-number-handler-wrap {
+    display: none;
+  }
+}
