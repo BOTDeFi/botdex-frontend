@@ -2,7 +2,6 @@ import {
   MasterRefiner,
   Multicall,
   RefineryVault,
-  RocketFactory,
   RocketPropellant,
   SmartRefinerInitializable,
 } from './abi';
@@ -11,7 +10,7 @@ import {
 
 export const contracts = {
   ROUTER: {
-    ADDRESS: '0x6399DB760300DB13E6c095e7880d8d896144D5a9',
+    ADDRESS: '0xb05241134B0974bE957fc56efD6b51dFFb3E74db',
     ABI: [
       {
         inputs: [
@@ -51,11 +50,7 @@ export const contracts = {
       {
         inputs: [
           { internalType: 'address', name: 'token', type: 'address' },
-          {
-            internalType: 'uint256',
-            name: 'amountTokenDesired',
-            type: 'uint256',
-          },
+          { internalType: 'uint256', name: 'amountTokenDesired', type: 'uint256' },
           { internalType: 'uint256', name: 'amountTokenMin', type: 'uint256' },
           { internalType: 'uint256', name: 'amountETHMin', type: 'uint256' },
           { internalType: 'address', name: 'to', type: 'address' },
@@ -358,8 +353,94 @@ export const contracts = {
     ],
   },
   FACTORY: {
-    ADDRESS: '0xC921753FBB5F024D3c32471bF42cC1183730daBe',
-    ABI: RocketFactory,
+    ADDRESS: '0x219864AC21AFe9B03386B172cc58334d949cDC88',
+    ABI: [
+      {
+        inputs: [{ internalType: 'address', name: '_feeToSetter', type: 'address' }],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        anonymous: false,
+        inputs: [
+          { indexed: true, internalType: 'address', name: 'token0', type: 'address' },
+          { indexed: true, internalType: 'address', name: 'token1', type: 'address' },
+          { indexed: false, internalType: 'address', name: 'pair', type: 'address' },
+          { indexed: false, internalType: 'uint256', name: '', type: 'uint256' },
+        ],
+        name: 'PairCreated',
+        type: 'event',
+      },
+      {
+        inputs: [],
+        name: 'INIT_CODE_PAIR_HASH',
+        outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        name: 'allPairs',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'allPairsLength',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: 'tokenA', type: 'address' },
+          { internalType: 'address', name: 'tokenB', type: 'address' },
+        ],
+        name: 'createPair',
+        outputs: [{ internalType: 'address', name: 'pair', type: 'address' }],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'feeTo',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'feeToSetter',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [
+          { internalType: 'address', name: '', type: 'address' },
+          { internalType: 'address', name: '', type: 'address' },
+        ],
+        name: 'getPair',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: '_feeTo', type: 'address' }],
+        name: 'setFeeTo',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [{ internalType: 'address', name: '_feeToSetter', type: 'address' }],
+        name: 'setFeeToSetter',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
   },
   ERC20: {
     ABI: [
@@ -517,7 +598,7 @@ export const contracts = {
     ],
   },
   PAIR: {
-    ADDRESS: '0xc36AfeA215679D1aa4F15C29378dBF29D560492c',
+    ADDRESS: '0x92e999CCB3A368678422e5814ABdD177700ccf93',
     ABI: [
       { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
       {
