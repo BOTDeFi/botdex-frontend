@@ -131,7 +131,10 @@ export const fetchPoolsAllowance = async (
   const allowances = await multicall(erc20Abi, calls);
 
   return nonBnbPools.reduce(
-    (acc, pool, index) => ({ ...acc, [pool.id]: new BigNumber(allowances[index]).toJSON() }),
+    (acc, pool, index) => ({
+      ...acc,
+      [pool.id]: new BigNumber(allowances[index]).toJSON(),
+    }),
     {},
   );
 };
@@ -181,7 +184,10 @@ export const fetchUserStakeBalances = async (
     .userInfo('0', accountAddress)
     .call();
 
-  return { ...stakedBalances, 0: new BigNumber(masterPoolAmount.toString()).toJSON() };
+  return {
+    ...stakedBalances,
+    0: new BigNumber(masterPoolAmount.toString()).toJSON(),
+  };
 };
 
 export const fetchUserPendingRewards = async (
@@ -206,5 +212,8 @@ export const fetchUserPendingRewards = async (
   const masterRefinerContract = getContract('MASTER_REFINER');
   const pendingReward = await masterRefinerContract.methods.pendingRP1('0', accountAddress).call();
 
-  return { ...pendingRewards, 0: new BigNumber(pendingReward.toString()).toJSON() };
+  return {
+    ...pendingRewards,
+    0: new BigNumber(pendingReward.toString()).toJSON(),
+  };
 };

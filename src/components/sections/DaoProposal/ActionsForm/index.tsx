@@ -40,7 +40,9 @@ const ActionsForm: React.FC<IActionsFormProps> = observer(
           {
             required: true,
             validator: (_, value: Moment) => {
-              const formFieldsValues: { [key: string]: Moment } = form.getFieldsValue();
+              const formFieldsValues: {
+                [key: string]: Moment;
+              } = form.getFieldsValue();
               if (!value) {
                 return Promise.reject(new Error('Please select date'));
               }
@@ -97,7 +99,9 @@ const ActionsForm: React.FC<IActionsFormProps> = observer(
           {
             required: true,
             validator: (_, value: Moment) => {
-              const formFieldsValues: { [key: string]: Moment } = form.getFieldsValue();
+              const formFieldsValues: {
+                [key: string]: Moment;
+              } = form.getFieldsValue();
               if (!value) {
                 return Promise.reject(new Error('Please select date'));
               }
@@ -140,7 +144,9 @@ const ActionsForm: React.FC<IActionsFormProps> = observer(
           {
             required: true,
             validator: (_, value) => {
-              const formFieldsValues: { [key: string]: Moment } = form.getFieldsValue();
+              const formFieldsValues: {
+                [key: string]: Moment;
+              } = form.getFieldsValue();
               if (!value) {
                 return Promise.reject(new Error('Please select time'));
               }

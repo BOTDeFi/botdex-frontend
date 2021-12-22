@@ -9,16 +9,14 @@
   &__box {
     padding: 40px;
 
-    background-color: $yellow-d;
-    background-image: url(../../../../assets/img/sections/farms/bg.jpg);
-    background-position: 0 0;
-    background-size: 100% 100%;
+    color: #fff;
+
+    background: $bg-gradient;
+
     border-radius: 0 0 40px 40px;
 
     @include b(mobile) {
       padding: 40px 10px 20px 40px;
-
-      background-image: url(../../../../assets/img/sections/farms/bg-1.svg);
     }
 
     &--info {

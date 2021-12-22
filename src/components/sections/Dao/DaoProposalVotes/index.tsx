@@ -36,21 +36,22 @@ const UserAvatar: React.FC<{ url: IPerson['avatar'] }> = React.memo(({ url }) =>
   );
 });
 
-const UserName: React.FC<{ name: IPerson['name']; userAddress: IPerson['address'] }> = React.memo(
-  ({ name, userAddress }) => {
-    const userAddressUrl = useScannerUrl(`address/${userAddress}`);
-    return (
-      <div className="votes-list__name">
-        <OpenLink
-          className="text-smd text-yellow"
-          href={userAddressUrl}
-          text={name || addressShortener(userAddress)}
-          iconClassName="votes-list__link-icon"
-        />
-      </div>
-    );
-  },
-);
+const UserName: React.FC<{
+  name: IPerson['name'];
+  userAddress: IPerson['address'];
+}> = React.memo(({ name, userAddress }) => {
+  const userAddressUrl = useScannerUrl(`address/${userAddress}`);
+  return (
+    <div className="votes-list__name">
+      <OpenLink
+        className="text-smd text-yellow"
+        href={userAddressUrl}
+        text={name || addressShortener(userAddress)}
+        iconClassName="votes-list__link-icon"
+      />
+    </div>
+  );
+});
 
 const DaoProposalVotes: React.FC<IDaoProposalVotesProps> = ({ votes, token }) => {
   return (

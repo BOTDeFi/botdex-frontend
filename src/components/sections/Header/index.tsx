@@ -29,7 +29,9 @@ const Header: React.FC = React.memo(() => {
           tabIndex={0}
           role="button"
           onKeyDown={() => {}}
-          className={classNames('header-burger', { 'header-burger--active': isBurger })}
+          className={classNames('header-burger', {
+            'header-burger--active': isBurger,
+          })}
           onClick={() => setIsBurger(!isBurger)}
         >
           {isBurger ? (

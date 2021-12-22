@@ -39,7 +39,11 @@ export const convertSharesToRefinery = (
     decimals,
     displayDecimals: decimalsToRound,
   });
-  return { refineryAsNumberBalance, refineryAsBigNumber, refineryAsDisplayBalance };
+  return {
+    refineryAsNumberBalance,
+    refineryAsBigNumber,
+    refineryAsDisplayBalance,
+  };
 };
 
 export interface IConvertRefineryToSharesResult {

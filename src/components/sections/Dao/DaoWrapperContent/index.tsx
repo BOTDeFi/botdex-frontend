@@ -103,7 +103,9 @@ const DaoWrapperContent: React.FC<IDaoWrapperContentProps> = observer(({ proposa
 
   const results = votesRaw.length
     ? choices.map((choice) => {
-        const { votingPower } = mapChoiceToTotalVotingPower[choice] || { votingPower: BIG_ZERO };
+        const { votingPower } = mapChoiceToTotalVotingPower[choice] || {
+          votingPower: BIG_ZERO,
+        };
         return {
           choice,
           votingPower,

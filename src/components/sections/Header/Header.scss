@@ -12,6 +12,8 @@
   width: 100%;
   height: 72px;
 
+  color: #fff;
+
   background-color: $dark-grey;
   border-radius: 0 0 14px 14px;
   box-shadow: $shadow;
@@ -105,13 +107,12 @@
   top: 0;
   left: -100%;
 
-  @include bb(desktop) {
-    display: none !important;
-  }
   padding-top: 102px;
 
   width: 100%;
   height: 100%;
+
+  color: #fff;
 
   background-color: $dark-grey;
 

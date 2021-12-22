@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const DetailsSectionTitle: React.FC<{ className?: string; title: string | JSX.Element }> = ({
-  className,
-  title,
-}) => {
+const DetailsSectionTitle: React.FC<{
+  className?: string;
+  title: string | JSX.Element;
+}> = ({ className, title }) => {
   return (
     <div
       className={classNames(

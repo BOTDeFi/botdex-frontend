@@ -2,8 +2,8 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
-import { clog, clogError } from '@/utils/logger';
 import { tokens } from '@/config';
+import { clog, clogError } from '@/utils/logger';
 
 import { useWalletConnectorContext } from '../../../../services/MetamaskConnect';
 import MetamaskService from '../../../../services/web3';

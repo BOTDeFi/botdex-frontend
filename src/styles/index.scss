@@ -15,7 +15,7 @@ body {
   font-family: ReadexPro, sans-serif;
   font-weight: 400;
 
-  color: #fff;
+  background: $bg-color;
 
   &.hide-scroll {
     overflow: hidden;

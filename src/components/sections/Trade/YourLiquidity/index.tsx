@@ -113,7 +113,7 @@ const YourLiquidity: React.FC = observer(() => {
         <Button className="y-liquidity__btn" link="/trade/liquidity/add">
           <span className="text-md text-white text-bold">Add liquidity</span>
         </Button>
-        <div className="y-liquidity__title text-black  text-md">Your Liquidity</div>
+        <div className="y-liquidity__title text-white text-md">Your Liquidity</div>
         <div className="y-liquidity__box">
           {user.address && loading ? 'Loading' : ''}
 
@@ -172,7 +172,7 @@ const YourLiquidity: React.FC = observer(() => {
                 >
                   <img src={UnknownImg} alt="" />
                   <img src={UnknownImg} alt="" />
-                  <span className="text-black text-smd">{`${liquidity.pair.token0.symbol}/${liquidity.pair.token1.symbol}`}</span>
+                  <span className="text-white text-smd">{`${liquidity.pair.token0.symbol}/${liquidity.pair.token1.symbol}`}</span>
                 </div>
               ))}
             </Scrollbar>
@@ -181,7 +181,7 @@ const YourLiquidity: React.FC = observer(() => {
           )}
 
           {user.address && !loading && !liquidities.length ? (
-            <div className="text-center  text-black box-f-fd-c box-f-ai-c">
+            <div className="text-center text-white box-f-fd-c box-f-ai-c">
               <div className="y-liquidity__text">No liquidity found.</div>
             </div>
           ) : (

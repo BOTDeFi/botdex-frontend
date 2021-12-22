@@ -3,19 +3,15 @@ import nextId from 'react-id-generator';
 import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import DaoImg from '@/assets/img/icons/dao.svg';
 import LogoImg from '@/assets/img/icons/logo-new.svg';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
-import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
 import TradeImg from '../../../assets/img/icons/exchange.svg';
 import FarmsImg from '../../../assets/img/icons/farms-new.svg';
 import HomeImg from '../../../assets/img/icons/home-new.svg';
 import LogoMiniImg from '../../../assets/img/icons/logo-m-new.svg';
-import LotteryImg from '../../../assets/img/icons/lottery.svg';
 import PoolsImg from '../../../assets/img/icons/staking.svg';
-import TeamsImg from '../../../assets/img/icons/teams.svg';
 import { ReactComponent as TgImg } from '../../../assets/img/icons/tg-new.svg';
 import { ReactComponent as TwImg } from '../../../assets/img/icons/tw-new.svg';
 import { Button } from '../../atoms';
@@ -60,29 +56,9 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       img: FarmsImg,
     },
     {
-      text: 'Lottery',
-      link: '/lottery',
-      img: LotteryImg,
-    },
-    {
       text: 'Staking',
       link: '/pools',
       img: PoolsImg,
-    },
-    {
-      text: 'Collectibles',
-      link: '/collectibles',
-      img: CollectiblesImg,
-    },
-    {
-      text: 'Teams & Profile',
-      link: '/teams',
-      img: TeamsImg,
-    },
-    {
-      text: 'DAO',
-      link: '/dao',
-      img: DaoImg,
     },
   ];
 
