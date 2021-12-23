@@ -3,15 +3,14 @@ import nextId from 'react-id-generator';
 import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import LogoImg from '@/assets/img/icons/logo-new.svg';
+import LogoImg from '@/assets/img/icons/logo.png';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
 import TradeImg from '../../../assets/img/icons/exchange.svg';
-import FarmsImg from '../../../assets/img/icons/farms-new.svg';
+// import FarmsImg from '../../../assets/img/icons/farms-new.svg';
 import HomeImg from '../../../assets/img/icons/home-new.svg';
-import LogoMiniImg from '../../../assets/img/icons/logo-m-new.svg';
-import PoolsImg from '../../../assets/img/icons/staking.svg';
+// import PoolsImg from '../../../assets/img/icons/staking.svg';
 import { ReactComponent as TgImg } from '../../../assets/img/icons/tg-new.svg';
 import { ReactComponent as TwImg } from '../../../assets/img/icons/tw-new.svg';
 import { Button } from '../../atoms';
@@ -50,16 +49,16 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       ],
       img: TradeImg,
     },
-    {
-      text: 'Farms',
-      link: '/farms',
-      img: FarmsImg,
-    },
-    {
-      text: 'Staking',
-      link: '/pools',
-      img: PoolsImg,
-    },
+    // {
+    //   text: 'Farms',
+    //   link: '/farms',
+    //   img: FarmsImg,
+    // },
+    // {
+    //   text: 'Staking',
+    //   link: '/pools',
+    //   img: PoolsImg,
+    // },
   ];
 
   const [isWalletModalVisible, setWalletModalVisible] = React.useState<boolean>(false);
@@ -112,7 +111,7 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
           )}
         </div>
         <div className="menu__balance box-gradient box-f-ai-c">
-          <img src={LogoMiniImg} alt="BOTDEX logo" className="menu__balance-img" />
+          <img src={LogoImg} alt="BOTDEX logo" className="menu__balance-img" />
           <span className="text-white">$37.166</span>
         </div>
         <div className="menu__socials box-f-ai-c">

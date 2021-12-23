@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import Burger from '@/assets/img/icons/burger-white.svg';
 import Close from '@/assets/img/icons/close-white.svg';
-import logo from '@/assets/img/icons/logo-m-new.svg';
+import logo from '@/assets/img/icons/logo.png';
 
 import { Menu } from '../index';
 

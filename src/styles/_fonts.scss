@@ -1,7 +1,3 @@
 @import './mixins/main';
 
-@include font-face('Lato', '../assets/fonts/Lato-Regular', normal);
-@include font-face('Lato', '../assets/fonts/Lato-Bold', 700);
-@include font-face('ReadexPro', '../assets/fonts/ReadexPro-Regular', normal);
-@include font-face('ReadexPro', '../assets/fonts/ReadexPro-Medium', 500);
-@include font-face('ReadexPro', '../assets/fonts/ReadexPro-Bold', 700);
+@include font-face('Gemina', '../assets/fonts/gemina');

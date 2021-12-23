@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { MetamaskErrModal, RoiModal } from './components/molecules';
 import { Header } from './components/sections';
-import { FarmsPage, PoolsPage, TradePage } from './pages';
+import { TradePage } from './pages';
 import { useMst } from './store';
 
 import './styles/index.scss';
@@ -42,8 +42,8 @@ const App: React.FC = observer(() => {
           ]}
           component={TradePage}
         />
-        <Route exact path="/farms" component={FarmsPage} />
-        <Route exact path="/pools" component={PoolsPage} />
+        {/* <Route exact path="/farms" component={FarmsPage} /> */}
+        {/* <Route exact path="/pools" component={PoolsPage} /> */}
       </Switch>
       <MetamaskErrModal />
       <RoiModal />
