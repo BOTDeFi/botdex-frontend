@@ -68,7 +68,7 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       <div className="menu box-f-fd-c">
         <div className="menu__header">
           <img src={LogoImg} alt="BOTDEX logo" className="menu__header__logo" />
-          <div className="menu__header__title">BOTDEX</div>
+          <div className="menu__header__title">BOTSwap</div>
         </div>
         <div className="menu__nav">
           {navItems.map((item) => (

@@ -42,7 +42,7 @@ const Header: React.FC = React.memo(() => {
         </div>
         <div className="header__logo">
           <img src={logo} alt="logo" />
-          <div className="header__logo__title">BOTDEX</div>
+          <div className="header__logo__title">BOTSwap</div>
         </div>
       </section>
       <div className={`menu-mob ${isBurger && 'menu-mob--active'}`}>
