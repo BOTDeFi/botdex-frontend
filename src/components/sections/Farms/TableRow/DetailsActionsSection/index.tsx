@@ -19,6 +19,7 @@ import FarmsStakeUnstakeButtons from '../../FarmsStakeUnstakeButtons';
 import DetailsSectionTitle from '../DetailsSectionTitle';
 
 interface IDetailsActionsSectionProps {
+  // eslint-disable-next-line react/require-default-props
   className?: string;
   farm: FarmWithStakedValue;
 }

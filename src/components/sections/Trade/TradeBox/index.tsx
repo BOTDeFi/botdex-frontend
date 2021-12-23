@@ -13,11 +13,17 @@ import './TradeBox.scss';
 
 interface ITradeBox {
   title: string;
+  // eslint-disable-next-line react/require-default-props
   subtitle?: string;
+  // eslint-disable-next-line react/require-default-props
   settingsLink?: string;
+  // eslint-disable-next-line react/require-default-props
   recentTxLink?: string;
+  // eslint-disable-next-line react/require-default-props
   className?: string;
+  // eslint-disable-next-line react/require-default-props
   titleBackLink?: boolean;
+  // eslint-disable-next-line react/require-default-props
   info?: string;
 }
 

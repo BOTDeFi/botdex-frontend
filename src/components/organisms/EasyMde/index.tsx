@@ -5,6 +5,7 @@ import 'easymde/dist/easymde.min.css';
 import './EasyMde.scss';
 
 interface SimpleMdeProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+  // eslint-disable-next-line react/require-default-props
   options?: EasyMde.Options;
   onTextChange: (value: string) => void;
 }

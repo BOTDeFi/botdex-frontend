@@ -33,6 +33,7 @@ const compoundHarvestChoices = [
   },
 ];
 
+// eslint-disable-next-line react/require-default-props
 const ModalTitle: React.FC<{ className?: string; title: string }> = ({ className, title }) => {
   return <div className={classNames(className, 'text-smd text-bold text-yellow')}>{title}</div>;
 };

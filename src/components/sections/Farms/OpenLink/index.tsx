@@ -4,8 +4,10 @@ import classNames from 'classnames';
 import OpenLinkImg from '@/assets/img/icons/open-link.svg';
 
 interface IOpenLinkProps {
-  className?: string;
+  // eslint-disable-next-line react/require-default-props
   href?: string;
+  // eslint-disable-next-line react/require-default-props
+  className?: string;
   text: string;
 }
 

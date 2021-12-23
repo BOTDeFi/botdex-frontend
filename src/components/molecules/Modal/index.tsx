@@ -10,10 +10,15 @@ import './Modal.scss';
 
 interface IModal {
   isVisible: boolean;
+  // eslint-disable-next-line react/require-default-props
   handleCancel?: () => void;
+  // eslint-disable-next-line react/require-default-props
   width?: number | string;
+  // eslint-disable-next-line react/require-default-props
   className?: string;
+  // eslint-disable-next-line react/require-default-props
   destroyOnClose?: boolean;
+  // eslint-disable-next-line react/require-default-props
   closeIcon?: boolean;
 }
 

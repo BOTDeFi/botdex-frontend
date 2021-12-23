@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js/bignumber';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 
@@ -57,7 +59,7 @@ export default class MetamaskService {
     this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
     this.usedChain = this.isProduction ? networks.mainnet : networks[this.testnet];
 
-    this.chainChangedObs = new Observable((subscriber) => {
+    this.chainChangedObs = new Observable((subscriber: any) => {
       if (!this.wallet) {
         return;
       }
@@ -71,7 +73,7 @@ export default class MetamaskService {
       });
     });
 
-    this.accountChangedObs = new Observable((subscriber) => {
+    this.accountChangedObs = new Observable((subscriber: any) => {
       if (!this.wallet) {
         return;
       }
