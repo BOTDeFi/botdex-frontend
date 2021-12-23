@@ -3,21 +3,21 @@ import nextId from 'react-id-generator';
 import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import DaoImg from '@/assets/img/icons/dao.svg';
+// import DaoImg from '@/assets/img/icons/dao.svg';
 import LogoImg from '@/assets/img/icons/logo.svg';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
 
-import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
-import FarmsImg from '../../../assets/img/icons/farms.svg';
+// import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
+// import FarmsImg from '../../../assets/img/icons/farms.svg';
 import HomeImg from '../../../assets/img/icons/home.svg';
 import LogoMiniImg from '../../../assets/img/icons/logo-m.svg';
-import LotteryImg from '../../../assets/img/icons/lottery.svg';
-import PoolsImg from '../../../assets/img/icons/pools.svg';
-import TeamsImg from '../../../assets/img/icons/teams.svg';
+// import LotteryImg from '../../../assets/img/icons/lottery.svg';
+// import PoolsImg from '../../../assets/img/icons/pools.svg';
+// import TeamsImg from '../../../assets/img/icons/teams.svg';
 import { ReactComponent as TgImg } from '../../../assets/img/icons/tg.svg';
 import TradeImg from '../../../assets/img/icons/trade.svg';
 import { ReactComponent as TwImg } from '../../../assets/img/icons/tw.svg';
-import { useWalletConnectorContext } from '../../../services/MetamaskConnect';
-import { useMst } from '../../../store';
 import { Button } from '../../atoms';
 import { WalletModal } from '..';
 
@@ -54,36 +54,36 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       ],
       img: TradeImg,
     },
-    {
-      text: 'Farms',
-      link: '/farms',
-      img: FarmsImg,
-    },
-    {
-      text: 'Lottery',
-      link: '/lottery',
-      img: LotteryImg,
-    },
-    {
-      text: 'Pools',
-      link: '/pools',
-      img: PoolsImg,
-    },
-    {
-      text: 'Collectibles',
-      link: '/collectibles',
-      img: CollectiblesImg,
-    },
-    {
-      text: 'Teams & Profile',
-      link: '/teams',
-      img: TeamsImg,
-    },
-    {
-      text: 'DAO',
-      link: '/dao',
-      img: DaoImg,
-    },
+    // {
+    //   text: 'Farms',
+    //   link: '/farms',
+    //   img: FarmsImg,
+    // },
+    // {
+    //   text: 'Lottery',
+    //   link: '/lottery',
+    //   img: LotteryImg,
+    // },
+    // {
+    //   text: 'Pools',
+    //   link: '/pools',
+    //   img: PoolsImg,
+    // },
+    // {
+    //   text: 'Collectibles',
+    //   link: '/collectibles',
+    //   img: CollectiblesImg,
+    // },
+    // {
+    //   text: 'Teams & Profile',
+    //   link: '/teams',
+    //   img: TeamsImg,
+    // },
+    // {
+    //   text: 'DAO',
+    //   link: '/dao',
+    //   img: DaoImg,
+    // },
   ];
 
   const [isWalletModalVisible, setWalletModalVisible] = React.useState<boolean>(false);
