@@ -33,7 +33,9 @@ export const apolloClient = new ApolloClient({
       rfExchangeGql,
     ),
   ),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    addTypename: false,
+  }),
 });
 
 interface IContextServiceName {
@@ -43,6 +45,10 @@ interface IContextServiceName {
 export const ApolloProvider: React.FC = ({ children }) => {
   return <OriginalApolloProvider client={apolloClient}>{children}</OriginalApolloProvider>;
 };
+
+export const getExchangeContext = (): IContextServiceName => ({
+  context: { serviceName: ServicesEndpoints.rfExchange },
+})
 
 export const getRfPairsContext = (): IContextServiceName => ({
   context: { serviceName: ServicesEndpoints.rfPairs },

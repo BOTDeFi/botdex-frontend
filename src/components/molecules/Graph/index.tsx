@@ -1,12 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useRef, VFC } from 'react';
 import ApexCharts from 'apexcharts';
+
 import './Graph.scss';
 
 interface IGraphProps {
   id: string;
   series?: any;
   options?: any;
+  onHovered?: (event: any, chartContext: any, config: any) => void;
 }
 
 const initOptions = {
@@ -16,7 +18,7 @@ const initOptions = {
     toolbar: {
       offsetX: -40,
     },
-    width: '109%',
+    width: '105%',
     stroke: {
       width: 2,
       curve: 'straight',
@@ -31,7 +33,7 @@ const initOptions = {
   },
 };
 
-const Graph: VFC<IGraphProps> = ({ id, series, options }) => {
+const Graph: VFC<IGraphProps> = ({ id, series, options, onHovered }) => {
   const chart = useRef<ApexCharts | null>(null);
 
   // initialize chart
@@ -48,11 +50,16 @@ const Graph: VFC<IGraphProps> = ({ id, series, options }) => {
       chart.current.updateOptions({
         ...options,
         dataLabels: initOptions.dataLabels,
-        chart: initOptions.chart,
+        chart: {
+          ...initOptions.chart,
+          events: {
+            mouseMove: onHovered,
+          },
+        },
         noData: initOptions.noData,
       });
     }
-  }, [options]);
+  }, [options, onHovered]);
 
   // update series (data)
   useEffect(() => {
@@ -64,11 +71,12 @@ const Graph: VFC<IGraphProps> = ({ id, series, options }) => {
         },
       ]);
     }
-  }, [series]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [series.length]);
 
   return (
-    <section className='graph-wrapper'>
-      <div className='graph-wrapper__body' id={id} />
+    <section className="graph-wrapper">
+      <div className="graph-wrapper__body" id={id} />
     </section>
   );
 };

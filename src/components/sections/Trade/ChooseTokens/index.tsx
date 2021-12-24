@@ -204,7 +204,6 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
             );
           }
           const result = await Promise.all(promises);
-
           if (
             changeTokenFromAllowance &&
             tokenFrom?.symbol &&
@@ -225,6 +224,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           if (tokenTo?.symbol && tokenTo.symbol.toLowerCase() === 'bnb' && changeTokenToAllowance) {
             changeTokenToAllowance(true);
           }
+
           return result;
         } catch (err) {
           clogError(err, 'err check token allowance');

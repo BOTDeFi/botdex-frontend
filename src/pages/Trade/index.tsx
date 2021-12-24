@@ -1,47 +1,25 @@
 /* eslint-disable object-shorthand */
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
-import BNBIcon from '@/assets/img/icons/BNB.svg';
-import BTCIcon from '@/assets/img/icons/BTC.svg';
 import { Graph } from '@/components/molecules';
 import { CurrencyInfo, TimeSelector } from '@/components/sections/Graph';
-import { ICurrencyInfoProps } from '@/components/sections/Graph/CurrencyInfo';
 import { TTimestampSelector } from '@/components/sections/Graph/TimeSelector';
+import { useGetDaysPairs, useGetHoursPairs } from '@/services/api/refinery-finance-pairs';
+import { useMst } from '@/store';
 
 import { Liquidity, Swap, TradeNavbar } from '../../components/sections/Trade';
 
 import './Trade.scss';
 
-const Trade: React.FC = React.memo(() => {
-  const [data, setData] = React.useState<any[]>([]);
-  const [currentStamp, setCurrentStamp] = React.useState<number>(0);
-  /*
-  Когда будут данные, заполнять массив currentStamp данными и при наведеени брать i элемент
-  */
-  const [currencyData, setCurrencyData] = React.useState<ICurrencyInfoProps>({
-    icons: [BNBIcon, BTCIcon],
-    names: ['BNB', 'BTCB'],
-    date: '18:42 30 Nov, 2021',
-    price: 43.99,
-    currency: 'BTCB',
-    shift: 0.729,
-    percentShift: 1.68,
-  });
+const Trade: React.FC = observer(() => {
+  const { pairs } = useMst();
 
-  const onUpdClick = React.useCallback(() => {
-    const size = 35;
-    const min = 0;
-    const max = 100;
-    setData(
-      new Array(size)
-        .fill(1)
-        .map((e: any, i: number) => [
-          Date.now() - i * 8640000,
-          e * Math.floor(Math.random() * (max - min)) + min,
-        ]),
-    );
-  }, []);
+  const [data, setData] = React.useState(pairs.getFormattedPoints());
+  const [reversed, setReversed] = React.useState(false);
+  const [currentStamp, setCurrentStamp] = React.useState<number>(0);
+  const [currencyData, setCurrencyData] = React.useState<any>(null);
 
   const options = React.useMemo(
     () => ({
@@ -84,11 +62,7 @@ const Trade: React.FC = React.memo(() => {
         marker: {
           show: false,
         },
-        custom: function ({ series, seriesIndex, dataPointIndex }: any) {
-          setCurrencyData(prev => ({
-            ...prev,
-            price: series[seriesIndex][dataPointIndex],
-          }))
+        custom: function () {
           return ``;
         },
       },
@@ -105,7 +79,26 @@ const Trade: React.FC = React.memo(() => {
             cssClass: 'xaxis-label',
           },
           formatter: function (value: any, timestamp: number) {
-            return moment(timestamp).format('HH:mm a');
+            let format = 'HH:mm a';
+            switch(currentStamp){
+              case 1:{
+                format = 'MMM DD YY';
+                break;
+              }
+              case 2: {
+                format = 'MMM DD YY';
+                break;
+              }
+              case 3: {
+                format = 'MMM DD YY';
+                break;
+              }
+              default:{
+                format = 'HH:mm a';
+                break;
+              }
+            }
+            return moment(timestamp).format(format);
           },
         },
         tooltip: {
@@ -120,48 +113,73 @@ const Trade: React.FC = React.memo(() => {
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [currentStamp],
   );
 
-  const onStampClick = React.useCallback(
-    (id: number) => {
-      return function () {
-        setCurrentStamp(id);
-        onUpdClick();
-      };
+  const onStampClick = React.useCallback((id: number) => {
+    setCurrentStamp(id);
+  }, []);
+
+  const onGraphHovered = useCallback(
+    (events: any, chartContext: any, config: any) => {
+      if (pairs.currentPairData.points.length !== 0 && config.dataPointIndex !== -1) {
+        setCurrencyData(pairs.getFormattedCurrentPair(config.dataPointIndex, reversed));
+      }
     },
-    [onUpdClick],
+    [pairs, reversed],
   );
+
+  const getByHours = useGetHoursPairs();
+  const getByDays = useGetDaysPairs();
 
   const selectors: TTimestampSelector[] = React.useMemo(
     () => [
       {
         text: '24h',
-        onClick: onStampClick(0),
+        onClick: async () => {
+          onStampClick(0);
+          const response = await getByHours(24, pairs.currentPairData.id);
+          pairs.setCurrentPairData(pairs.currentPairData.id, response.pairHourDatas);
+        },
       },
       {
         text: '1W',
-        onClick: onStampClick(1),
+        onClick: async () => {
+          onStampClick(1);
+          const response = await getByHours(24 * 7, pairs.currentPairData.id);
+          pairs.setCurrentPairData(pairs.currentPairData.id, response.pairHourDatas);
+        },
       },
       {
         text: '1M',
-        onClick: onStampClick(2),
+        onClick: async () => {
+          onStampClick(2);
+          const response = await getByDays(30, pairs.currentPairData.id);
+          pairs.setCurrentPairData(pairs.currentPairData.id, response.pairDayDatas);
+        },
       },
       {
         text: '1Y',
-        onClick: onStampClick(3),
+        onClick: async () => {
+          onStampClick(3);
+          const response = await getByDays(365, pairs.currentPairData.id);
+          pairs.setCurrentPairData(pairs.currentPairData.id, response.pairDayDatas);
+        },
       },
     ],
-    [onStampClick],
+    [getByDays, getByHours, onStampClick, pairs],
   );
 
-  // emulation of fetching data
   useEffect(() => {
-    setTimeout(() => {
-      onUpdClick();
-    }, 1500);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setData(pairs.getFormattedPoints());
+    if (pairs.currentPairData.points.length !== 0) {
+      setCurrencyData(pairs.getFormattedCurrentPair(0, reversed));
+    }
+  }, [pairs.currentPairData.points.length, pairs, reversed]);
+
+  const onReverseClick = React.useCallback(() => {
+    setReversed(!reversed);
+  }, [reversed]);
 
   return (
     <main className="trade">
@@ -175,10 +193,15 @@ const Trade: React.FC = React.memo(() => {
           <div className="trade__graph">
             <div className="trade__graph-body box-white box-shadow">
               <div className="trade__graph-body__info">
-                <CurrencyInfo {...currencyData} />
+                {currencyData && <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />}
                 <TimeSelector currentSelector={currentStamp} selectors={selectors} />
               </div>
-              <Graph id="exchange-graph" series={data} options={options} />
+              <Graph
+                id="exchange-graph"
+                series={data}
+                options={options}
+                onHovered={onGraphHovered}
+              />
             </div>
           </div>
         </div>

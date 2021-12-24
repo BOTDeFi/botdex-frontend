@@ -13,6 +13,7 @@ export interface ICurrencyInfoProps {
   currency: string;
   shift: number;
   percentShift: number;
+  onSwapClick: () => void;
 }
 
 /**
@@ -34,6 +35,7 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
   currency,
   shift,
   percentShift,
+  onSwapClick,
 }) => {
   return (
     <section className="currency-info__body">
@@ -57,7 +59,11 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
             </span>
           ))}
         </div>
-        <button type="button" className="currency-info__body-currencies__swap">
+        <button
+          onClick={onSwapClick}
+          type="button"
+          className="currency-info__body-currencies__swap"
+        >
           <SwapSVG />
         </button>
       </div>
@@ -74,7 +80,7 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
           }`}
         >
           {shift >= 0 ? '+' : '-'}
-          {shift} ({shift >= 0 ? '' : '-'} {percentShift}%)
+          {shift} ({shift >= 0 ? '' : '-'}{percentShift}%)
         </span>
       </div>
       <div className="currency-info__body-currencies-statistic__date">
