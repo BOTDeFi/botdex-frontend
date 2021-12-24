@@ -2,13 +2,13 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
-import { clog, clogError } from '@/utils/logger';
 import { tokens } from '@/config';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
+import { ISettings, ITokens } from '@/types';
+import { clog, clogError } from '@/utils/logger';
 
-import { useWalletConnectorContext } from '../../../../services/MetamaskConnect';
 import MetamaskService from '../../../../services/web3';
-import { useMst } from '../../../../store';
-import { ISettings, ITokens } from '../../../../types';
 import { Button, Popover } from '../../../atoms';
 import { ChooseTokens, TradeBox } from '..';
 
@@ -107,8 +107,6 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
               );
             }
           }
-
-          debugger;
 
           await metamaskService.createTransaction({
             contractName: 'ROUTER',
@@ -329,7 +327,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             disabled={!tokensData.from.amount || !tokensData.to.amount}
             onClick={handleCreatePair}
             loading={isLoading || isLoadingExchange}
-            loadingText={isLoadingExchange ? 'Geting exchange' : ''}
+            loadingText={isLoadingExchange ? 'Getting exchange' : ''}
           >
             <span className="text-white text-bold text-smd">Add</span>
           </Button>
@@ -361,6 +359,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             className="add-liquidity__btn"
             onClick={handleApproveTokens}
             loading={isApproving}
+            loadingText="Waiting for approve..."
           >
             <span className="text-white text-bold text-smd">Approve tokens</span>
           </Button>

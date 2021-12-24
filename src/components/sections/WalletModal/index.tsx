@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { observer } from 'mobx-react-lite';
 
+import { IS_PRODUCTION } from '@/config';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
+
 import CopyImg from '../../../assets/img/icons/copy.svg';
+import LinkImg from '../../../assets/img/icons/link.svg';
 import LogoutImg from '../../../assets/img/icons/logout.svg';
-import { useWalletConnectorContext } from '../../../services/MetamaskConnect';
-import { useMst } from '../../../store';
 import { Button } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -19,10 +22,16 @@ interface IImportTokensModal {
 const WalletModal: React.FC<IImportTokensModal> = observer(({ isVisible, handleClose }) => {
   const { user } = useMst();
   const { disconnect } = useWalletConnectorContext();
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleLogout = () => {
     handleClose();
     disconnect();
+  };
+
+  const handleCopy = () => {
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2500);
   };
 
   return (
@@ -38,20 +47,31 @@ const WalletModal: React.FC<IImportTokensModal> = observer(({ isVisible, handleC
         <div className="m-wallet__address text-black text-md">{user.address}</div>
         <div className="m-wallet__box">
           <a
-            href={`https://kovan.etherscan.io/address/${user.address}`}
+            href={`https://${IS_PRODUCTION ? '' : 'testnet.'}bscscan.com/address/${user.address}`}
             rel="noreferrer"
             target="_blank"
             className="m-wallet__item box-f-ai-c"
           >
-            <img src={CopyImg} alt="" />
+            <img src={LinkImg} alt="" />
             <span className="text text-black">View on BscScan</span>
           </a>
           <CopyToClipboard text={user.address}>
-            <div className="m-wallet__item box-f-ai-c box-pointer">
+            <div
+              className="m-wallet__item box-f-ai-c box-pointer"
+              role="button"
+              tabIndex={0}
+              onKeyPress={handleCopy}
+              onClick={handleCopy}
+            >
               <img src={CopyImg} alt="" />
               <span className="text text-black">Copy Address</span>
             </div>
           </CopyToClipboard>
+          {isCopied ? (
+            <div className="m-wallet__item text-yellow">Address was copied to clipboard</div>
+          ) : (
+            ''
+          )}
         </div>
         <Button
           className="m-wallet__btn"

@@ -106,36 +106,43 @@ const TradeWrapper = (
 
     async handleApproveTokens() {
       try {
-        if (
-          !this.state.isAllowanceFrom &&
-          this.state.tokensData.from.token &&
-          this.state.tokensData.from.token.symbol.toLowerCase() !== 'bnb'
-        ) {
-          this.setState({
-            isApproving: true,
-          });
-          await this.context.metamaskService.approveToken({
-            contractName: 'ERC20',
-            approvedAddress: contracts.ROUTER.ADDRESS,
-            tokenAddress: this.state.tokensData.from.token.address,
-          });
-          this.setState({
-            isAllowanceFrom: true,
-          });
+        if (!this.state.isAllowanceFrom && this.state.tokensData.from.token) {
+          if (this.state.tokensData.from.token.symbol.toLowerCase() !== 'bnb') {
+            this.setState({
+              isApproving: true,
+            });
+            await this.context.metamaskService.approveToken({
+              contractName: 'ERC20',
+              approvedAddress: contracts.ROUTER.ADDRESS,
+              tokenAddress: this.state.tokensData.from.token.address,
+            });
+            this.setState({
+              isAllowanceFrom: true,
+            });
+          } else {
+            this.setState({
+              isAllowanceFrom: true,
+            });
+          }
         }
-        if (
-          !this.state.isAllowanceTo &&
-          this.state.tokensData.to.token &&
-          this.state.tokensData.to.token.symbol.toLowerCase() !== 'bnb'
-        ) {
-          await this.context.metamaskService.approveToken({
-            contractName: 'ERC20',
-            approvedAddress: contracts.ROUTER.ADDRESS,
-            tokenAddress: this.state.tokensData.to.token.address,
-          });
-          this.setState({
-            isAllowanceTo: true,
-          });
+        if (!this.state.isAllowanceTo && this.state.tokensData.to.token) {
+          if (this.state.tokensData.to.token.symbol.toLowerCase() !== 'bnb') {
+            this.setState({
+              isApproving: true,
+            });
+            await this.context.metamaskService.approveToken({
+              contractName: 'ERC20',
+              approvedAddress: contracts.ROUTER.ADDRESS,
+              tokenAddress: this.state.tokensData.to.token.address,
+            });
+            this.setState({
+              isAllowanceTo: true,
+            });
+          } else {
+            this.setState({
+              isAllowanceTo: true,
+            });
+          }
         }
         this.setState({
           isApproving: false,

@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import moment from 'moment';
 
+import { ISettings } from '@/types';
+
 import CrossImg from '../../../../assets/img/icons/cross-2.svg';
-import { ISettings } from '../../../../types';
 import { Button, InputNumber, Switch } from '../../../atoms';
 
 import './ExchangeSettings.scss';
@@ -27,6 +28,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
     const [slippage, setSlippage] = React.useState<IActiveSlippage>(savedSettings.slippage);
     const [txDeadline, setTxDeadline] = React.useState<number>(savedSettings.txDeadline);
     const [txDeadlineUtc, setTxDeadlineUtc] = React.useState<number>(savedSettings.txDeadlineUtc);
+    const [isAudio, setIsAudio] = React.useState<boolean>(savedSettings.isAudio);
 
     const [slippageInputValue, setSlippageInputValue] = React.useState<number>(
       savedSettings.slippage.type === 'input' ? savedSettings.slippage.value : NaN,
@@ -38,6 +40,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
         slippage,
         txDeadline,
         txDeadlineUtc,
+        isAudio,
       });
       history.goBack();
     };
@@ -140,7 +143,12 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
         </div>
         <div className="exch-settings__section">
           <div className="exch-settings__section-title text-black">Audio</div>
-          <Switch colorScheme="purple" switchSize="bg" />
+          <Switch
+            colorScheme="purple"
+            switchSize="bg"
+            value={isAudio}
+            onChange={() => setIsAudio(!isAudio)}
+          />
         </div>
         <Button className="exch-settings__btn" onClick={handleSaveSettings}>
           <span className="text-smd text-white">Save and close</span>

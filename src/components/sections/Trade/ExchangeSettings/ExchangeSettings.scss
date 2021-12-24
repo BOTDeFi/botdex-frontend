@@ -1,41 +1,54 @@
 .exch-settings {
   &__box {
     &-title {
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 25px;
       margin-bottom: 30px;
+      padding-bottom: 25px;
+
+      border-bottom: 1px solid #e0e0e0;
     }
   }
+
   &__close {
     cursor: pointer;
   }
+
   &__section {
     &:last-of-type {
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 30px;
       margin-bottom: 30px;
+      padding-bottom: 30px;
+
+      border-bottom: 1px solid #e0e0e0;
     }
+
     & + & {
       margin-top: 30px;
     }
+
     &-title {
       margin-bottom: 22px;
     }
   }
+
   &__slippage {
     &-input {
       max-width: 122px;
     }
+
     &-btn {
       margin-right: 5px;
+
+      border-radius: 30px !important;
     }
   }
+
   &__txdeadline {
     &-input {
-      max-width: 128px;
       margin-right: 15px;
+
+      max-width: 128px;
     }
   }
+
   &__btn {
     width: 100%;
     max-width: 240px;

@@ -92,6 +92,17 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     <>
       <div className="menu box-f-fd-c">
         <img src={LogoImg} alt="refinery finance" className="menu__logo" />
+        <div className="menu__connect-box">
+          {!user.address ? (
+            <Button className="menu__connect" size="md" onClick={connect}>
+              <span className="text-bold text-white">Connect Wallet</span>
+            </Button>
+          ) : (
+            <Button className="menu__connect" size="md" onClick={() => setWalletModalVisible(true)}>
+              <span className="text-bold text-white text-address">{user.address}</span>
+            </Button>
+          )}
+        </div>
         <div className="menu__nav">
           {navItems.map((item) => (
             <NavLink
@@ -118,17 +129,6 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
               </div>
             </NavLink>
           ))}
-        </div>
-        <div className="menu__connect-box">
-          {!user.address ? (
-            <Button className="menu__connect" size="md" onClick={connect}>
-              <span className="text-bold text-white">Connect Wallet</span>
-            </Button>
-          ) : (
-            <Button className="menu__connect" size="md" onClick={() => setWalletModalVisible(true)}>
-              <span className="text-bold text-white text-address">{user.address}</span>
-            </Button>
-          )}
         </div>
         <div className="menu__balance box-yellow box-f-ai-c">
           <img src={LogoMiniImg} alt="refinery finance" className="menu__balance-img" />
