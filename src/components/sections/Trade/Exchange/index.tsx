@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
+import { useGetHoursPairs, useGetPair } from '@/services/api/refinery-finance-pairs';
 import { clogError } from '@/utils/logger';
 
 import { useWalletConnectorContext } from '../../../../services/MetamaskConnect';
@@ -26,6 +27,7 @@ interface IExchange {
   maxTo: '';
   isLoadingExchange: boolean;
   isApproving: boolean;
+  pairAddress?: any;
 }
 
 const Exchange: React.FC<IExchange> = observer(
@@ -43,9 +45,29 @@ const Exchange: React.FC<IExchange> = observer(
     tokensResurves,
     isLoadingExchange,
     isApproving,
+    pairAddress,
   }) => {
     const { connect, metamaskService } = useWalletConnectorContext();
-    const { user } = useMst();
+    const { user, pairs } = useMst();
+
+    const getPair = useGetPair();
+    const getPairData = useGetHoursPairs();
+
+    const fetchPair = useCallback(async () => {
+      const normalizedAddress = pairAddress.toLowerCase();
+      const [pair] = await (await getPair(normalizedAddress)).pairs;
+      if (pair.id) {
+        pairs.setPair(pair);
+        const pairData = await (await getPairData(24, normalizedAddress)).pairHourDatas;
+        pairs.setCurrentPairData(normalizedAddress, pairData);
+      }
+    }, [pairAddress, getPair, getPairData, pairs])
+
+    useEffect(() => {
+      if (pairs.pair.id !== pairAddress) {
+        fetchPair();
+      }
+    }, [fetchPair, pairAddress, pairs]);
 
     const handleSwap = async () => {
       if (tokensData.to.token && tokensData.from.token) {
@@ -103,13 +125,13 @@ const Exchange: React.FC<IExchange> = observer(
             maxTo={maxTo}
           />
           {isAllowanceFrom &&
-          isAllowanceTo &&
-          tokensData.from.token &&
-          tokensData.to.token &&
-          tokensData.to.amount &&
-          tokensData.from.amount &&
-          user.address &&
-          tokensResurves !== null ? (
+            isAllowanceTo &&
+            tokensData.from.token &&
+            tokensData.to.token &&
+            tokensData.to.amount &&
+            tokensData.from.amount &&
+            user.address &&
+            tokensResurves !== null ? (
             <Button
               className="exchange__btn"
               onClick={handleSwap}
@@ -129,10 +151,10 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {tokensData.from.token &&
-          tokensData.to.token &&
-          (!tokensData.to.amount || !tokensData.from.amount) &&
-          tokensResurves !== null &&
-          user.address ? (
+            tokensData.to.token &&
+            (!tokensData.to.amount || !tokensData.from.amount) &&
+            tokensResurves !== null &&
+            user.address ? (
             <Button
               className="exchange__btn"
               disabled={!tokensData.from.amount || !tokensData.to.amount}
@@ -144,12 +166,12 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {(!isAllowanceFrom || !isAllowanceTo) &&
-          tokensData.from.token &&
-          tokensData.to.token &&
-          tokensData.to.amount &&
-          tokensData.from.amount &&
-          tokensResurves !== null &&
-          user.address ? (
+            tokensData.from.token &&
+            tokensData.to.token &&
+            tokensData.to.amount &&
+            tokensData.from.amount &&
+            tokensResurves !== null &&
+            user.address ? (
             <Button className="exchange__btn" onClick={handleApproveTokens} loading={isApproving}>
               <span className="text-white text-bold text-smd">Approve tokens</span>
             </Button>
@@ -157,8 +179,8 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {(!tokensData.from.token || !tokensData.to.token) &&
-          tokensResurves !== null &&
-          user.address ? (
+            tokensResurves !== null &&
+            user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">Select a Tokens</span>
             </Button>
@@ -166,9 +188,9 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {tokensData.from.token &&
-          tokensData.to.token &&
-          tokensResurves === null &&
-          user.address ? (
+            tokensData.to.token &&
+            tokensResurves === null &&
+            user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">
                 This pair haven&lsquo;t been created

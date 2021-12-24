@@ -1,0 +1,9 @@
+.graph{
+    &-wrapper{
+        width: 100%;
+        &__body{
+            min-height: 200px;
+            position: relative;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+@import 'src/styles/mixins/displays.scss';
+@import 'src/styles/vars';
+
+.time-selector{
+    &__body{
+       @include flexbox($gap: 6px); 
+       &-btn{
+           padding: 12px 9.5px;
+           color: $black;
+           background: $white;
+           min-width: 50.25px;
+           min-height: 44px;
+           box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.1);
+
+        &:hover{
+            background: $yellow;
+            color: $black;
+        }
+
+        &.selected{
+            background: $yellow;
+            color: $black;
+        }
+       }
+    }
+}

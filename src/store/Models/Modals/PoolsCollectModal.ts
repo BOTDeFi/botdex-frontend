@@ -1,6 +1,7 @@
 import { Instance, types } from 'mobx-state-tree';
 
 const PoolsCollectOptions = types.model({
+  isOpen: types.optional(types.boolean, false),
   poolId: types.identifierNumber,
   earnings: types.string,
   farmMode: types.string,

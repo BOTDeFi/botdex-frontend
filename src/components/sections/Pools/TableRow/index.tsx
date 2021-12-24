@@ -127,6 +127,7 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farmMode, pool, columns }
 
   const collectHandler = () => {
     modals.poolsCollect.open({
+      isOpen: true,
       poolId: pool.id,
       farmMode,
       earningTokenSymbol: pool.earningToken.symbol,
