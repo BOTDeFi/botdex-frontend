@@ -3,7 +3,7 @@
 
 .time-selector{
     &__body{
-       @include flexbox($gap: 6px); 
+       @include flexbox($gap: 6px, $wrap: wrap);
        &-btn{
            padding: 12px 9.5px;
            color: $black;

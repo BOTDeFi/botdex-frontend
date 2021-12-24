@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { FC, ReactElement } from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 
 import { ReactComponent as SwapSVG } from '@/assets/img/icons/swap-currency.svg';
 
@@ -43,12 +44,16 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
         <div className="currency-info__body-currencies-icon">
           {typeof icons[0] === 'string' ? (
             <>
-              {icons.map((e: any, i: number) => (
-                <img key={e} src={e} alt={names[i]} />
-              ))}
+              {icons.map((e: any, i: number) => {
+                return e ? <img key={e} src={e} alt={names[i]} /> : '';
+              })}
             </>
           ) : (
-            <>{icons.map((e: any) => e)}</>
+            <>
+              {icons.map((e: any) => {
+                return e || '';
+              })}
+            </>
           )}
         </div>
         <div className="currency-info__body-currencies-names">
@@ -69,7 +74,7 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
       </div>
       <div className="currency-info__body-currencies-statistic">
         <h2 className="currency-info__body-currencies-statistic__price h2-lg text-black text-bold">
-          {price}
+          {new BigNumber(price).toFixed(price < 10 ? 5 : 2, 1)}
         </h2>
         <span className="currency-info__body-currencies-statistic__price-symbols text-smd text-black text-500">
           {currency}
@@ -80,7 +85,8 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
           }`}
         >
           {shift >= 0 ? '+' : '-'}
-          {shift} ({shift >= 0 ? '' : '-'}{percentShift}%)
+          {new BigNumber(shift).toFixed(10, 1)} ({shift >= 0 ? '' : '-'}
+          {new BigNumber(percentShift).toFixed(5, 1)}%)
         </span>
       </div>
       <div className="currency-info__body-currencies-statistic__date">
