@@ -18,6 +18,55 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
+interface IChain {
+  chainId: string;
+  rpcUrl: string;
+  name: string;
+  blockExp: string;
+}
+interface IChains {
+  [key: string]: IChain;
+}
+
+const chainsParams: IChains = {
+  '0x1': {
+    chainId: '0x1',
+    rpcUrl: 'https://mainnet.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+    name: 'Ethereum Mainnet',
+    blockExp: 'https://etherscan.io/',
+  },
+  '0x3': {
+    chainId: '0x3',
+    rpcUrl: 'https://ropsten.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+    name: 'Ropsten',
+    blockExp: 'https://ropsten.etherscan.io/',
+  },
+  '0x2a': {
+    chainId: '0x2a',
+    rpcUrl: 'https://kovan.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+    name: 'Kovan',
+    blockExp: 'https://kovan.etherscan.io/',
+  },
+  '0x4': {
+    chainId: '0x4',
+    rpcUrl: 'https://rinkeby.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+    name: 'Rinkeby',
+    blockExp: 'https://rinkeby.etherscan.io/',
+  },
+  '0x61': {
+    chainId: '0x61',
+    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    name: 'Binance Testnet',
+    blockExp: 'https://testnet.bscscan.com',
+  },
+  '0x38': {
+    chainId: '0x38',
+    rpcUrl: 'https://bsc-dataseed.binance.org/',
+    name: 'Binance Mainnet',
+    blockExp: 'https://bscscan.com/',
+  },
+};
+
 const networks: INetworks = {
   mainnet: '0x1',
   ropsten: '0x3',
@@ -64,7 +113,6 @@ export default class MetamaskService {
 
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
-
         if (currentChain !== this.usedChain) {
           subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
         }
@@ -86,6 +134,36 @@ export default class MetamaskService {
     return this.wallet.request({ method: 'eth_requestAccounts' });
   }
 
+  async checkNets(chainId = this.wallet.chainId): Promise<boolean> {
+    const requiredChain = this.usedChain;
+    if (chainId !== requiredChain) {
+      try {
+        await this.wallet.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: requiredChain }],
+        });
+        return true;
+      } catch (switchError: any) {
+        if (switchError.code === 4902) {
+          try {
+            await this.wallet.request({
+              method: 'wallet_addEthereumChain',
+              params: [chainsParams[requiredChain]],
+            });
+          return true;
+          } catch (addError: any) {
+            console.log(addError);
+            return false;
+          }
+        } else {
+          console.log(switchError);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   public connect() {
     if (!this.wallet) {
       return Promise.reject(
@@ -103,33 +181,40 @@ export default class MetamaskService {
         this.wallet
           .request({ method: 'eth_chainId' })
           .then((resChain: any) => {
-            if (resChain === this.usedChain) {
-              this.ethRequestAccounts()
-                .then((account: any) => {
-                  [this.walletAddress] = account;
-                  resolve({
-                    address: account[0],
-                    network: resChain,
-                  });
-                })
-                .catch(() => reject(new Error('Not authorized')));
-            } else {
-              reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
-            }
-          })
-          .catch(() => reject(new Error('Not authorized')));
-      } else if (currentChain === this.usedChain) {
-        this.ethRequestAccounts()
-          .then((account: any) => {
-            [this.walletAddress] = account;
-            resolve({
-              address: account[0],
-              network: currentChain,
+            this.checkNets(resChain).then((required) => {
+              if (required) {
+                this.ethRequestAccounts()
+                  .then((account: any) => {
+                    [this.walletAddress] = account;
+                    resolve({
+                      address: account[0],
+                      network: resChain,
+                    });
+                  })
+                  .catch(() => reject(new Error('Not authorized')));
+              } else {
+                reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
+              }
             });
           })
           .catch(() => reject(new Error('Not authorized')));
       } else {
-        reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
+        this.checkNets().then((required) => {
+          console.log(required);
+          if (required) {
+            this.ethRequestAccounts()
+              .then((account: any) => {
+                [this.walletAddress] = account;
+                resolve({
+                  address: account[0],
+                  network: currentChain,
+                });
+              })
+              .catch(() => reject(new Error('Not authorized')));
+          } else {
+            reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
+          }
+        })
       }
     });
   }
@@ -343,7 +428,6 @@ export default class MetamaskService {
         return await method().call();
       }
     } catch (err: any) {
-      debugger;
       throw new Error(err);
     }
     return new Error(`contract ${contractName} didn't created`);

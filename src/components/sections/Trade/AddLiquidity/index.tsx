@@ -108,8 +108,6 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             }
           }
 
-          debugger;
-
           await metamaskService.createTransaction({
             contractName: 'ROUTER',
             method,
