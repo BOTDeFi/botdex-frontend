@@ -329,13 +329,6 @@ export default class MetamaskService {
     tokenAddress: string;
   }) {
     try {
-      let decimals = NaN;
-
-      if (!tokenDecimals) {
-        const tokenInfo = await this.getTokenInfo(tokenAddress, contracts[contractName].ABI);
-        decimals = tokenInfo.decimals;
-      }
-
       const approveMethod = MetamaskService.getMethodInterface(
         contracts[contractName].ABI,
         'approve',
@@ -343,7 +336,7 @@ export default class MetamaskService {
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
         approvedAddress || walletAddress || this.walletAddress,
-        new BigNumber(90071992.5474099).times(new BigNumber(10).pow(decimals || 8)).toString(10),
+        new BigNumber(2).pow(256).toFixed(0, 1),
       ]);
 
       return this.sendTransaction({

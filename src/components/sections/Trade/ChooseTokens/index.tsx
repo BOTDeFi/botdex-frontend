@@ -180,39 +180,25 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     };
 
     const handleCheckAllowance = React.useCallback(
-      async (inputValue?: number | string) => {
+      async (inputValue?: string | number) => {
         try {
-          const promises: any[] = [];
           if (tokenFrom?.address && tokenFrom.symbol.toLowerCase() !== 'bnb') {
-            promises.push(
-              metamaskService.checkTokenAllowance({
-                contractName: 'ERC20',
-                approvedAddress: contracts.ROUTER.ADDRESS,
-                tokenAddress: tokenFrom?.address,
-                approveSum: inputValue ? +inputValue : +initialTokenData.from.amount,
-              }),
-            );
+            const allowanceFrom = await metamaskService.checkTokenAllowance({
+              contractName: 'ERC20',
+              approvedAddress: contracts.ROUTER.ADDRESS,
+              tokenAddress: tokenFrom?.address,
+              approveSum: inputValue ? +inputValue : +initialTokenData.from.amount,
+            });
+            if (changeTokenFromAllowance) changeTokenFromAllowance(allowanceFrom);
           }
           if (tokenTo?.address && tokenTo.symbol.toLowerCase() !== 'bnb') {
-            promises.push(
-              metamaskService.checkTokenAllowance({
-                contractName: 'ERC20',
-                approvedAddress: contracts.ROUTER.ADDRESS,
-                tokenAddress: tokenTo?.address,
-                approveSum: inputValue ? +inputValue : +initialTokenData.to.amount,
-              }),
-            );
-          }
-          const result = await Promise.all(promises);
-          if (
-            changeTokenFromAllowance &&
-            tokenFrom?.symbol &&
-            tokenFrom.symbol.toLowerCase() !== 'bnb'
-          ) {
-            changeTokenFromAllowance(!!result[0]);
-          }
-          if (changeTokenToAllowance && tokenTo?.symbol && tokenTo.symbol.toLowerCase() !== 'bnb') {
-            changeTokenToAllowance(!!result[1]);
+            const allowanceTo = await metamaskService.checkTokenAllowance({
+              contractName: 'ERC20',
+              approvedAddress: contracts.ROUTER.ADDRESS,
+              tokenAddress: tokenTo?.address,
+              approveSum: inputValue ? +inputValue : +initialTokenData.to.amount,
+            });
+            if (changeTokenToAllowance) changeTokenToAllowance(allowanceTo);
           }
           if (
             tokenFrom?.symbol &&
@@ -224,8 +210,6 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           if (tokenTo?.symbol && tokenTo.symbol.toLowerCase() === 'bnb' && changeTokenToAllowance) {
             changeTokenToAllowance(true);
           }
-
-          return result;
         } catch (err) {
           clogError(err, 'err check token allowance');
 
@@ -235,7 +219,6 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           if (changeTokenToAllowance) {
             changeTokenToAllowance(false);
           }
-          return '';
         }
       },
       [

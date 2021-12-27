@@ -2,8 +2,14 @@
 @import 'src/styles/mixins/media';
 
 .exchange {
+  //margin-top: 40px;
   padding: 30px;
-  margin-top: 40px;
+
+  min-width: 400px;
+
+  @include b(mobile) {
+    min-width: 100%;
+  }
 
   @include b(extramobile) {
     padding: 20px;
@@ -12,15 +18,19 @@
   &__title {
     margin-bottom: 12px;
   }
+
   &__box {
     &-top {
-      padding-bottom: 30px;
       margin-bottom: 30px;
+      padding-bottom: 30px;
+
       border-bottom: 1px solid #e0e0e0;
     }
   }
+
   &__btn {
-    width: 100%;
     margin-top: 30px;
+
+    width: 100%;
   }
 }

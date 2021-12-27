@@ -8,6 +8,7 @@ import { CurrencyInfo, TimeSelector } from '@/components/sections/Graph';
 import { TTimestampSelector } from '@/components/sections/Graph/TimeSelector';
 import { useGetDaysPairs, useGetHoursPairs } from '@/services/api/refinery-finance-pairs';
 import { useMst } from '@/store';
+import { clogData } from '@/utils/logger';
 
 import { Liquidity, Swap, TradeNavbar } from '../../components/sections/Trade';
 
@@ -15,6 +16,7 @@ import './Trade.scss';
 
 const Trade: React.FC = observer(() => {
   const { pairs } = useMst();
+  clogData('location:', window.location);
 
   const [data, setData] = React.useState(pairs.getFormattedPoints());
   const [reversed, setReversed] = React.useState(false);
@@ -191,20 +193,24 @@ const Trade: React.FC = observer(() => {
             <Swap />
             <Liquidity />
           </div>
-          <div className="trade__graph">
-            <div className="trade__graph-body box-white box-shadow">
-              <div className="trade__graph-body__info">
-                {currencyData && <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />}
-                <TimeSelector currentSelector={currentStamp} selectors={selectors} />
+          {window.location.pathname === '/trade/bridge' ? (
+            ''
+          ) : (
+            <div className="trade__graph">
+              <div className="trade__graph-body box-white box-shadow">
+                <div className="trade__graph-body__info">
+                  {currencyData && <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />}
+                  <TimeSelector currentSelector={currentStamp} selectors={selectors} />
+                </div>
+                <Graph
+                  id="exchange-graph"
+                  series={data}
+                  options={options}
+                  onHovered={onGraphHovered}
+                />
               </div>
-              <Graph
-                id="exchange-graph"
-                series={data}
-                options={options}
-                onHovered={onGraphHovered}
-              />
             </div>
-          </div>
+          )}
         </div>
       </div>
     </main>

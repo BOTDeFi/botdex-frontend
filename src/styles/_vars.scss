@@ -1,4 +1,4 @@
-$yellow: #ffcc00;
+$yellow: #fc0;
 $yellow-d: #ffeeb0;
 $yellow-s-l: #f4f0fb;
 $yellow-l: #fffae8;
@@ -6,7 +6,7 @@ $white: #fff;
 $orange: #ffa237;
 $gray-3: #c1c1c1;
 $gray-l: rgba(#c1c1c1, 0.1);
-$gray-l-2: rgba(black, 0.3);
+$gray-l-2: rgba(0, 0, 0, 0.3);
 $gray-2: rgba(#3c4252, 0.6);
 $gray-4: #585858;
 $green: #09bdc6;
@@ -14,11 +14,11 @@ $green1: #19a04f;
 $blue: #32afe3;
 $blue-d: #5e8dec;
 $red: #ff4d4f;
-$black: #222222;
+$black: #222;
 $gray: rgba($black, 0.5);
 
 $bg-gradient: linear-gradient(98.94deg, #ffd335 -22.87%, #f9f9f9 94.67%);
-$shadow: 0px 12px 40px rgba(0, 0, 0, 0.1);
+$shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
 $mediaWidthLaptop: 1440px;
 $mediaWidthDesktop: 1024px;

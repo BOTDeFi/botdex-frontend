@@ -2,14 +2,15 @@
 @import '/src/styles/mixins/displays.scss';
 
 .trade {
-  padding-left: 0;
+  margin-left: 240px;
   padding-top: 90px;
+  padding-left: 0;
   padding-bottom: 90px;
+
   background-image: url(../../assets/img/bg.png);
   background-repeat: no-repeat;
-  background-size: 100% 100%;
   background-position: center;
-  margin-left: 240px;
+  background-size: 100% 100%;
 
   &__body{
     @include container;
@@ -19,21 +20,24 @@
 
   &__content {
     padding: 10px;
-    max-width: 420px;
+
     width: 100%;
+    max-width: 420px;
   }
 
-  &__blocks{
+  &__blocks {
     @include flexbox(center, center);
     margin-top: 35px;
   }
 
-  &__graph{
+  &__graph {
+    padding: 10px;
+
     max-width: 670px;
     height: fit-content;
-    padding: 10px;
-    &-body{
-      &__info{
+
+    &-body {
+      &__info {
         @include flexbox(space-between, center);
         padding: 30px 30.5px;
         position: relative;
@@ -41,7 +45,7 @@
     }
   }
 
-  .xaxis-label{
+  .xaxis-label {
     font-family: Montserrat, sans-serif;
     font-size: 16px;
     line-height: 19.5px;

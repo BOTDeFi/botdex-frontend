@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
 import { MetamaskErrModal, RoiModal } from './components/molecules';
@@ -18,6 +19,7 @@ import {
 } from './pages';
 import { useMst } from './store';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
 
 const App: React.FC = observer(() => {
@@ -65,6 +67,7 @@ const App: React.FC = observer(() => {
       </Switch>
       <MetamaskErrModal />
       <RoiModal />
+      <ToastContainer position="bottom-right" />
     </div>
   );
 });

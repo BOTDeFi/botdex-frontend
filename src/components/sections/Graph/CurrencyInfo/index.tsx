@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { FC, ReactElement } from 'react';
-import BigNumber from 'bignumber.js/bignumber';
 
 import { ReactComponent as SwapSVG } from '@/assets/img/icons/swap-currency.svg';
 
@@ -74,7 +73,7 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
       </div>
       <div className="currency-info__body-currencies-statistic">
         <h2 className="currency-info__body-currencies-statistic__price h2-lg text-black text-bold">
-          {price.toFixed(price < 10 ? 5 : 2, 1)}
+          {price.toFixed(price < 10 ? 5 : 2)}
         </h2>
         <span className="currency-info__body-currencies-statistic__price-symbols text-smd text-black text-500">
           {currency}

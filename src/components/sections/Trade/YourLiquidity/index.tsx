@@ -23,6 +23,7 @@ const USER_PAIRS = gql`
           id
           reserve0
           reserve1
+          totalSupply
           token0Price
           token1Price
           token0 {

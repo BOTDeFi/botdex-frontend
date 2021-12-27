@@ -1,16 +1,17 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import BnbImg from '@/assets/img/currency/unknown.svg';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
+import { ILiquidityInfo } from '@/types';
 import { clogError } from '@/utils/logger';
 
-import { useWalletConnectorContext } from '../../../../services/MetamaskConnect';
 import MetamaskService from '../../../../services/web3';
-import { useMst } from '../../../../store';
-import { ILiquidityInfo } from '../../../../types';
 import { Button, Popover } from '../../../atoms';
 import { TradeBox } from '..';
 
@@ -40,15 +41,33 @@ const Receive: React.FC = observer(() => {
             liquidityInfo?.token0.address,
             liquidityInfo?.token1.address,
             liquidityInfo.lpTokens,
-            new BigNumber(liquidityInfo?.token0.receive).multipliedBy(0.99).toFixed(0),
-            new BigNumber(liquidityInfo?.token1.receive).multipliedBy(0.99).toFixed(0),
+            new BigNumber(liquidityInfo?.token0.receive).toFixed(0),
+            new BigNumber(liquidityInfo?.token1.receive).toFixed(0),
             user.address,
             moment.utc().add(20, 'm').valueOf(),
           ],
         });
         history.push('/trade/liquidity');
+        toast.success('Successfully removed liquidity!', {
+          position: 'bottom-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     } catch (err) {
+      toast.error('Something went wrong', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setIsActiveTx(false);
       clogError('remove liquidity', err);
     }

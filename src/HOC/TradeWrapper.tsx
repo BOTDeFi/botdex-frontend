@@ -1,10 +1,11 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { contracts, tokens as configTokens } from '@/config';
 import { walletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { IToken, ITokens } from '@/types';
-import { clogError } from '@/utils/logger';
+import { clog, clogError } from '@/utils/logger';
 
 interface ITradeWrapper {
   isAllowanceFrom: boolean;
@@ -31,8 +32,9 @@ interface ITradeWrapper {
 const TradeWrapper = (
   Component: React.FC<any>,
   getExchangeMethod: 'quote' | 'getAmountOut',
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   compProps?: any,
-) => {
+): any => {
   return class TradeWrapperComponent extends React.Component<any, ITradeWrapper, any> {
     // eslint-disable-next-line react/static-property-placement
     static contextType = walletConnectorContext;
@@ -119,6 +121,9 @@ const TradeWrapper = (
             this.setState({
               isAllowanceFrom: true,
             });
+            toast.success(
+              `Successfully approved token ${this.state.tokensData.from.token.symbol}!`,
+            );
           } else {
             this.setState({
               isAllowanceFrom: true,
@@ -138,6 +143,7 @@ const TradeWrapper = (
             this.setState({
               isAllowanceTo: true,
             });
+            toast.success(`Successfully approved token ${this.state.tokensData.to.token.symbol}!`);
           } else {
             this.setState({
               isAllowanceTo: true,
@@ -153,6 +159,7 @@ const TradeWrapper = (
           isAllowanceTo: false,
           isApproving: false,
         });
+        toast.error(`${err?.message ?? 'Approve token error :('}`);
         clogError('err approve tokens', err);
       }
     }
@@ -180,6 +187,9 @@ const TradeWrapper = (
         );
 
         if (pairAddr === '0x0000000000000000000000000000000000000000') {
+          if (window.location.pathname === '/trade/swap') {
+            toast.warning('There is no pair for these tokens');
+          }
           if (type === 'from') {
             this.setState((prev) => ({
               tokensResurves: null,
@@ -368,7 +378,7 @@ const TradeWrapper = (
 
     handleChangeTokensData(tokensData: ITokens, type?: 'from' | 'to') {
       if (tokensData.from.amount === 0 || tokensData.to.amount === 0) {
-        console.log(1);
+        clog(1);
       } else if (tokensData.from.token && tokensData.to.token && type) {
         this.handleGetExchange(tokensData, type);
       } else {

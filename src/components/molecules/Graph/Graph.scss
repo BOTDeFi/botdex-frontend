@@ -1,9 +1,11 @@
-.graph{
-    &-wrapper{
-        width: 100%;
-        &__body{
-            min-height: 300px;
-            position: relative;
-        }
+.graph {
+  &-wrapper {
+    width: 100%;
+
+    &__body {
+      position: relative;
+
+      min-height: 200px;
     }
+  }
 }

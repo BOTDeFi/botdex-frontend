@@ -1,81 +1,87 @@
-@import "src/styles/mixins/displays.scss";
-@import "src/styles/vars";
+@import 'src/styles/mixins/displays.scss';
+@import 'src/styles/vars';
 
 .currency-info {
-    &__body {
-        width: 100%;
-        &-currencies {
-            @include flexbox(flex-start, center, row, 15px);
-            margin-bottom: 19.5px;
+  &__body {
+    width: 100%;
 
-            &-icon {
-                @include flexbox;
-                & svg,
-                & img {
-                    &:not(:last-child){
-                        margin-right: 3px;
-                    }
-                    max-width: 32px;
-                }
-            }
+    &-currencies {
+      @include flexbox(flex-start, center, row, 15px);
+      margin-bottom: 19.5px;
 
-            &-names {
-                @include flexbox(space-evenly, center);
-                &__text {
-                    display: inline-flex;
-                    align-items: center;
+      &-icon {
+        @include flexbox;
 
-                    &:not(:last-child) {
-                        margin-right: 2px;
-                    }
-                }
-            }
+        & svg,
+        & img {
+          max-width: 32px;
 
-            &__swap {
-                background: transparent;
-                appearance: none;
-                border: 0px solid transparent;
-
-                & svg {
-                    color: $black;
-                    transition: 0.3s linear;
-
-                    &:hover {
-                        color: $orange;
-                    }
-                }
-            }
-
-            &-statistic {
-                @include flexbox(flex-start, center, row, 15px);
-                margin-bottom: 5px;
-
-                &__price {
-                    &-symbols {
-                        display: inline-flex;
-                        align-items: center;
-                    }
-
-                    &-shift {
-                        display: inline-flex;
-                        align-items: center;
-
-                        &.green{
-                            color: $green;
-                        }
-
-                        &.red{
-                            color: $red;
-                        }
-                    }
-                }
-
-                &__date{
-                    color: $gray-2;
-                }
-            }
+          &:not(:last-child) {
+            margin-right: 3px;
+          }
         }
+      }
+
+      &-names {
+        @include flexbox(space-evenly, center);
+
+        &__text {
+          display: inline-flex;
+          align-items: center;
+
+          &:not(:last-child) {
+            margin-right: 2px;
+          }
+        }
+      }
+
+      &__swap {
+        background: transparent;
+        appearance: none;
+
+        border: 0 solid transparent;
+
+        & svg {
+          color: $black;
+
+          transition: 0.3s linear;
+
+          &:hover {
+            color: $orange;
+          }
+        }
+      }
+
+      &-statistic {
+        @include flexbox(flex-start, center, row, 15px);
+        margin-bottom: 5px;
+
+        &__price {
+          &-symbols {
+            display: inline-flex;
+            align-items: center;
+          }
+
+          &-shift {
+            display: inline-flex;
+            align-items: center;
+
+            &.green {
+              color: $green;
+            }
+
+            &.red {
+              color: $red;
+            }
+          }
+        }
+
+        &__date {
+          color: $gray-2;
+        }
+      }
     }
+  }
 }
 
 

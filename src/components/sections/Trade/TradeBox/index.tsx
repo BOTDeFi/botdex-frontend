@@ -33,7 +33,7 @@ const TradeBox: React.FC<ITradeBox> = ({
 }) => {
   return (
     <div className={cn('trade-box box-shadow box-white', className)}>
-      <div className="trade-box__box-top box-f box-f-jc-sb">
+      <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">
         <div className="">
           {titleBackLink ? (
             <Link to="/trade/liquidity">

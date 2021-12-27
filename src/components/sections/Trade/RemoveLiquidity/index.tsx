@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
-import UnkNownImg from '@/assets/img/currency/unknown.svg';
+import UnknownImg from '@/assets/img/currency/unknown.svg';
 import { Button, Slider } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -71,11 +72,29 @@ const RemoveLiquidity: React.FC = observer(() => {
           approvedAddress: contracts.ROUTER.ADDRESS,
           tokenAddress: liquidityInfo?.address,
         });
+        toast.success('Successfully approved LP token!', {
+          position: 'bottom-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
 
         setTokensApproving(false);
         setTokensApprove(true);
       }
     } catch (err) {
+      toast.error('Something went wrong!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       clogError('approve lp', err);
       setTokensApproving(false);
       setTokensApprove(false);
@@ -95,7 +114,7 @@ const RemoveLiquidity: React.FC = observer(() => {
   }, [handleCheckApprove]);
 
   return (
-    <TradeBox className="r-liquidity" title="Remove Liguidity" titleBackLink>
+    <TradeBox className="r-liquidity" title="Remove Liquidity" titleBackLink>
       <div className="r-liquidity__percent text-yellow">{percent}%</div>
       <Slider
         tooltipVisible={false}
@@ -134,7 +153,7 @@ const RemoveLiquidity: React.FC = observer(() => {
             </div>
             <div className="box-f-ai-c r-liquidity__currency-item">
               <div className="text-smd text-upper">{liquidityInfo?.token0.symbol}</div>
-              <img src={UnkNownImg} alt="" />
+              <img src={UnknownImg} alt="" />
             </div>
           </div>
           <div className="r-liquidity__currency box-f-ai-c box-f-jc-sb">
@@ -152,7 +171,7 @@ const RemoveLiquidity: React.FC = observer(() => {
             </div>
             <div className="box-f-ai-c r-liquidity__currency-item">
               <div className="text-smd text-upper">{liquidityInfo?.token1.symbol}</div>
-              <img src={UnkNownImg} alt="" />
+              <img src={UnknownImg} alt="" />
             </div>
           </div>
         </div>

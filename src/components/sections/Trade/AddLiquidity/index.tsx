@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
@@ -114,6 +115,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             data,
             value,
           });
+          toast.success('Successfully added liquidity!');
           setLoading(false);
           delete localStorage['refinery-finance-quote'];
           setTokensData({
@@ -361,7 +363,9 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             loading={isApproving}
             loadingText="Waiting for approve..."
           >
-            <span className="text-white text-bold text-smd">Approve tokens</span>
+            <span className="text-white text-bold text-smd">
+              Approve {tokensData[!isAllowanceFrom ? 'from' : 'to'].token?.symbol}
+            </span>
           </Button>
         ) : (
           ''
