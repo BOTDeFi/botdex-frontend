@@ -74,7 +74,7 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
       </div>
       <div className="currency-info__body-currencies-statistic">
         <h2 className="currency-info__body-currencies-statistic__price h2-lg text-black text-bold">
-          {new BigNumber(price).toFixed(price < 10 ? 5 : 2, 1)}
+          {price.toFixed(price < 10 ? 5 : 2, 1)}
         </h2>
         <span className="currency-info__body-currencies-statistic__price-symbols text-smd text-black text-500">
           {currency}
@@ -83,10 +83,9 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
           className={`currency-info__body-currencies-statistic__price-shift text-sm text-500 ${
             shift >= 0 ? 'green' : 'red'
           }`}
+          title={`${shift} (${percentShift}%)`}
         >
-          {shift >= 0 ? '+' : '-'}
-          {new BigNumber(shift).toFixed(10, 1)} ({shift >= 0 ? '' : '-'}
-          {new BigNumber(percentShift).toFixed(5, 1)}%)
+          {shift.toFixed(4)} ({percentShift.toFixed(3)}%)
         </span>
       </div>
       <div className="currency-info__body-currencies-statistic__date">

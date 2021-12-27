@@ -77,3 +77,18 @@
         }
     }
 }
+
+
+@media (max-width: 1024px){
+    .currency-info{
+        &__body{
+            &-currencies{
+                &-statistic{
+                    flex-direction: column;
+                    gap: 5px;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}

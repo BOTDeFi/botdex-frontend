@@ -69,6 +69,7 @@ const Trade: React.FC = observer(() => {
       xaxis: {
         type: 'datetime',
         tickAmount: 6,
+        hideOverlappingLabels: true,
         axisTicks: {
           show: false,
         },

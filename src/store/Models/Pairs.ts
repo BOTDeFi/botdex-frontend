@@ -69,7 +69,7 @@ const PairsModel = types
     getFormattedCurrentPair(id: number, reversed = false) {
       const currentPair = self.pair;
 
-      const firstPoint = self.currentPairData.points[0];
+      const firstPoint = self.currentPairData.points[self.currentPairData.points.length - 1];
       const currentPoint = self.currentPairData.points[id];
 
       const token0 = currentPair[reversed ? 'token1' : 'token0'];

@@ -13,7 +13,7 @@ interface IGraphProps {
 
 const initOptions = {
   chart: {
-    height: '200px',
+    height: '100%',
     type: 'area',
     toolbar: {
       offsetX: -40,
