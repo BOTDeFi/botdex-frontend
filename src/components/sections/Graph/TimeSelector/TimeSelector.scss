@@ -3,7 +3,10 @@
 
 .time-selector{
     &__body{
-       @include flexbox($gap: 6px); 
+       @include flexbox($gap: 6px);
+       position: absolute;
+       top: 30px;
+       right: 30.5px; 
        &-btn{
            padding: 12px 9.5px;
            color: $black;
@@ -22,5 +25,15 @@
             color: $black;
         }
        }
+    }
+}
+
+@media (max-width: 1024px){
+    .time-selector{
+        &__body{
+            position: relative;
+            top: 0;
+            left: 0;
+        }
     }
 }

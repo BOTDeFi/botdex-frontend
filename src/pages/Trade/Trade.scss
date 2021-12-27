@@ -11,6 +11,10 @@
   background-position: center;
   margin-left: 240px;
 
+  &__body{
+    @include container;
+  }
+
   @include flexbox(center);
 
   &__content {
@@ -32,6 +36,7 @@
       &__info{
         @include flexbox(space-between, center);
         padding: 30px 30.5px;
+        position: relative;
       }
     }
   }
@@ -44,5 +49,40 @@
 
   @include b(extramobile) {
     background-image: none;
+  }
+}
+
+
+@media (max-width: 1350px){
+  .trade{
+    &__blocks{
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__graph{
+      min-width: 0;
+    }
+
+    &__content{
+      max-width: 100%;
+    }
+  }
+}
+
+
+@media (max-width: 1024px){
+  .trade{
+    margin-left: 0;
+    &__graph{
+      min-width: 100%;
+      &-body{
+        &__info{
+          flex-direction: column-reverse;
+          gap: 20px;
+          padding: 15px 15.25px;
+        }
+      }
+    }
   }
 }

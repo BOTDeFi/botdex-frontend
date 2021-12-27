@@ -56,7 +56,7 @@ const Exchange: React.FC<IExchange> = observer(
     const fetchPair = useCallback(async () => {
       const normalizedAddress = pairAddress.toLowerCase();
       const [pair] = await (await getPair(normalizedAddress)).pairs;
-      if (pair.id) {
+      if (pair?.id) {
         pairs.setPair(pair);
         const pairData = await (await getPairData(24, normalizedAddress)).pairHourDatas;
         pairs.setCurrentPairData(normalizedAddress, pairData);
