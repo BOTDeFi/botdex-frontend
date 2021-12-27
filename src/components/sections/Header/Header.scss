@@ -2,15 +2,19 @@
 @import '../../../styles/vars';
 
 .header {
-  display: none;
-  height: 72px;
-  box-shadow: $shadow;
-  border-radius: 0px 0px 14px 14px;
-  padding: 0 22px;
   position: fixed;
-  width: 100%;
-  background-color: #fff;
   z-index: 10;
+
+  padding: 0 22px;
+
+  display: none;
+
+  width: 100%;
+  height: 72px;
+
+  background-color: #fff;
+  border-radius: 0 0 14px 14px;
+  box-shadow: $shadow;
 
   @include b(tablet) {
     display: flex;
@@ -19,28 +23,39 @@
   }
 
   &-logo {
+    margin-right: calc(50% - 80px);
+
+    width: 160px;
   }
 
   &-burger {
-    height: 16px;
-    width: 30px;
     position: relative;
+
+    width: 30px;
+    height: 16px;
+
     cursor: pointer;
 
     &__line {
       position: absolute;
-      background-color: $black;
-      height: 1px;
+
       width: 100%;
+      height: 1px;
+
+      background-color: $black;
+
       transition: 0.4s ease;
 
       &--1 {
         top: 0;
       }
+
       &--2 {
         top: 50%;
+
         transform: translateY(-50%);
       }
+
       &--3 {
         bottom: 0;
       }
@@ -50,14 +65,19 @@
       .header-burger__line {
         &--1 {
           top: 50%;
+
           transform: rotate(225deg) translateY(-50%);
         }
+
         &--2 {
           opacity: 0;
+
           transform: rotate(405deg);
         }
+
         &--3 {
           top: 50%;
+
           transform: rotate(-45deg) translateY(-50%);
         }
       }
@@ -69,28 +89,46 @@
 
 // TODO: fix min-width to bb
 .menu-mob {
-  // @media (min-width: 1024px) {
-  //   display: none !important;
-  // }
-  padding-top: 102px;
   position: fixed;
   z-index: 5;
   top: 0;
   left: -100%;
+  @include bb(laptop, desktop) {
+    display: none !important;
+  }
+  padding-top: 92px;
+
   width: 100%;
   height: 100%;
+
   background-color: #fff;
+
   transition: 0.4s ease;
 
   &--active {
     left: 0;
+
     .menu {
       left: 0;
     }
   }
 
   .header-mob__connect {
+    margin: 0 auto 20px;
+
     width: 85% !important;
-    margin: 0px auto 20px;
+  }
+}
+
+.connect {
+  position: fixed;
+  z-index: 6;
+  top: 25px;
+  right: 87px;
+
+  max-width: 200px;
+
+  @include b(tablet) {
+    display: none !important;
   }
 }

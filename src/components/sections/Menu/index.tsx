@@ -3,21 +3,21 @@ import nextId from 'react-id-generator';
 import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import DaoImg from '@/assets/img/icons/dao.svg';
+// import DaoImg from '@/assets/img/icons/dao.svg';
 import LogoImg from '@/assets/img/icons/logo.svg';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
 
-import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
-import FarmsImg from '../../../assets/img/icons/farms.svg';
+// import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
+// import FarmsImg from '../../../assets/img/icons/farms.svg';
 import HomeImg from '../../../assets/img/icons/home.svg';
 import LogoMiniImg from '../../../assets/img/icons/logo-m.svg';
-import LotteryImg from '../../../assets/img/icons/lottery.svg';
-import PoolsImg from '../../../assets/img/icons/pools.svg';
-import TeamsImg from '../../../assets/img/icons/teams.svg';
+// import LotteryImg from '../../../assets/img/icons/lottery.svg';
+// import PoolsImg from '../../../assets/img/icons/pools.svg';
+// import TeamsImg from '../../../assets/img/icons/teams.svg';
 import { ReactComponent as TgImg } from '../../../assets/img/icons/tg.svg';
 import TradeImg from '../../../assets/img/icons/trade.svg';
 import { ReactComponent as TwImg } from '../../../assets/img/icons/tw.svg';
-import { useWalletConnectorContext } from '../../../services/MetamaskConnect';
-import { useMst } from '../../../store';
 import { Button } from '../../atoms';
 import { WalletModal } from '..';
 
@@ -54,36 +54,36 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       ],
       img: TradeImg,
     },
-    {
-      text: 'Farms',
-      link: '/farms',
-      img: FarmsImg,
-    },
-    {
-      text: 'Lottery',
-      link: '/lottery',
-      img: LotteryImg,
-    },
-    {
-      text: 'Pools',
-      link: '/pools',
-      img: PoolsImg,
-    },
-    {
-      text: 'Collectibles',
-      link: '/collectibles',
-      img: CollectiblesImg,
-    },
-    {
-      text: 'Teams & Profile',
-      link: '/teams',
-      img: TeamsImg,
-    },
-    {
-      text: 'DAO',
-      link: '/dao',
-      img: DaoImg,
-    },
+    // {
+    //   text: 'Farms',
+    //   link: '/farms',
+    //   img: FarmsImg,
+    // },
+    // {
+    //   text: 'Lottery',
+    //   link: '/lottery',
+    //   img: LotteryImg,
+    // },
+    // {
+    //   text: 'Pools',
+    //   link: '/pools',
+    //   img: PoolsImg,
+    // },
+    // {
+    //   text: 'Collectibles',
+    //   link: '/collectibles',
+    //   img: CollectiblesImg,
+    // },
+    // {
+    //   text: 'Teams & Profile',
+    //   link: '/teams',
+    //   img: TeamsImg,
+    // },
+    // {
+    //   text: 'DAO',
+    //   link: '/dao',
+    //   img: DaoImg,
+    // },
   ];
 
   const [isWalletModalVisible, setWalletModalVisible] = React.useState<boolean>(false);
@@ -92,6 +92,17 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     <>
       <div className="menu box-f-fd-c">
         <img src={LogoImg} alt="refinery finance" className="menu__logo" />
+        <div className="menu__connect-box">
+          {!user.address ? (
+            <Button className="menu__connect" size="md" onClick={connect}>
+              <span className="text-bold text-white">Connect Wallet</span>
+            </Button>
+          ) : (
+            <Button className="menu__connect" size="md" onClick={() => setWalletModalVisible(true)}>
+              <span className="text-bold text-white text-address">{user.address}</span>
+            </Button>
+          )}
+        </div>
         <div className="menu__nav">
           {navItems.map((item) => (
             <NavLink
@@ -118,17 +129,6 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
               </div>
             </NavLink>
           ))}
-        </div>
-        <div className="menu__connect-box">
-          {!user.address ? (
-            <Button className="menu__connect" size="md" onClick={connect}>
-              <span className="text-bold text-white">Connect Wallet</span>
-            </Button>
-          ) : (
-            <Button className="menu__connect" size="md" onClick={() => setWalletModalVisible(true)}>
-              <span className="text-bold text-white text-address">{user.address}</span>
-            </Button>
-          )}
         </div>
         <div className="menu__balance box-yellow box-f-ai-c">
           <img src={LogoMiniImg} alt="refinery finance" className="menu__balance-img" />

@@ -6,7 +6,8 @@
        @include flexbox($gap: 6px);
        position: absolute;
        top: 30px;
-       right: 30.5px; 
+       right: 30.5px;
+      
        &-btn{
            padding: 12px 9.5px;
            color: $black;

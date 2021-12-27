@@ -5,13 +5,14 @@ import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
 import OpenLinkImg from '@/assets/img/icons/open-link.svg';
+import { useMst } from '@/store';
+import { IRecentTx } from '@/types';
 
 import CrossImg from '../../../../assets/img/icons/cross-2.svg';
-import { useMst } from '../../../../store';
-import { IRecentTx } from '../../../../types';
 import { Button, Popover } from '../../../atoms';
 
 import './RecentTxs.scss';
+import { IS_PRODUCTION } from '@/config';
 
 interface IRecentTxs {
   items?: IRecentTx[];
@@ -64,7 +65,7 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
               <div className="box-f-ai-c box-f-jc-sb">
                 <span className="text-smd text-black">{tx.type}</span>
                 <a
-                  href={`https://kovan.etherscan.io/tx/${tx.address}`}
+                  href={`https://${IS_PRODUCTION ? '' : 'testnet.'}bscscan.com/tx/${tx.address}`}
                   target="_blank"
                   rel="noreferrer"
                 >

@@ -1,14 +1,16 @@
-@mixin flexbox($justify: center, $align: center, $direction: row, $gap: 0){
+@mixin flexbox($justify: center, $align: center, $direction: row, $gap: 0, $wrap: nowrap){
     display: flex;
     flex-direction: $direction;
     justify-content: $justify;
     align-content: $align;
     gap: $gap;
+    flex-wrap: $wrap;
   }
-  
+
 @mixin container($max-width: 1100px){
   max-width: $max-width;
   @media (max-width: $max-width){
     max-width: 100%;
   }
 }
+

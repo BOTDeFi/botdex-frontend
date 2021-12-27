@@ -27,6 +27,7 @@ export interface ISettings {
   slippage: IActiveSlippage;
   txDeadline: number;
   txDeadlineUtc: number;
+  isAudio: boolean;
 }
 
 export interface IActiveSlippage {

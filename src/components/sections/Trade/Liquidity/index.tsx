@@ -4,9 +4,10 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
+import { useMst } from '@/store';
+import { IRecentTx, ISettings } from '@/types';
+
 import TradeWrapper from '../../../../HOC/TradeWrapper';
-import { useMst } from '../../../../store';
-import { IRecentTx, ISettings } from '../../../../types';
 import AddLiquidity from '../AddLiquidity';
 import {
   ExchangeSettings,
@@ -70,6 +71,7 @@ const Liquidity: React.FC = observer(() => {
     },
     txDeadline: 20,
     txDeadlineUtc: moment.utc().add(20, 'm').unix(),
+    isAudio: false,
   });
   console.log(settings.txDeadlineUtc, 'deadline');
 
