@@ -376,6 +376,7 @@ const TradeWrapper = (
         <Component
           {...this.props}
           {...compProps}
+          pairAddress={this.state.pairAddress}
           tokensData={this.state.tokensData}
           setTokensData={this.handleChangeTokensData}
           setAllowanceFrom={this.handleChangeAllowanceFrom}

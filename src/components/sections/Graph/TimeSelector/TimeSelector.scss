@@ -1,0 +1,39 @@
+@import 'src/styles/mixins/displays.scss';
+@import 'src/styles/vars';
+
+.time-selector {
+  &__body {
+    @include flexbox($gap: 6px, $wrap: wrap);
+
+    &-btn {
+      padding: 12px 9.5px;
+
+      min-width: 50.25px;
+      min-height: 44px;
+
+      color: $black;
+      background: $white;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        color: $black;
+        background: $yellow;
+      }
+
+      &.selected {
+        color: $black;
+        background: $yellow;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .time-selector {
+    &__body {
+      position: relative;
+      top: 0;
+      left: 0;
+    }
+  }
+}

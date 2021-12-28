@@ -1,0 +1,99 @@
+@import 'src/styles/mixins/displays.scss';
+@import 'src/styles/vars';
+
+.currency-info {
+  &__body {
+    width: 100%;
+
+    &-currencies {
+      @include flexbox(flex-start, center, row, 15px);
+      margin-bottom: 19.5px;
+
+      &-icon {
+        @include flexbox;
+
+        & svg,
+        & img {
+          max-width: 32px;
+
+          &:not(:last-child) {
+            margin-right: 3px;
+          }
+        }
+      }
+
+      &-names {
+        @include flexbox(space-evenly, center);
+
+        &__text {
+          display: inline-flex;
+          align-items: center;
+
+          &:not(:last-child) {
+            margin-right: 2px;
+          }
+        }
+      }
+
+      &__swap {
+        background: transparent;
+        appearance: none;
+
+        border: 0 solid transparent;
+
+        & svg {
+          color: $black;
+
+          transition: 0.3s linear;
+
+          &:hover {
+            color: $orange;
+          }
+        }
+      }
+
+      &-statistic {
+        @include flexbox(flex-start, center, row, 15px);
+        margin-bottom: 5px;
+
+        &__price {
+          &-symbols {
+            display: inline-flex;
+            align-items: center;
+          }
+
+          &-shift {
+            display: inline-flex;
+            align-items: center;
+
+            &.green {
+              color: $green;
+            }
+
+            &.red {
+              color: $red;
+            }
+          }
+        }
+
+        &__date {
+          color: $gray-2;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .currency-info {
+    &__body {
+      &-currencies {
+        &-statistic {
+          flex-direction: column;
+          gap: 5px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

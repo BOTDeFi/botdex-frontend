@@ -6,6 +6,7 @@ export { pools } from './pools';
 export { farms } from './farms';
 
 export const SHOW_LOGS = true;
+export const IS_PRODUCTION = false;
 
 export enum GAS_PRICE_ETHERS {
   default = '5',

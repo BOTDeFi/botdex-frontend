@@ -184,13 +184,14 @@ const StakeUnstakeModal: React.FC = observer(() => {
   }, [modal]);
 
   const inputValueAsString = useMemo(() => inputValue.toFixed(), [inputValue]);
-  const inputValueUsdToDisplay = useMemo(() => getTokenUsdPrice(inputValue, tokenUsdPrice), [
-    inputValue,
-    tokenUsdPrice,
-  ]);
-  const balanceToDisplay = useMemo(() => maxStakingValueBN.toFixed(Precisions.shortToken), [
-    maxStakingValueBN,
-  ]);
+  const inputValueUsdToDisplay = useMemo(
+    () => getTokenUsdPrice(inputValue, tokenUsdPrice),
+    [inputValue, tokenUsdPrice],
+  );
+  const balanceToDisplay = useMemo(
+    () => maxStakingValueBN.toFixed(Precisions.shortToken),
+    [maxStakingValueBN],
+  );
 
   const isNotEnoughBalanceToStake = maxStakingValueRaw === 0;
   const hasValidationErrors = isNotEnoughBalanceToStake || inputValue.eq(0) || inputValue.isNaN();

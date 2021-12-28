@@ -1,16 +1,85 @@
-@import '../../styles/mixins/media.scss';
+@import '/src/styles/mixins/media.scss';
+@import '/src/styles/mixins/displays.scss';
 
 .trade {
+  margin-left: 240px;
   padding-top: 90px;
   padding-left: 0;
   padding-bottom: 90px;
 
-  background: $bg-color;
+  &__body {
+    @include container;
+  }
+
+  @include flexbox(center);
 
   &__content {
     padding: 10px;
 
     width: 100%;
-    max-width: 440px;
+    max-width: 420px;
+  }
+
+  &__blocks {
+    @include flexbox(center, center);
+    margin-top: 35px;
+  }
+
+  &__graph {
+    padding: 10px;
+
+    max-width: 670px;
+    height: fit-content;
+
+    &-body {
+      &__info {
+        @include flexbox(space-between, center);
+        padding: 30px 30.5px;
+        position: relative;
+      }
+    }
+  }
+
+  .xaxis-label {
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    line-height: 19.5px;
+  }
+
+  @include b(extramobile) {
+    background-image: none;
+  }
+}
+
+@media (max-width: 1350px) {
+  .trade {
+    &__blocks {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__graph {
+      min-width: 0;
+    }
+
+    &__content {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .trade {
+    margin-left: 0;
+    &__graph {
+      min-width: 100%;
+      &-body {
+        &__info {
+          flex-direction: column-reverse;
+          gap: 20px;
+          padding: 15px 15.25px;
+        }
+      }
+    }
   }
 }
