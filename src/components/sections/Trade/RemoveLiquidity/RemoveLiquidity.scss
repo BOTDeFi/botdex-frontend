@@ -1,6 +1,12 @@
-@import 'src/styles/vars';
+@import 'src/styles/index';
 
 .r-liquidity {
+  min-width: 400px;
+
+  @include b(mobile) {
+    min-width: unset;
+  }
+
   &__percent {
     font-size: 77px;
     line-height: 91px;

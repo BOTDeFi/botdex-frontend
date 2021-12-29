@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
-import { Button } from '@/components/atoms';
+import { Button, Popover } from '@/components/atoms';
 import { Modal } from '@/components/molecules';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -38,7 +38,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
         );
         clogData('lpBalance:', lpBalance);
 
-        lpBalance = +lpBalance + 1000;
+        lpBalance = new BigNumber(lpBalance).plus(1000).toFixed(0, 1);
 
         const supply = await metamaskService.callContractMethodFromNewContract(
           info?.address,
@@ -133,35 +133,55 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
             <span>{`${info.token0.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
               <img src={UnknownImg} alt={info.token0.symbol} />
-              <span>
-                {(+MetamaskService.amountFromGwei(deposit0, +info.token0.decimals)).toFixed(5)}
-              </span>
+              <Popover
+                content={(+MetamaskService.amountFromGwei(
+                  deposit0,
+                  +info.token0.decimals,
+                )).toString(10)}
+              >
+                <span>
+                  {(+MetamaskService.amountFromGwei(deposit0, +info.token0.decimals)).toFixed(5)}
+                </span>
+              </Popover>
             </div>
           </div>
           <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
             <span>{`${info.token1.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
               <img src={UnknownImg} alt={info.token1.symbol} />
-              <span>
-                {(+MetamaskService.amountFromGwei(deposit1, +info.token1.decimals)).toFixed(5)}
-              </span>
+              <Popover
+                content={(+MetamaskService.amountFromGwei(
+                  deposit1,
+                  +info.token1.decimals,
+                )).toString(10)}
+              >
+                <span>
+                  {(+MetamaskService.amountFromGwei(deposit1, +info.token1.decimals)).toFixed(5)}
+                </span>
+              </Popover>
             </div>
           </div>
           <div className="liquidity-info__row box-f box-f-jc-sb text-black text-smd">
             <span>Rates</span>
             <div className="text-right">
-              <div>{`1 ${info.token0.symbol} = ${new BigNumber(info.token1.rate).toFixed(8)} ${
-                info.token1.symbol
-              }`}</div>
+              <Popover content={new BigNumber(info.token1.rate).toString(10)}>
+                <div>{`1 ${info.token0.symbol} = ${new BigNumber(info.token1.rate).toFixed(5)} ${
+                  info.token1.symbol
+                }`}</div>
+              </Popover>
               <br />
-              <div>{`1 ${info.token1.symbol} = ${new BigNumber(info.token0.rate).toFixed(8)} ${
-                info.token0.symbol
-              }`}</div>
+              <Popover content={new BigNumber(info.token0.rate).toString(10)}>
+                <div>{`1 ${info.token1.symbol} = ${new BigNumber(info.token0.rate).toFixed(5)} ${
+                  info.token0.symbol
+                }`}</div>
+              </Popover>
             </div>
           </div>
           <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
             <span>Share of Pool</span>
-            <span>{(+share).toFixed(5)}%</span>
+            <Popover content={(+share).toString(10)}>
+              <span>{(+share).toFixed(2)}%</span>
+            </Popover>
           </div>
           <Button
             colorScheme="yellow"

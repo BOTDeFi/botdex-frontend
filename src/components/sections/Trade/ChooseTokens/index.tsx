@@ -1,10 +1,11 @@
 import React from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
 import ArrowCImg from '@/assets/img/icons/arrow-circle.svg';
 import ArrowImg from '@/assets/img/icons/arrow-cur.svg';
-import { Button, InputNumber } from '@/components/atoms';
+import { Button, InputNumber, Popover } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
@@ -426,7 +427,11 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     }
                   />
                   {balanceFrom ? (
-                    <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${balanceFrom}`}</div>
+                    <Popover content={balanceFrom}>
+                      <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${new BigNumber(
+                        balanceFrom,
+                      ).toFixed(5, 1)}`}</div>
+                    </Popover>
                   ) : (
                     ''
                   )}
@@ -490,12 +495,18 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     max={maxTo}
                   />
                   {balanceTo ? (
-                    <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${balanceTo}`}</div>
+                    <Popover content={balanceTo}>
+                      <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${new BigNumber(
+                        balanceTo,
+                      ).toFixed(5, 1)}`}</div>
+                    </Popover>
                   ) : (
                     ''
                   )}
                   {maxTo && +maxTo < +tokenToQuantity ? (
-                    <div className="choose-tokens__err text-red text-right">{`Maximum value is ${maxTo}`}</div>
+                    <div className="choose-tokens__err text-red text-right">{`Maximum value is ${new BigNumber(
+                      maxTo,
+                    ).toFixed(8, 1)}`}</div>
                   ) : (
                     ''
                   )}

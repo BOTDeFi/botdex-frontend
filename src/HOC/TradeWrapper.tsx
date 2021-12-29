@@ -191,9 +191,6 @@ const TradeWrapper = (
         );
 
         if (pairAddress === '0x0000000000000000000000000000000000000000') {
-          if (window.location.pathname === '/trade/swap') {
-            toast.warning('There is no pair for these tokens');
-          }
           if (type === 'from') {
             this.setState((prev) => ({
               tokensReserves: null,

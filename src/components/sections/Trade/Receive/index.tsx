@@ -188,9 +188,19 @@ const Receive: React.FC = observer(() => {
           <div className="box-f-ai-c">
             <img src={BnbImg} alt="" />
             <img src={BnbImg} alt="" />
-            <span className=" text-address">
-              {MetamaskService.amountFromGwei(liquidityInfo?.lpTokens, 18)}
-            </span>
+            <Popover
+              content={new BigNumber(
+                MetamaskService.amountFromGwei(liquidityInfo?.lpTokens, 18),
+              ).toString(10)}
+            >
+              <span className="receive__burned__amount text-address">
+                {' '}
+                {new BigNumber(MetamaskService.amountFromGwei(liquidityInfo?.lpTokens, 18)).toFixed(
+                  5,
+                  1,
+                )}
+              </span>
+            </Popover>
           </div>
         </div>
       ) : (
@@ -200,14 +210,20 @@ const Receive: React.FC = observer(() => {
         <div className="receive__price box-f box-f-jc-sb text-smd text-yellow">
           <span>Price</span>
           <div>
-            <div className="peceive__price-item">
-              1 {liquidityInfo?.token0.symbol} ={' '}
-              {new BigNumber(liquidityInfo?.token1.rate).toFixed(8)} {liquidityInfo?.token1.symbol}
-            </div>
-            <div className="peceive__price-item">
-              1 {liquidityInfo?.token1.symbol} ={' '}
-              {new BigNumber(liquidityInfo?.token0.rate).toFixed(8)} {liquidityInfo?.token0.symbol}
-            </div>
+            <Popover content={new BigNumber(liquidityInfo?.token1.rate).toString(10)}>
+              <div className="peceive__price-item">
+                1 {liquidityInfo?.token0.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token1.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token1.symbol}
+              </div>
+            </Popover>
+            <Popover content={new BigNumber(liquidityInfo?.token0.rate).toString(10)}>
+              <div className="peceive__price-item">
+                1 {liquidityInfo?.token1.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token0.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token0.symbol}
+              </div>
+            </Popover>
           </div>
         </div>
       ) : (

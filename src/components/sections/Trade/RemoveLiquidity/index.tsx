@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
-import { Button, Slider } from '@/components/atoms';
+import { Button, Popover, Slider } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
@@ -146,36 +146,58 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
       {liquidityInfo && liquidityInfo.token0.deposited && liquidityInfo.token1.deposited ? (
         <div className="r-liquidity__content">
           <div className="r-liquidity__currency box-f-ai-c box-f-jc-sb">
-            <div className="r-liquidity__currency-sum text-lmd">
-              {
-                +new BigNumber(
-                  MetamaskService.amountFromGwei(
-                    liquidityInfo.token0.deposited,
-                    +liquidityInfo.token0.decimals,
-                  ),
-                )
-                  .multipliedBy(percent / 100)
-                  .toFixed(5, 1)
-              }
-            </div>
+            <Popover
+              content={new BigNumber(
+                MetamaskService.amountFromGwei(
+                  liquidityInfo.token0.deposited,
+                  +liquidityInfo.token0.decimals,
+                ),
+              )
+                .multipliedBy(percent / 100)
+                .toString(10)}
+            >
+              <div className="r-liquidity__currency-sum text-lmd">
+                {
+                  +new BigNumber(
+                    MetamaskService.amountFromGwei(
+                      liquidityInfo.token0.deposited,
+                      +liquidityInfo.token0.decimals,
+                    ),
+                  )
+                    .multipliedBy(percent / 100)
+                    .toFixed(5, 1)
+                }
+              </div>
+            </Popover>
             <div className="box-f-ai-c r-liquidity__currency-item">
               <div className="text-smd text-upper">{liquidityInfo?.token0.symbol}</div>
               <img src={UnknownImg} alt="" />
             </div>
           </div>
           <div className="r-liquidity__currency box-f-ai-c box-f-jc-sb">
-            <div className="r-liquidity__currency-sum text-lmd">
-              {
-                +new BigNumber(
-                  MetamaskService.amountFromGwei(
-                    liquidityInfo.token1.deposited,
-                    +liquidityInfo.token1.decimals,
-                  ),
-                )
-                  .multipliedBy(percent / 100)
-                  .toFixed(5, 1)
-              }
-            </div>
+            <Popover
+              content={new BigNumber(
+                MetamaskService.amountFromGwei(
+                  liquidityInfo.token1.deposited,
+                  +liquidityInfo.token1.decimals,
+                ),
+              )
+                .multipliedBy(percent / 100)
+                .toString(10)}
+            >
+              <div className="r-liquidity__currency-sum text-lmd">
+                {
+                  +new BigNumber(
+                    MetamaskService.amountFromGwei(
+                      liquidityInfo.token1.deposited,
+                      +liquidityInfo.token1.decimals,
+                    ),
+                  )
+                    .multipliedBy(percent / 100)
+                    .toFixed(5, 1)
+                }
+              </div>
+            </Popover>
             <div className="box-f-ai-c r-liquidity__currency-item">
               <div className="text-smd text-upper">{liquidityInfo?.token1.symbol}</div>
               <img src={UnknownImg} alt="" />
@@ -189,14 +211,20 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
         <div className="r-liquidity__price box-f box-f-jc-sb text-yellow">
           <span>Price</span>
           <div>
-            <div className="r-liquidity__price-item text-right">
-              1 {liquidityInfo?.token0.symbol} ={' '}
-              {new BigNumber(liquidityInfo?.token1.rate).toFixed(8)} {liquidityInfo?.token1.symbol}
-            </div>
-            <div className="r-liquidity__price-item text-right">
-              1 {liquidityInfo?.token1.symbol} ={' '}
-              {new BigNumber(liquidityInfo?.token0.rate).toFixed(8)} {liquidityInfo?.token0.symbol}
-            </div>
+            <Popover content={new BigNumber(liquidityInfo?.token1.rate).toString(10)}>
+              <div className="r-liquidity__price-item text-right">
+                1 {liquidityInfo?.token0.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token1.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token1.symbol}
+              </div>
+            </Popover>
+            <Popover content={new BigNumber(liquidityInfo?.token0.rate).toString(10)}>
+              <div className="r-liquidity__price-item text-right">
+                1 {liquidityInfo?.token1.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token0.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token0.symbol}
+              </div>
+            </Popover>
           </div>
         </div>
       ) : (
