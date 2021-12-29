@@ -1,57 +1,79 @@
 @import 'src/styles/vars';
+
 .choose-tokens {
   &__box {
     &-top {
-      padding-bottom: 30px;
       margin-bottom: 30px;
+      padding-bottom: 30px;
+
       border-bottom: 1px solid #e0e0e0;
     }
+
     &-title {
       margin-bottom: 7px;
     }
   }
+
   &__currency {
-    cursor: pointer;
     margin-right: 20px;
+
+    cursor: pointer;
+
     &-img {
       width: 46px;
     }
+
     &-arrow {
       margin-left: 12px;
     }
   }
+
   &__line {
     margin: 20px 0;
+
     &::before {
       content: '';
+
       display: block;
+
       width: 100%;
-      background: #e0e0e0;
       height: 1px;
+
+      background: #e0e0e0;
     }
+
     div {
       margin-left: 13px;
+
       min-width: 36px;
-      cursor: pointer;
       height: 36px;
+
+      cursor: pointer;
+
       background: $gray-l;
     }
+
     img {
       margin-bottom: -3px;
     }
   }
+
   &__select {
     width: 100%;
   }
+
   &__err {
     position: absolute;
     top: calc(100% + 5px);
-    width: max-content;
     right: 0;
+
+    width: max-content;
+
     &-wrapper {
       position: relative;
     }
   }
+
   &__balance {
     position: absolute;
     left: 0;

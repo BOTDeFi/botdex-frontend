@@ -1,33 +1,44 @@
 @import 'src/styles/vars';
+
 .r-group {
-  background: $gray-l;
-  border: 1px solid rgba(black, 0.1);
-  overflow: hidden;
-  border-radius: 12px;
   padding: 4px;
+
+  overflow: hidden;
+
+  background: $gray-l;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
   &__btn {
-    height: auto;
-    border-radius: 12px;
-    line-height: unset;
-    border: none;
-    background: transparent;
-    color: rgba(0, 0, 0, 0.5);
     padding: 11px 16px;
+
+    height: auto;
+
+    line-height: unset;
     text-align: center;
+
+    color: rgba(0, 0, 0, 0.5);
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+
     &:first-child,
     &:last-child {
-      border-radius: 12px;
       border: none;
+      border-radius: 12px;
     }
+
     &:not(:first-child)::before {
       display: none;
     }
+
     &:hover {
       color: rgba(0, 0, 0, 0.5);
     }
   }
+
   .ant-radio-button-wrapper-checked {
-    background: $yellow !important;
     color: $black !important;
+    background: $yellow !important;
   }
 }

@@ -12,7 +12,7 @@
   background-position: center;
   background-size: 100% 100%;
 
-  &__body{
+  &__body {
     @include container;
   }
 
@@ -39,8 +39,9 @@
     &-body {
       &__info {
         @include flexbox(space-between, center);
-        padding: 30px 30.5px;
         position: relative;
+
+        padding: 30px 30.5px;
       }
     }
   }
@@ -56,35 +57,36 @@
   }
 }
 
-
-@media (max-width: 1350px){
-  .trade{
-    &__blocks{
+@media (max-width: 1350px) {
+  .trade {
+    &__blocks {
       flex-direction: column;
       align-items: center;
     }
 
-    &__graph{
+    &__graph {
       min-width: 0;
     }
 
-    &__content{
+    &__content {
       max-width: 100%;
     }
   }
 }
 
-
-@media (max-width: 1024px){
-  .trade{
+@media (max-width: 1024px) {
+  .trade {
     margin-left: 0;
-    &__graph{
+
+    &__graph {
       min-width: 100%;
-      &-body{
-        &__info{
+
+      &-body {
+        &__info {
+          padding: 15px 15.25px;
+
           flex-direction: column-reverse;
           gap: 20px;
-          padding: 15px 15.25px;
         }
       }
     }

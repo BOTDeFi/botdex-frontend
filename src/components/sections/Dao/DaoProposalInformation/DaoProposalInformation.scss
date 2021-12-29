@@ -1,11 +1,9 @@
 .additional-information {
   &__content-row {
+    margin-top: 10px;
+
     display: flex;
     flex-direction: row;
-    margin-top: 10px;
-  }
-
-  &__content-col {
   }
 
   &__option-name {
@@ -14,11 +12,13 @@
 
   &__option-value {
     flex: 0 0 65%;
-    color: black;
+
+    color: #000;
   }
 
   &__link-icon {
     margin-left: 5px;
+
     width: 16px;
   }
 }

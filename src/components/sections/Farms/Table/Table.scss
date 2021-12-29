@@ -8,20 +8,24 @@
   padding: 35px 0;
 
   @include b(tablet) {
-    padding: 0;
     margin-top: 30px;
+    padding: 0;
+
     border-radius: 0 !important;
   }
 
   &__head {
     position: sticky;
     top: 20px;
+
+    margin: 0 30px;
+    padding-bottom: 14px;
+
     display: grid;
+    align-items: center;
+
+    border-bottom: 1px solid #eaeaea;
     grid-template-columns: $columns;
     grid-column-gap: 20px;
-    align-items: center;
-    margin: 0 30px;
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: 14px;
   }
 }

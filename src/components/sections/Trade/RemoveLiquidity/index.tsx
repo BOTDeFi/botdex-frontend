@@ -10,14 +10,14 @@ import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
-import { ILiquidityInfo } from '@/types';
+import { ILiquidityInfo, ISettings } from '@/types';
 import { clogError } from '@/utils/logger';
 
 import { TradeBox } from '..';
 
 import './RemoveLiquidity.scss';
 
-const RemoveLiquidity: React.FC = observer(() => {
+const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings }) => {
   const { user } = useMst();
   const { metamaskService } = useWalletConnectorContext();
 
@@ -114,7 +114,12 @@ const RemoveLiquidity: React.FC = observer(() => {
   }, [handleCheckApprove]);
 
   return (
-    <TradeBox className="r-liquidity" title="Remove Liquidity" titleBackLink>
+    <TradeBox
+      className="r-liquidity"
+      title="Remove Liquidity"
+      settingsLink="/trade/liquidity/settings"
+      titleBackLink
+    >
       <div className="r-liquidity__percent text-yellow">{percent}%</div>
       <Slider
         tooltipVisible={false}
@@ -148,7 +153,9 @@ const RemoveLiquidity: React.FC = observer(() => {
                     liquidityInfo.token0.deposited,
                     +liquidityInfo.token0.decimals,
                   ),
-                ).multipliedBy(percent / 100)
+                )
+                  .multipliedBy(percent / 100)
+                  .toFixed(5, 1)
               }
             </div>
             <div className="box-f-ai-c r-liquidity__currency-item">
@@ -166,7 +173,7 @@ const RemoveLiquidity: React.FC = observer(() => {
                   ),
                 )
                   .multipliedBy(percent / 100)
-                  .toFixed(8)
+                  .toFixed(5, 1)
               }
             </div>
             <div className="box-f-ai-c r-liquidity__currency-item">
@@ -183,12 +190,12 @@ const RemoveLiquidity: React.FC = observer(() => {
           <span>Price</span>
           <div>
             <div className="r-liquidity__price-item text-right">
-              1 {liquidityInfo?.token0.symbol} = {+(+liquidityInfo?.token1.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token1.symbol}
+              1 {liquidityInfo?.token0.symbol} ={' '}
+              {new BigNumber(liquidityInfo?.token1.rate).toFixed(8)} {liquidityInfo?.token1.symbol}
             </div>
             <div className="r-liquidity__price-item text-right">
-              1 {liquidityInfo?.token1.symbol} = {+(+liquidityInfo?.token0.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token0.symbol}
+              1 {liquidityInfo?.token1.symbol} ={' '}
+              {new BigNumber(liquidityInfo?.token0.rate).toFixed(8)} {liquidityInfo?.token0.symbol}
             </div>
           </div>
         </div>
@@ -228,6 +235,7 @@ const RemoveLiquidity: React.FC = observer(() => {
                     .multipliedBy(new BigNumber(percent).dividedBy(100))
                     .toString(10),
                 },
+                settings,
               },
             }}
           >

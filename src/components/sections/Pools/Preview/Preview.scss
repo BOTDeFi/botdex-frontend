@@ -1,60 +1,71 @@
 @import 'src/styles/mixins/media.scss';
 
 .pools-preview {
-  padding: 30px 30px 30px 40px;
-  background: #191919;
-  border-radius: 40px;
-  background-image: url(~src/assets/img/sections/pools/bg.jpg);
-  background-repeat: no-repeat;
-  background-size: auto 100%;
-  background-position: 100% 0;
   position: relative;
+
+  padding: 30px 30px 30px 40px;
+
+  //background: #191919 url('src/assets/img/sections/pools/bg.jpg') no-repeat 100% 0;
+  background-size: auto 100%;
+  border-radius: 40px;
   @include b(tablet) {
-    display: block !important;
-    background-image: none;
     padding: 40px 10px 10px;
+
+    display: block !important;
+
+    background-image: none;
   }
+
   &__title {
-    margin-bottom: 15px;
-    z-index: 2;
     position: relative;
+    z-index: 2;
+
+    margin-bottom: 15px;
     @include b(tablet) {
-      font-size: 35px !important;
       margin-bottom: 0;
+
+      font-size: 35px !important;
     }
   }
+
   &__bg {
     position: absolute;
+    z-index: 1;
     top: 15px;
     left: -12px;
-    z-index: 1;
     @include b(tablet) {
-      left: 8px;
       top: 8px;
+      left: 8px;
     }
   }
+
   &__box {
     @include b(tablet) {
-      padding: 0 32px;
       margin-bottom: 20px;
+      padding: 0 32px;
     }
   }
+
   &__bounty {
     padding: 20px 15px 20px 24px;
     @include b(tablet) {
       border-radius: 20px 20px 40px 40px !important;
     }
+
     &-title {
       span {
         margin-right: 7px;
       }
     }
+
     &-btn {
       margin-left: 63px;
     }
+
     &-box {
       margin-top: 11px;
     }
+
     &-usd {
       margin-top: 5px;
     }

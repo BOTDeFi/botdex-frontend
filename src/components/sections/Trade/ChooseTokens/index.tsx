@@ -235,6 +235,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     );
 
     const handleChangeTokensQuantity = async (type: 'from' | 'to', quantity: number) => {
+      user.changeType(type);
       if (type === 'from') {
         setTokenFromQuantity(quantity);
         if (time) {
@@ -327,7 +328,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       async (type: 'from' | 'to') => {
         try {
           if (initialTokenData[type] && initialTokenData[type].token && user.address) {
-            let balance = '0';
+            let balance;
             if (initialTokenData[type].token?.symbol.toLowerCase() === 'bnb') {
               balance = await metamaskService.getEthBalance();
             } else {
@@ -419,7 +420,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   <InputNumber
                     value={tokenFromQuantity}
                     placeholder="0"
-                    max={maxFrom && maxFrom < balanceFrom ? maxFrom : balanceFrom}
+                    max={maxFrom}
                     onChange={(value: number | string) =>
                       handleChangeTokensQuantity('from', +value)
                     }
@@ -429,7 +430,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   ) : (
                     ''
                   )}
-                  {maxFrom && +tokenFromQuantity > maxFrom ? (
+                  {maxFrom && +maxFrom < +tokenFromQuantity ? (
                     <div className="choose-tokens__err text-red text-right">{`Maximum value is ${maxFrom}`}</div>
                   ) : (
                     ''
@@ -486,14 +487,14 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     value={tokenToQuantity}
                     placeholder="0"
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
-                    max={maxTo && maxTo < balanceTo ? maxTo : balanceTo}
+                    max={maxTo}
                   />
                   {balanceTo ? (
                     <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${balanceTo}`}</div>
                   ) : (
                     ''
                   )}
-                  {maxTo && +tokenToQuantity > maxTo ? (
+                  {maxTo && +maxTo < +tokenToQuantity ? (
                     <div className="choose-tokens__err text-red text-right">{`Maximum value is ${maxTo}`}</div>
                   ) : (
                     ''

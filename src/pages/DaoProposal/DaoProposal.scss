@@ -7,37 +7,43 @@ $outline-color: #cecece;
 
 .dao-proposal {
   &__wrapper {
-    display: flex;
-    flex-direction: row;
     padding: $section-margin;
 
+    display: flex;
+    flex-direction: row;
+
     @include b(mobile) {
-      flex-direction: column;
       padding: $section-margin / 3;
+
+      flex-direction: column;
     }
   }
 
   &__column {
     &:first-child {
-      flex: 0 0 65%;
-      width: 65%;
       padding-right: 30px;
 
+      width: 65%;
+      flex: 0 0 65%;
+
       @include b(mobile) {
-        flex: 0 0 100%;
-        width: 100%;
         padding-right: 0;
+
+        width: 100%;
+        flex: 0 0 100%;
       }
     }
 
     &:last-child {
       flex: 0 0 100% - 65%;
+
       width: 100% - 65%;
 
       @include b(mobile) {
-        flex: 0 0 100%;
-        width: 100%;
         margin-top: $section-margin;
+
+        width: 100%;
+        flex: 0 0 100%;
       }
     }
   }
@@ -51,7 +57,7 @@ $outline-color: #cecece;
   }
 
   &__section-header-tip {
-    color: black;
+    color: #000;
   }
 
   &__section-body {
@@ -62,8 +68,8 @@ $outline-color: #cecece;
     padding: $section-margin;
 
     @include b(mobile) {
-      padding-left: 20px;
       padding-right: 20px;
+      padding-left: 20px;
     }
   }
 }
@@ -81,17 +87,17 @@ $outline-color: #cecece;
 }
 
 .choices-section {
-  &__input {
-  }
-
   &__input-postfix {
     position: absolute;
     top: 50%;
     left: 90%;
-    transform: translateY(-50%);
+
+    padding: 12px;
+
     width: 5px;
     height: 5px;
-    padding: 12px;
+
+    transform: translateY(-50%);
 
     img {
       width: 10px;
@@ -103,8 +109,9 @@ $outline-color: #cecece;
   }
 
   &__button {
-    width: 40%;
     margin-top: 20px;
+
+    width: 40%;
   }
 }
 
@@ -114,8 +121,10 @@ $outline-color: #cecece;
   }
 
   &__input {
-    width: 100%;
     padding: 18px;
+
+    width: 100%;
+
     border-radius: 20px;
 
     &:hover {
@@ -123,12 +132,9 @@ $outline-color: #cecece;
     }
 
     &.ant-picker-focused {
-      box-shadow: 0 0 0 2px $yellow;
       border-color: $yellow;
+      box-shadow: 0 0 0 2px $yellow;
     }
-  }
-
-  &__input-dropdown {
   }
 
   &__input-popup {

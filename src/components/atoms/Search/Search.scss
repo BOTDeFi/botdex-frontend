@@ -1,14 +1,18 @@
 @import 'src/styles/vars';
+
 .search {
   &__img {
     margin-right: 12px;
-    cursor: pointer;
     margin-bottom: -3px;
+
+    cursor: pointer;
   }
+
   &-gray {
-    background: $gray-l;
-    border: 1px solid rgba(black, 0.1);
-    border-radius: 12px;
     padding: 14px;
+
+    background: $gray-l;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
   }
 }

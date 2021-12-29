@@ -6,10 +6,11 @@ import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import BnbImg from '@/assets/img/currency/unknown.svg';
+import { tokens } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 import { ILiquidityInfo } from '@/types';
-import { clogError } from '@/utils/logger';
+import { clogData, clogError } from '@/utils/logger';
 
 import MetamaskService from '../../../../services/web3';
 import { Button, Popover } from '../../../atoms';
@@ -30,44 +31,92 @@ const Receive: React.FC = observer(() => {
   const [liquidityInfo, setLiquidityInfo] = React.useState<IReceiveState>();
   const [isActiveTx, setIsActiveTx] = React.useState<boolean>(false);
 
+  clogData('liquidityInfo:', liquidityInfo);
+
   const handleRemoveLiquidity = async () => {
     try {
       if (liquidityInfo && liquidityInfo?.token0.receive && liquidityInfo?.token1.receive) {
         setIsActiveTx(true);
+        const wbnb = tokens.wbnb.address['97'].toLowerCase();
+        clogData('wbnb:', wbnb);
+        let method: string;
+        if (
+          liquidityInfo.token0.address.toLowerCase() === wbnb ||
+          liquidityInfo.token1.address.toLowerCase() === wbnb
+        ) {
+          method = 'removeLiquidityETH';
+        } else method = 'removeLiquidity';
+        clogData('method:', method);
         await metamaskService.createTransaction({
-          method: 'removeLiquidity',
+          method,
           contractName: 'ROUTER',
-          data: [
-            liquidityInfo?.token0.address,
-            liquidityInfo?.token1.address,
-            liquidityInfo.lpTokens,
-            new BigNumber(liquidityInfo?.token0.receive).toFixed(0),
-            new BigNumber(liquidityInfo?.token1.receive).toFixed(0),
-            user.address,
-            moment.utc().add(20, 'm').valueOf(),
-          ],
+          data:
+            method === 'removeLiquidity'
+              ? [
+                  liquidityInfo?.token0.address,
+                  liquidityInfo?.token1.address,
+                  liquidityInfo.lpTokens,
+                  new BigNumber(liquidityInfo?.token0.receive)
+                    .minus(
+                      new BigNumber(liquidityInfo?.token0.receive).times(
+                        liquidityInfo.settings.slippage.value,
+                      ),
+                    )
+                    .toFixed(0, 1),
+                  new BigNumber(liquidityInfo?.token1.receive)
+                    .minus(
+                      new BigNumber(liquidityInfo?.token1.receive).times(
+                        liquidityInfo.settings.slippage.value,
+                      ),
+                    )
+                    .toFixed(0, 1),
+                  user.address,
+                  moment.utc().add(20, 'm').valueOf(),
+                ]
+              : [
+                  liquidityInfo.token0.address.toLowerCase() === wbnb
+                    ? liquidityInfo.token1.address
+                    : liquidityInfo.token0.address,
+                  liquidityInfo.lpTokens,
+                  liquidityInfo.token0.address.toLowerCase() === wbnb
+                    ? new BigNumber(liquidityInfo.token1.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token1.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1)
+                    : new BigNumber(liquidityInfo.token0.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token0.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1),
+                  liquidityInfo.token0.address.toLowerCase() === wbnb
+                    ? new BigNumber(liquidityInfo.token0.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token0.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1)
+                    : new BigNumber(liquidityInfo.token1.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token1.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1),
+                  user.address,
+                  moment.utc().add(20, 'm').valueOf(),
+                ],
         });
         history.push('/trade/liquidity');
-        toast.success('Successfully removed liquidity!', {
-          position: 'bottom-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success('Successfully removed liquidity!');
       }
     } catch (err) {
-      toast.error('Something went wrong', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('Something went wrong');
       setIsActiveTx(false);
       clogError('remove liquidity', err);
     }
@@ -152,12 +201,12 @@ const Receive: React.FC = observer(() => {
           <span>Price</span>
           <div>
             <div className="peceive__price-item">
-              1 {liquidityInfo?.token0.symbol} = {+(+liquidityInfo?.token1.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token1.symbol}
+              1 {liquidityInfo?.token0.symbol} ={' '}
+              {new BigNumber(liquidityInfo?.token1.rate).toFixed(8)} {liquidityInfo?.token1.symbol}
             </div>
             <div className="peceive__price-item">
-              1 {liquidityInfo?.token1.symbol} = {+(+liquidityInfo?.token0.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token0.symbol}
+              1 {liquidityInfo?.token1.symbol} ={' '}
+              {new BigNumber(liquidityInfo?.token0.rate).toFixed(8)} {liquidityInfo?.token0.symbol}
             </div>
           </div>
         </div>

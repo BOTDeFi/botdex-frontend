@@ -3,14 +3,16 @@
 .farming-mode-status {
   &__button {
     padding: 4px 4px 4px 0;
+
     border: none;
 
     &_auto {
       & > :first-child {
         width: 20px;
         height: 20px;
-        border-radius: 50%;
+
         background: $green;
+        border-radius: 50%;
 
         svg {
           path {
@@ -23,6 +25,7 @@
 
   &__button-text {
     padding-left: 10px;
+
     line-height: 100% !important;
   }
 }

@@ -15,9 +15,9 @@ $document-column-width: calc(100% - #{$information-column-min-width});
   }
 
   &__title {
-    text-align: center;
     font-size: 36px;
     line-height: 43px;
+    text-align: center;
   }
 
   &__section {
@@ -28,32 +28,37 @@ $document-column-width: calc(100% - #{$information-column-min-width});
     padding: $section-margin;
 
     @include b(mobile) {
-      padding-left: 20px;
       padding-right: 20px;
+      padding-left: 20px;
     }
   }
 }
 
 .document {
   &__wrapper {
+    padding: 27px 27px 27px 34px;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 27px 27px 27px 34px;
 
     @include b(mobile) {
       position: relative;
-      flex-direction: column;
+
       padding-top: 60px;
+
+      flex-direction: column;
     }
   }
 
   &__column {
     flex: 1 1 $document-column-width;
+
     width: $document-column-width;
 
     @include b(mobile) {
       flex: unset;
+
       width: unset;
     }
   }
@@ -65,8 +70,9 @@ $document-column-width: calc(100% - #{$information-column-min-width});
 
   &__status {
     margin-bottom: 18px;
-    text-transform: capitalize;
+
     font-weight: 500;
+    text-transform: capitalize;
 
     &_active {
       color: $green1;
@@ -91,22 +97,26 @@ $document-column-width: calc(100% - #{$information-column-min-width});
   }
 
   &__information {
-    width: 100%;
     margin-top: 10px;
+
+    width: 100%;
   }
 }
 
 .information-column {
+  padding-left: 20px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding-left: 20px;
+
   min-width: $information-column-min-width;
 
   @include b(mobile) {
-    flex: unset;
-    width: unset;
     padding-left: 0;
+
+    width: unset;
+    flex: unset;
   }
 
   @include b(extramobile) {

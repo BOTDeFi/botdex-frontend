@@ -8,7 +8,7 @@ import { Button } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
-import { ILiquidityInfo } from '@/types';
+import { ILiquidityInfo, ISettings } from '@/types';
 import { clogError } from '@/utils/logger';
 
 import { LiquidityInfoModal, TradeBox } from '..';
@@ -42,7 +42,7 @@ const USER_PAIRS = gql`
   }
 `;
 
-const YourLiquidity: React.FC = observer(() => {
+const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings }) => {
   const { user } = useMst();
   const { metamaskService } = useWalletConnectorContext();
 
@@ -147,6 +147,7 @@ const YourLiquidity: React.FC = observer(() => {
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
                       },
+                      settings,
                     })
                   }
                   onKeyDown={() =>
@@ -166,6 +167,7 @@ const YourLiquidity: React.FC = observer(() => {
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
                       },
+                      settings,
                     })
                   }
                   role="button"

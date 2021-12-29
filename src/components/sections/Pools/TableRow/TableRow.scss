@@ -9,14 +9,19 @@
   & + & {
     &::after {
       content: '';
+
       position: absolute;
       top: 0;
       left: 50%;
-      transform: translateX(-50%);
+
       display: block;
-      height: 1px;
+
       width: calc(100% - 100px);
+      height: 1px;
+
       background: #eaeaea;
+
+      transform: translateX(-50%);
 
       @include b(tablet) {
         width: 100%;
@@ -25,16 +30,18 @@
   }
 
   &__content {
+    padding: 35px 30px;
+
     display: grid;
+    align-items: center;
+
+    cursor: pointer;
     grid-template-columns: $columns;
     grid-column-gap: 20px;
-    align-items: center;
-    padding: 35px 30px;
-    cursor: pointer;
 
     @include b(tablet) {
-      grid-template-columns: $columns-tablet;
       padding: 20px 20px 20px 10px;
+      grid-template-columns: $columns-tablet;
     }
   }
 
@@ -44,9 +51,10 @@
 
   &__currencies {
     &-item {
+      margin-right: 13px;
+
       width: 42px;
       height: 42px;
-      margin-right: 13px;
 
       &-image {
         width: inherit;
@@ -78,6 +86,7 @@
   &__item {
     &--mob {
       display: none;
+
       transition: 0.4s ease;
 
       &_active {
@@ -91,8 +100,10 @@
       @include b(1120) {
         span {
           visibility: hidden;
-          opacity: 0;
+
           width: 0;
+
+          opacity: 0;
         }
 
         svg {
@@ -117,15 +128,16 @@
 
   &__details {
     padding: 10px 30px;
-    overflow: hidden;
+
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    overflow: hidden;
     align-items: center;
+    grid-template-columns: 1fr 3fr;
 
     @include b(tablet) {
+      padding: 8px 10px;
       grid-template-columns: 1fr;
       grid-auto-flow: row dense;
-      padding: 8px 10px;
     }
 
     &-links {
@@ -142,15 +154,17 @@
     }
 
     &-info-popover {
+      margin-left: 8px;
+
       width: 20px;
       height: 20px;
-      margin-left: 8px;
     }
 
     &-box {
       padding: 20px 30px 40px;
-      border-radius: 12px;
+
       background: #f8f5fe;
+      border-radius: 12px;
 
       & + & {
         margin-left: 10px;
@@ -158,14 +172,16 @@
 
       &-start-staking-button {
         @include b(tablet) {
-          width: 100%;
           padding: 17px 0;
+
+          width: 100%;
         }
       }
 
       @include b(tablet) {
-        text-align: center;
         padding: 20px 10px;
+
+        text-align: center;
 
         & + & {
           margin: 10px 0;
@@ -187,24 +203,30 @@
   }
 
   .show-enter {
-    padding: 0px 30px;
+    padding: 0 30px;
+
     max-height: 0;
   }
 
   .show-enter-active {
     padding: 10px 30px;
+
     max-height: 192px;
+
     transition: padding 300ms, max-height 300ms;
   }
 
   .show-exit {
     padding: 10px 30px;
+
     max-height: 192px;
   }
 
   .show-exit-active {
-    padding: 0px 30px;
+    padding: 0 30px;
+
     max-height: 0;
+
     transition: padding 300ms, max-height 300ms;
   }
 }

@@ -7,10 +7,9 @@
   flex-wrap: $wrap;
 }
 
-@mixin container($max-width: 1100px){
+@mixin container($max-width: 1100px) {
   max-width: $max-width;
-  @media (max-width: $max-width){
+  @media (max-width: $max-width) {
     max-width: 100%;
   }
 }
-

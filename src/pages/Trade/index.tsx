@@ -8,7 +8,6 @@ import { CurrencyInfo, TimeSelector } from '@/components/sections/Graph';
 import { TTimestampSelector } from '@/components/sections/Graph/TimeSelector';
 import { useGetDaysPairs, useGetHoursPairs } from '@/services/api/refinery-finance-pairs';
 import { useMst } from '@/store';
-import { clogData } from '@/utils/logger';
 
 import { Liquidity, Swap, TradeNavbar } from '../../components/sections/Trade';
 
@@ -16,7 +15,6 @@ import './Trade.scss';
 
 const Trade: React.FC = observer(() => {
   const { pairs } = useMst();
-  clogData('location:', window.location);
 
   const [data, setData] = React.useState(pairs.getFormattedPoints());
   const [reversed, setReversed] = React.useState(false);
@@ -64,6 +62,7 @@ const Trade: React.FC = observer(() => {
         marker: {
           show: false,
         },
+        // eslint-disable-next-line func-names
         custom: function () {
           return ``;
         },
@@ -81,10 +80,11 @@ const Trade: React.FC = observer(() => {
             fontFamily: 'Montserrat',
             cssClass: 'xaxis-label',
           },
+          // eslint-disable-next-line func-names
           formatter: function (value: any, timestamp: number) {
-            let format = 'HH:mm a';
-            switch(currentStamp){
-              case 1:{
+            let format: string;
+            switch (currentStamp) {
+              case 1: {
                 format = 'MMM DD YY';
                 break;
               }
@@ -96,7 +96,7 @@ const Trade: React.FC = observer(() => {
                 format = 'MMM DD YY';
                 break;
               }
-              default:{
+              default: {
                 format = 'HH:mm a';
                 break;
               }

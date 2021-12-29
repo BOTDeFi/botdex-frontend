@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 
 import ArrowImg from '@/assets/img/icons/arrow-btn.svg';
 import InfoImg from '@/assets/img/icons/info.svg';
@@ -21,40 +22,53 @@ interface ITradeBox {
   info?: string;
 }
 
-const TradeBox: React.FC<ITradeBox> = ({
-  title,
-  subtitle,
-  settingsLink,
-  recentTxLink,
-  children,
-  className,
-  titleBackLink,
-  info,
-}) => {
-  return (
-    <div className={cn('trade-box box-shadow box-white', className)}>
-      <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">
-        <div className="">
-          {titleBackLink ? (
-            <Link to="/trade/liquidity">
+const TradeBox: React.FC<ITradeBox> = observer(
+  ({ title, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, info }) => {
+    return (
+      <div className={cn('trade-box box-shadow box-white', className)}>
+        <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">
+          <div className="">
+            {titleBackLink ? (
+              <Link to="/trade/liquidity">
+                <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
+                  <img src={ArrowImg} alt="" className="trade-box__back" />
+                  <span>{title}</span>
+                </div>
+              </Link>
+            ) : (
               <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
-                <img src={ArrowImg} alt="" className="trade-box__back" />
                 <span>{title}</span>
               </div>
-            </Link>
-          ) : (
-            <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
-              <span>{title}</span>
-            </div>
-          )}
-          {subtitle ? (
-            <div className="trade-box__subtitle text-gray box-f-ai-c">
-              <span>{subtitle}</span>
+            )}
+            {subtitle ? (
+              <div className="trade-box__subtitle text-gray box-f-ai-c">
+                <span>{subtitle}</span>
 
-              {info ? (
-                <Popover content={<span className="text-med text text-black">{info}</span>}>
-                  <img src={InfoImg} alt="" />
-                </Popover>
+                {info ? (
+                  <Popover content={<span className="text-med text text-black">{info}</span>}>
+                    <img src={InfoImg} alt="" />
+                  </Popover>
+                ) : (
+                  ''
+                )}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          {recentTxLink || settingsLink ? (
+            <div className="box-f-ai-c">
+              {settingsLink ? (
+                <Link to={settingsLink} className="trade-box__icon">
+                  <img src={SettingsImg} alt="advanced settings" />
+                </Link>
+              ) : (
+                ''
+              )}
+              {recentTxLink ? (
+                <Link to={recentTxLink} className="trade-box__icon">
+                  <img src={RecentTxImg} alt="advanced settings" />
+                </Link>
               ) : (
                 ''
               )}
@@ -63,30 +77,10 @@ const TradeBox: React.FC<ITradeBox> = ({
             ''
           )}
         </div>
-        {recentTxLink && settingsLink ? (
-          <div className="box-f-ai-c">
-            {settingsLink ? (
-              <Link to={settingsLink} className="trade-box__icon">
-                <img src={SettingsImg} alt="advanced settings" />
-              </Link>
-            ) : (
-              ''
-            )}
-            {recentTxLink ? (
-              <Link to={recentTxLink} className="trade-box__icon">
-                <img src={RecentTxImg} alt="advanced settings" />
-              </Link>
-            ) : (
-              ''
-            )}
-          </div>
-        ) : (
-          ''
-        )}
+        {children}
       </div>
-      {children}
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default TradeBox;

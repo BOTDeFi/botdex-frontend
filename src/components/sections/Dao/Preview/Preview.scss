@@ -4,19 +4,21 @@
 $default-margin: 15px;
 
 .dao-preview {
-  background-color: $yellow-d;
-  border-radius: 40px;
-  padding: 42px 30px 30px 42px;
-  background-image: url(~@/assets/img/sections/dao/bg.jpg);
-  background-position: 100% 0;
-  background-repeat: no-repeat;
   position: relative;
+
+  padding: 42px 30px 30px 42px;
+
+  background-color: $yellow-d;
+  //background-image: url('src/assets/img/sections/dao/bg.jpg');
+  background-repeat: no-repeat;
+  background-position: 100% 0;
   background-size: 100% 100%;
+  border-radius: 40px;
 
   &__footer-container {
     display: flex;
-    align-items: flex-end;
     justify-content: space-between;
+    align-items: flex-end;
 
     @include b(extramobile) {
       flex-direction: column;
@@ -24,8 +26,9 @@ $default-margin: 15px;
   }
 
   &__subtitle {
-    max-width: 600px;
     margin-top: $default-margin;
+
+    max-width: 600px;
   }
 
   &__button {

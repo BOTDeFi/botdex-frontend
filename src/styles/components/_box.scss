@@ -43,43 +43,55 @@
   &-f-ai-e {
     align-items: flex-end;
   }
+
   &-f-fd-c {
     display: flex;
     flex-direction: column;
   }
 
   &-shadow {
-    box-shadow: $shadow;
-    border-radius: 12px;
     overflow: hidden;
+
+    border-radius: 12px;
+    box-shadow: $shadow;
   }
+
   &-yellow-l {
     background: $yellow-l;
   }
+
   &-yellow-l-d {
     background: $yellow-d;
   }
+
   &-yellow {
     background: $yellow;
   }
+
   &-circle {
     border-radius: 50%;
   }
+
   &-white {
     background: #fff;
   }
+
   &-black {
     background: $black;
   }
+
   &-gray {
     background: rgba(#c1c1c1, 0.1);
   }
+
   &-full {
     width: 100%;
   }
+
   &-overflow-v {
     overflow: visible;
   }
+
   &-pointer {
     cursor: pointer;
   }

@@ -13,16 +13,21 @@ $card-bg-color: #f9f9f9;
 }
 
 .p-card {
-  max-width: 355px;
-  width: 100%;
-  height: fit-content;
   margin: 0 auto;
+
+  width: 100%;
+  max-width: 355px;
+  height: fit-content;
+
   background-color: $card-bg-color;
 
   &__head {
     position: relative;
+
     padding: 20px 18px 10px 31px;
+
     min-height: 115px;
+
     background: $bg-gradient;
   }
 
@@ -39,9 +44,10 @@ $card-bg-color: #f9f9f9;
 
     img + img {
       position: absolute;
-      width: 32px;
-      bottom: -8px;
       right: -8px;
+      bottom: -8px;
+
+      width: 32px;
     }
   }
 
@@ -50,8 +56,10 @@ $card-bg-color: #f9f9f9;
       position: absolute;
       top: -7px;
       right: -50px;
-      transform: rotate(45deg);
+
       padding: 35px 45px 10px;
+
+      transform: rotate(45deg);
     }
   }
 
@@ -63,13 +71,11 @@ $card-bg-color: #f9f9f9;
     }
   }
 
-  &__footer {
-  }
-
   &__footer-info-popover {
+    margin: 0 auto 0 8px;
+
     width: 20px;
     height: 20px;
-    margin: 0 auto 0 8px;
   }
 
   &__apr {
@@ -104,6 +110,7 @@ $card-bg-color: #f9f9f9;
 
   &__details {
     padding-top: 30px;
+
     overflow: hidden;
 
     &-item {
@@ -114,9 +121,10 @@ $card-bg-color: #f9f9f9;
       }
 
       img {
-        width: 19px;
         margin-top: -2px;
         margin-left: 5px;
+
+        width: 19px;
       }
     }
   }
@@ -133,23 +141,29 @@ $card-bg-color: #f9f9f9;
 
   .show-enter {
     padding-top: 0;
+
     max-height: 0;
   }
 
   .show-enter-active {
     padding-top: 30px;
+
     max-height: 132px;
+
     transition: padding-top 300ms, max-height 300ms;
   }
 
   .show-exit {
     padding-top: 30px;
+
     max-height: 132px;
   }
 
   .show-exit-active {
     padding-top: 0;
+
     max-height: 0;
+
     transition: padding-top 300ms, max-height 300ms;
   }
 }

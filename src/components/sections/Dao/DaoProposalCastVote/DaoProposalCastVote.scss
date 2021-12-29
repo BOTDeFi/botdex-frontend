@@ -2,21 +2,25 @@
 @import 'src/styles/mixins/media';
 
 .buttons-group {
+  margin: 0 auto;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   max-width: 450px;
-  margin: 0 auto;
 
   &__button {
-    width: 100%;
     margin-bottom: 20px;
+
+    width: 100%;
+
     border: 3px solid #cecece;
 
     &_active {
+      color: #fff;
       background-color: $yellow;
       border-color: $yellow;
-      color: white;
     }
   }
 

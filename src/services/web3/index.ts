@@ -1,8 +1,10 @@
 import BigNumber from 'bignumber.js/bignumber';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
+import { Contract } from 'web3-eth-contract';
 
 import { contracts } from '@/config';
+import { clog } from '@/utils/logger';
 
 declare global {
   interface Window {
@@ -81,9 +83,9 @@ export default class MetamaskService {
 
   public web3Provider;
 
-  private testnet: string;
+  private readonly testnet: string;
 
-  private isProduction: boolean;
+  private readonly isProduction: boolean;
 
   public walletAddress = '';
 
@@ -130,7 +132,7 @@ export default class MetamaskService {
     });
   }
 
-  ethRequestAccounts() {
+  ethRequestAccounts(): any {
     return this.wallet.request({ method: 'eth_requestAccounts' });
   }
 
@@ -150,13 +152,13 @@ export default class MetamaskService {
               method: 'wallet_addEthereumChain',
               params: [chainsParams[requiredChain]],
             });
-          return true;
+            return true;
           } catch (addError: any) {
-            console.log(addError);
+            clog(addError);
             return false;
           }
         } else {
-          console.log(switchError);
+          clog(switchError);
           return false;
         }
       }
@@ -164,7 +166,7 @@ export default class MetamaskService {
     return true;
   }
 
-  public connect() {
+  public connect(): Promise<any> {
     if (!this.wallet) {
       return Promise.reject(
         new Error(`Couldn't find Metamask extension, check if it's installed and enabled.`),
@@ -177,7 +179,7 @@ export default class MetamaskService {
         reject(new Error(`metamask wallet is not injected`));
       }
 
-      if (!currentChain || currentChain === null) {
+      if (!currentChain) {
         this.wallet
           .request({ method: 'eth_chainId' })
           .then((resChain: any) => {
@@ -200,7 +202,7 @@ export default class MetamaskService {
           .catch(() => reject(new Error('Not authorized')));
       } else {
         this.checkNets().then((required) => {
-          console.log(required);
+          clog(required);
           if (required) {
             this.ethRequestAccounts()
               .then((account: any) => {
@@ -214,12 +216,12 @@ export default class MetamaskService {
           } else {
             reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
           }
-        })
+        });
       }
     });
   }
 
-  createContract(contractName: string, tokenAddress: string, abi: Array<any>) {
+  createContract(contractName: string, tokenAddress: string, abi: Array<any>): void {
     if (!this.contracts[contractName]) {
       const contract = this.getContract(tokenAddress, abi);
       this.contracts = {
@@ -229,32 +231,35 @@ export default class MetamaskService {
     }
   }
 
-  getContract(tokenAddress: string, abi: Array<any>) {
+  getContract(tokenAddress: string, abi: Array<any>): Contract {
     return new this.web3Provider.eth.Contract(abi, tokenAddress);
   }
 
-  getEthBalance() {
+  getEthBalance(): any {
     return this.web3Provider.eth.getBalance(this.walletAddress);
   }
 
-  static getMethodInterface(abi: Array<any>, methodName: string) {
+  static getMethodInterface(abi: Array<any>, methodName: string): any {
     return abi.filter((m) => {
       return m.name === methodName;
     })[0];
   }
 
-  encodeFunctionCall(abi: any, data: Array<any>) {
+  encodeFunctionCall(abi: any[] | any, data: Array<any>): any {
     return this.web3Provider.eth.abi.encodeFunctionCall(abi, data);
   }
 
-  async totalSupply(tokenAddress: string, abi: Array<any>, tokenDecimals: number) {
+  async totalSupply(tokenAddress: string, abi: Array<any>, tokenDecimals: number): Promise<number> {
     const contract = this.getContract(tokenAddress, abi);
     const totalSupply = await contract.methods.totalSupply().call();
 
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
-  async getTokenInfo(address: string, abi: any) {
+  async getTokenInfo(
+    address: string,
+    abi: any[],
+  ): Promise<{ name: any; decimals: any; symbol: any; address: any }> {
     try {
       const contract = this.getContract(address, abi);
       const name = await contract.methods.name().call();
@@ -286,7 +291,7 @@ export default class MetamaskService {
     walletAddress?: string;
     tokenAddress: string;
     approveSum?: number;
-  }) {
+  }): Promise<boolean> {
     let decimals = NaN;
 
     const contract = this.getContract(tokenAddress, contracts[contractName].ABI);
@@ -306,10 +311,7 @@ export default class MetamaskService {
           : +new BigNumber(result)
               .dividedBy(new BigNumber(10).pow(tokenDecimals || decimals))
               .toString(10);
-      if (result && new BigNumber(result).minus(approveSum || 0).isPositive()) {
-        return true;
-      }
-      return false;
+      return !!(result && new BigNumber(result).minus(approveSum || 0).isPositive());
     } catch (error) {
       return false;
     }
@@ -317,28 +319,24 @@ export default class MetamaskService {
 
   async approveToken({
     contractName,
-    tokenDecimals,
     approvedAddress,
     walletAddress,
     tokenAddress,
   }: {
     contractName: 'ROUTER' | 'ERC20' | 'PAIR';
-    tokenDecimals?: number;
     approvedAddress?: string;
     walletAddress?: string;
     tokenAddress: string;
-  }) {
+  }): Promise<any> {
     try {
       const approveMethod = MetamaskService.getMethodInterface(
         contracts[contractName].ABI,
         'approve',
       );
-
       const approveSignature = this.encodeFunctionCall(approveMethod, [
         approvedAddress || walletAddress || this.walletAddress,
-        new BigNumber(2).pow(256).toFixed(0, 1),
+        new BigNumber(2).pow(256).minus(1).toFixed(0, 1),
       ]);
-
       return this.sendTransaction({
         from: walletAddress || this.walletAddress,
         to: tokenAddress,
@@ -349,11 +347,11 @@ export default class MetamaskService {
     }
   }
 
-  static calcTransactionAmount(amount: number | string, tokenDecimal: number) {
+  static calcTransactionAmount(amount: number | string, tokenDecimal: number): string {
     return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
   }
 
-  static amountFromGwei(amount: number | string, tokenDecimal: number) {
+  static amountFromGwei(amount: number | string, tokenDecimal: number): string {
     return new BigNumber(amount).dividedBy(new BigNumber(10).pow(tokenDecimal)).toString(10);
   }
 
@@ -373,7 +371,7 @@ export default class MetamaskService {
     toAddress?: string;
     fromAddress?: string;
     value?: any;
-  }) {
+  }): any {
     const contract = contracts[contractName];
     const { ABI, ADDRESS } = contract;
     const transactionMethod = MetamaskService.getMethodInterface(ABI, method);
@@ -397,7 +395,7 @@ export default class MetamaskService {
     });
   }
 
-  signMsg(msg: string) {
+  signMsg(msg: string): any {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }
 
@@ -407,7 +405,7 @@ export default class MetamaskService {
     data?: any[],
     contractAddress?: string,
     contractAbi?: Array<any>,
-  ) {
+  ): Promise<any> {
     try {
       if (!this.contracts[contractName] && contractAddress && contractAbi) {
         await this.createContract(contractName, contractAddress, contractAbi);
@@ -431,7 +429,7 @@ export default class MetamaskService {
     abi: any[],
     methodName: string,
     data?: any[],
-  ) {
+  ): Promise<any> {
     try {
       const contract = this.getContract(contractAddress, abi);
       const method = contract.methods[methodName];
@@ -445,7 +443,7 @@ export default class MetamaskService {
     }
   }
 
-  sendTransaction(transactionConfig: any) {
+  sendTransaction(transactionConfig: any | string): any {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
       from: this.walletAddress,

@@ -8,13 +8,13 @@ $default-vertical-padding: 22px;
   padding: {
     top: $default-vertical-padding;
     right: $default-horizontal-padding;
-    bottom: $default-vertical-padding;
     left: $default-horizontal-padding + $desktop-menu-width;
+    bottom: $default-vertical-padding;
   }
 
   @include b(tablet) {
-    padding-left: 0;
     padding-right: 0;
+    padding-left: 0;
   }
 
   &__content {

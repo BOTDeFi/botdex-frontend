@@ -26,6 +26,7 @@ const RootModel = types.model({
 export const Store = RootModel.create({
   user: {
     address: '',
+    type: 'from',
   },
   modals: {
     metamaskErr: {
@@ -95,7 +96,7 @@ export const Store = RootModel.create({
       points: [],
       id: '',
     },
-  }
+  },
 });
 
 const rootStore = Store;

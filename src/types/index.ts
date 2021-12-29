@@ -80,6 +80,7 @@ export interface ILiquidityInfo {
     deposited?: number | string;
     receive?: number | string;
   };
+  settings: ISettings;
 }
 
 export enum PoolFarmingMode {

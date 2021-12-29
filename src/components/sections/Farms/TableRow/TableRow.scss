@@ -9,13 +9,18 @@
   & + & {
     &::after {
       content: '';
+
       position: absolute;
-      display: block;
-      height: 1px;
-      width: calc(100% - 100px);
-      left: 50%;
       top: 0;
+      left: 50%;
+
+      display: block;
+
+      width: calc(100% - 100px);
+      height: 1px;
+
       background: #eaeaea;
+
       transform: translateX(-50%);
 
       @include b(tablet) {
@@ -25,28 +30,18 @@
   }
 
   &__content {
-    display: grid;
-    grid-template-columns: $columns;
-    align-items: center;
-    grid-column-gap: 20px;
     padding: 35px 30px;
+
+    display: grid;
+    align-items: center;
+
     cursor: pointer;
+    grid-template-columns: $columns;
+    grid-column-gap: 20px;
 
     @include b(tablet) {
-      grid-template-columns: $columns-tablet;
       padding: 20px 20px 20px 10px;
-    }
-  }
-
-  &__currencies {
-  }
-
-  &__currencies-pair {
-  }
-
-  &__currencies-pair-item {
-    &:last-child {
-      margin-left: -5px;
+      grid-template-columns: $columns-tablet;
     }
   }
 
@@ -57,11 +52,15 @@
   &__currencies {
     &-pair {
       margin-right: 12px;
-    }
 
-    &-pair-item {
-      width: 24px;
-      height: 24px;
+      &-item {
+        width: 24px;
+        height: 24px;
+
+        &:last-child {
+          margin-left: -5px;
+        }
+      }
     }
   }
 
@@ -82,6 +81,7 @@
   &__item {
     &--mob {
       display: none;
+
       transition: 0.4s ease;
 
       &_active {
@@ -96,8 +96,10 @@
       @include b(1120) {
         span {
           visibility: hidden;
-          opacity: 0;
+
           width: 0;
+
+          opacity: 0;
         }
 
         svg {
@@ -129,21 +131,23 @@
 
   &__details {
     padding: 10px 30px;
-    overflow: hidden;
+
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    overflow: hidden;
     align-items: center;
+    grid-template-columns: 1fr 3fr;
 
     @include b(tablet) {
+      padding: 8px 10px;
       grid-template-columns: 1fr;
       grid-auto-flow: row dense;
-      padding: 8px 10px;
     }
 
     &-links {
       &-item {
-        width: fit-content;
         margin-bottom: 15px;
+
+        width: fit-content;
 
         span {
           margin-right: 7px;
@@ -153,27 +157,32 @@
 
     &-check {
       padding: 1px 6px;
+
+      width: fit-content;
+
       border: 1px solid $yellow;
       border-radius: 40px;
-      width: fit-content;
     }
 
     &-box {
       padding: 20px 30px 40px;
-      border-radius: 12px;
+
       background: rgba(#fff, 0.5);
+      border-radius: 12px;
 
       & + & {
         margin-left: 10px;
       }
 
       @include b(tablet) {
-        text-align: center;
         padding: 20px 10px;
 
+        text-align: center;
+
         .btn-yellow {
-          width: 100% !important;
           padding: 17px 0 !important;
+
+          width: 100% !important;
         }
 
         & + & {
@@ -196,24 +205,30 @@
   }
 
   .show-enter {
-    padding: 0px 30px;
+    padding: 0 30px;
+
     max-height: 0;
   }
 
   .show-enter-active {
     padding: 10px 30px;
+
     max-height: 192px;
+
     transition: padding 300ms, max-height 300ms;
   }
 
   .show-exit {
     padding: 10px 30px;
+
     max-height: 192px;
   }
 
   .show-exit-active {
-    padding: 0px 30px;
+    padding: 0 30px;
+
     max-height: 0;
+
     transition: padding 300ms, max-height 300ms;
   }
 }

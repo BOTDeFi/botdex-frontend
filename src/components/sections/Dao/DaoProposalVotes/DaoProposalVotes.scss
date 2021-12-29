@@ -1,20 +1,23 @@
 .votes-list {
   &__item {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
     padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     &:not(:last-child) {
       padding-bottom: 20px;
+
       border-bottom: 1px solid #b8b8b8;
     }
   }
 
   &__avatar {
+    margin-right: 13px;
+
     width: 42px;
     height: 42px;
-    margin-right: 13px;
   }
 
   &__avatar-image {
@@ -23,6 +26,7 @@
 
   &__name {
     flex: 1 0;
+
     margin-right: 5px;
   }
 
@@ -44,6 +48,7 @@
 
   &__tokens-value {
     padding-right: 12px;
+
     font-weight: 500;
   }
 }

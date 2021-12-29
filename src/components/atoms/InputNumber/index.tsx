@@ -23,6 +23,7 @@ const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> = React.me
       colorScheme = 'gray',
       inputPrefix,
       className,
+      max,
       inputClass,
       value,
       prefixPosition = 'right',
@@ -42,6 +43,7 @@ const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> = React.me
         )}
       >
         <Input
+          max={max}
           type="number"
           ref={ref}
           className={cn(

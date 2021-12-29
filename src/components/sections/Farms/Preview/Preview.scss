@@ -2,19 +2,23 @@
 @import 'src/styles/mixins/media';
 
 .farms-preview {
-  border-radius: 40px;
   overflow: hidden;
+
+  border-radius: 40px;
+
   &__box {
-    background-color: $yellow-d;
-    border-radius: 0px 0 40px 40px;
     padding: 40px;
+
+    background-color: $yellow-d;
     background-image: url(../../../../assets/img/sections/farms/bg.jpg);
     background-position: 0 0;
     background-size: 100% 100%;
+    border-radius: 0 0 40px 40px;
 
     @include b(mobile) {
-      background-image: url(../../../../assets/img/sections/farms/bg-1.svg);
       padding: 40px 10px 20px 40px;
+
+      background-image: url(../../../../assets/img/sections/farms/bg-1.svg);
     }
 
     &--info {
@@ -25,23 +29,28 @@
       }
     }
   }
+
   &__title {
     @include b(mobile) {
       font-size: 40px !important;
     }
   }
+
   &__sibtitle {
     margin-top: 16px;
   }
+
   &__auc {
     padding: 21px 26px;
     @include b(mobile) {
       padding: 23px 10px;
     }
+
     &-img {
       margin-right: 14px;
     }
   }
+
   &__details {
     margin-top: 15px;
     margin-left: 58px;
@@ -52,24 +61,37 @@
 
   .show-enter {
     margin-top: 0;
+
     max-height: 0;
+
     opacity: 0;
   }
+
   .show-enter-active {
     margin-top: 15px;
+
     max-height: 45px;
+
     opacity: 1;
+
     transition: margin-top 300ms, max-height 300ms, opacity 500ms;
   }
+
   .show-exit {
     margin-top: 15px;
+
     max-height: 45px;
+
     opacity: 1;
   }
+
   .show-exit-active {
     margin-top: 0;
-    opacity: 0;
+
     max-height: 0;
+
+    opacity: 0;
+
     transition: margin-top 300ms, max-height 300ms, opacity 300ms;
   }
 }

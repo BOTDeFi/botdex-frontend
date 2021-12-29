@@ -6,26 +6,23 @@
   }
 
   &__captions {
+    margin-bottom: 6px;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  &__option {
-  }
-
-  &__value {
   }
 
   &__progress-bar {
     height: 6px;
+
     border: 1px solid $yellow;
     border-radius: 20px;
   }
 
   &__progress-bar-value {
     height: 100%;
+
     background-color: $yellow;
   }
 }

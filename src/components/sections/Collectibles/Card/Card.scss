@@ -1,22 +1,28 @@
 @import '../../../../styles/vars';
 
 .collectibles-card {
-  overflow: hidden;
-  background: #f9f9f9;
-  box-shadow: $shadow;
-  border-radius: 40px;
-  width: 100%;
   margin: 0 9px;
+
+  overflow: hidden;
+
+  width: 100%;
   max-width: 355px;
+
+  background: #f9f9f9;
+  border-radius: 40px;
+  box-shadow: $shadow;
+
   &__img {
     img {
       width: 115%;
       max-height: 355px;
     }
   }
+
   &__content {
     padding: 30px 20px 40px;
   }
+
   &__btn {
     margin: 25px auto 0;
   }

@@ -1,3 +1,5 @@
+@import './mixins/media';
+
 .h1 {
   font-size: 70px;
   line-height: 84px;
@@ -5,18 +7,22 @@
     font-size: 50px;
     line-height: 60px;
   }
+
   &-md {
     font-size: 60px;
     line-height: 71px;
   }
+
   &-lg {
     font-size: 60px;
     line-height: 71px;
   }
 }
+
 .h2 {
   font-size: 30px;
   line-height: 36px;
+
   &-lg {
     font-size: 40px;
     line-height: 47px;
@@ -26,103 +32,134 @@
 .text {
   font-size: 16px;
   line-height: 19px;
+
   &-ssm {
     font-size: 14px;
     line-height: 17px;
   }
+
   &-ssmd {
     font-size: 16px;
     line-height: 26px;
   }
+
   &-sm {
     font-size: 15px;
     line-height: 18px;
   }
+
   &-smd {
     font-size: 18px;
     line-height: 21px;
   }
+
   &-md {
     font-size: 20px;
     line-height: 24px;
   }
+
   &-lmd {
     font-size: 22px;
     line-height: 26px;
   }
+
   &-slg {
     font-size: 24px;
     line-height: 28px;
   }
+
   &-lg {
     font-size: 25px;
     line-height: 30px;
   }
+
   &-yellow {
     color: $yellow;
   }
+
   &-bold {
-    font-weight: bold;
+    font-weight: 700;
   }
+
   &-med {
     font-weight: 600;
   }
+
   &-500 {
     font-weight: 500;
   }
+
   &-white {
     color: #fff;
   }
+
   &-gray {
     color: $gray;
   }
+
   &-gray-2 {
     color: $gray-2;
   }
+
   &-gray-l-2 {
     color: $gray-l-2;
   }
+
   &-upper {
     text-transform: uppercase;
   }
+
   &-orange {
     color: $orange;
   }
+
   &-green {
     color: $green;
   }
+
   &-norm {
-    font-weight: normal;
+    font-weight: 400;
   }
+
   &-center {
     text-align: center;
   }
+
   &-right {
     text-align: right;
   }
+
   &-left {
     text-align: left;
   }
+
   &-blue {
     color: $blue;
   }
+
   &-blue-d {
     color: $blue-d;
   }
+
   &-black {
     color: $black;
   }
+
   &-capitalize {
     text-transform: capitalize;
   }
+
   &-red {
     color: $red;
   }
+
   &-address {
-    max-width: 220px;
-    text-overflow: ellipsis;
-    overflow: hidden;
     display: block;
+    overflow: hidden;
+
+    max-width: 220px;
+
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

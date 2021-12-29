@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import { useMst } from '@/store';
 import { IRecentTx, ISettings } from '@/types';
+import { clog } from '@/utils/logger';
 
 import TradeWrapper from '../../../../HOC/TradeWrapper';
 import AddLiquidity from '../AddLiquidity';
@@ -32,6 +33,8 @@ const GET_USER_TRX = gql`
         token1 {
           symbol
         }
+        reserve0
+        reserve1
       }
       transaction {
         mints {
@@ -53,10 +56,11 @@ const GET_USER_TRX = gql`
   }
 `;
 
-const AddLiquidityComp = TradeWrapper(AddLiquidity, 'quote');
-
 const Liquidity: React.FC = observer(() => {
   const { user } = useMst();
+  const AddLiquidityComp = TradeWrapper(AddLiquidity, 'liquidity');
+  const RemoveLiquidityComp = TradeWrapper(RemoveLiquidity, 'liquidity');
+  const YourLiquidityComp = TradeWrapper(YourLiquidity, 'liquidity');
 
   const [getUserTrx, { error, data: userTrx }] = useLazyQuery(GET_USER_TRX, {
     pollInterval: 60000,
@@ -73,7 +77,7 @@ const Liquidity: React.FC = observer(() => {
     txDeadlineUtc: moment.utc().add(20, 'm').unix(),
     isAudio: false,
   });
-  console.log(settings.txDeadlineUtc, 'deadline');
+  clog(settings.txDeadlineUtc, 'deadline');
 
   const handleSaveSettings = (settingsObj: ISettings): void => {
     setSettings(settingsObj);
@@ -145,7 +149,11 @@ const Liquidity: React.FC = observer(() => {
 
   return (
     <Switch>
-      <Route exact path="/trade/liquidity" component={YourLiquidity} />
+      <Route
+        exact
+        path="/trade/liquidity"
+        render={() => <YourLiquidityComp settings={settings} />}
+      />
       <Route exact path="/trade/liquidity/find" component={ImportPool} />
       <Route
         exact
@@ -157,17 +165,17 @@ const Liquidity: React.FC = observer(() => {
         path="/trade/liquidity/add/:currencyIdA/:currencyIdB"
         render={() => <AddLiquidityComp settings={settings} />}
       />
-      <Route exact path="/trade/liquidity/remove" component={RemoveLiquidity} />
+      <Route
+        exact
+        path="/trade/liquidity/remove"
+        render={() => <RemoveLiquidityComp settings={settings} />}
+      />
       <Route exact path="/trade/liquidity/receive" component={Receive} />
       <Route
         exact
         path="/trade/liquidity/settings"
         render={() => (
-          <ExchangeSettings
-            savedSettings={settings}
-            handleSave={handleSaveSettings}
-            isSlippage={false}
-          />
+          <ExchangeSettings savedSettings={settings} handleSave={handleSaveSettings} isSlippage />
         )}
       />
       <Route exact path="/trade/liquidity/history" render={() => <RecentTxs items={trx} />} />

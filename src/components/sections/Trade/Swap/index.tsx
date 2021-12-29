@@ -33,10 +33,9 @@ const GET_USER_TRX = gql`
   }
 `;
 
-const ExchangeComp = TradeWrapper(Exchange, 'getAmountOut');
-
 const Swap: React.FC = observer(() => {
   const { user } = useMst();
+  const ExchangeComp = TradeWrapper(Exchange, 'swap');
 
   const [getUserTrx, { error, data: userTrx }] = useLazyQuery(GET_USER_TRX, {
     pollInterval: 60000,

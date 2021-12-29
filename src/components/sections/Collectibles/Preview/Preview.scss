@@ -1,22 +1,29 @@
 @import 'src/styles/vars';
+
 .collectibles-preview {
-  background-color: $yellow-d;
-  border-radius: 40px;
-  padding: 40px 42px 200px;
-  background-image: url(../../../../assets/img/sections/collectibles/bg.jpg);
-  background-position: 0 0;
-  background-repeat: no-repeat;
   position: relative;
+
+  padding: 40px 42px 200px;
+
+  background-color: $yellow-d;
+  background-image: url(../../../../assets/img/sections/collectibles/bg.jpg);
+  background-repeat: no-repeat;
+  background-position: 0 0;
   background-size: 100% 100%;
+  border-radius: 40px;
+
   &__title {
     position: relative;
   }
+
   &__img {
     position: absolute;
+
     &-1 {
       top: -10px;
       left: -25px;
     }
+
     &-2 {
       left: 230px;
       bottom: -22px;

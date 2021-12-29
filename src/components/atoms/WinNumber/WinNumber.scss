@@ -1,10 +1,13 @@
 .win-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 83.5px;
   height: 83.5px;
+
   font-size: 40.4329px;
   line-height: 48px;
+
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

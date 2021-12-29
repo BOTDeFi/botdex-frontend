@@ -1,31 +1,40 @@
 @import 'src/styles/vars';
+
 .r-liquidity {
   &__percent {
     font-size: 77px;
     line-height: 91px;
+
     &-btns {
       margin-top: 30px;
     }
   }
+
   &__content {
-    background: $gray-l;
+    margin: 20px 0 30px;
     padding: 20px;
-    margin: 20px 0px 30px;
+
+    background: $gray-l;
   }
+
   &__currency {
     & + & {
       margin-top: 12px;
     }
+
     &-item {
       img {
-        margin-left: 11px;
-        width: 32px;
         margin-top: -2px;
+        margin-left: 11px;
+
+        width: 32px;
       }
     }
   }
+
   &__price {
     margin-bottom: 30px;
+
     &-item {
       & + & {
         margin-top: 10px;

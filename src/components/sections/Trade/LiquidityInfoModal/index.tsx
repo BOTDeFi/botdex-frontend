@@ -82,20 +82,20 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
 
   // const handleGetShareOfPool = React.useCallback(() => {
   //   if (info && deposit0 && deposit1) {
-  //     const resurve0 = MetamaskService.calcTransactionAmount(
+  //     const reserve0 = MetamaskService.calcTransactionAmount(
   //       +info?.token0.balance,
   //       +info?.token0.decimals,
   //     );
-  //     const resurve1 = MetamaskService.calcTransactionAmount(
+  //     const reserve1 = MetamaskService.calcTransactionAmount(
   //       +info?.token1.balance,
   //       +info?.token1.decimals,
   //     );
   //
   //     const share1 = new BigNumber(deposit0)
-  //       .dividedBy(new BigNumber(resurve0).plus(resurve1).plus(deposit0))
+  //       .dividedBy(new BigNumber(reserve0).plus(reserve1).plus(deposit0))
   //       .toString(10);
   //     const share2 = new BigNumber(deposit1)
-  //       .dividedBy(new BigNumber(resurve0).plus(resurve1).plus(deposit1))
+  //       .dividedBy(new BigNumber(reserve0).plus(reserve1).plus(deposit1))
   //       .toString(10);
   //
   //     const min = BigNumber.min(share1, share2).toString(10);
@@ -150,11 +150,11 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
           <div className="liquidity-info__row box-f box-f-jc-sb text-black text-smd">
             <span>Rates</span>
             <div className="text-right">
-              <div>{`1 ${info.token0.symbol} = ${+(+info.token1.rate).toFixed(8)} ${
+              <div>{`1 ${info.token0.symbol} = ${new BigNumber(info.token1.rate).toFixed(8)} ${
                 info.token1.symbol
               }`}</div>
               <br />
-              <div>{`1 ${info.token1.symbol} = ${+(+info.token0.rate).toFixed(8)} ${
+              <div>{`1 ${info.token1.symbol} = ${new BigNumber(info.token0.rate).toFixed(8)} ${
                 info.token0.symbol
               }`}</div>
             </div>
@@ -164,7 +164,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
             <span>{(+share).toFixed(5)}%</span>
           </div>
           <Button
-            colorScheme="purple"
+            colorScheme="yellow"
             size="smd"
             className="liquidity-info__btn"
             link={{
@@ -182,7 +182,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               },
             }}
           >
-            <span>Remove</span>
+            <span className="text-bold text-black">Remove</span>
           </Button>
         </div>
       ) : (

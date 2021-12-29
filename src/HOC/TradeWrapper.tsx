@@ -1,9 +1,11 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import BigNumber from 'bignumber.js/bignumber';
 
 import { contracts, tokens as configTokens } from '@/config';
-import { walletConnectorContext } from '@/services/MetamaskConnect';
+import { metamaskService, walletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
+import rootStore from '@/store';
 import { IToken, ITokens } from '@/types';
 import { clog, clogError } from '@/utils/logger';
 
@@ -20,18 +22,18 @@ interface ITradeWrapper {
       amount: number | string;
     };
   };
-  tokensResurves: any;
-  resurvesInterval: any;
+  tokensReserves: any;
+  reservesInterval: any;
   pairAddress: string;
-  maxFrom: number | string;
-  maxTo: number | string;
+  maxFrom: number;
+  maxTo: number;
   isLoadingExchange: boolean;
   isApproving: boolean;
 }
 
 const TradeWrapper = (
   Component: React.FC<any>,
-  getExchangeMethod: 'quote' | 'getAmountOut',
+  getExchangeMethod: 'swap' | 'liquidity',
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   compProps?: any,
 ): any => {
@@ -46,8 +48,8 @@ const TradeWrapper = (
       super(props);
 
       this.state = {
-        tokensData: (localStorage[`refinery-finance-${getExchangeMethod}`] &&
-          JSON.parse(localStorage[`refinery-finance-${getExchangeMethod}`])) || {
+        tokensData: (localStorage[`refinery-finance-quote`] &&
+          JSON.parse(localStorage[`refinery-finance-quote`])) || {
           from: {
             token: undefined,
             amount: NaN,
@@ -59,11 +61,11 @@ const TradeWrapper = (
         },
         isAllowanceFrom: true,
         isAllowanceTo: true,
-        tokensResurves: undefined,
-        resurvesInterval: null,
+        tokensReserves: undefined,
+        reservesInterval: null,
         pairAddress: '',
-        maxFrom: '',
-        maxTo: '',
+        maxFrom: NaN,
+        maxTo: NaN,
         isLoadingExchange: false,
         isApproving: false,
       };
@@ -76,8 +78,8 @@ const TradeWrapper = (
     }
 
     componentDidMount() {
-      this.handleGetExchange(this.state.tokensData, 'from');
-      if (getExchangeMethod !== 'quote') {
+      if (rootStore.user.address) {
+        this.handleGetExchange(this.state.tokensData, rootStore.user.type);
         const interval = setInterval(async () => {
           if (
             this.state.pairAddress &&
@@ -86,23 +88,23 @@ const TradeWrapper = (
             this.state.tokensData.to.amount &&
             this.state.tokensData.from.amount
           ) {
-            this.handleGetExchange(this.state.tokensData, 'from');
+            await this.handleGetExchange(this.state.tokensData, rootStore.user.type);
           }
         }, 60000);
 
         this.setState({
-          resurvesInterval: interval,
+          reservesInterval: interval,
         });
       }
     }
 
     componentDidUpdate() {
-      localStorage[`refinery-finance-${getExchangeMethod}`] = JSON.stringify(this.state.tokensData);
+      localStorage[`refinery-finance-quote`] = JSON.stringify(this.state.tokensData);
     }
 
     componentWillUnmount() {
-      if (this.state.resurvesInterval) {
-        clearInterval(this.state.resurvesInterval);
+      if (this.state.reservesInterval) {
+        clearInterval(this.state.reservesInterval);
       }
     }
 
@@ -118,6 +120,7 @@ const TradeWrapper = (
               approvedAddress: contracts.ROUTER.ADDRESS,
               tokenAddress: this.state.tokensData.from.token.address,
             });
+
             this.setState({
               isAllowanceFrom: true,
             });
@@ -140,6 +143,7 @@ const TradeWrapper = (
               approvedAddress: contracts.ROUTER.ADDRESS,
               tokenAddress: this.state.tokensData.to.token.address,
             });
+
             this.setState({
               isAllowanceTo: true,
             });
@@ -164,7 +168,7 @@ const TradeWrapper = (
       }
     }
 
-    async handleGetExchange(tokens: ITokens, type?: 'from' | 'to') {
+    async handleGetExchange(tokens: ITokens, type?: string) {
       if (!tokens.from.token || !tokens.to.token) {
         return;
       }
@@ -175,24 +179,24 @@ const TradeWrapper = (
         const isFromBnb = tokens.from.token.symbol.toLowerCase() === 'bnb';
         const isToBnb = tokens.to.token.symbol.toLowerCase() === 'bnb';
 
-        const pairAddr = await this.context.metamaskService.callContractMethod(
+        const pairAddress = await this.context.metamaskService.callContractMethod(
           'FACTORY',
           'getPair',
           [
-            isFromBnb ? configTokens.wbnb.address[97] : tokens.from.token?.address,
-            isToBnb ? configTokens.wbnb.address[97] : tokens.to.token?.address,
+            isFromBnb ? configTokens.wbnb.address['97'] : tokens.from.token?.address,
+            isToBnb ? configTokens.wbnb.address['97'] : tokens.to.token?.address,
           ],
           contracts.FACTORY.ADDRESS,
           contracts.FACTORY.ABI,
         );
 
-        if (pairAddr === '0x0000000000000000000000000000000000000000') {
+        if (pairAddress === '0x0000000000000000000000000000000000000000') {
           if (window.location.pathname === '/trade/swap') {
             toast.warning('There is no pair for these tokens');
           }
           if (type === 'from') {
             this.setState((prev) => ({
-              tokensResurves: null,
+              tokensReserves: null,
               pairAddress: '',
               isLoadingExchange: false,
               tokensData: {
@@ -208,7 +212,7 @@ const TradeWrapper = (
             }));
           } else {
             this.setState((prev) => ({
-              tokensResurves: null,
+              tokensReserves: null,
               pairAddress: '',
               isLoadingExchange: false,
               tokensData: {
@@ -226,126 +230,164 @@ const TradeWrapper = (
           return;
         }
         this.setState({
-          pairAddress: pairAddr,
-          tokensResurves: undefined,
+          pairAddress,
+          tokensReserves: undefined,
         });
 
         if (
           tokens.from.token &&
           tokens.to.token &&
           (tokens.from.amount || tokens.to.amount) &&
-          pairAddr
+          pairAddress
         ) {
           const token0 = await this.context.metamaskService.callContractMethodFromNewContract(
-            pairAddr,
+            pairAddress,
             contracts.PAIR.ABI,
             'token0',
           );
 
-          const token1 = await this.context.metamaskService.callContractMethodFromNewContract(
-            pairAddr,
-            contracts.PAIR.ABI,
-            'token1',
-          );
-
-          const resurves = await this.context.metamaskService.callContractMethodFromNewContract(
-            pairAddr,
+          const reserves = await this.context.metamaskService.callContractMethodFromNewContract(
+            pairAddress,
             contracts.PAIR.ABI,
             'getReserves',
           );
 
           this.setState({
-            tokensResurves: resurves,
+            tokensReserves: reserves,
           });
 
+          let reserve1: number;
+          let reserve2: number;
+          // let tokenFirst: IToken;
+          // let tokenSecond: IToken;
+
           if (
-            (type === 'from' && tokens.from.amount) ||
-            (tokens.from.token && tokens.from.amount && !tokens.to.amount)
+            (tokens.from.token.address.toLowerCase() ||
+              configTokens.wbnb.address['97'].toLowerCase()) === token0.toLowerCase()
           ) {
-            let resurve1: number;
-            let resurve2: number;
-            if (tokens.from.token.address.toLowerCase() === token0.toLowerCase()) {
-              resurve1 = resurves['0'];
-              resurve2 = resurves['1'];
-            } else {
-              resurve1 = resurves['1'];
-              resurve2 = resurves['0'];
-            }
-
-            this.setState({
-              maxFrom: MetamaskService.amountFromGwei(resurve1, +tokens.from.token.decimals),
-              maxTo: MetamaskService.amountFromGwei(resurve2, +tokens.to.token.decimals),
-            });
-
-            const quote = await this.context.metamaskService.callContractMethod(
-              'ROUTER',
-              getExchangeMethod,
-              [
-                MetamaskService.calcTransactionAmount(
-                  tokens.from.amount,
-                  +tokens.from.token.decimals,
-                ),
-                resurve1,
-                resurve2,
-              ],
-            );
-
-            this.setState({
-              tokensData: {
-                from: {
-                  token: tokens.from.token,
-                  amount: tokens.from.amount,
-                },
-                to: {
-                  token: tokens.to.token,
-                  amount: MetamaskService.amountFromGwei(quote, +tokens.to.token.decimals),
-                },
-              },
-            });
-          } else if (
-            (type === 'to' && tokens.to.amount) ||
-            (tokens.to.token && tokens.to.amount && !tokens.from.amount)
-          ) {
-            let resurve1: number;
-            let resurve2: number;
-            if (tokens.to.token.address.toLowerCase() === token1.toLowerCase()) {
-              resurve1 = resurves['1'];
-              resurve2 = resurves['0'];
-            } else {
-              resurve1 = resurves['0'];
-              resurve2 = resurves['1'];
-            }
-
-            this.setState({
-              maxFrom: MetamaskService.amountFromGwei(resurve2, +tokens.from.token.decimals),
-              maxTo: MetamaskService.amountFromGwei(resurve1, +tokens.to.token.decimals),
-            });
-
-            const quote = await this.context.metamaskService.callContractMethod(
-              'ROUTER',
-              getExchangeMethod,
-              [
-                MetamaskService.calcTransactionAmount(tokens.to.amount, +tokens.to.token.decimals),
-                resurve1,
-                resurve2,
-              ],
-            );
-
-            this.setState({
-              tokensData: {
-                from: {
-                  token: tokens.from.token,
-                  amount: MetamaskService.amountFromGwei(quote, +tokens.from.token.decimals),
-                },
-                to: {
-                  token: tokens.to.token,
-                  amount: tokens.to.amount,
-                },
-              },
-            });
+            reserve1 = reserves['0'];
+            reserve2 = reserves['1'];
+            // tokenFirst = tokens.from.token;
+            // tokenSecond = tokens.to.token;
           } else {
+            reserve1 = reserves['1'];
+            reserve2 = reserves['0'];
+            // tokenFirst = tokens.to.token;
+            // tokenSecond = tokens.from.token;
+          }
+
+          if (getExchangeMethod === 'swap') {
             this.setState({
-              tokensData: tokens,
+              maxFrom: +MetamaskService.amountFromGwei(reserve1, +tokens.from.token.decimals),
+              maxTo: +MetamaskService.amountFromGwei(reserve2, +tokens.to.token.decimals),
+            });
+            if (
+              (type === 'from' && tokens.from.amount) ||
+              (tokens.from.token && tokens.from.amount && !tokens.to.amount)
+            ) {
+              const amount = await this.context.metamaskService.callContractMethod(
+                'ROUTER',
+                'getAmountOut',
+                [
+                  MetamaskService.calcTransactionAmount(
+                    tokens.from.amount,
+                    +tokens.from.token.decimals,
+                  ),
+                  reserve1,
+                  reserve2,
+                ],
+              );
+
+              this.setState({
+                tokensData: {
+                  from: {
+                    token: tokens.from.token,
+                    amount: tokens.from.amount,
+                  },
+                  to: {
+                    token: tokens.to.token,
+                    amount: MetamaskService.amountFromGwei(amount, +tokens.to.token.decimals),
+                  },
+                },
+              });
+            } else if (
+              (type === 'to' && tokens.to.amount) ||
+              (tokens.to.token && tokens.to.amount && !tokens.from.amount)
+            ) {
+              const amount = await this.context.metamaskService.callContractMethod(
+                'ROUTER',
+                'getAmountIn',
+                [
+                  MetamaskService.calcTransactionAmount(
+                    tokens.to.amount,
+                    +tokens.to.token.decimals,
+                  ),
+                  reserve1,
+                  reserve2,
+                ],
+              );
+
+              this.setState({
+                tokensData: {
+                  from: {
+                    token: tokens.from.token,
+                    amount: MetamaskService.amountFromGwei(amount, +tokens.from.token.decimals),
+                  },
+                  to: {
+                    token: tokens.to.token,
+                    amount: tokens.to.amount,
+                  },
+                },
+              });
+            } else {
+              this.setState({
+                tokensData: tokens,
+              });
+            }
+          } else {
+            const firstBalance = await metamaskService.callContractMethodFromNewContract(
+              tokens.from.token.address || configTokens.wbnb.address['97'],
+              contracts.ERC20.ABI,
+              'balanceOf',
+              [rootStore.user.address],
+            );
+            const secondBalance = await metamaskService.callContractMethodFromNewContract(
+              tokens.to.token.address || configTokens.wbnb.address['97'],
+              contracts.ERC20.ABI,
+              'balanceOf',
+              [rootStore.user.address],
+            );
+            const balanceFrom = MetamaskService.amountFromGwei(
+              firstBalance,
+              +tokens.from.token.decimals || 18,
+            );
+            const balanceTo = MetamaskService.amountFromGwei(
+              secondBalance,
+              +tokens.to.token.decimals || 18,
+            );
+            this.setState({
+              maxFrom: +balanceFrom,
+              maxTo: +balanceTo,
+            });
+            const firstPrice = new BigNumber(reserve1).dividedBy(reserve2).toString(10);
+            const secondPrice = new BigNumber(reserve2).dividedBy(reserve1).toString(10);
+            this.setState({
+              tokensData: {
+                from: {
+                  token: tokens.from.token,
+                  amount:
+                    type === 'from'
+                      ? tokens.from.amount
+                      : new BigNumber(tokens.to.amount).times(firstPrice).toString(10),
+                },
+                to: {
+                  token: tokens.to.token,
+                  amount:
+                    type === 'to'
+                      ? tokens.to.amount
+                      : new BigNumber(tokens.from.amount).times(secondPrice).toString(10),
+                },
+              },
             });
           }
         } else {
@@ -401,7 +443,7 @@ const TradeWrapper = (
           isAllowanceFrom={this.state.isAllowanceFrom}
           isAllowanceTo={this.state.isAllowanceTo}
           handleApproveTokens={this.handleApproveTokens}
-          tokensResurves={this.state.tokensResurves}
+          tokensReserves={this.state.tokensReserves}
           maxFrom={this.state.maxFrom}
           maxTo={this.state.maxTo}
           isLoadingExchange={this.state.isLoadingExchange}
