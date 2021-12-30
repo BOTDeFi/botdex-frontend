@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
-import logo from '@/assets/img/icons/logo-header.svg';
+import logo from '@/assets/img/icons/logo.png';
 import { Button } from '@/components/atoms';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
-import { Menu, WalletModal } from '../index';
+import { Menu, WalletModal, OutsideClick } from '../index';
 
 import './Header.scss';
 
@@ -41,22 +41,25 @@ const Header: React.FC = observer(() => {
           <div className="header-burger__line header-burger__line--2" />
           <div className="header-burger__line header-burger__line--3" />
         </div>
-        <div className="header-logo">
+        <div className="header__logo">
           <img src={logo} alt="logo" />
+          <div className="header__logo__title"><span>BOT</span>Swap</div>
         </div>
       </section>
       {!user.address ? (
         <Button className="connect" size="md" onClick={connect}>
-          <span className="text-bold text-white">Connect Wallet</span>
+          <span className="text-bold">Connect Wallet</span>
         </Button>
       ) : (
         <Button className="connect" size="md" onClick={() => setWalletModalVisible(true)}>
           <span className="text-bold text-white text-address">{user.address}</span>
         </Button>
       )}
-      <div className={`menu-mob ${isBurger && 'menu-mob--active'}`}>
-        <Menu onClick={handleClose} />
-      </div>
+      <OutsideClick onClick={handleClose}>
+        <div className={`menu-mob ${isBurger && 'menu-mob--active'}`}>
+          <Menu onClick={handleClose} />
+        </div>
+      </OutsideClick>
       {user.address ? (
         <WalletModal
           isVisible={isWalletModalVisible}

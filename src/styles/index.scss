@@ -13,10 +13,11 @@ body {
   height: max-content;
   min-height: 100vh;
 
-  font-family: Montserrat, sans-serif;
+  font-family: 'Readex Pro', sans-serif;
   font-weight: 400;
 
-  color: #000;
+  color: $text-main-color;
+  background: $bg-main-color;
 
   &.hide-scroll {
     overflow: hidden;
@@ -25,6 +26,16 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+
+  color: $text-main-color;
+
+  &:hover {
+    color: $text-main-color;
+  }
 }
 
 #root {
@@ -45,6 +56,8 @@ body {
   font-size: 16px;
   line-height: 19px;
   flex-grow: 2;
+
+  background: $bg-main-color;
 
   &__connect {
     @include b(tablet) {
@@ -113,8 +126,4 @@ main {
 .ScrollbarsCustom-Scroller {
   margin-right: -20px !important;
   padding-right: 25px !important;
-}
-
-a:hover {
-  color: $black;
 }

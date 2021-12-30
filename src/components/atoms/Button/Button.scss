@@ -1,7 +1,7 @@
 @import 'src/styles/vars';
 
 .btn {
-  padding: 20px;
+  padding: 20px 40px;
 
   display: block;
 
@@ -24,6 +24,22 @@
 
     path {
       transition: 0.3s;
+    }
+  }
+
+  &-default {
+    color: $text-main-color;
+    background: $accent-gradient;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+
+    & > * {
+      color: $text-main-color !important;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: $accent-gradient;
     }
   }
 
@@ -174,16 +190,11 @@
   }
 
   &-yellow-l {
-    color: $black;
-    background: $yellow-d;
+    background: $accent-gradient;
 
     &:hover,
     &:focus {
-      background: $yellow-d;
-    }
-
-    span {
-      color: $black;
+      background: $accent-gradient;
     }
   }
 

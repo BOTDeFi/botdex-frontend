@@ -1,5 +1,6 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins/media';
+@import 'src/styles/mixins/main';
 
 .menu {
   position: fixed;
@@ -14,12 +15,14 @@
   max-width: 240px;
   height: 100vh;
 
-  background: #fff;
+  background: $bg-sidebar-color;
   border-radius: 0 12px 12px 0;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   transition: 0.4s ease;
   @include b(tablet) {
+    padding-top: 14px;
+
     max-width: 100%;
   }
 
@@ -35,13 +38,31 @@
     box-shadow: none;
   }
 
-  &__logo {
-    margin-bottom: 10px;
-    margin-left: 30px;
+  &__header {
+    margin-bottom: 25px;
+    margin-left: 25px;
 
-    width: 157px;
-    @include b(tablet) {
-      display: none;
+    @include flex(row, center);
+    gap: 10px;
+
+    &__logo {
+      width: 50px;
+    }
+
+    &__title {
+      margin-top: 10px;
+      @include font-gemina;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+
+      span {
+        margin-right: 5px;
+
+        background: $accent-gradient;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
   }
 
@@ -94,17 +115,11 @@
         height: 20px;
       }
 
-      &:hover {
-        &::before {
-          background: $yellow;
-        }
-      }
-
       &.active &-box {
-        background: $yellow-l;
+        background: $bg-sidebar-menu;
 
         &::before {
-          background: $yellow;
+          background: $bg-accent-gradient;
         }
       }
     }
@@ -141,13 +156,13 @@
 
   &__socials {
     margin-top: 12px;
-    padding: 0 25px 0 20px;
+    padding: 0 20px;
 
     &-item {
       width: 28px;
       height: 28px;
 
-      border: 1px solid $black;
+      border: 1px solid $bg-white;
       border-radius: 50%;
 
       & + & {

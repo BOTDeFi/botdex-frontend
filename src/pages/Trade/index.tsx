@@ -77,7 +77,7 @@ const Trade: React.FC = observer(() => {
         labels: {
           rotate: 0,
           style: {
-            fontFamily: 'Montserrat',
+            fontFamily: 'ReadexPro',
             cssClass: 'xaxis-label',
           },
           // eslint-disable-next-line func-names

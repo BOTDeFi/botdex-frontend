@@ -4,14 +4,13 @@ import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 // import DaoImg from '@/assets/img/icons/dao.svg';
-import LogoImg from '@/assets/img/icons/logo.svg';
+import LogoImg from '@/assets/img/icons/logo.png';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
 // import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
 // import FarmsImg from '../../../assets/img/icons/farms.svg';
 import HomeImg from '../../../assets/img/icons/home.svg';
-import LogoMiniImg from '../../../assets/img/icons/logo-m.svg';
 // import LotteryImg from '../../../assets/img/icons/lottery.svg';
 // import PoolsImg from '../../../assets/img/icons/pools.svg';
 // import TeamsImg from '../../../assets/img/icons/teams.svg';
@@ -91,7 +90,10 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
   return (
     <>
       <div className="menu box-f-fd-c">
-        <img src={LogoImg} alt="refinery finance" className="menu__logo" />
+        <div className="menu__header">
+          <img src={LogoImg} alt="BOTDEX logo" className="menu__header__logo" />
+          <div className="menu__header__title"><span>Bot</span>Swap</div>
+        </div>
         <div className="menu__connect-box">
           {!user.address ? (
             <Button className="menu__connect" size="md" onClick={connect}>
@@ -125,14 +127,10 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
                 <div className="menu__nav-item-img box-f-c">
                   <img src={item.img} alt="" />
                 </div>
-                <span className="text-black">{item.text}</span>
+                <span>{item.text}</span>
               </div>
             </NavLink>
           ))}
-        </div>
-        <div className="menu__balance box-yellow box-f-ai-c">
-          <img src={LogoMiniImg} alt="refinery finance" className="menu__balance-img" />
-          <span className="text-black">$37.166</span>
         </div>
         <div className="menu__socials box-f-ai-c">
           <a href="/" className="menu__socials-item menu__socials-item-tg box-f-c">
