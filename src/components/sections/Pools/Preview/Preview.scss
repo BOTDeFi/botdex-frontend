@@ -5,6 +5,8 @@
 
   padding: 30px 30px 30px 40px;
 
+  //background: #191919 url('src/assets/img/sections/pools/bg.jpg') no-repeat 100% 0;
+  background-size: auto 100%;
   border-radius: 40px;
   @include b(tablet) {
     padding: 40px 10px 10px;

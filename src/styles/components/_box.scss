@@ -61,19 +61,11 @@
   }
 
   &-yellow-l-d {
-    background: $yellow;
+    background: $yellow-d;
   }
 
   &-yellow {
     background: $yellow;
-  }
-
-  &-gradient {
-    background: $dark-gradient;
-  }
-
-  &-dark-grey {
-    background: $dark-grey;
   }
 
   &-circle {
@@ -81,7 +73,7 @@
   }
 
   &-white {
-    background: $dark-grey;
+    background: #fff;
   }
 
   &-black {

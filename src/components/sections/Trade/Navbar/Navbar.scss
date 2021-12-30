@@ -1,11 +1,18 @@
-@import 'src/styles/vars';
+@import 'src/styles/index';
 
 .trade__nav {
+  margin: 0 auto;
   padding: 5px 8px;
 
   width: 100%;
+  min-width: 420px;
+  max-width: 420px;
 
-  background: $dark-grey;
+  background: #fff;
+
+  @include b(mobile) {
+    min-width: 100vw;
+  }
 
   &-item {
     padding: 13px 0 14px;
@@ -19,8 +26,8 @@
     border-radius: 12px;
 
     &.active {
-      color: #fff;
-      background: $purple;
+      color: $black;
+      background: $yellow;
     }
   }
 }

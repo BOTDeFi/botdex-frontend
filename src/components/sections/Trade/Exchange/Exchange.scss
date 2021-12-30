@@ -2,8 +2,14 @@
 @import 'src/styles/mixins/media';
 
 .exchange {
-  margin-top: 40px;
+  //margin-top: 40px;
   padding: 30px;
+
+  min-width: 400px;
+
+  @include b(mobile) {
+    min-width: 100%;
+  }
 
   @include b(extramobile) {
     padding: 20px;

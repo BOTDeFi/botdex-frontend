@@ -1,0 +1,52 @@
+@import 'src/styles/vars';
+
+.teams-card {
+  padding: 35px 25px 35px 20px;
+
+  & + & {
+    margin-top: 40px;
+  }
+
+  &__numb {
+    margin-right: 35px;
+
+    width: 66px;
+    height: 66px;
+
+    border: 2px solid $black;
+    border-radius: 50%;
+
+    &.active {
+      color: #fff;
+      background: $black;
+      box-shadow: $shadow;
+    }
+  }
+
+  &__details {
+    margin: 10px 0 13px;
+
+    max-width: 515px;
+  }
+
+  &__elem {
+    & + & {
+      margin-left: 50px;
+    }
+
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  &__img {
+    margin-left: 35px;
+
+    width: 143px;
+    height: 143px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

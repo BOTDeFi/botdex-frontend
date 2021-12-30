@@ -1,5 +1,4 @@
-@import 'vars';
-@import 'mixins/media';
+@import './mixins/media';
 
 .h1 {
   font-size: 70px;
@@ -96,7 +95,6 @@
 
   &-gray {
     color: $gray;
-    opacity: 0.5;
   }
 
   &-gray-2 {
@@ -104,7 +102,7 @@
   }
 
   &-gray-l-2 {
-    color: #fff;
+    color: $gray-l-2;
   }
 
   &-upper {
@@ -144,7 +142,7 @@
   }
 
   &-black {
-    color: #fff;
+    color: $black;
   }
 
   &-capitalize {

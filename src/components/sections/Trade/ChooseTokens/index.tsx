@@ -1,10 +1,11 @@
 import React from 'react';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
-import ArrowCImg from '@/assets/img/icons/arrow-down-light-white.svg';
-import ArrowImg from '@/assets/img/icons/arrow-down-white.svg';
-import { Button, InputNumber } from '@/components/atoms';
+import ArrowCImg from '@/assets/img/icons/arrow-circle.svg';
+import ArrowImg from '@/assets/img/icons/arrow-cur.svg';
+import { Button, InputNumber, Popover } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
@@ -180,40 +181,25 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     };
 
     const handleCheckAllowance = React.useCallback(
-      async (inputValue?: number | string) => {
+      async (inputValue?: string | number) => {
         try {
-          const promises: any[] = [];
           if (tokenFrom?.address && tokenFrom.symbol.toLowerCase() !== 'bnb') {
-            promises.push(
-              metamaskService.checkTokenAllowance({
-                contractName: 'ERC20',
-                approvedAddress: contracts.ROUTER.ADDRESS,
-                tokenAddress: tokenFrom?.address,
-                approveSum: inputValue ? +inputValue : +initialTokenData.from.amount,
-              }),
-            );
+            const allowanceFrom = await metamaskService.checkTokenAllowance({
+              contractName: 'ERC20',
+              approvedAddress: contracts.ROUTER.ADDRESS,
+              tokenAddress: tokenFrom?.address,
+              approveSum: inputValue ? +inputValue : +initialTokenData.from.amount,
+            });
+            if (changeTokenFromAllowance) changeTokenFromAllowance(allowanceFrom);
           }
           if (tokenTo?.address && tokenTo.symbol.toLowerCase() !== 'bnb') {
-            promises.push(
-              metamaskService.checkTokenAllowance({
-                contractName: 'ERC20',
-                approvedAddress: contracts.ROUTER.ADDRESS,
-                tokenAddress: tokenTo?.address,
-                approveSum: inputValue ? +inputValue : +initialTokenData.to.amount,
-              }),
-            );
-          }
-          const result = await Promise.all(promises);
-
-          if (
-            changeTokenFromAllowance &&
-            tokenFrom?.symbol &&
-            tokenFrom.symbol.toLowerCase() !== 'bnb'
-          ) {
-            changeTokenFromAllowance(!!result[0]);
-          }
-          if (changeTokenToAllowance && tokenTo?.symbol && tokenTo.symbol.toLowerCase() !== 'bnb') {
-            changeTokenToAllowance(!!result[1]);
+            const allowanceTo = await metamaskService.checkTokenAllowance({
+              contractName: 'ERC20',
+              approvedAddress: contracts.ROUTER.ADDRESS,
+              tokenAddress: tokenTo?.address,
+              approveSum: inputValue ? +inputValue : +initialTokenData.to.amount,
+            });
+            if (changeTokenToAllowance) changeTokenToAllowance(allowanceTo);
           }
           if (
             tokenFrom?.symbol &&
@@ -225,7 +211,6 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           if (tokenTo?.symbol && tokenTo.symbol.toLowerCase() === 'bnb' && changeTokenToAllowance) {
             changeTokenToAllowance(true);
           }
-          return result;
         } catch (err) {
           clogError(err, 'err check token allowance');
 
@@ -235,7 +220,6 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           if (changeTokenToAllowance) {
             changeTokenToAllowance(false);
           }
-          return '';
         }
       },
       [
@@ -252,6 +236,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     );
 
     const handleChangeTokensQuantity = async (type: 'from' | 'to', quantity: number) => {
+      user.changeType(type);
       if (type === 'from') {
         setTokenFromQuantity(quantity);
         if (time) {
@@ -414,7 +399,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           {tokenFrom ? (
             <>
               <div className="box-f-jc-sb box-f choose-tokens__box-title">
-                <div className="text-upper text-white">{tokenFrom.symbol}</div>
+                <div className="text-upper text-black">{tokenFrom.symbol}</div>
                 <div className="text-sm text-gray">{textFrom || 'From'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
@@ -436,17 +421,21 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   <InputNumber
                     value={tokenFromQuantity}
                     placeholder="0"
-                    max={maxFrom && maxFrom < balanceFrom ? maxFrom : balanceFrom}
+                    max={maxFrom}
                     onChange={(value: number | string) =>
                       handleChangeTokensQuantity('from', +value)
                     }
                   />
                   {balanceFrom ? (
-                    <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${balanceFrom}`}</div>
+                    <Popover content={balanceFrom}>
+                      <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${new BigNumber(
+                        balanceFrom,
+                      ).toFixed(5, 1)}`}</div>
+                    </Popover>
                   ) : (
                     ''
                   )}
-                  {maxFrom && +tokenFromQuantity > maxFrom ? (
+                  {maxFrom && +maxFrom < +tokenFromQuantity ? (
                     <div className="choose-tokens__err text-red text-right">{`Maximum value is ${maxFrom}`}</div>
                   ) : (
                     ''
@@ -461,7 +450,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
               colorScheme="gray"
               size="lmd"
             >
-              <span className="text-center text-white text-med">Select a Token</span>
+              <span className="text-center text-black text-med">Select a Token</span>
             </Button>
           )}
           <div className="choose-tokens__line box-f-ai-c">
@@ -480,7 +469,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           {tokenTo ? (
             <>
               <div className="box-f-jc-sb box-f choose-tokens__box-title">
-                <div className="text-upper text-white">{tokenTo.symbol}</div>
+                <div className="text-upper text-black">{tokenTo.symbol}</div>
                 <div className="text-sm text-gray">{textTo || 'To'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
@@ -503,15 +492,21 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     value={tokenToQuantity}
                     placeholder="0"
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
-                    max={maxTo && maxTo < balanceTo ? maxTo : balanceTo}
+                    max={maxTo}
                   />
                   {balanceTo ? (
-                    <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${balanceTo}`}</div>
+                    <Popover content={balanceTo}>
+                      <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${new BigNumber(
+                        balanceTo,
+                      ).toFixed(5, 1)}`}</div>
+                    </Popover>
                   ) : (
                     ''
                   )}
-                  {maxTo && +tokenToQuantity > maxTo ? (
-                    <div className="choose-tokens__err text-red text-right">{`Maximum value is ${maxTo}`}</div>
+                  {maxTo && +maxTo < +tokenToQuantity ? (
+                    <div className="choose-tokens__err text-red text-right">{`Maximum value is ${new BigNumber(
+                      maxTo,
+                    ).toFixed(8, 1)}`}</div>
                   ) : (
                     ''
                   )}
@@ -525,7 +520,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
               colorScheme="gray"
               size="lmd"
             >
-              <span className="text-center text-white text-med">Select a Token</span>
+              <span className="text-center text-black text-med">Select a Token</span>
             </Button>
           )}
         </div>

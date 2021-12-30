@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { tokens } from '@/config';
@@ -24,7 +25,7 @@ interface IExchange {
   isAllowanceTo: boolean;
   handleApproveTokens: () => void;
   settings: ISettings;
-  tokensResurves: any;
+  tokensReserves: any;
   maxFrom: '';
   maxTo: '';
   isLoadingExchange: boolean;
@@ -44,7 +45,7 @@ const Exchange: React.FC<IExchange> = observer(
     maxFrom,
     maxTo,
     settings,
-    tokensResurves,
+    tokensReserves,
     isLoadingExchange,
     isApproving,
     pairAddress,
@@ -55,6 +56,9 @@ const Exchange: React.FC<IExchange> = observer(
 
     const getPair = useGetPair();
     const getPairData = useGetHoursPairs();
+
+    clogData('maxFrom:', maxFrom);
+    clogData('maxTo:', maxTo);
 
     const fetchPair = useCallback(async () => {
       const normalizedAddress = pairAddress.toLowerCase();
@@ -77,45 +81,97 @@ const Exchange: React.FC<IExchange> = observer(
         setIsLoading(true);
         let method;
         if (tokensData.to.token.address && tokensData.from.token.address) {
-          method = 'swapExactTokensForTokens';
+          method = user.type === 'from' ? 'swapExactTokensForTokens' : 'swapTokensForExactTokens';
         } else if (tokensData.to.token.address) {
-          method = 'swapExactETHForTokens';
+          method = user.type === 'from' ? 'swapExactETHForTokens' : 'swapETHForExactTokens';
         } else {
-          method = 'swapExactTokensForETH';
+          method = user.type === 'from' ? 'swapExactTokensForETH' : 'swapTokensForExactETH';
         }
-        clogData('method:', method);
         try {
-          const data = [
-            MetamaskService.calcTransactionAmount(
-              tokensData.to.amount,
-              +tokensData.to.token?.decimals || 18,
-            ),
-            [
-              tokensData.from.token.address || tokens.wbnb.address['97'],
-              tokensData.to.token.address || tokens.wbnb.address['97'],
-            ],
-            user.address,
-            settings.txDeadlineUtc,
-          ];
-          if (method !== 'swapExactETHForTokens') {
-            data.unshift(
+          let data: any[];
+          let value;
+          if (method === 'swapETHForExactTokens') {
+            data = [
+              MetamaskService.calcTransactionAmount(
+                tokensData.to.amount,
+                +tokensData.to.token?.decimals,
+              ),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
+            value = MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token?.decimals,
+            );
+          } else if (method === 'swapExactETHForTokens') {
+            data = [
+              (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.to.amount)
+                  .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
+                  .toString(10),
+                +tokensData.to.token?.decimals,
+              )).toFixed(0),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
+            value = MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token?.decimals,
+            );
+          } else if (method === 'swapExactTokensForETH' || method === 'swapExactTokensForTokens') {
+            data = [
               MetamaskService.calcTransactionAmount(
                 tokensData.from.amount,
-                +tokensData.from.token?.decimals || 18,
+                +tokensData.from.token?.decimals,
               ),
-            );
+              (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.to.amount)
+                  .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
+                  .toString(10),
+                +tokensData.to.token?.decimals,
+              )).toFixed(0),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
+          } else {
+            data = [
+              MetamaskService.calcTransactionAmount(
+                tokensData.to.amount,
+                +tokensData.to.token?.decimals,
+              ),
+              (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.from.amount)
+                  .plus(new BigNumber(tokensData.from.amount).times(settings.slippage.value / 100))
+                  .toString(10),
+                +tokensData.from.token?.decimals,
+              )).toFixed(0),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
           }
+          clogData('data:', data);
+          clogData('value:', value);
           await metamaskService.createTransaction({
             method,
             contractName: 'ROUTER',
             data,
-            value:
-              method === 'swapExactETHForTokens'
-                ? MetamaskService.calcTransactionAmount(
-                    tokensData.from.amount,
-                    +tokensData.from.token?.decimals || 18,
-                  )
-                : 0,
+            value: value ?? '0',
           });
           delete localStorage['refinery-finance-getAmountOut'];
           setTokensData({
@@ -163,10 +219,16 @@ const Exchange: React.FC<IExchange> = observer(
           tokensData.to.amount &&
           tokensData.from.amount &&
           user.address &&
-          tokensResurves !== null ? (
+          tokensReserves !== null ? (
             <Button
               className="exchange__btn"
               onClick={handleSwap}
+              disabled={
+                !tokensData.from.amount ||
+                !tokensData.to.amount ||
+                +tokensData.from.amount > +maxFrom ||
+                +tokensData.to.amount > +maxTo
+              }
               loading={isLoadingExchange || isLoading}
               loadingText={
                 // eslint-disable-next-line no-nested-ternary
@@ -188,7 +250,7 @@ const Exchange: React.FC<IExchange> = observer(
           {tokensData.from.token &&
           tokensData.to.token &&
           (!tokensData.to.amount || !tokensData.from.amount) &&
-          tokensResurves !== null &&
+          tokensReserves !== null &&
           user.address ? (
             <Button
               className="exchange__btn"
@@ -203,16 +265,19 @@ const Exchange: React.FC<IExchange> = observer(
           {(!isAllowanceFrom || !isAllowanceTo) &&
           tokensData.to.amount &&
           tokensData.from.amount &&
-          tokensResurves !== null &&
+          tokensReserves !== null &&
           user.address ? (
             <Button className="exchange__btn" onClick={handleApproveTokens} loading={isApproving}>
-              <span className="text-white text-bold text-smd">Approve tokens</span>
+              <span className="text-white text-bold text-smd">
+                Approve{' '}
+                {!isAllowanceFrom ? tokensData.from.token?.symbol : tokensData.to.token?.symbol}
+              </span>
             </Button>
           ) : (
             ''
           )}
           {(!tokensData.from.token || !tokensData.to.token) &&
-          tokensResurves !== null &&
+          tokensReserves !== null &&
           user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">Select a Tokens</span>
@@ -222,7 +287,7 @@ const Exchange: React.FC<IExchange> = observer(
           )}
           {tokensData.from.token &&
           tokensData.to.token &&
-          tokensResurves === null &&
+          tokensReserves === null &&
           user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">

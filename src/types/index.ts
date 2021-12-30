@@ -27,6 +27,7 @@ export interface ISettings {
   slippage: IActiveSlippage;
   txDeadline: number;
   txDeadlineUtc: number;
+  isAudio: boolean;
 }
 
 export interface IActiveSlippage {
@@ -79,6 +80,7 @@ export interface ILiquidityInfo {
     deposited?: number | string;
     receive?: number | string;
   };
+  settings: ISettings;
 }
 
 export enum PoolFarmingMode {

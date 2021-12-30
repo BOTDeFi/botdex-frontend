@@ -4,21 +4,16 @@ import classNames from 'classnames';
 
 import 'antd/lib/modal/style/css';
 
-import { ReactComponent as ClearImg } from '../../../assets/img/icons/close-new.svg';
+import { ReactComponent as ClearImg } from '../../../assets/img/icons/cross.svg';
 
 import './Modal.scss';
 
 interface IModal {
   isVisible: boolean;
-  // eslint-disable-next-line react/require-default-props
   handleCancel?: () => void;
-  // eslint-disable-next-line react/require-default-props
   width?: number | string;
-  // eslint-disable-next-line react/require-default-props
   className?: string;
-  // eslint-disable-next-line react/require-default-props
   destroyOnClose?: boolean;
-  // eslint-disable-next-line react/require-default-props
   closeIcon?: boolean;
 }
 

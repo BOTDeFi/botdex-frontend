@@ -93,9 +93,12 @@ const PoolsModel = types
     fetchVaultFeesSuccess(aggregatedCallsResponse: any) {
       // if (!aggregatedCallsResponse) throw new Error('MultiCallResponse is null');
       const callsResult = aggregatedCallsResponse?.flat();
-      const [performanceFee, callFee, withdrawalFee, withdrawalFeePeriod] = callsResult?.map(
-        (result: any) => Number(result),
-      );
+      const [
+        performanceFee,
+        callFee,
+        withdrawalFee,
+        withdrawalFeePeriod,
+      ] = callsResult?.map((result: any) => Number(result));
 
       // console.log(performanceFee, callFee, withdrawalFee, withdrawalFeePeriod);
       self.fees = {
@@ -341,11 +344,7 @@ const PoolsModel = types
 
     async updateUserAllowance(poolId: number, accountAddress: string) {
       const allowances = await fetchPoolsAllowance(accountAddress);
-      this.updatePoolsUserData({
-        poolId,
-        field: 'allowance',
-        value: allowances[poolId],
-      });
+      this.updatePoolsUserData({ poolId, field: 'allowance', value: allowances[poolId] });
     },
 
     async updateUserBalance(poolId: number, accountAddress: string) {
@@ -359,20 +358,12 @@ const PoolsModel = types
 
     async updateUserStakedBalance(poolId: number, accountAddress: string) {
       const stakedBalances = await fetchUserStakeBalances(accountAddress);
-      this.updatePoolsUserData({
-        poolId,
-        field: 'stakedBalance',
-        value: stakedBalances[poolId],
-      });
+      this.updatePoolsUserData({ poolId, field: 'stakedBalance', value: stakedBalances[poolId] });
     },
 
     async updateUserPendingReward(poolId: number, accountAddress: string) {
       const pendingRewards = await fetchUserPendingRewards(accountAddress);
-      this.updatePoolsUserData({
-        poolId,
-        field: 'pendingReward',
-        value: pendingRewards[poolId],
-      });
+      this.updatePoolsUserData({ poolId, field: 'pendingReward', value: pendingRewards[poolId] });
     },
 
     updatePoolsUserData({

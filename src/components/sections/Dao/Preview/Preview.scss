@@ -1,0 +1,37 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+$default-margin: 15px;
+
+.dao-preview {
+  position: relative;
+
+  padding: 42px 30px 30px 42px;
+
+  background-color: $yellow-d;
+  //background-image: url('src/assets/img/sections/dao/bg.jpg');
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: 100% 100%;
+  border-radius: 40px;
+
+  &__footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    @include b(extramobile) {
+      flex-direction: column;
+    }
+  }
+
+  &__subtitle {
+    margin-top: $default-margin;
+
+    max-width: 600px;
+  }
+
+  &__button {
+    margin-top: $default-margin;
+  }
+}

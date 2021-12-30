@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 
 import ArrowImg from '@/assets/img/icons/arrow-btn.svg';
 import InfoImg from '@/assets/img/icons/info.svg';
-import RecentTxImg from '@/assets/img/icons/recent-tx-white.svg';
-import SettingsImg from '@/assets/img/icons/settings-white.svg';
+import RecentTxImg from '@/assets/img/icons/recent-tx.svg';
+import SettingsImg from '@/assets/img/icons/settings.svg';
 
 import { Popover } from '../../../atoms';
 
@@ -13,54 +14,61 @@ import './TradeBox.scss';
 
 interface ITradeBox {
   title: string;
-  // eslint-disable-next-line react/require-default-props
   subtitle?: string;
-  // eslint-disable-next-line react/require-default-props
   settingsLink?: string;
-  // eslint-disable-next-line react/require-default-props
   recentTxLink?: string;
-  // eslint-disable-next-line react/require-default-props
   className?: string;
-  // eslint-disable-next-line react/require-default-props
   titleBackLink?: boolean;
-  // eslint-disable-next-line react/require-default-props
   info?: string;
 }
 
-const TradeBox: React.FC<ITradeBox> = ({
-  title,
-  subtitle,
-  settingsLink,
-  recentTxLink,
-  children,
-  className,
-  titleBackLink,
-  info,
-}) => {
-  return (
-    <div className={cn('trade-box box-shadow box-dark-grey', className)}>
-      <div className="trade-box__box-top box-f box-f-jc-sb">
-        <div className="">
-          {titleBackLink ? (
-            <Link to="/trade/liquidity">
-              <div className={cn('trade-box__title text-md text-white text-bold box-f-ai-c')}>
-                <img src={ArrowImg} alt="" className="trade-box__back" />
+const TradeBox: React.FC<ITradeBox> = observer(
+  ({ title, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, info }) => {
+    return (
+      <div className={cn('trade-box box-shadow box-white', className)}>
+        <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">
+          <div className="">
+            {titleBackLink ? (
+              <Link to="/trade/liquidity">
+                <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
+                  <img src={ArrowImg} alt="" className="trade-box__back" />
+                  <span>{title}</span>
+                </div>
+              </Link>
+            ) : (
+              <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
                 <span>{title}</span>
               </div>
-            </Link>
-          ) : (
-            <div className={cn('trade-box__title text-md text-white text-bold box-f-ai-c')}>
-              <span>{title}</span>
-            </div>
-          )}
-          {subtitle ? (
-            <div className="trade-box__subtitle text-gray box-f-ai-c">
-              <span>{subtitle}</span>
+            )}
+            {subtitle ? (
+              <div className="trade-box__subtitle text-gray box-f-ai-c">
+                <span>{subtitle}</span>
 
-              {info ? (
-                <Popover content={<span className="text-med text text-gray">{info}</span>}>
-                  <img src={InfoImg} alt="info icon" />
-                </Popover>
+                {info ? (
+                  <Popover content={<span className="text-med text text-black">{info}</span>}>
+                    <img src={InfoImg} alt="" />
+                  </Popover>
+                ) : (
+                  ''
+                )}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          {recentTxLink || settingsLink ? (
+            <div className="box-f-ai-c">
+              {settingsLink ? (
+                <Link to={settingsLink} className="trade-box__icon">
+                  <img src={SettingsImg} alt="advanced settings" />
+                </Link>
+              ) : (
+                ''
+              )}
+              {recentTxLink ? (
+                <Link to={recentTxLink} className="trade-box__icon">
+                  <img src={RecentTxImg} alt="advanced settings" />
+                </Link>
               ) : (
                 ''
               )}
@@ -69,30 +77,10 @@ const TradeBox: React.FC<ITradeBox> = ({
             ''
           )}
         </div>
-        {recentTxLink && settingsLink ? (
-          <div className="box-f-ai-c">
-            {settingsLink ? (
-              <Link to={settingsLink} className="trade-box__icon">
-                <img src={SettingsImg} alt="advanced settings" />
-              </Link>
-            ) : (
-              ''
-            )}
-            {recentTxLink ? (
-              <Link to={recentTxLink} className="trade-box__icon">
-                <img src={RecentTxImg} alt="advanced settings" />
-              </Link>
-            ) : (
-              ''
-            )}
-          </div>
-        ) : (
-          ''
-        )}
+        {children}
       </div>
-      {children}
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default TradeBox;

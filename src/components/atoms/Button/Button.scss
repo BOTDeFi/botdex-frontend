@@ -27,22 +27,22 @@
     }
   }
 
-  &-cold-blue {
-    color: #fff;
-    background: $cold-blue;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  &-yellow {
+    color: $black;
+    background: $yellow;
+    box-shadow: 0 12px 40px rgba(255, 162, 55, 0.25);
 
     & > * {
-      color: #fff !important;
+      color: $black !important;
     }
 
     &:hover {
-      background: $cold-blue;
+      background: $yellow;
     }
 
     &:active,
     &:focus {
-      background: $cold-blue;
+      background: $yellow;
     }
   }
 
@@ -76,23 +76,23 @@
   }
 
   &-outline {
-    color: #fff;
-    background: transparent;
-    border: 3px solid $cold-blue;
+    color: $black;
+    background: #fff;
+    border: 3px solid $yellow-d;
 
     &:hover {
-      color: #fff;
-      border-color: $cold-blue;
+      color: #000;
+      border-color: $yellow-d;
     }
 
     &:active,
     &:focus {
-      color: #fff;
-      border-color: $cold-blue;
+      color: #000;
+      border-color: $yellow-d;
     }
 
     &.active {
-      background: $cold-blue;
+      background: $yellow-d;
     }
 
     &-purple {

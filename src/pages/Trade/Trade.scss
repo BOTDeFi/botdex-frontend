@@ -7,6 +7,11 @@
   padding-left: 0;
   padding-bottom: 90px;
 
+  background-image: url(../../assets/img/bg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+
   &__body {
     @include container;
   }
@@ -34,8 +39,9 @@
     &-body {
       &__info {
         @include flexbox(space-between, center);
-        padding: 30px 30.5px;
         position: relative;
+
+        padding: 30px 30.5px;
       }
     }
   }
@@ -71,13 +77,16 @@
 @media (max-width: 1024px) {
   .trade {
     margin-left: 0;
+
     &__graph {
       min-width: 100%;
+
       &-body {
         &__info {
+          padding: 15px 15.25px;
+
           flex-direction: column-reverse;
           gap: 20px;
-          padding: 15px 15.25px;
         }
       }
     }

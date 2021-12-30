@@ -119,13 +119,7 @@ const FarmsModel = types
       );
     },
     fetchFarmUserDataAsyncSuccess(
-      newData: {
-        pid: any;
-        allowance: any;
-        tokenBalance: any;
-        stakedBalance: any;
-        earnings: any;
-      }[],
+      newData: { pid: any; allowance: any; tokenBalance: any; stakedBalance: any; earnings: any }[],
     ) {
       newData.forEach((userData) => {
         const { pid } = userData;

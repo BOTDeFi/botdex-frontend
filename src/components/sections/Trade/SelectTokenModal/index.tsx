@@ -111,7 +111,7 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
           closeIcon
         >
           <div className="m-select-token__content">
-            <div className="m-select-token__title text-white text-bold text-smd">
+            <div className="m-select-token__title text-black text-bold text-smd">
               Select a token
             </div>
 
@@ -145,7 +145,7 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
                     />
                     <div>
                       <div>{token.name}</div>
-                      <div className="text-ssm text-gray">{token.symbol}</div>
+                      <div className="text-ssm text-gray-2">{token.symbol}</div>
                     </div>
                   </div>
                 ))}
@@ -154,7 +154,7 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
               <span className="text">Not found</span>
             )}
             <div
-              className="m-select-token__manage text-white text-center box-pointer"
+              className="m-select-token__manage text-black text-center box-pointer"
               onClick={handleOpenManageModal}
               onKeyDown={handleOpenManageModal}
               role="button"

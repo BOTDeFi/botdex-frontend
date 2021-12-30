@@ -47,15 +47,13 @@ export const useSelectVaultData = () => {
     [estimatedRefineryBountyRewardRaw],
   );
 
-  const totalRefineryInVault = useMemo(
-    () => toBigNumber(totalRefineryInVaultRaw, true),
-    [totalRefineryInVaultRaw],
-  );
+  const totalRefineryInVault = useMemo(() => toBigNumber(totalRefineryInVaultRaw, true), [
+    totalRefineryInVaultRaw,
+  ]);
 
-  const pricePerFullShare = useMemo(
-    () => toBigNumber(pricePerFullShareRaw, true),
-    [pricePerFullShareRaw],
-  );
+  const pricePerFullShare = useMemo(() => toBigNumber(pricePerFullShareRaw, true), [
+    pricePerFullShareRaw,
+  ]);
 
   const totalShares = useMemo(() => toBigNumber(totalSharesRaw, true), [totalSharesRaw]);
 
@@ -113,10 +111,12 @@ export const useStakedValue = (
     return stakedBalance.gt(0);
   }, [farmMode, userData?.stakedBalance, userShares]);
 
-  const stakedValue = useMemo(
-    () => getStakedValue(farmMode, pool, userShares, pricePerFullShare),
-    [farmMode, pool, pricePerFullShare, userShares],
-  );
+  const stakedValue = useMemo(() => getStakedValue(farmMode, pool, userShares, pricePerFullShare), [
+    farmMode,
+    pool,
+    pricePerFullShare,
+    userShares,
+  ]);
 
   return {
     hasStakedValue,

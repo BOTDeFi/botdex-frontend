@@ -1,7 +1,8 @@
-$yellow: #7649fe;
+$yellow: #fc0;
 $yellow-d: #ffeeb0;
 $yellow-s-l: #f4f0fb;
 $yellow-l: #fffae8;
+$white: #fff;
 $orange: #ffa237;
 $gray-3: #c1c1c1;
 $gray-l: rgba(#c1c1c1, 0.1);
@@ -14,17 +15,9 @@ $blue: #32afe3;
 $blue-d: #5e8dec;
 $red: #ff4d4f;
 $black: #222;
-$gray: #f4f4f4;
-$white: #fff;
+$gray: rgba($black, 0.5);
 
-$dark-grey: #2f2542;
-$bg-color: #1d1135;
-$purple: #bb1d67;
-$cold-blue: #7649fe;
-$dark-gradient: linear-gradient(98.94deg, #2f2542 -22.87%, #1d1135 94.67%);
-$gray-field: rgba(255, 255, 255, 0.13);
-
-$bg-gradient: linear-gradient(98.94deg, #2f2542 -22.87%, #1d1135 94.67%);
+$bg-gradient: linear-gradient(98.94deg, #ffd335 -22.87%, #f9f9f9 94.67%);
 $shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
 $mediaWidthLaptop: 1440px;

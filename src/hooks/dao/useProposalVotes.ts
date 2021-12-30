@@ -112,10 +112,5 @@ export const useProposalVotes = (
     };
   }, [proposalVotesData, proposalVotesLoading]);
 
-  return {
-    votes,
-    proposalVotesLoading,
-    votingPowersLoading,
-    updateProposalVotes,
-  };
+  return { votes, proposalVotesLoading, votingPowersLoading, updateProposalVotes };
 };

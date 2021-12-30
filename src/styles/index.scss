@@ -1,5 +1,6 @@
 @import './reset';
 @import 'mixins/media';
+@import 'mixins/displays.scss';
 @import './fonts';
 @import './vars';
 @import './components/index.scss';
@@ -12,18 +13,14 @@ body {
   height: max-content;
   min-height: 100vh;
 
-  font-family: Gemina, sans-serif;
+  font-family: Montserrat, sans-serif;
   font-weight: 400;
 
-  background: $bg-color;
+  color: #000;
 
   &.hide-scroll {
     overflow: hidden;
   }
-}
-
-iframe {
-  display: none;
 }
 
 * {
@@ -119,5 +116,5 @@ main {
 }
 
 a:hover {
-  color: #fff;
+  color: $black;
 }

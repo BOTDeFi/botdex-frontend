@@ -35,6 +35,7 @@
 
   &__prefix-bottom {
     margin: -20px 20px 15px;
+    margin-top: -20px;
   }
 
   &-lg {
@@ -93,18 +94,16 @@
     &-box {
       overflow: hidden;
 
-      color: #fff;
-      background: transparent;
-      border: 3px solid $cold-blue;
+      color: $gray;
+      background: #fff;
+      border: 3px solid $yellow-d;
 
       &.active {
-        background: $cold-blue;
+        background: $yellow-d;
       }
     }
 
     input {
-      color: #fff;
-
       background: transparent;
     }
   }
@@ -122,27 +121,6 @@
 
     input {
       background: transparent;
-    }
-  }
-
-  &-gray-field {
-    &-box {
-      background: $gray-field;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    &:hover,
-    &:focus {
-      border-color: rgba(0, 0, 0, 0.1);
-    }
-
-    input {
-      color: #fff;
-      background: transparent;
-
-      &::placeholder {
-        opacity: 0.5;
-      }
     }
   }
 

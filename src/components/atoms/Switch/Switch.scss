@@ -37,7 +37,7 @@
 
   &.ant-switch {
     &-checked {
-      background: $cold-blue;
+      background: $yellow;
       border-color: $yellow;
     }
 
@@ -55,17 +55,17 @@
   &-purple {
     &.ant-switch {
       &-checked {
-        background: $cold-blue;
+        background: $yellow-d;
         border-color: transparent;
       }
 
       &-checked .ant-switch-handle {
         left: calc(100% - 21px + 1px) !important;
 
-        border-color: #fff;
+        border-color: $yellow;
 
         &::before {
-          background: #fff;
+          background: $yellow;
         }
       }
     }

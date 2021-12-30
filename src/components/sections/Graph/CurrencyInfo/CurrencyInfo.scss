@@ -89,9 +89,10 @@
     &__body {
       &-currencies {
         &-statistic {
+          margin-bottom: 10px;
+
           flex-direction: column;
           gap: 5px;
-          margin-bottom: 10px;
         }
       }
     }

@@ -155,14 +155,13 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
     };
   }, [modal]);
 
-  const inputValueUsdToDisplay = useMemo(
-    () => getTokenUsdPrice(inputValue, tokenUsdPrice),
-    [inputValue, tokenUsdPrice],
-  );
-  const balanceToDisplay = useMemo(
-    () => maxStakeUnstakeValueBN.toFixed(Precisions.shortToken),
-    [maxStakeUnstakeValueBN],
-  );
+  const inputValueUsdToDisplay = useMemo(() => getTokenUsdPrice(inputValue, tokenUsdPrice), [
+    inputValue,
+    tokenUsdPrice,
+  ]);
+  const balanceToDisplay = useMemo(() => maxStakeUnstakeValueBN.toFixed(Precisions.shortToken), [
+    maxStakeUnstakeValueBN,
+  ]);
 
   const isNotEnoughBalanceToStake = maxStakeUnstakeValueRaw === '0';
   const hasValidationErrors = isNotEnoughBalanceToStake || inputValue.eq(0) || inputValue.isNaN();

@@ -2,7 +2,6 @@
 @import 'src/styles/mixins/media';
 
 .trade-box {
-  margin-top: 40px;
   padding: 30px;
 
   @include b(extramobile) {
@@ -16,9 +15,11 @@
   &__subtitle {
     margin-top: 12px;
 
-    img {
-      margin-left: 6px;
+    span {
+      width: fit-content;
+    }
 
+    img {
       display: block;
     }
   }
@@ -28,7 +29,7 @@
       margin-bottom: 30px;
       padding-bottom: 30px;
 
-      border-bottom: 1px solid #685096;
+      border-bottom: 1px solid #e0e0e0;
     }
   }
 

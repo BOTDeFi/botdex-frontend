@@ -76,12 +76,7 @@ const Farms: React.FC = observer(() => {
           )
         : { refineryRewardsApr: 0, lpRewardsApr: 0 };
 
-      return {
-        ...farm,
-        apr: refineryRewardsApr,
-        lpRewardsApr,
-        liquidity: totalLiquidity,
-      };
+      return { ...farm, apr: refineryRewardsApr, lpRewardsApr, liquidity: totalLiquidity };
     });
 
     return farmsToDisplayWithAPR;

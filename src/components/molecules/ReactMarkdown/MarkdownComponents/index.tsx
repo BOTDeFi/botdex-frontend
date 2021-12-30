@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Components, SpecialComponents } from 'react-markdown/lib/ast-to-react';
+import { NormalComponents, SpecialComponents } from 'react-markdown/lib/ast-to-react';
 
 import './MarkdownComponents.scss';
 
@@ -35,7 +35,7 @@ const Blockquote: React.FC<any> = ({ node, ...props }) => {
   return <blockquote className="markdown-components__blockquote" {...props} />;
 };
 
-const markdownComponents: Partial<Components & SpecialComponents> = {
+const markdownComponents: Partial<NormalComponents & SpecialComponents> = {
   h1: Title,
   h2: Title,
   h3: Title,

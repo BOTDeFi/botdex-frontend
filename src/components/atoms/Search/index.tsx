@@ -2,7 +2,7 @@ import React from 'react';
 import { Input as AntdInput } from 'antd';
 import cn from 'classnames';
 
-import LupaImg from '../../../assets/img/icons/lupa-white.svg';
+import LupaImg from '../../../assets/img/icons/lupa.svg';
 import { Button, Input, InputNumber } from '..';
 
 import './Search.scss';
@@ -90,13 +90,10 @@ const Search: React.FC<ISearch> = React.memo(
         {type === 'text' && (
           <Input
             value={inputValue}
-            className={cn(
-              {
-                'text-md': size === 'lg',
-                'text': size === 'sm',
-              },
-              'text-white',
-            )}
+            className={cn({
+              'text-md': size === 'lg',
+              'text': size === 'sm',
+            })}
             ref={inputRef}
             placeholder={placeholder}
             onChange={(e: any) => handleChange(e.target.value)}

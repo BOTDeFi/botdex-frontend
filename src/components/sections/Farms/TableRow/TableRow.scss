@@ -52,14 +52,14 @@
   &__currencies {
     &-pair {
       margin-right: 12px;
-    }
 
-    &-pair-item {
-      width: 24px;
-      height: 24px;
+      &-item {
+        width: 24px;
+        height: 24px;
 
-      &:last-child {
-        margin-left: -5px;
+        &:last-child {
+          margin-left: -5px;
+        }
       }
     }
   }

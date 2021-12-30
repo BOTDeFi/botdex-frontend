@@ -11,7 +11,7 @@ import CrossImg from '@/assets/img/icons/cross.svg';
 import OpenLinkImg from '@/assets/img/icons/open-link.svg';
 import { Button, Input } from '@/components/atoms';
 import { Modal } from '@/components/molecules';
-import { contracts } from '@/config';
+import { contracts, IS_PRODUCTION } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 // import { RadioGroup, Input, Switch, Button } from '../../../atoms';
@@ -38,7 +38,7 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
     // const [acitveTab, setActiveTab] = React.useState<'lists' | 'tokens'>('lists');
     // const [isExtendedTokensActive, setExtendedTokensActive] = React.useState<boolean>(false);
     // const [isTopTokensActive, setTopTokensActive] = React.useState<boolean>(false);
-    const [unknownToken, setUnknowToken] = React.useState<IToken | undefined>(undefined);
+    const [unknownToken, setUnknownToken] = React.useState<IToken | undefined>(undefined);
     const [selectedToken, setSelectedToken] = React.useState<IToken | undefined>();
     const [isLoading, setLoading] = React.useState<boolean>(false);
     const [searchedValue, setSearchedValue] = React.useState<string>('');
@@ -77,17 +77,17 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
         try {
           setLoading(true);
           const token = await metamaskService.getTokenInfo(target.value, contracts.ERC20.ABI);
-          setUnknowToken({
+          setUnknownToken({
             ...token,
             logoURI: UnknownImg,
           });
           setLoading(false);
         } catch (err) {
           setLoading(false);
-          setUnknowToken(undefined);
+          setUnknownToken(undefined);
         }
       } else {
-        setUnknowToken(undefined);
+        setUnknownToken(undefined);
       }
     };
 
@@ -98,13 +98,13 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
       tokens.setTokens('imported', filteredArr);
 
       if (unknownToken?.address === tokenAddress) {
-        setUnknowToken(undefined);
+        setUnknownToken(undefined);
       }
     };
 
     const handleCloseModal = (): void => {
       handleClose();
-      setUnknowToken(undefined);
+      setUnknownToken(undefined);
     };
 
     return (
@@ -290,7 +290,14 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
                       >
                         <img src={CrossImg} alt={token.name} />
                       </div>
-                      <a href="/" className="m-manage-tokens__token-open">
+                      <a
+                        href={`https://${IS_PRODUCTION ? '' : 'testnet.'}bscscan.com/address/${
+                          token.address
+                        }`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="m-manage-tokens__token-open"
+                      >
                         <img src={OpenLinkImg} alt="" />
                       </a>
                     </div>

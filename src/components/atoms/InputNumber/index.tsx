@@ -8,17 +8,11 @@ import 'antd/lib/input-number/style/css';
 import './InputNumber.scss';
 
 interface IInputNumberProps extends InputNumberProps {
-  // eslint-disable-next-line react/no-unused-prop-types,react/require-default-props
   inputSize?: 'lg' | 'md' | 'sm';
-  // eslint-disable-next-line react/no-unused-prop-types,react/require-default-props
   colorScheme?: 'gray' | 'outline' | 'transparent' | 'white';
-  // eslint-disable-next-line react/no-unused-prop-types,react/require-default-props
   inputPrefix?: string | React.ReactElement;
-  // eslint-disable-next-line react/no-unused-prop-types,react/require-default-props
   prefixPosition?: 'right' | 'left' | 'top' | 'button';
-  // eslint-disable-next-line react/no-unused-prop-types,react/require-default-props
   inputClass?: string;
-  // eslint-disable-next-line react/no-unused-prop-types,react/require-default-props
   ref?: React.ForwardedRef<HTMLInputElement>;
 }
 
@@ -26,9 +20,10 @@ const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> = React.me
   React.forwardRef<HTMLInputElement, IInputNumberProps>((props, ref) => {
     const {
       inputSize = 'lg',
-      colorScheme = 'gray-field',
+      colorScheme = 'gray',
       inputPrefix,
       className,
+      max,
       inputClass,
       value,
       prefixPosition = 'right',
@@ -48,6 +43,7 @@ const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> = React.me
         )}
       >
         <Input
+          max={max}
           type="number"
           ref={ref}
           className={cn(
