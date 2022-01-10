@@ -104,10 +104,10 @@ const Trade: React.FC = observer(() => {
       grid: {
         show: false,
         padding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
+          right: -26,
+          top: -20,
           left: 0,
+          bottom: 0,
         },
       },
     }),

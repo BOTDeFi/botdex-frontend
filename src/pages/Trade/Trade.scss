@@ -32,6 +32,9 @@
     width: 100%;
     min-width: 670px;
     height: fit-content;
+    @include b(670) {
+      min-width: 100%;
+    }
 
     &-body {
       background: linear-gradient(159.55deg, #1D1238 10.58%, #581368 56.54%, #12168C 98.7%), linear-gradient(157.08deg, #8F1BA9 -57.13%, #170C4E 58.18%);
@@ -40,7 +43,7 @@
       &__info {
         position: relative;
 
-        padding: 30px 31.5px;
+        padding: 30px 31.5px 0;
       }
     }
   }
@@ -80,11 +83,10 @@
 
     &__graph {
       max-width: 100%;
-      min-width: 0;
 
       &-body {
         &__info {
-          padding: 15px 15.25px;
+          padding: 15px 15.25px 0;
 
           flex-direction: column-reverse;
           gap: 20px;
