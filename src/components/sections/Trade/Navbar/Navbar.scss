@@ -5,17 +5,16 @@
   padding: 5px 8px;
 
   width: 100%;
-  min-width: 420px;
   max-width: 420px;
 
-  background: #fff;
+  background: $bg-dop;
 
   @include b(mobile) {
-    min-width: 100vw;
+    max-width: calc(100% - 20px);
   }
 
   &-item {
-    padding: 13px 0 14px;
+    padding: 12px;
 
     display: block;
 
@@ -26,8 +25,7 @@
     border-radius: 12px;
 
     &.active {
-      color: $black;
-      background: $yellow;
+      background: $accent-gradient;
     }
   }
 }

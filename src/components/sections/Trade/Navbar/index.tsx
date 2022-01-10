@@ -12,7 +12,7 @@ const TradeNavbar: React.FC = () => {
       {navItems.map((item) => (
         <NavLink
           to={`/trade/${item.toLocaleLowerCase()}`}
-          className="trade__nav-item text-gray text-med"
+          className="trade__nav-item text text-500"
           key={nextId()}
         >
           {item}
