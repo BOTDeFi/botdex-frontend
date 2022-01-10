@@ -1,28 +1,43 @@
-@import 'src/styles/mixins/displays.scss';
+@import 'src/styles/mixins/displays';
+@import 'src/styles/mixins/main';
+@import 'src/styles/mixins/media';
 @import 'src/styles/vars';
 
 .time-selector {
   &__body {
-    @include flexbox($gap: 6px, $wrap: wrap);
+    position: absolute;
+    top: 28px;
+    right: 20px;
+    padding: 6px 7px;
+    @include flex(row, center, center, nowrap);
+    @include b(extramobile) {
+      margin-top: 8px;
+    }
 
     &-btn {
       padding: 12px 9.5px;
+      margin-right: 6px;
+      &:last-of-type {
+        margin-right: 0;
+      }
+      width: 50.25px;
+      height: 44px;
+      @include b(extramobile) {
+        width: 70px;
+      }
 
-      min-width: 50.25px;
-      min-height: 44px;
-
-      color: $black;
-      background: $white;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      background: $bg-time-selector;
+      border: 1px solid #402B99;
 
       &:hover {
-        color: $black;
-        background: $yellow;
+        color: $text-main-color;
+        border: 1px solid #402B99;
       }
 
       &.selected {
-        color: $black;
-        background: $yellow;
+        color: $text-main-color;
+        border: 1px solid #402B99;
+        background: $bg-accent-gradient;
       }
     }
   }

@@ -83,7 +83,7 @@ const PairsModel = types
 
       return {
         icons: ['', ''],
-        names: currentPair.name.split(' '),
+        names: currentPair.name.split('-'),
         date: new Date(+currentPoint.timestamp * 1000).toDateString(),
         price: currentTokenPrice,
         currency: token0.name,

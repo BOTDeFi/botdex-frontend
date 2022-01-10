@@ -1,5 +1,6 @@
 @import '/src/styles/mixins/media.scss';
-@import '/src/styles/mixins/displays.scss';
+@import '/src/styles/mixins/main';
+@import '/src/styles/mixins/displays';
 
 .trade {
   margin-left: 240px;
@@ -28,22 +29,27 @@
   &__graph {
     padding: 10px;
 
-    max-width: 670px;
+    width: 100%;
+    min-width: 670px;
     height: fit-content;
 
     &-body {
+      background: linear-gradient(159.55deg, #1D1238 10.58%, #581368 56.54%, #12168C 98.7%), linear-gradient(157.08deg, #8F1BA9 -57.13%, #170C4E 58.18%);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
       &__info {
-        @include flexbox(space-between, center);
         position: relative;
 
-        padding: 30px 30.5px;
+        padding: 30px 31.5px;
       }
     }
   }
 
   .xaxis-label {
-    font-size: 16px;
-    line-height: 19.5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+    color: $text-main-color;
   }
 
   @include b(extramobile) {
@@ -59,7 +65,7 @@
     }
 
     &__graph {
-      min-width: 0;
+      max-width: 100%;
     }
 
     &__content {
@@ -73,7 +79,8 @@
     margin-left: 0;
 
     &__graph {
-      min-width: 100%;
+      max-width: 100%;
+      min-width: 0;
 
       &-body {
         &__info {

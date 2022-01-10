@@ -1,12 +1,13 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { FC, ReactElement } from 'react';
 
+import UnknownImg from '@/assets/img/currency/unknown.svg';
 import { ReactComponent as SwapSVG } from '@/assets/img/icons/swap-currency.svg';
 
 import './CurrencyInfo.scss';
 
 export interface ICurrencyInfoProps {
-  icons: [string, string] | [ReactElement | ReactElement];
+  icons: [string, string] | [ReactElement, ReactElement];
   names: [string, string];
   date: string;
   price: number;
@@ -24,6 +25,7 @@ export interface ICurrencyInfoProps {
  * @param {string} currency - symbol of the token
  * @param {number} shift - shift of the tokens
  * @param {number} percentShift - shift in the percents of the tokens
+ * @param {void} onSwapClick - todo: add text
  * @returns Component, which contain info of the tokens volatility
  */
 
@@ -44,7 +46,11 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
           {typeof icons[0] === 'string' ? (
             <>
               {icons.map((e: any, i: number) => {
-                return e ? <img key={e} src={e} alt={names[i]} /> : '';
+                return e ? (
+                  <img key={e} src={e} alt={names[i]} />
+                ) : (
+                  <img key={names[i]} src={UnknownImg} alt={names[i]} />
+                );
               })}
             </>
           ) : (
@@ -57,9 +63,12 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
         </div>
         <div className="currency-info__body-currencies-names">
           {names.map((t: string, i: number) => (
-            <span className="currency-info__body-currencies-names__text text-smd text-black text-500 text-upper">
+            <span
+              key={t}
+              className="currency-info__body-currencies-names__text text-smd text-upper"
+            >
               {t}
-              {i !== names.length - 1 ? ' / ' : ''}
+              {i !== names.length - 1 ? ' /  ' : ''}
             </span>
           ))}
         </div>
@@ -72,10 +81,10 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
         </button>
       </div>
       <div className="currency-info__body-currencies-statistic">
-        <h2 className="currency-info__body-currencies-statistic__price h2-lg text-black text-bold">
+        <div className="currency-info__body-currencies-statistic__price h2-lg text-bold">
           {price.toFixed(price < 10 ? 5 : 2)}
-        </h2>
-        <span className="currency-info__body-currencies-statistic__price-symbols text-smd text-black text-500">
+        </div>
+        <span className="currency-info__body-currencies-statistic__price-symbols text-smd">
           {currency}
         </span>
         <span

@@ -23,10 +23,13 @@ const Trade: React.FC = observer(() => {
 
   const options = React.useMemo(
     () => ({
-      colors: ['#FFCC00'], // color of the border
+      chart: {
+        width: '100%',
+      },
+      colors: ['rgba(255, 255, 255, 0.1)'], // color of the border
       markers: {
         size: [0],
-        colors: ['#FFCC00'], // color of the marker
+        colors: ['#F4F4F4'], // color of the marker
         strokeWidth: 3,
         hover: {
           size: 4,
@@ -37,26 +40,9 @@ const Trade: React.FC = observer(() => {
         show: false,
       },
       fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'light',
-          type: 'horizontal',
-          opacityFrom: 1,
-          opacityTo: 1,
-          shadeIntensity: 0.5,
-          colorStops: [
-            {
-              offset: -22,
-              color: '#FFD335',
-              opacity: 1,
-            },
-            {
-              offset: 100,
-              color: '#F9F9F9',
-              opacity: 1,
-            },
-          ],
-        },
+        type: 'solid',
+        colors: ['#000000'],
+        opacity: 0.3,
       },
       tooltip: {
         marker: {
@@ -74,11 +60,15 @@ const Trade: React.FC = observer(() => {
         axisTicks: {
           show: false,
         },
+        axisBorder: {
+          show: false,
+        },
         labels: {
           rotate: 0,
           style: {
-            fontFamily: 'ReadexPro',
+            fontFamily: 'Poppins',
             cssClass: 'xaxis-label',
+            colors: '#f4f4f4',
           },
           // eslint-disable-next-line func-names
           formatter: function (value: any, timestamp: number) {
@@ -113,6 +103,12 @@ const Trade: React.FC = observer(() => {
       },
       grid: {
         show: false,
+        padding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        },
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -178,7 +174,7 @@ const Trade: React.FC = observer(() => {
     if (pairs.currentPairData.points.length !== 0) {
       setCurrencyData(pairs.getFormattedCurrentPair(0, reversed));
     }
-  }, [pairs.currentPairData.points.length, pairs, reversed]);
+  }, [currentStamp, pairs.currentPairData.points.length, pairs, reversed]);
 
   const onReverseClick = React.useCallback(() => {
     setReversed(!reversed);
@@ -197,7 +193,7 @@ const Trade: React.FC = observer(() => {
             ''
           ) : (
             <div className="trade__graph">
-              <div className="trade__graph-body box-white box-shadow">
+              <div className="trade__graph-body">
                 <div className="trade__graph-body__info">
                   {currencyData && <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />}
                   <TimeSelector currentSelector={currentStamp} selectors={selectors} />

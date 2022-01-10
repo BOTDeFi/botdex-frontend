@@ -16,9 +16,8 @@ const initOptions = {
     height: '100%',
     type: 'area',
     toolbar: {
-      offsetX: -40,
+      show: false,
     },
-    width: '105%',
     stroke: {
       width: 2,
       curve: 'straight',
@@ -30,6 +29,7 @@ const initOptions = {
   series: [],
   noData: {
     text: 'Loading...',
+    colors: ['#f4f4f4'],
   },
 };
 

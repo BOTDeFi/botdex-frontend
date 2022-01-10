@@ -7,14 +7,14 @@
 
     &-currencies {
       @include flexbox(flex-start, center, row, 15px);
-      margin-bottom: 19.5px;
+      margin-bottom: 14.5px;
 
       &-icon {
         @include flexbox;
 
         & svg,
         & img {
-          max-width: 32px;
+          width: 32px;
 
           &:not(:last-child) {
             margin-right: 3px;
@@ -53,7 +53,7 @@
       }
 
       &-statistic {
-        @include flexbox(flex-start, center, row, 15px);
+        @include flexbox(flex-start, flex-start, row, 15px, wrap);
         margin-bottom: 5px;
 
         &__price {
@@ -77,7 +77,10 @@
         }
 
         &__date {
-          color: $gray-2;
+          font-family: 'Poppins', sans-serif;
+          color: $text-main-color;
+          line-height: 24px;
+          opacity: 0.6;
         }
       }
     }
@@ -91,8 +94,8 @@
         &-statistic {
           margin-bottom: 10px;
 
-          flex-direction: column;
-          gap: 5px;
+          //flex-direction: column;
+          //gap: 5px;
         }
       }
     }
