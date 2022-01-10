@@ -15,7 +15,7 @@ interface IInput extends InputProps {
 
 const Input: React.ForwardRefExoticComponent<IInput> = React.memo(
   React.forwardRef<AntdInput, IInput>((props, ref) => {
-    const { colorScheme = 'transparent', inputSize = 'sm', className, ...therProps } = props;
+    const { colorScheme = 'transparent', inputSize = 'sm', className, ...otherProps } = props;
     return (
       <AntdInput
         className={cn(
@@ -25,7 +25,7 @@ const Input: React.ForwardRefExoticComponent<IInput> = React.memo(
           className,
         )}
         ref={ref}
-        {...therProps}
+        {...otherProps}
       />
     );
   }),

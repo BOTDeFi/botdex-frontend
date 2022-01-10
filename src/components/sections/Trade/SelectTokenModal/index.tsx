@@ -109,11 +109,10 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
           width={300}
           destroyOnClose
           closeIcon
+          maskStyle={{ background: 'rgba(0,0,0,0.8)' }}
         >
           <div className="m-select-token__content">
-            <div className="m-select-token__title text-black text-bold text-smd">
-              Select a token
-            </div>
+            <div className="m-select-token__title text-bold text-smd">Select a token</div>
 
             <div className="m-select-token__search">
               <Search placeholder="Search" realtime onChange={handleSearch} />
@@ -124,7 +123,7 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
                 className="m-select-token__scroll"
                 style={{
                   width: '100%',
-                  height: tokens.length > 5 ? '55vh' : `${tokens.length * 65}px`,
+                  height: tokens.length > 5 ? '55vh' : `${tokens.length * 65 - 25}px`,
                 }}
               >
                 {[...tokens].map((token: IToken) => (
@@ -144,8 +143,8 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
                       alt=""
                     />
                     <div>
-                      <div>{token.name}</div>
-                      <div className="text-ssm text-gray-2">{token.symbol}</div>
+                      <div className="text">{token.name}</div>
+                      <div className="text-ssm text-gray-2 text-inter">{token.symbol}</div>
                     </div>
                   </div>
                 ))}
@@ -153,15 +152,15 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
             ) : (
               <span className="text">Not found</span>
             )}
-            <div
-              className="m-select-token__manage text-black text-center box-pointer"
-              onClick={handleOpenManageModal}
-              onKeyDown={handleOpenManageModal}
-              role="button"
-              tabIndex={0}
-            >
-              Manage Tokens
-            </div>
+            {/* <div */}
+            {/*  className="m-select-token__manage text-black text-center box-pointer" */}
+            {/*  onClick={handleOpenManageModal} */}
+            {/*  onKeyDown={handleOpenManageModal} */}
+            {/*  role="button" */}
+            {/*  tabIndex={0} */}
+            {/* > */}
+            {/*  Manage Tokens */}
+            {/* </div> */}
           </div>
         </Modal>
         <ManageTokensModal
