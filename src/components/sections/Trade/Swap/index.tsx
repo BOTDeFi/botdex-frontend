@@ -70,7 +70,6 @@ const Swap: React.FC = observer(() => {
   React.useEffect(() => {
     if (!error && userTrx && userTrx.swaps) {
       const trxData: IRecentTx[] = [];
-
       userTrx.swaps.forEach((swapObj: any) => {
         const dataItem: IRecentTx = {
           type: 'Swap',

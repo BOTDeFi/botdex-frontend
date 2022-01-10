@@ -399,8 +399,8 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           {tokenFrom ? (
             <>
               <div className="box-f-jc-sb box-f choose-tokens__box-title">
-                <div className="text-upper text-black">{tokenFrom.symbol}</div>
-                <div className="text-sm text-gray">{textFrom || 'From'}</div>
+                <div className="text-upper">{tokenFrom.symbol}</div>
+                <div className="text-sm text-gray-2 text-500">{textFrom || 'From'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
                 <div
@@ -428,7 +428,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   />
                   {balanceFrom ? (
                     <Popover content={balanceFrom}>
-                      <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${new BigNumber(
+                      <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
                         balanceFrom,
                       ).toFixed(5, 1)}`}</div>
                     </Popover>
@@ -450,7 +450,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
               colorScheme="gray"
               size="lmd"
             >
-              <span className="text-center text-black text-med">Select a Token</span>
+              <span className="text-center text-med">Select a Token</span>
             </Button>
           )}
           <div className="choose-tokens__line box-f-ai-c">
@@ -469,8 +469,8 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           {tokenTo ? (
             <>
               <div className="box-f-jc-sb box-f choose-tokens__box-title">
-                <div className="text-upper text-black">{tokenTo.symbol}</div>
-                <div className="text-sm text-gray">{textTo || 'To'}</div>
+                <div className="text-upper">{tokenTo.symbol}</div>
+                <div className="text-sm text-gray-2 text-500">{textTo || 'To'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
                 <div
@@ -496,7 +496,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   />
                   {balanceTo ? (
                     <Popover content={balanceTo}>
-                      <div className="choose-tokens__balance text-sm text-gray text-address">{`Balance: ${new BigNumber(
+                      <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
                         balanceTo,
                       ).toFixed(5, 1)}`}</div>
                     </Popover>
@@ -520,7 +520,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
               colorScheme="gray"
               size="lmd"
             >
-              <span className="text-center text-black text-med">Select a Token</span>
+              <span className="text-center text-med">Select a Token</span>
             </Button>
           )}
         </div>

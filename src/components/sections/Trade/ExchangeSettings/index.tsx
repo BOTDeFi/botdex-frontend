@@ -80,9 +80,9 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
     };
 
     return (
-      <div className="exchange exch-settings box-shadow box-white">
+      <div className="exchange exch-settings">
         <div className="box-f-jc-sb box-f-ai-c exch-settings__box-title">
-          <div className=" text-black text-md">Advanced Settings</div>
+          <div className="text-md text-500">Advanced Settings</div>
           <div
             className="exch-settings__close"
             onClick={handleClose}
@@ -95,7 +95,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
         </div>
         {isSlippage ? (
           <div className="exch-settings__section">
-            <div className="exch-settings__section-title text-black">Slippage tolerance</div>
+            <div className="exch-settings__section-title text-500">Slippage tolerance</div>
             <div className="box-f box-f-jc-sb">
               {btns.map((btn) => (
                 <Button
@@ -128,7 +128,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
           ''
         )}
         <div className="exch-settings__section">
-          <div className="exch-settings__section-title text-black">Transaction deadline</div>
+          <div className="exch-settings__section-title-2 text-500">Transaction deadline</div>
           <div className="box-f-ai-c">
             <InputNumber
               colorScheme="outline"
@@ -138,11 +138,11 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
               className="exch-settings__txdeadline-input"
               placeholder="0"
             />
-            <span className="text-med text-gray">Minutes</span>
+            <span className="text-500">Minutes</span>
           </div>
         </div>
         <div className="exch-settings__section">
-          <div className="exch-settings__section-title text-black">Audio</div>
+          <div className="exch-settings__section-title-2 text-500">Audio</div>
           <Switch
             colorScheme="purple"
             switchSize="bg"

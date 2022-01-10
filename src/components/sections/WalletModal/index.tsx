@@ -41,10 +41,11 @@ const WalletModal: React.FC<IImportTokensModal> = observer(({ isVisible, handleC
       handleCancel={handleClose}
       width={390}
       closeIcon
+      maskStyle={{ background: 'rgba(0,0,0,0.8)' }}
     >
       <div className="m-wallet__content">
-        <div className="text-smd text-bold text-black m-wallet__title">Your wallet</div>
-        <div className="m-wallet__address text-black text-md">{user.address}</div>
+        <div className="text-smd text-bold m-wallet__title">Your wallet</div>
+        <div className="m-wallet__address text-gray-2 text-md">{user.address}</div>
         <div className="m-wallet__box">
           <a
             href={`https://${IS_PRODUCTION ? '' : 'testnet.'}bscscan.com/address/${user.address}`}
@@ -53,7 +54,7 @@ const WalletModal: React.FC<IImportTokensModal> = observer(({ isVisible, handleC
             className="m-wallet__item box-f-ai-c"
           >
             <img src={LinkImg} alt="" />
-            <span className="text text-black">View on BscScan</span>
+            <span className="text">View on BscScan</span>
           </a>
           <CopyToClipboard text={user.address}>
             <div
@@ -64,7 +65,7 @@ const WalletModal: React.FC<IImportTokensModal> = observer(({ isVisible, handleC
               onClick={handleCopy}
             >
               <img src={CopyImg} alt="" />
-              <span className="text text-black">Copy Address</span>
+              <span className="text">Copy Address</span>
             </div>
           </CopyToClipboard>
           {isCopied ? (

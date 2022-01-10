@@ -25,27 +25,27 @@ interface ITradeBox {
 const TradeBox: React.FC<ITradeBox> = observer(
   ({ title, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, info }) => {
     return (
-      <div className={cn('trade-box box-shadow box-white', className)}>
+      <div className={cn('trade-box', className)}>
         <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">
           <div className="">
             {titleBackLink ? (
               <Link to="/trade/liquidity">
-                <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
+                <div className={cn('trade-box__title text-md text-med box-f-ai-c')}>
                   <img src={ArrowImg} alt="" className="trade-box__back" />
                   <span>{title}</span>
                 </div>
               </Link>
             ) : (
-              <div className={cn('trade-box__title text-md text-black text-med box-f-ai-c')}>
+              <div className={cn('trade-box__title text-md text-med box-f-ai-c')}>
                 <span>{title}</span>
               </div>
             )}
             {subtitle ? (
-              <div className="trade-box__subtitle text-gray box-f-ai-c">
+              <div className="trade-box__subtitle text-gray-2 box-f-ai-c">
                 <span>{subtitle}</span>
 
                 {info ? (
-                  <Popover content={<span className="text-med text text-black">{info}</span>}>
+                  <Popover content={<span className="text-med text">{info}</span>}>
                     <img src={InfoImg} alt="" />
                   </Popover>
                 ) : (

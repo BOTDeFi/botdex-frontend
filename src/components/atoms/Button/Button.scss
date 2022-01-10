@@ -63,7 +63,7 @@
   }
 
   &-sm {
-    padding: 13px 5px 14px;
+    padding: 10px 18px;
 
     min-width: 74px;
 
@@ -92,43 +92,45 @@
   }
 
   &-outline {
-    color: $black;
-    background: #fff;
-    border: 3px solid $yellow-d;
+    background: transparent;
+    border: 3px solid $bg-btn;
+    color: $text-main-color;
 
     &:hover {
-      color: #000;
-      border-color: $yellow-d;
+      color: $text-main-color;
+      border-color: $bg-btn;
+      background: transparent;
     }
 
     &:active,
     &:focus {
-      color: #000;
-      border-color: $yellow-d;
+      color: $text-main-color;
+      border-color: $bg-btn;
     }
 
     &.active {
-      background: $yellow-d;
+      color: $text-main-color;
+      background: $bg-btn;
     }
 
     &-purple {
-      color: $black;
+      color: $text-main-color;
       background: transparent;
-      border: 1px solid $black;
+      border: 1px solid $bg-white;
 
       &:hover,
       &:focus {
-        color: $black;
+        color: $text-main-color;
         background: transparent;
-        border-color: $black;
+        border-color: $bg-white;
       }
 
       &.active {
-        color: #fff !important;
-        background: $black;
+        color: $text-main-color !important;
+        background: $bg-white;
 
         span {
-          color: #fff !important;
+          color: $text-main-color !important;
         }
 
         svg {

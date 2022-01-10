@@ -1,10 +1,13 @@
+@import 'src/styles/vars';
+
 .exch-settings {
+
   &__box {
     &-title {
       margin-bottom: 30px;
       padding-bottom: 25px;
 
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid $bg-divider;
     }
   }
 
@@ -17,7 +20,7 @@
       margin-bottom: 30px;
       padding-bottom: 30px;
 
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid $bg-divider;
     }
 
     & + & {
@@ -25,7 +28,10 @@
     }
 
     &-title {
-      margin-bottom: 22px;
+      margin-bottom: 21px;
+    }
+    &-title-2 {
+      margin-bottom: 14px;
     }
   }
 

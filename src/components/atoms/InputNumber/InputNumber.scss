@@ -39,6 +39,9 @@
   }
 
   &-lg {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
     &-box {
       border-radius: 12px;
     }
@@ -51,6 +54,7 @@
       font-size: 25px;
       font-weight: 500;
       line-height: 30px;
+      color: $text-main-color;
     }
   }
 
@@ -73,10 +77,11 @@
     }
 
     input {
-      padding: 13px 20px 14px;
+      padding: 10px 18px;
+      color: $text-main-color;
 
       font-size: 16px;
-      line-height: 19px;
+      line-height: 20px;
     }
   }
 
@@ -94,12 +99,11 @@
     &-box {
       overflow: hidden;
 
-      color: $gray;
-      background: #fff;
-      border: 3px solid $yellow-d;
+      background: transparent;
+      border: 3px solid $bg-btn;
 
       &.active {
-        background: $yellow-d;
+        background: $bg-btn;
       }
     }
 

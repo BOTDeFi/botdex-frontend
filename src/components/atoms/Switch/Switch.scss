@@ -3,10 +3,12 @@
 .switch {
   width: 38px;
   min-width: unset;
-  height: 21px;
+  padding: 4px 6px;
+  //height: 21px;
+  top: 4px;
 
-  background: #dedede;
-  border: 0.8px solid transparent;
+  background: transparent;
+  border: 3px solid $bg-btn;
 
   &:focus {
     box-shadow: none;
@@ -18,27 +20,25 @@
 
   .ant-switch {
     &-handle {
-      top: -1px;
-      left: -1px;
-
       width: 21px;
       height: 21px;
 
-      background: #c7c7c7;
       border: 0.8px solid transparent;
       border-radius: 50%;
 
       &::before {
-        background: #c7c7c7;
+        background: $text-main-color;
         border-radius: 50%;
+        width: 100%;
+        height: 100%;
       }
     }
   }
 
   &.ant-switch {
     &-checked {
-      background: $yellow;
-      border-color: $yellow;
+      background: $bg-btn;
+      border-color: $bg-btn;
     }
 
     &-checked .ant-switch-handle {
@@ -55,17 +55,16 @@
   &-purple {
     &.ant-switch {
       &-checked {
-        background: $yellow-d;
-        border-color: transparent;
+        background: $bg-btn;
       }
 
       &-checked .ant-switch-handle {
         left: calc(100% - 21px + 1px) !important;
 
-        border-color: $yellow;
+        border-color: $bg-btn;
 
         &::before {
-          background: $yellow;
+          background: $text-main-color;
         }
       }
     }
@@ -96,7 +95,7 @@
 
     .ant-switch {
       &-handle {
-        top: 6px;
+        top: 4px;
         left: 5px;
       }
     }

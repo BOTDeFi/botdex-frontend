@@ -8,6 +8,7 @@
   max-width: 420px;
 
   background: $bg-dop;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   @include b(mobile) {
     max-width: calc(100% - 20px);

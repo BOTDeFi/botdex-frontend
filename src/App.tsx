@@ -67,7 +67,7 @@ const App: React.FC = observer(() => {
       </Switch>
       <MetamaskErrModal />
       <RoiModal />
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="bottom-right" theme="dark" />
     </div>
   );
 });
