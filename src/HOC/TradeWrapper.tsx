@@ -157,14 +157,12 @@ const TradeWrapper = (
         this.setState({
           isApproving: false,
         });
-      } catch (err) {
+      } catch (err: any) {
         this.setState({
           isAllowanceFrom: false,
           isAllowanceTo: false,
           isApproving: false,
         });
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         toast.error(`${err?.message ?? 'Approve token error :('}`);
         clogError('err approve tokens', err);
       }

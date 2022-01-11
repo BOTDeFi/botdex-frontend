@@ -275,7 +275,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
                     {new BigNumber(exchange.first).toFixed(5, 1)}
                   </div>
                 </Popover>
-                <div className="text-sm text-center text-gray text-center text-yellow">
+                <div className="text-sm text-center text-gray-2 text-center text-yellow">
                   {tokensData.from.token.symbol}
                   <br /> per {tokensData.to.token.symbol}
                 </div>
@@ -286,7 +286,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
                     {new BigNumber(exchange.second).toFixed(5, 1)}
                   </div>
                 </Popover>
-                <div className="text-sm text-center text-gray text-center text-yellow">
+                <div className="text-sm text-center text-gray-2 text-center text-yellow">
                   {tokensData.to.token.symbol}
                   <br /> per {tokensData.from.token.symbol}
                 </div>
@@ -297,7 +297,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
                     {exchange.share < 0.01 ? '<0.01' : new BigNumber(exchange.share).toFixed(2, 1)}%
                   </div>
                 </Popover>
-                <div className="text-sm text-center text-gray text-center text-yellow">
+                <div className="text-sm text-center text-gray-2 text-center text-yellow">
                   Share
                   <br /> of Pool
                 </div>
