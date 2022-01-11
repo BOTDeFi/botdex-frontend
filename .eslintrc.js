@@ -1,4 +1,5 @@
 const prettierConfig = require('./.prettierrc.js');
+
 module.exports = {
   env: {
     browser: true,
@@ -83,6 +84,7 @@ module.exports = {
         prop: 'ignore',
       },
     ],
+    'react/require-default-props': [0],
     'sort-imports': 'off',
     'no-param-reassign': [
       2,

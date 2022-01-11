@@ -8,11 +8,17 @@ import 'antd/lib/input-number/style/css';
 import './InputNumber.scss';
 
 interface IInputNumberProps extends InputNumberProps {
+  // eslint-disable-next-line react/no-unused-prop-types
   inputSize?: 'lg' | 'md' | 'sm';
+  // eslint-disable-next-line react/no-unused-prop-types
   colorScheme?: 'gray' | 'outline' | 'transparent' | 'white';
+  // eslint-disable-next-line react/no-unused-prop-types
   inputPrefix?: string | React.ReactElement;
+  // eslint-disable-next-line react/no-unused-prop-types
   prefixPosition?: 'right' | 'left' | 'top' | 'button';
+  // eslint-disable-next-line react/no-unused-prop-types
   inputClass?: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   ref?: React.ForwardedRef<HTMLInputElement>;
 }
 
