@@ -58,7 +58,8 @@ const ItemsController: React.FC<IItemsController> = React.memo(
           {prefixContainer && prefixContainer}
           <Switch
             colorScheme="white"
-            text={<span className="i-contr__switch-text text-black text-bold">Staked only</span>}
+            switchSize="sm"
+            text={<span className="i-contr__switch-text text-bold">Staked only</span>}
             onChange={onStakedSwitchChange}
           />
           <RadioGroup

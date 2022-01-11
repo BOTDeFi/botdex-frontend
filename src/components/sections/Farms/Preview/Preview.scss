@@ -4,16 +4,15 @@
 .farms-preview {
   overflow: hidden;
 
-  border-radius: 40px;
+  border-radius: 12px;
 
   &__box {
-    padding: 40px;
+    padding: 41px 42px 39px;
 
-    background-color: $yellow-d;
-    background-image: url(../../../../assets/img/sections/farms/bg.jpg);
+    background-color: $bg-purple;
+    background-image: url(../../../../assets/img/sections/farms/farms.png);
     background-position: 0 0;
     background-size: 100% 100%;
-    border-radius: 0 0 40px 40px;
 
     @include b(mobile) {
       padding: 40px 10px 20px 40px;
@@ -36,11 +35,12 @@
     }
   }
 
-  &__sibtitle {
-    margin-top: 16px;
+  &__subtitle {
+    margin-top: 12px;
   }
 
   &__auc {
+    display: none;
     padding: 21px 26px;
     @include b(mobile) {
       padding: 23px 10px;

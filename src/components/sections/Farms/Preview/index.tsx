@@ -26,8 +26,8 @@ const Preview: React.FC = React.memo(() => {
   return (
     <div className="farms-preview box-yellow-l-d">
       <div className="farms-preview__box">
-        <h1 className="farms-preview__title h1 text-white text-bold">Farms</h1>
-        <div className="farms-preview__subtitle text-white">
+        <h1 className="farms-preview__title h1-lg text-bold">Farms</h1>
+        <div className="farms-preview__subtitle">
           Stake Liquidity Pool (LP) tokens to earn.
         </div>
       </div>

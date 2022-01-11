@@ -106,4 +106,23 @@
       }
     }
   }
+
+  &-sm {
+    height: 21px;
+    .ant-switch {
+      &-handle {
+        border: none !important;
+        top: -3px;
+        left: -3px;
+      }
+    }
+    &.ant-switch {
+      &-checked {
+        .ant-switch-handle {
+          left: calc(100% - 17px);
+        }
+        background: $bg-accent-gradient;
+      }
+    }
+  }
 }
