@@ -7,7 +7,7 @@ import { Button } from '@/components/atoms';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
-import { Menu, WalletModal, OutsideClick } from '../index';
+import { Menu, OutsideClick, WalletModal } from '../index';
 
 import './Header.scss';
 
@@ -43,7 +43,9 @@ const Header: React.FC = observer(() => {
         </div>
         <div className="header__logo">
           <img src={logo} alt="logo" />
-          <div className="header__logo__title"><span>BOT</span>Swap</div>
+          <div className="header__logo__title">
+            <span>BOT</span>Swap
+          </div>
         </div>
       </section>
       {!user.address ? (

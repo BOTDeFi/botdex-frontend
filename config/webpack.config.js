@@ -390,7 +390,6 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -646,6 +645,9 @@ module.exports = function (webpackEnv) {
             entrypoints: entrypointFiles,
           };
         },
+      }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
       }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical

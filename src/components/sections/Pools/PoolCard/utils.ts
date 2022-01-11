@@ -88,12 +88,14 @@ export const useNonAutoVaultEarnings = (
 } => {
   const { userData } = pool;
 
-  const nonAutoVaultEarnings = useMemo(() => toBigNumber(userData?.pendingReward), [
-    userData?.pendingReward,
-  ]);
-  const nonAutoVaultEarningsAsString = useMemo(() => nonAutoVaultEarnings.toString(), [
-    nonAutoVaultEarnings,
-  ]);
+  const nonAutoVaultEarnings = useMemo(
+    () => toBigNumber(userData?.pendingReward),
+    [userData?.pendingReward],
+  );
+  const nonAutoVaultEarningsAsString = useMemo(
+    () => nonAutoVaultEarnings.toString(),
+    [nonAutoVaultEarnings],
+  );
 
   return { nonAutoVaultEarnings, nonAutoVaultEarningsAsString };
 };

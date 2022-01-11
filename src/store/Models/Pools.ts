@@ -93,12 +93,9 @@ const PoolsModel = types
     fetchVaultFeesSuccess(aggregatedCallsResponse: any) {
       // if (!aggregatedCallsResponse) throw new Error('MultiCallResponse is null');
       const callsResult = aggregatedCallsResponse?.flat();
-      const [
-        performanceFee,
-        callFee,
-        withdrawalFee,
-        withdrawalFeePeriod,
-      ] = callsResult?.map((result: any) => Number(result));
+      const [performanceFee, callFee, withdrawalFee, withdrawalFeePeriod] = callsResult?.map(
+        (result: any) => Number(result),
+      );
 
       // console.log(performanceFee, callFee, withdrawalFee, withdrawalFeePeriod);
       self.fees = {

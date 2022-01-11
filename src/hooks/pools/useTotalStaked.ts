@@ -13,11 +13,8 @@ export const useTotalStaked = (
   totalStakedBalanceToDisplay: string | number;
 } => {
   const { stakingToken, totalStaked } = pool;
-  const {
-    totalRefineryInVault,
-    availableRefineryAmountToCompound,
-    fuelTokensAmount,
-  } = useSelectVaultData();
+  const { totalRefineryInVault, availableRefineryAmountToCompound, fuelTokensAmount } =
+    useSelectVaultData();
 
   const totalStakedBalance = useMemo(() => {
     switch (farmMode) {

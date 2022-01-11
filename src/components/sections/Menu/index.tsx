@@ -92,7 +92,9 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       <div className="menu box-f-fd-c">
         <div className="menu__header">
           <img src={LogoImg} alt="BOTDEX logo" className="menu__header__logo" />
-          <div className="menu__header__title"><span>Bot</span>Swap</div>
+          <div className="menu__header__title">
+            <span>Bot</span>Swap
+          </div>
         </div>
         <div className="menu__connect-box">
           {!user.address ? (

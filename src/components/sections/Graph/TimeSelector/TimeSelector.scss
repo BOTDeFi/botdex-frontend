@@ -27,16 +27,16 @@
       }
 
       background: $bg-time-selector;
-      border: 1px solid #402B99;
+      border: 1px solid #402b99;
 
       &:hover {
         color: $text-main-color;
-        border: 1px solid #402B99;
+        border: 1px solid #402b99;
       }
 
       &.selected {
         color: $text-main-color;
-        border: 1px solid #402B99;
+        border: 1px solid #402b99;
         background: $bg-accent-gradient;
       }
     }

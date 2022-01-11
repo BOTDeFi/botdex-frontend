@@ -1,17 +1,11 @@
-@mixin font-face(
-  $font-family,
-  $file-path,
-  $weight: normal,
-  $style: normal,
-  $format: 'woff'
-) {
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $format: 'woff') {
   @font-face {
     font-family: $font-family;
     font-weight: $weight;
     font-style: $style;
     font-display: swap;
 
-    @if $format=='woff' {
+    @if $format== 'woff' {
       src: url('#{$file-path}.#{$format}') format($format);
     } @else {
       src: url('#{$file-path}.#{$format}') format('truetype');
@@ -22,7 +16,6 @@
 @mixin font-gemina {
   font-family: 'Gemina', sans-serif;
 }
-
 
 @mixin flex($direction: row, $alignment: normal, $justification: normal, $wrap: wrap) {
   display: flex;

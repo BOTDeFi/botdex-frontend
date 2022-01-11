@@ -20,9 +20,8 @@ const Lottery: React.FC = () => {
   const history = useHistory();
   const { id } = useParams<ILotteryId>();
 
-  const [isWinningTicketsModalVisible, setWinningTicketsModalVisible] = React.useState<boolean>(
-    false,
-  );
+  const [isWinningTicketsModalVisible, setWinningTicketsModalVisible] =
+    React.useState<boolean>(false);
 
   const [isBuyTicketsModalVisible, setBuyTicketsModalVisible] = React.useState<boolean>(false);
 
