@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
@@ -16,16 +17,18 @@ const Header: React.FC = observer(() => {
   const [isWalletModalVisible, setWalletModalVisible] = useState(false);
   const { user } = useMst();
   const { connect } = useWalletConnectorContext();
+  const location = useLocation();
 
   const handleClose = () => {
     setIsBurger(false);
   };
 
   useEffect(() => {
+    console.log(location);
     if (isBurger) {
       document.body.classList.add('hide-scroll');
     } else document.body.classList.remove('hide-scroll');
-  }, [isBurger]);
+  }, [location, isBurger]);
 
   return (
     <>
@@ -49,12 +52,20 @@ const Header: React.FC = observer(() => {
         </div>
       </section>
       {!user.address ? (
-        <Button className="connect" size="md" onClick={connect}>
+        <Button
+          className={`connect ${location.pathname === '/farms' && 'hide'}`}
+          size="md"
+          onClick={connect}
+        >
           <span className="text-bold">Connect Wallet</span>
         </Button>
       ) : (
-        <Button className="connect" size="md" onClick={() => setWalletModalVisible(true)}>
-          <span className="text-bold text-white text-address">{user.address}</span>
+        <Button
+          className={`connect ${location.pathname === '/farms' && 'hide'}`}
+          size="md"
+          onClick={() => setWalletModalVisible(true)}
+        >
+          <span className="text-bold text-address">{user.address}</span>
         </Button>
       )}
       <OutsideClick onClick={handleClose}>

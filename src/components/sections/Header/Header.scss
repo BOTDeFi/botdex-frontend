@@ -154,4 +154,8 @@
   @include b(tablet) {
     display: none !important;
   }
+
+  &.hide {
+    display: none;
+  }
 }
