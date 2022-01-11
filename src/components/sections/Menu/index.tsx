@@ -9,7 +9,7 @@ import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
 // import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
-// import FarmsImg from '../../../assets/img/icons/farms.svg';
+import FarmsImg from '../../../assets/img/icons/farms.svg';
 import HomeImg from '../../../assets/img/icons/home.svg';
 // import LotteryImg from '../../../assets/img/icons/lottery.svg';
 // import PoolsImg from '../../../assets/img/icons/pools.svg';
@@ -53,11 +53,11 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       ],
       img: TradeImg,
     },
-    // {
-    //   text: 'Farms',
-    //   link: '/farms',
-    //   img: FarmsImg,
-    // },
+    {
+      text: 'Farms',
+      link: '/farms',
+      img: FarmsImg,
+    },
     // {
     //   text: 'Lottery',
     //   link: '/lottery',

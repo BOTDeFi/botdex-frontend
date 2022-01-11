@@ -7,7 +7,7 @@
   font-weight: 500;
   line-height: 19px;
 
-  color: rgba(0, 0, 0, 0.5);
+  color: $text-main-color;
 
   .ant-select-selector {
     padding: 11px 15px !important;
@@ -16,7 +16,6 @@
 
     height: auto !important;
 
-    background: $gray-l !important;
     border: 1px solid rgba(0, 0, 0, 0.1) !important;
     border-radius: 12px !important;
     box-shadow: none !important;
@@ -38,7 +37,7 @@
 
   overflow: hidden;
 
-  background: #f9f9f9 !important;
+  background: $bg-switch !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
   border-radius: 12px !important;
 }
@@ -50,12 +49,14 @@
   font-weight: 500;
   line-height: 19px;
 
+  color: $text-main-color !important;
+
   &-option {
     transition: 0s;
 
     &-active {
       color: #fff;
-      background: $yellow !important;
+      background: $bg-accent-gradient !important;
     }
   }
 }

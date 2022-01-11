@@ -30,12 +30,14 @@
   }
 
   &__title {
+    color: #fff;
     @include b(mobile) {
       font-size: 40px !important;
     }
   }
 
   &__subtitle {
+    color: #fff;
     margin-top: 12px;
   }
 

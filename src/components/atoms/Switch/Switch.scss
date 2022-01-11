@@ -108,6 +108,7 @@
   }
 
   &-sm {
+    top: 0;
     height: 21px;
     .ant-switch {
       &-handle {
@@ -119,9 +120,12 @@
     &.ant-switch {
       &-checked {
         .ant-switch-handle {
-          left: calc(100% - 17px);
+          //top: 0;
+          left: calc(100% - 18px) !important;
         }
         background: $bg-accent-gradient;
+        background-origin: border-box;
+        border: 3px solid transparent;
       }
     }
   }
