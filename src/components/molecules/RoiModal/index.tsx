@@ -113,14 +113,12 @@ const RoiModal: React.FC = observer(() => {
       closeIcon
     >
       <div className="m-roi__content">
-        <div className="m-roi__title text-md text-black">
+        <div className="m-roi__title text-md">
           <span className="text-upper">Roi</span> Calculator
         </div>
 
         <div className="m-roi__row m-roi__staked-row">
-          <div className="m-roi__row-title text-black text-bold text-upper">
-            {stakingTokenSymbol} Staked
-          </div>
+          <div className="m-roi__row-title text-bold text-upper">{stakingTokenSymbol} Staked</div>
           <div className="m-roi__staked-row-inputs-container">
             {editingCurrency === EditingCurrency.TOKEN && (
               <InputNumber
@@ -130,7 +128,7 @@ const RoiModal: React.FC = observer(() => {
                 colorScheme="outline"
                 inputSize="md"
                 inputPrefix={
-                  <span className="text-ssm text-gray" style={{ flexWrap: 'nowrap' }}>
+                  <span className="text-ssm text-gray-2" style={{ flexWrap: 'nowrap' }}>
                     ~{principalAsUSD} <span>{FIAT}</span>
                   </span>
                 }
@@ -150,7 +148,7 @@ const RoiModal: React.FC = observer(() => {
                 colorScheme="outline"
                 inputSize="md"
                 inputPrefix={
-                  <span className="text-ssm text-gray">
+                  <span className="text-ssm text-gray-2">
                     ~<span>{principalAsToken}</span> <span>{stakingTokenSymbol}</span>
                   </span>
                 }
@@ -165,7 +163,7 @@ const RoiModal: React.FC = observer(() => {
             <Button
               className="m-roi__staked-row-input-container-button"
               icon={ExchangeImg}
-              colorScheme="white"
+              colorScheme="outline-purple"
               onClick={toggleEditingCurrency}
             />
           </div>
@@ -177,7 +175,7 @@ const RoiModal: React.FC = observer(() => {
                 size="ssm"
                 onClick={() => setPrincipalFromUSDValue(principalAmountAsText)}
               >
-                <span className="text-ssmd">
+                <span className="text-white text-ssmd">
                   {index !== arr.length - 1 && '$'}
                   {principalAmountAsText}
                 </span>
@@ -187,9 +185,9 @@ const RoiModal: React.FC = observer(() => {
         </div>
 
         <div className="m-roi__row">
-          <div className="m-roi__row-title text-black text-bold text-upper">Staked for</div>
+          <div className="m-roi__row-title text-bold text-upper">Staked for</div>
           <RadioGroup
-            className="box-f box-f-jc-sb"
+            className="m-roi__row-radio box-f box-f-jc-sb"
             buttonStyle="solid"
             defaultValue={stakedForOptions[3].value}
             items={stakedForOptions}
@@ -199,17 +197,17 @@ const RoiModal: React.FC = observer(() => {
 
         {autoCompoundFrequency === 0 && (
           <div className="m-roi__row m-roi__compounding-every-row">
-            <div className="m-roi__row-title text-black text-bold text-upper">
-              Compounding every
-            </div>
+            <div className="m-roi__row-title text-bold text-upper">Compounding every</div>
             <div className="box-f m-roi__compounding-every-row-container">
               <Switch
                 colorScheme="white"
+                switchSize="sm"
                 defaultChecked={compounding}
                 onChange={toggleCompounding}
               />
               <RadioGroup
                 className={classNames(
+                  'm-roi__row-radio',
                   'm-roi__compounding-every-row-radio-group',
                   'box-f box-f-jc-sb',
                   {
@@ -240,9 +238,7 @@ const RoiModal: React.FC = observer(() => {
         </div>
 
         <div className="m-roi__row">
-          <div className="m-roi__row-title text-black text-bold text-upper">
-            ROI at current rates
-          </div>
+          <div className="m-roi__row-title text-bold text-upper">ROI at current rates</div>
           <InputNumber
             className="m-roi__staked-row-input"
             value={roiUSD}
@@ -250,7 +246,7 @@ const RoiModal: React.FC = observer(() => {
             colorScheme="outline"
             inputSize="md"
             inputPrefix={
-              <span className="text-ssm text-gray">
+              <span className="text-ssm text-gray-2">
                 ~<span>{roiTokens}</span> <span>{earningTokenSymbol}</span> (
                 <span>
                   {roiPercentage.toLocaleString('en', {

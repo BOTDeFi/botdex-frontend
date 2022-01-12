@@ -107,6 +107,10 @@
 
     input {
       background: transparent;
+      color: $text-main-color;
+      &::placeholder {
+        color: $text-main-color;
+      }
     }
   }
   &-darkgray {
@@ -162,9 +166,9 @@
     appearance: none;
   }
 
-  input[type='number'] {
-    -webkit-appearance: textfield;
-  }
+  //input[type='number'] {
+  //  appearance: textfield;
+  //}
 
   .ant-input-number-handler-wrap {
     display: none;

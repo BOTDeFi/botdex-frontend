@@ -178,12 +178,12 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
       closeIcon
     >
       <div className="farms-stake-unstake-modal__content">
-        <div className="farms-stake-unstake-modal__title text-smd text-bold text-yellow">
+        <div className="farms-stake-unstake-modal__title text-smd text-bold">
           {isStaking ? 'Stake in Farm' : 'Unstake'}
         </div>
         <div className="farms-stake-unstake-modal__subtitle box-f-ai-c box-f-jc-sb">
-          <span className="text-yellow text-med text">{isStaking ? 'Stake' : 'Unstake'}</span>
-          <div className="box-f-ai-c farms-stake-unstake-modal__currency text-smd text-yellow">
+          <span className="text-med text">{isStaking ? 'Stake' : 'Unstake'}</span>
+          <div className="box-f-ai-c farms-stake-unstake-modal__currency text-smd">
             <span>{tokenSymbol}</span>
           </div>
         </div>
@@ -193,7 +193,7 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
           colorScheme="outline"
           inputSize="md"
           inputPrefix={
-            <span className="text-ssm text-gray">
+            <span className="text-ssm text-gray-2">
               ~{inputValueUsdToDisplay} {mockData.additionalCurrency}
             </span>
           }
@@ -215,7 +215,7 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
               key={name}
               onClick={() => handlePercentChange(value)}
             >
-              <span className="text-ssmd">{name}</span>
+              <span className="text-ssmd text-white">{name}</span>
             </Button>
           ))}
         </div>
