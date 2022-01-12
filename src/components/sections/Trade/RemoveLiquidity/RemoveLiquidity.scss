@@ -1,4 +1,5 @@
-@import 'src/styles/index';
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
 
 .r-liquidity {
   min-width: 400px;

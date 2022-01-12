@@ -9,10 +9,10 @@ interface IDetailsBadgeProps {
 
 const CoreBadge: React.FC = () => {
   return (
-    <>
+    <span className="badge-wrapper">
       <img src={VerifiedIcon} alt="verified core farm" />
-      <span className="text-black text-ssmd">Core</span>
-    </>
+      <span className="text-ssmd">Core</span>
+    </span>
   );
 };
 

@@ -12,7 +12,7 @@ const BasePopover: React.FC<IBasePopover> = ({ className, text, ...props }) => {
   return (
     <Popover
       className={className}
-      content={<div className="text-med text text-black">{text}</div>}
+      content={<div className="text-med text">{text}</div>}
       overlayInnerStyle={{ borderRadius: '20px' }}
       {...props}
     >

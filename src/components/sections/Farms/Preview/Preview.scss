@@ -15,9 +15,9 @@
     background-size: 100% 100%;
 
     @include b(mobile) {
-      padding: 40px 10px 20px 40px;
+      padding: 40px 20px 19px 42px;
 
-      background-image: url(../../../../assets/img/sections/farms/bg-1.svg);
+      background-image: none;
     }
 
     &--info {
@@ -44,12 +44,17 @@
   &__auc {
     display: none;
     padding: 21px 26px;
+    background: $bg-purple;
     @include b(mobile) {
       padding: 23px 10px;
+      display: block;
     }
 
     &-img {
       margin-right: 14px;
+    }
+    &-btn {
+      margin-left: 58px;
     }
   }
 

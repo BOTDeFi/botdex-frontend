@@ -1,31 +1,29 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins/media';
-
+@import 'src/styles/mixins/main';
 @import '../styles';
 
 .farms-table-row {
   position: relative;
+  &::after {
+    content: '';
 
-  & + & {
-    &::after {
-      content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
 
-      position: absolute;
-      top: 0;
-      left: 50%;
+    display: block;
 
-      display: block;
+    width: calc(100% - 100px);
+    height: 1px;
 
-      width: calc(100% - 100px);
-      height: 1px;
+    background: $bg-table-divider;
+    opacity: 0.3;
 
-      background: #eaeaea;
+    transform: translateX(-50%);
 
-      transform: translateX(-50%);
-
-      @include b(tablet) {
-        width: 100%;
-      }
+    @include b(tablet) {
+      width: 100%;
     }
   }
 
@@ -47,11 +45,18 @@
 
   &__extra-text {
     display: none;
+    @include b(tablet) {
+      display: block;
+      margin-bottom: 5px;
+    }
   }
 
   &__currencies {
     &-pair {
       margin-right: 12px;
+      @include b(tablet) {
+        margin-bottom: 9px;
+      }
 
       &-item {
         width: 24px;
@@ -67,7 +72,7 @@
   &__earned {
     @include b(tablet) {
       span {
-        color: #000 !important;
+        color: $text-main-color;
       }
     }
   }
@@ -136,11 +141,24 @@
     overflow: hidden;
     align-items: center;
     grid-template-columns: 1fr 3fr;
+    background: $bg-purple;
 
     @include b(tablet) {
       padding: 8px 10px;
       grid-template-columns: 1fr;
       grid-auto-flow: row dense;
+    }
+
+    &-badge {
+      .badge-wrapper {
+        border: 1px solid $bg-white;
+        border-radius: 12px;
+        @include flex(row, center, space-between);
+        padding: 2px 6px;
+      }
+      img {
+        margin-right: 2px;
+      }
     }
 
     &-links {
@@ -167,7 +185,7 @@
     &-box {
       padding: 20px 30px 40px;
 
-      background: rgba(#fff, 0.5);
+      background: linear-gradient(98.94deg, rgba(47,37,66,0.5) -22.87%, rgba(29,17,53,0.5) 94.67%);
       border-radius: 12px;
 
       & + & {
@@ -202,6 +220,11 @@
     &-staked-value {
       margin-bottom: 5px;
     }
+  }
+
+  &__btn-mobile {
+    width: 100%;
+    padding: 17px 40px;
   }
 
   .show-enter {

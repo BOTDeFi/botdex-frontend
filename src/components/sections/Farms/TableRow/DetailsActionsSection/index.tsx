@@ -108,7 +108,7 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       return (
         <>
           <DetailsSectionTitle title="Start Farming" />
-          <Button size="lg" onClick={connect}>
+          <Button size="lg" className="farms-table-row__btn-mobile" onClick={connect}>
             <span className="text-smd text-white text-bold">Unlock Wallet</span>
           </Button>
         </>

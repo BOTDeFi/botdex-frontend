@@ -1,4 +1,5 @@
-@import 'src/styles/index';
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
 
 .trade__nav {
   margin: 0 auto;

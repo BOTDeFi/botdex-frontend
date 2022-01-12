@@ -39,8 +39,6 @@
   }
 
   &-lg {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     &-box {
       border-radius: 12px;
@@ -111,7 +109,21 @@
       background: transparent;
     }
   }
+  &-darkgray {
+    &-box {
+      background: linear-gradient(98.94deg, #2F2542 -22.87%, #1D1135 94.67%);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
+    &:hover,
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      background: transparent;
+    }
+  }
   &-gray {
     &-box {
       background: $gray-l;
@@ -151,7 +163,7 @@
   }
 
   input[type='number'] {
-    appearance: textfield;
+    -webkit-appearance: textfield;
   }
 
   .ant-input-number-handler-wrap {

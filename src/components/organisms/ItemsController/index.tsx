@@ -33,10 +33,10 @@ const ItemsController: React.FC<IItemsController> = React.memo(
         text: 'Finished',
         value: 'finished',
       },
-      // {
-      //   text: 'Discontinued',
-      //   value: 'discontinued',
-      // },
+      {
+        text: 'Discontinued',
+        value: 'discontinued',
+      },
     ],
     radioGroupClassName,
     sortOptions,
