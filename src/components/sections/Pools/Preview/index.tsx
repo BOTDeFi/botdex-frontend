@@ -86,9 +86,9 @@ const ClaimBounty: React.FC = observer(() => {
   const isLoadingBountyData = estimatedRefineryBountyReward === null;
 
   return (
-    <div className="pools-preview__bounty box-white box-shadow">
+    <div className="pools-preview__bounty">
       <div className="pools-preview__bounty-title box-f-ai-c">
-        <span className="text-upper text-ssm text-black">Auto {tokenSymbol} Bounty</span>
+        <span className="text-upper text-ssm">Auto {tokenSymbol} Bounty</span>
         <AutoBountyPopover symbol={tokenSymbol} fee={fees.callFee} />
       </div>
       <div className="pools-preview__bounty-box box-f-ai-c box-f-jc-sb">
@@ -98,7 +98,7 @@ const ClaimBounty: React.FC = observer(() => {
           ) : (
             <div className="text-lg">{displayBountyReward}</div>
           )}
-          <div className="pools-preview__bounty-usd text-med text-gray">
+          <div className="pools-preview__bounty-usd text-med text-gray-2">
             ~{' '}
             {isLoadingBountyData ? (
               <Skeleton.Input style={{ width: 40 }} size="small" active />
@@ -131,8 +131,8 @@ const Preview: React.FC = observer(() => {
   return (
     <div className="pools-preview box-f-ai-c box-f-jc-sb">
       <div className="pools-preview__box">
-        <h1 className="pools-preview__title h1-lg text-white text-bold">Rocket Pools</h1>
-        <div className="pools-preview__subtitle text-white">
+        <h1 className="pools-preview__title h1-lg text-bold">Staking</h1>
+        <div className="pools-preview__subtitle">
           Simply stake tokens to earn. <br />
           High APR, low risk.
         </div>

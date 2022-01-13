@@ -2,16 +2,16 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { SwitchClickEventHandler } from 'antd/lib/switch';
 import BigNumber from 'bignumber.js/bignumber';
-import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 
-import { ReactComponent as CardViewIcon } from '@/assets/img/icons/card-view.svg';
-import { ReactComponent as ListViewIcon } from '@/assets/img/icons/list-view.svg';
-import { Button } from '@/components/atoms';
+// import { ReactComponent as CardViewIcon } from '@/assets/img/icons/card-view.svg';
+// import { ReactComponent as ListViewIcon } from '@/assets/img/icons/list-view.svg';
+// import { Button } from '@/components/atoms';
 import { CollectModal, ItemsController, StakeUnstakeModal } from '@/components/organisms';
-import { PoolCard, PoolsPreview, PoolTable } from '@/components/sections/Pools';
+import { PoolsPreview, StakeCard } from '@/components/sections/Pools';
 import { getAprData } from '@/components/sections/Pools/PoolCard/utils';
 import useRefresh from '@/hooks/useRefresh';
+import { stakes } from '@/pages/Pools/mock';
 import { getAddress } from '@/services/web3/contractHelpers';
 import { useMst } from '@/store';
 import { getFarmMode, getRefineryVaultEarnings } from '@/store/pools/helpers';
@@ -23,77 +23,85 @@ import { clog } from '@/utils/logger';
 
 import './Pools.scss';
 
-enum PoolsContentView {
-  list = 'list',
-  card = 'card',
-}
+// enum PoolsContentView {
+//   list = 'list',
+//   card = 'card',
+// }
 interface IPoolsContent {
-  view: PoolsContentView;
+  // view: PoolsContentView;
   content: Pool[];
 }
 
-const ListCardViewButtons: React.FC<{
-  view: PoolsContentView;
-  onChange: (value: boolean) => void;
-}> = ({ view, onChange }) => {
-  const prefixContainer = [
-    {
-      key: 'list-view-mode',
-      icon: ListViewIcon,
-      handler: () => onChange(true),
-      activeClassCondition: view === PoolsContentView.list,
-      title: 'List View',
-    },
-    {
-      key: 'card-view-mode',
-      icon: CardViewIcon,
-      handler: () => onChange(false),
-      activeClassCondition: view === PoolsContentView.card,
-      title: 'Card View',
-    },
-  ];
+// const ListCardViewButtons: React.FC<{
+//   view: PoolsContentView;
+//   onChange: (value: boolean) => void;
+// }> = ({ view, onChange }) => {
+//   const prefixContainer = [
+//     {
+//       key: 'list-view-mode',
+//       icon: ListViewIcon,
+//       handler: () => onChange(true),
+//       activeClassCondition: view === PoolsContentView.list,
+//       title: 'List View',
+//     },
+//     {
+//       key: 'card-view-mode',
+//       icon: CardViewIcon,
+//       handler: () => onChange(false),
+//       activeClassCondition: view === PoolsContentView.card,
+//       title: 'Card View',
+//     },
+//   ];
+//
+//   return (
+//     <div className="pools__i-contr-prefix box-f-ai-c">
+//       {prefixContainer.map((item) => {
+//         const { key, handler, activeClassCondition, title } = item;
+//         return (
+//           <Button
+//             key={key}
+//             className="pools__i-contr-button"
+//             title={title}
+//             colorScheme="white"
+//             size="ssm"
+//             onClick={handler}
+//           >
+//             <item.icon
+//               className={cn('pools__i-contr-icon', {
+//                 'pools__i-contr-icon_active': activeClassCondition,
+//               })}
+//             />
+//           </Button>
+//         );
+//       })}
+//     </div>
+//   );
+// };
 
-  return (
-    <div className="pools__i-contr-prefix box-f-ai-c">
-      {prefixContainer.map((item) => {
-        const { key, handler, activeClassCondition, title } = item;
-        return (
-          <Button
-            key={key}
-            className="pools__i-contr-button"
-            title={title}
-            colorScheme="white"
-            size="ssm"
-            onClick={handler}
-          >
-            <item.icon
-              className={cn('pools__i-contr-icon', {
-                'pools__i-contr-icon_active': activeClassCondition,
-              })}
-            />
-          </Button>
-        );
-      })}
-    </div>
-  );
-};
-
-const PoolsContent: React.FC<IPoolsContent> = ({ view, content }) => {
+const PoolsContent: React.FC<IPoolsContent> = ({ content }) => {
   return (
     <div className="pools__content">
-      <div className={`pools__content-${view}-view`}>
-        {view === PoolsContentView.list && <PoolTable data={content} />}
-        {view === PoolsContentView.card &&
+      {/* <div className={`pools__content-${view}-view`}> */}
+      <div className="pools__content-card-view">
+        {stakes.map((stake) => (
+          <StakeCard key={stake.name} stake={stake} />
+        ))}
+        {/* {view === PoolsContentView.list && <PoolTable data={content} />} */}
+        {
+          // view === PoolsContentView.card &&
           content.map((pool) => {
-            const farmMode = getFarmMode(pool);
+            console.log(getFarmMode(pool));
+            // const farmMode = getFarmMode(pool);
             return (
-              <PoolCard
-                key={pool.isAutoVault ? 'auto-pool' : pool.id}
-                farmMode={farmMode}
-                pool={pool}
-              />
+              <></>
+              // <PoolCard
+              //   key={pool.isAutoVault ? 'auto-pool' : pool.id}
+              //   farmMode={farmMode}
+              //   pool={pool}
+              // />
             );
-          })}
+          })
+        }
       </div>
     </div>
   );
@@ -133,9 +141,9 @@ const Pools: React.FC = observer(() => {
   } = useSelectVaultData();
   // const [filteredPools, setFilteredPools] = useState(poolsWithoutAutoVault);
   const [appliedFilters, setAppliedFilters] = useState<Map<IFilterBy, IFilterFunc>>(new Map());
-  const [isListView, setIsListView] = useState(
-    localStorage['refinery-finance-pools-view'] === PoolsContentView.list,
-  );
+  // const [isListView,] = useState(
+  //   localStorage['refinery-finance-pools-view'] === PoolsContentView.list,
+  // );
   // const [poolsTypeFilter, setPoolsTypeFilter] = useState(PoolsType.live);
   const [sortOption, setSortOption] = useState(SortOptions.hot);
 
@@ -218,12 +226,12 @@ const Pools: React.FC = observer(() => {
     return filteredPools;
   }, [filteredPools]);
 
-  const handleSwitchView = (value: boolean) => {
-    localStorage['refinery-finance-pools-view'] = value
-      ? PoolsContentView.list
-      : PoolsContentView.card;
-    setIsListView(value);
-  };
+  // const handleSwitchView = (value: boolean) => {
+  //   localStorage['refinery-finance-pools-view'] = value
+  //     ? PoolsContentView.list
+  //     : PoolsContentView.card;
+  //   setIsListView(value);
+  // };
 
   const filterByStakedOnly = (value: BigNumber, isStaked: boolean) => {
     if (!isStaked) return true; // show all
@@ -360,12 +368,12 @@ const Pools: React.FC = observer(() => {
         <div className="row">
           <PoolsPreview />
           <ItemsController
-            prefixContainer={
-              <ListCardViewButtons
-                view={isListView ? PoolsContentView.list : PoolsContentView.card}
-                onChange={handleSwitchView}
-              />
-            }
+            // prefixContainer={
+            //   <ListCardViewButtons
+            //     view={isListView ? PoolsContentView.list : PoolsContentView.card}
+            //     onChange={handleSwitchView}
+            //   />
+            // }
             radioGroupOptions={[
               {
                 text: 'Live',
@@ -384,9 +392,10 @@ const Pools: React.FC = observer(() => {
             onStakedSwitchChange={handleStakedSwitchChange}
             onRadioGroupChange={handleRadioGroupChange}
             onSortSelectChange={handleSortSelectChange}
+            hideSortAndSearch
           />
           <PoolsContent
-            view={isListView ? PoolsContentView.list : PoolsContentView.card}
+            // view={isListView ? PoolsContentView.list : PoolsContentView.card}
             content={pools}
           />
         </div>

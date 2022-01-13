@@ -12,7 +12,7 @@ import { useMst } from '@/store';
 import FarmsImg from '../../../assets/img/icons/farms.svg';
 import HomeImg from '../../../assets/img/icons/home.svg';
 // import LotteryImg from '../../../assets/img/icons/lottery.svg';
-// import PoolsImg from '../../../assets/img/icons/pools.svg';
+import PoolsImg from '../../../assets/img/icons/pools.svg';
 // import TeamsImg from '../../../assets/img/icons/teams.svg';
 import { ReactComponent as TgImg } from '../../../assets/img/icons/tg.svg';
 import TradeImg from '../../../assets/img/icons/trade.svg';
@@ -63,11 +63,11 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     //   link: '/lottery',
     //   img: LotteryImg,
     // },
-    // {
-    //   text: 'Pools',
-    //   link: '/pools',
-    //   img: PoolsImg,
-    // },
+    {
+      text: 'Staking',
+      link: '/staking',
+      img: PoolsImg,
+    },
     // {
     //   text: 'Collectibles',
     //   link: '/collectibles',

@@ -5,9 +5,11 @@
 
   padding: 30px 30px 30px 40px;
 
-  //background: #191919 url('src/assets/img/sections/pools/bg.jpg') no-repeat 100% 0;
-  background-size: auto 100%;
-  border-radius: 40px;
+  background-color: $bg-purple;
+  background-image: url(../../../../assets/img/sections/pools/pools.png);
+  background-position: 0 0;
+  background-size: 100% 100%;
+  border-radius: 12px;
   @include b(tablet) {
     padding: 40px 10px 10px;
 
@@ -19,6 +21,7 @@
   &__title {
     position: relative;
     z-index: 2;
+    color: #fff;
 
     margin-bottom: 15px;
     @include b(tablet) {
@@ -26,6 +29,9 @@
 
       font-size: 35px !important;
     }
+  }
+  &__subtitle {
+    color: #fff;
   }
 
   &__bg {
@@ -47,9 +53,13 @@
   }
 
   &__bounty {
+    display: none;
     padding: 20px 15px 20px 24px;
+    background: $bg-farms-gradient;
+    box-shadow: 0 12px 40px rgba(85, 32, 142, 0.25);
+    border-radius: 12px;
     @include b(tablet) {
-      border-radius: 20px 20px 40px 40px !important;
+      display: block;
     }
 
     &-title {

@@ -24,7 +24,6 @@ const Header: React.FC = observer(() => {
   };
 
   useEffect(() => {
-    console.log(location);
     if (isBurger) {
       document.body.classList.add('hide-scroll');
     } else document.body.classList.remove('hide-scroll');
@@ -53,7 +52,7 @@ const Header: React.FC = observer(() => {
       </section>
       {!user.address ? (
         <Button
-          className={`connect ${location.pathname === '/farms' && 'hide'}`}
+          className={`connect ${location.pathname === ('/farms' && '/staking') && 'hide'}`}
           size="md"
           onClick={connect}
         >
@@ -61,7 +60,7 @@ const Header: React.FC = observer(() => {
         </Button>
       ) : (
         <Button
-          className={`connect ${location.pathname === '/farms' && 'hide'}`}
+          className={`connect ${location.pathname === ('/farms' && '/staking') && 'hide'}`}
           size="md"
           onClick={() => setWalletModalVisible(true)}
         >

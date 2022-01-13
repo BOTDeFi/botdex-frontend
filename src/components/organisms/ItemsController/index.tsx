@@ -19,6 +19,7 @@ interface IItemsController {
   onStakedSwitchChange?: SwitchClickEventHandler;
   onRadioGroupChange?: (e: RadioChangeEvent) => void;
   onSortSelectChange?: (value: any, option: any) => void;
+  hideSortAndSearch?: boolean;
 }
 
 const ItemsController: React.FC<IItemsController> = React.memo(
@@ -46,6 +47,7 @@ const ItemsController: React.FC<IItemsController> = React.memo(
     onStakedSwitchChange,
     onRadioGroupChange,
     onSortSelectChange,
+    hideSortAndSearch = false,
   }) => {
     let handleSearch: typeof onSearchChange | undefined;
     if (onSearchChange) {
@@ -71,21 +73,23 @@ const ItemsController: React.FC<IItemsController> = React.memo(
             onChange={onRadioGroupChange}
           />
         </div>
-        <div className="box-f-ai-c">
-          <SortSelect
-            className="i-contr__sort"
-            label="Sort by"
-            sortOptions={sortOptions}
-            onChange={onSortSelectChange}
-          />
-          <Search
-            className="i-contr__search"
-            colorScheme="gray"
-            placeholder={searchPlaceholder}
-            realtime
-            onChange={handleSearch}
-          />
-        </div>
+        {!hideSortAndSearch && (
+          <div className="box-f-ai-c">
+            <SortSelect
+              className="i-contr__sort"
+              label="Sort by"
+              sortOptions={sortOptions}
+              onChange={onSortSelectChange}
+            />
+            <Search
+              className="i-contr__search"
+              colorScheme="gray"
+              placeholder={searchPlaceholder}
+              realtime
+              onChange={handleSearch}
+            />
+          </div>
+        )}
       </div>
     );
   },

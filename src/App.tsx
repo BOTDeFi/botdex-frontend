@@ -12,7 +12,7 @@ import {
   // DaoProposalPage,
   FarmsPage,
   // LotteryPage,
-  // PoolsPage,
+  PoolsPage,
   // TeamPage,
   // TeamsPage,
   TradePage,
@@ -56,8 +56,8 @@ const App: React.FC = observer(() => {
           component={TradePage}
         />
         {/* <Route exact path={['/lottery/:id', '/lottery']} component={LotteryPage} /> */}
-         <Route exact path="/farms" component={FarmsPage} />
-        {/* <Route exact path="/pools" component={PoolsPage} /> */}
+        <Route exact path="/farms" component={FarmsPage} />
+        <Route exact path="/staking" component={PoolsPage} />
         {/* <Route exact path="/collectibles" component={CollectiblesPage} /> */}
         {/* <Route exact path="/teams" component={TeamsPage} /> */}
         {/* <Route exact path="/team/:id" component={TeamPage} /> */}
