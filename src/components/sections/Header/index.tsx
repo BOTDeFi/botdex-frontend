@@ -52,7 +52,9 @@ const Header: React.FC = observer(() => {
       </section>
       {!user.address ? (
         <Button
-          className={`connect ${location.pathname === ('/farms' && '/staking') && 'hide'}`}
+          className={`connect ${
+            (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
+          }`}
           size="md"
           onClick={connect}
         >
@@ -60,7 +62,9 @@ const Header: React.FC = observer(() => {
         </Button>
       ) : (
         <Button
-          className={`connect ${location.pathname === ('/farms' && '/staking') && 'hide'}`}
+          className={`connect ${
+            (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
+          }`}
           size="md"
           onClick={() => setWalletModalVisible(true)}
         >

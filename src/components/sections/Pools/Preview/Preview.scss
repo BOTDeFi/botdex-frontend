@@ -7,15 +7,18 @@
 
   background-color: $bg-purple;
   background-image: url(../../../../assets/img/sections/pools/pools.png);
-  background-position: 0 0;
-  background-size: 100% 100%;
+  background-position: center;
+  background-size: 100%;
   border-radius: 12px;
+  @include b(extramobile) {
+    //background-size: 75% 75%;
+    background-size: 150%;
+    background-position: center;
+  }
   @include b(tablet) {
     padding: 40px 10px 10px;
 
     display: block !important;
-
-    background-image: none;
   }
 
   &__title {
@@ -58,9 +61,9 @@
     background: $bg-farms-gradient;
     box-shadow: 0 12px 40px rgba(85, 32, 142, 0.25);
     border-radius: 12px;
-    @include b(tablet) {
-      display: block;
-    }
+    //@include b(tablet) {
+    //  display: block;
+    //}
 
     &-title {
       span {

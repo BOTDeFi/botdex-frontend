@@ -51,6 +51,9 @@ $default-vertical-padding: 22px;
       @include b(mobile) {
         flex-direction: column-reverse;
       }
+      @include b(tablet) {
+        align-items: normal;
+      }
       //display: grid;
       //grid-template-columns: repeat(3, 1fr);
       //

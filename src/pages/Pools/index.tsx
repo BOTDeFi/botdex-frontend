@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { SwitchClickEventHandler } from 'antd/lib/switch';
 import BigNumber from 'bignumber.js/bignumber';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 // import { ReactComponent as CardViewIcon } from '@/assets/img/icons/card-view.svg';
 // import { ReactComponent as ListViewIcon } from '@/assets/img/icons/list-view.svg';
 // import { Button } from '@/components/atoms';
 import { CollectModal, ItemsController, StakeUnstakeModal } from '@/components/organisms';
-import { PoolsPreview, StakeCard } from '@/components/sections/Pools';
+import { PoolCard, PoolsPreview, StakeCard } from '@/components/sections/Pools';
 import { getAprData } from '@/components/sections/Pools/PoolCard/utils';
 import useRefresh from '@/hooks/useRefresh';
 import { stakes } from '@/pages/Pools/mock';
@@ -91,14 +92,13 @@ const PoolsContent: React.FC<IPoolsContent> = ({ content }) => {
           // view === PoolsContentView.card &&
           content.map((pool) => {
             console.log(getFarmMode(pool));
-            // const farmMode = getFarmMode(pool);
+            const farmMode = getFarmMode(pool);
             return (
-              <></>
-              // <PoolCard
-              //   key={pool.isAutoVault ? 'auto-pool' : pool.id}
-              //   farmMode={farmMode}
-              //   pool={pool}
-              // />
+              <PoolCard
+                key={pool.isAutoVault ? 'auto-pool' : pool.id}
+                farmMode={farmMode}
+                pool={pool}
+              />
             );
           })
         }
@@ -133,6 +133,7 @@ enum SortOptions {
 const Pools: React.FC = observer(() => {
   const { user, pools: poolsStore } = useMst();
   const { pools: poolsWithoutAutoVault } = usePools();
+  console.log('pools', toJS(poolsStore));
   const {
     totalRefineryInVault,
     pricePerFullShare,

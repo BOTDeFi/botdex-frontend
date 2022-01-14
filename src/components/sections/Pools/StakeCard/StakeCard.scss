@@ -10,6 +10,10 @@ $bg-m12: linear-gradient(180deg, #7649FE 0%, #3D2094 100%);
 .stake-card {
   width: 260px;
   margin-bottom: 10px;
+  @include b(tablet) {
+    width: calc(100% / 2 - 20px);
+    justify-content: space-between;
+  }
   @include b(mobile) {
     width: 100%;
     padding-bottom: 30px;
