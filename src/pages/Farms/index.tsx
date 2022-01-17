@@ -31,7 +31,7 @@ type IFilterFunc = (farm: Farm) => boolean | typeof Array.prototype.filter;
 enum FarmsType {
   live = 'live',
   finished = 'finished',
-  discontinued = 'discontinued',
+  // discontinued = 'discontinued',
 }
 type IFarmsType = keyof typeof FarmsType;
 
@@ -230,10 +230,10 @@ const Farms: React.FC = observer(() => {
               text: 'Finished',
               value: FarmsType.finished,
             },
-            {
-              text: 'Discontinued',
-              value: FarmsType.discontinued,
-            },
+            // {
+            //   text: 'Discontinued',
+            //   value: FarmsType.discontinued,
+            // },
           ]}
           radioGroupClassName="farms__i-contr"
           searchPlaceholder="Search Farms"
