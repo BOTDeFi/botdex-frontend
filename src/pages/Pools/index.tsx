@@ -9,7 +9,7 @@ import { observer } from 'mobx-react-lite';
 // import { ReactComponent as ListViewIcon } from '@/assets/img/icons/list-view.svg';
 // import { Button } from '@/components/atoms';
 import { CollectModal, ItemsController, StakeUnstakeModal } from '@/components/organisms';
-import { PoolCard, PoolsPreview, StakeCard } from '@/components/sections/Pools';
+import { PoolsPreview, StakeCard } from '@/components/sections/Pools';
 import { getAprData } from '@/components/sections/Pools/PoolCard/utils';
 import useRefresh from '@/hooks/useRefresh';
 import { stakes } from '@/pages/Pools/mock';
@@ -92,13 +92,14 @@ const PoolsContent: React.FC<IPoolsContent> = ({ content }) => {
           // view === PoolsContentView.card &&
           content.map((pool) => {
             console.log(getFarmMode(pool));
-            const farmMode = getFarmMode(pool);
+            // const farmMode = getFarmMode(pool);
             return (
-              <PoolCard
-                key={pool.isAutoVault ? 'auto-pool' : pool.id}
-                farmMode={farmMode}
-                pool={pool}
-              />
+              <></>
+              // <PoolCard
+              //   key={pool.isAutoVault ? 'auto-pool' : pool.id}
+              //   farmMode={farmMode}
+              //   pool={pool}
+              // />
             );
           })
         }
