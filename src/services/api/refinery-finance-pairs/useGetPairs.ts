@@ -19,7 +19,7 @@ interface IGetPairsResponse {
 }
 
 export const useGetPair = () => {
-  return function (pairId: string) {
+  return (pairId: string): any => {
     return apolloClient
       .query<IGetPairsResponse>({
         ...getExchangeContext,
@@ -44,7 +44,7 @@ interface IGetHoursPairsResponse {
  * @returns
  */
 export const useGetHoursPairs = (orderBy = 'hourStartUnix', orderDir = 'desc') => {
-  return function (time: number, pairId: string) {
+  return (time: number, pairId: string): any => {
     return apolloClient
       .query<IGetHoursPairsResponse>({
         ...getExchangeContext,
@@ -72,7 +72,7 @@ interface IGetDaysPairsResponse {
  * @returns
  */
 export const useGetDaysPairs = (orderBy = 'date', orderDir = 'desc') => {
-  return function (time: number, pairId: string) {
+  return (time: number, pairId: string): any => {
     return apolloClient
       .query<IGetDaysPairsResponse>({
         ...getExchangeContext,

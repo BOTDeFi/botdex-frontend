@@ -44,6 +44,9 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
   const { pid, lpAddresses, lpSymbol, quoteToken, token } = farm;
   const lpAddress = getAddress(lpAddresses);
   const lpContract = useErc20(lpAddress);
+  // lpContract.methods.token1().call().then((res: any) => {
+  //   console.log('lp', res);
+  // });
   const { onApprove } = useApproveFarm(lpContract);
 
   const handleApprove = useCallback(async () => {

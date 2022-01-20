@@ -161,7 +161,7 @@ type PublicFarmData = {
 export const fetchPublicFarmData = async (farm: Farm): Promise<PublicFarmData> => {
   const { pid, lpAddresses, token, quoteToken } = farm;
   const lpAddress = getAddress(lpAddresses);
-  const [masterRefinerAddress, masterRefinerAbi] = getContractData('MASTER_REFINER');
+  const [masterRefinerAddress, masterRefinerAbi] = getContractData('MASTER_BOTDEX');
   const calls = [
     // Balance of token in the LP contract
     {
@@ -270,9 +270,11 @@ export const fetchFarms = (farmsToFetch: FarmConfig[]): Promise<Farm[]> => {
   );
 };
 
-export const fetchFarmUserAllowances = async (account: string, farmsToFetch: FarmConfig[]) => {
-  const masterRefinerAddress = getContractAddress('MASTER_REFINER');
-
+export const fetchFarmUserAllowances = async (
+  account: string,
+  farmsToFetch: FarmConfig[],
+): Promise<any> => {
+  const masterRefinerAddress = getContractAddress('MASTER_BOTDEX');
   const calls = farmsToFetch.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses);
     return {
@@ -281,7 +283,6 @@ export const fetchFarmUserAllowances = async (account: string, farmsToFetch: Far
       params: [account, masterRefinerAddress],
     };
   });
-
   const [, erc20Abi] = getContractData('ERC20');
   const rawLpAllowances = await multicall(erc20Abi, calls);
   const parsedLpAllowances = rawLpAllowances.map((lpBalance: any) => {
@@ -290,7 +291,10 @@ export const fetchFarmUserAllowances = async (account: string, farmsToFetch: Far
   return parsedLpAllowances;
 };
 
-export const fetchFarmUserTokenBalances = async (account: string, farmsToFetch: FarmConfig[]) => {
+export const fetchFarmUserTokenBalances = async (
+  account: string,
+  farmsToFetch: FarmConfig[],
+): Promise<any> => {
   const calls = farmsToFetch.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses);
     return {
@@ -308,8 +312,11 @@ export const fetchFarmUserTokenBalances = async (account: string, farmsToFetch: 
   return parsedTokenBalances;
 };
 
-export const fetchFarmUserStakedBalances = async (account: string, farmsToFetch: FarmConfig[]) => {
-  const [masterRefinerAddress, masterRefinerAbi] = getContractData('MASTER_REFINER');
+export const fetchFarmUserStakedBalances = async (
+  account: string,
+  farmsToFetch: FarmConfig[],
+): Promise<any> => {
+  const [masterRefinerAddress, masterRefinerAbi] = getContractData('MASTER_BOTDEX');
 
   const calls = farmsToFetch.map((farm) => {
     return {
@@ -326,8 +333,11 @@ export const fetchFarmUserStakedBalances = async (account: string, farmsToFetch:
   return parsedStakedBalances;
 };
 
-export const fetchFarmUserEarnings = async (account: string, farmsToFetch: FarmConfig[]) => {
-  const [masterRefinerAddress, masterRefinerAbi] = getContractData('MASTER_REFINER');
+export const fetchFarmUserEarnings = async (
+  account: string,
+  farmsToFetch: FarmConfig[],
+): Promise<any> => {
+  const [masterRefinerAddress, masterRefinerAbi] = getContractData('MASTER_BOTDEX');
 
   const calls = farmsToFetch.map((farm) => {
     return {

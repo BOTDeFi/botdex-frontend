@@ -92,6 +92,17 @@
     background: $gray-l;
     color: $text-main-color;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    &:hover {
+      color: $text-main-color;
+      border-color: $bg-btn;
+      background: transparent;
+    }
+
+    &:active,
+    &:focus {
+      color: $text-main-color;
+      border-color: $bg-btn;
+    }
   }
 
   &-outline {
@@ -204,7 +215,6 @@
       background: $accent-gradient;
     }
   }
-
 
   &[disabled] {
     color: $text-main-color;

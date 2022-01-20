@@ -52,7 +52,7 @@ export const RefreshContextProvider: React.FC = ({ children }) => {
 };
 
 // This hook is used to perform components/fetches to update the displayed data
-const useRefresh = () => {
+const useRefresh = (): any => {
   const { fast, slow } = useContext(RefreshContext);
   return { fastRefresh: fast, slowRefresh: slow };
 };

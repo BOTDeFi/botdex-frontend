@@ -4,11 +4,21 @@ import { contracts } from './contracts';
 import { tokens } from './tokens';
 
 export const farms: FarmConfig[] = [
+  // {
+  //   pid: 0,
+  //   lpSymbol: 'RP1',
+  //   lpAddresses: {
+  //     97: contracts.RP1.ADDRESS,
+  //   },
+  //   token: tokens.fuel,
+  //   quoteToken: tokens.wbnb, // ??
+  //   categoryType: 'core',
+  // },
   {
     pid: 0,
-    lpSymbol: 'RP1',
+    lpSymbol: 'BOT',
     lpAddresses: {
-      97: contracts.RP1.ADDRESS,
+      97: contracts.BOT.ADDRESS,
     },
     token: tokens.fuel,
     quoteToken: tokens.wbnb, // ??
@@ -16,22 +26,22 @@ export const farms: FarmConfig[] = [
   },
   {
     pid: 1,
-    lpSymbol: 'TMPT-BBSHK LP',
+    lpSymbol: 'DAI-WBNB LP',
     lpAddresses: {
-      97: '0xE272657CD75052eCeF43D24F3Bb93faa67733b2c',
+      97: '0x92e999CCB3A368678422e5814ABdD177700ccf93',
     },
-    token: tokens.tmpt,
-    quoteToken: tokens.bbshk,
+    token: tokens.dai,
+    quoteToken: tokens.wbnb,
     categoryType: 'core',
   },
-  {
-    pid: 2,
-    lpSymbol: 'UGBG-AVOOG LP',
-    lpAddresses: {
-      97: '0xc11425B023aF7AD46d16e880BFB56de9c6f16DA5',
-    },
-    token: tokens.ugbg,
-    quoteToken: tokens.avoog,
-    categoryType: 'core',
-  },
+  // {
+  //   pid: 2,
+  //   lpSymbol: 'UGBG-AVOOG LP',
+  //   lpAddresses: {
+  //     97: '0xc11425B023aF7AD46d16e880BFB56de9c6f16DA5',
+  //   },
+  //   token: tokens.ugbg,
+  //   quoteToken: tokens.avoog,
+  //   categoryType: 'core',
+  // },
 ];

@@ -1,8 +1,7 @@
 import React from 'react';
 
+import TableRow from '@/components/sections/Farms/TableRow';
 import { Farm } from '@/types';
-
-import { FarmsTableRow } from '..';
 
 import './Table.scss';
 
@@ -22,7 +21,7 @@ const Table: React.FC<ITableProps> = React.memo(({ data }) => {
       </div>
 
       {data.map((farm) => {
-        return <FarmsTableRow key={farm.pid} farm={farm} />;
+        return <TableRow key={farm.pid} farm={farm} />;
       })}
     </div>
   );

@@ -5,7 +5,7 @@ import { Contract } from 'web3-eth-contract';
 import { useCallWithGasPrice } from '@/services/web3/hooks';
 import { DEFAULT_TOKEN_DECIMAL } from '@/utils/constants';
 
-export const useUnstakeFarm = (masterRefinerContract: Contract) => {
+export const useUnstakeFarm = (masterRefinerContract: Contract): any => {
   const { callWithGasPrice } = useCallWithGasPrice();
 
   const unstakeFarm = useCallback(

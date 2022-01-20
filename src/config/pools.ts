@@ -9,7 +9,7 @@ export const pools: PoolConfig[] = [
     stakingToken: tokens.rp1,
     earningToken: tokens.rp1,
     contractAddress: {
-      97: contracts.MASTER_REFINER.ADDRESS,
+      97: contracts.MASTER_BOTDEX.ADDRESS,
     },
     tokenPerBlock: '1',
   },

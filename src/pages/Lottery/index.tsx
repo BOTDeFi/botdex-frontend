@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { Button, Search } from '../../components/atoms';
+import { Button } from '@/components/atoms';
+import Search from '@/components/atoms/Search';
+
 import {
   BuyTicketsModal,
   LotteryNotFound,

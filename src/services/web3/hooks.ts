@@ -35,7 +35,7 @@ export function useGasPrice(): string {
  * @param methodArgs An array of arguments to pass to the method
  * @param options An options object to pass to the method. gasPrice passed in here will take priority over the price returned by useGasPrice
  */
-export function useCallWithGasPrice() {
+export function useCallWithGasPrice(): any {
   const gasPrice = useGasPrice();
   const {
     metamaskService: { walletAddress: from },
@@ -59,7 +59,7 @@ export function useCallWithGasPrice() {
   return { callWithGasPrice };
 }
 
-export const useBlock = () => {
+export const useBlock = (): any => {
   const { metamaskService } = useWalletConnectorContext();
   const [block, setBlock] = useState(0);
   const { fastRefresh } = useRefresh();

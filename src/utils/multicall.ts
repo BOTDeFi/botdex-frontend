@@ -21,15 +21,19 @@ export const multicall = async <T = any>(
 ): Promise<MultiCallResponse<T>> => {
   const { requireSuccess } = options;
   const multiCallContract = getContract('MULTICALL');
-
   const contract = metamaskService.getContract(calls[0].address, abi);
-
   const callData = calls.map((call) => {
     const { address, name, params } = call;
     const method = contract.methods[name];
     const txObject = params ? method(...params) : method();
     return [address.toLowerCase(), txObject.encodeABI()];
   });
+
+  multiCallContract.methods
+    .tryAggregate(requireSuccess, callData)
+    .call()
+    .then((res: any) => console.log('res', res))
+    .catch((err: any) => console.log('err', err));
 
   const returnData = await multiCallContract.methods.tryAggregate(requireSuccess, callData).call();
   const res = returnData.map((call: any, index: number) => {

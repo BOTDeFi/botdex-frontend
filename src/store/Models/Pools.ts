@@ -97,7 +97,6 @@ const PoolsModel = types
         (result: any) => Number(result),
       );
 
-      // console.log(performanceFee, callFee, withdrawalFee, withdrawalFeePeriod);
       self.fees = {
         performanceFee,
         callFee,
@@ -186,7 +185,7 @@ const PoolsModel = types
       self.fuelTokensAmount = '0';
     },
     fetchVaultFuelTokensAmount() {
-      const masterRefinerContract = getContract('MASTER_REFINER');
+      const masterRefinerContract = getContract('MASTER_BOTDEX');
       const refineryVaultAddress = getContractAddress('REFINERY_VAULT');
       masterRefinerContract.methods
         .userInfo('0', refineryVaultAddress)

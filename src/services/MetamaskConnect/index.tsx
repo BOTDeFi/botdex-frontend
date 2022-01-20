@@ -6,7 +6,7 @@ import { contracts } from '@/config';
 import MetamaskService from '@/services/web3';
 import rootStore from '@/store';
 
-export interface IwalletConnectorContext {
+export interface IWalletConnectorContext {
   metamaskService: MetamaskService;
   connect: () => void;
   disconnect: () => void;
@@ -17,7 +17,7 @@ export const metamaskService = new MetamaskService({
   // isProduction: process.env.NODE_ENV === 'production',
 });
 
-export const walletConnectorContext = createContext<IwalletConnectorContext>({
+export const walletConnectorContext = createContext<IWalletConnectorContext>({
   metamaskService,
   connect: (): void => {},
   disconnect: (): void => {},
@@ -98,6 +98,6 @@ class Connector extends React.Component<any, any> {
 
 export default withRouter(Connector);
 
-export function useWalletConnectorContext() {
+export function useWalletConnectorContext(): IWalletConnectorContext {
   return useContext(walletConnectorContext);
 }

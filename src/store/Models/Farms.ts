@@ -105,7 +105,6 @@ const FarmsModel = types
       const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsToFetch);
       const userStakedBalances = await fetchFarmUserStakedBalances(account, farmsToFetch);
       const userFarmEarnings = await fetchFarmUserEarnings(account, farmsToFetch);
-
       this.fetchFarmUserDataAsyncSuccess(
         userFarmAllowances.map((farmAllowance: any, index: number) => {
           return {

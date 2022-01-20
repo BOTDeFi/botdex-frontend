@@ -13,7 +13,7 @@ import { useUpdateView } from './useUpdateView';
 
 const gasOptions = { gas: 380000 };
 
-export const useVaultUnstakeActions = (onFinally: () => void) => {
+export const useVaultUnstakeActions = (onFinally: () => void): any => {
   const { updateViewByFetchingBlockchainData } = useUpdateView();
   const { callWithGasPrice } = useCallWithGasPrice();
 
@@ -82,7 +82,7 @@ export const useVaultUnstakeActions = (onFinally: () => void) => {
   };
 };
 
-export const useVaultUnstake = (onFinally: () => void) => {
+export const useVaultUnstake = (onFinally: () => void): any => {
   const refineryVaultContract = getContract('REFINERY_VAULT');
 
   const {

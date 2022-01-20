@@ -3,8 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
+import Header from '@/components/sections/Header';
+
 import { MetamaskErrModal, RoiModal } from './components/molecules';
-import { Header } from './components/sections';
 import {
   // CollectiblesPage,
   // DaoListPage,

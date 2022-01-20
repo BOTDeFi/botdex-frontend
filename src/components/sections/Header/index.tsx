@@ -5,10 +5,10 @@ import { observer } from 'mobx-react-lite';
 
 import logo from '@/assets/img/icons/logo.png';
 import { Button } from '@/components/atoms';
+import { OutsideClick, WalletModal } from '@/components/sections';
+import Menu from '@/components/sections/Menu';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
-
-import { Menu, OutsideClick, WalletModal } from '../index';
 
 import './Header.scss';
 

@@ -5,7 +5,18 @@ import { contracts } from './contracts';
 const NO_LOGO = 'https://kovan.etherscan.io/images/main/empty-token.png';
 
 export const tokens: Record<
-  'tst' | 'rp1' | 'fuel' | 'wbnb' | 'tmpt' | 'bbshk' | 'busd' | 'mana' | 'avoog' | 'ugbg',
+  | 'tst'
+  | 'rp1'
+  | 'bot'
+  | 'fuel'
+  | 'dai'
+  | 'wbnb'
+  | 'tmpt'
+  | 'bbshk'
+  | 'busd'
+  | 'mana'
+  | 'avoog'
+  | 'ugbg',
   Token
 > = {
   tst: {
@@ -27,10 +38,28 @@ export const tokens: Record<
     projectLink: 'https://www.example.com/',
     logoURI: NO_LOGO,
   },
+  bot: {
+    symbol: 'BOT',
+    address: {
+      97: contracts.BOT.ADDRESS,
+    },
+    decimals: 18,
+    projectLink: 'https://www.example.com/',
+    logoURI: NO_LOGO,
+  },
   fuel: {
     symbol: 'FUEL',
     address: {
-      97: '0xe192A4cc48aC919d63EF2C13B546B5c6e13314f2',
+      97: '0xe9095E4Fb47f7136ab9e65edb92FAfCe044553d3',
+    },
+    decimals: 18,
+    projectLink: 'https://www.example.com/',
+    logoURI: NO_LOGO,
+  },
+  dai: {
+    symbol: 'DAI',
+    address: {
+      97: '0xA520feb43893Cfa59845cdbBCBDdf4f6f991fbB6',
     },
     decimals: 18,
     projectLink: 'https://www.example.com/',

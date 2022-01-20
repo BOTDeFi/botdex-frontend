@@ -2,10 +2,10 @@
 @import 'src/styles/mixins/media';
 @import 'src/styles/mixins/main';
 
-$bg-m1: linear-gradient(98.94deg, #1D1135 -22.87%, #3B2A5E 94.67%);
-$bg-m3: linear-gradient(98.94deg, #533292 -22.87%, #3E2177 94.67%);
-$bg-m6: linear-gradient(180deg, #A62A96 0%, #440F3D 100%);
-$bg-m12: linear-gradient(180deg, #7649FE 0%, #3D2094 100%);
+$bg-m1: linear-gradient(98.94deg, #1d1135 -22.87%, #3b2a5e 94.67%);
+$bg-m3: linear-gradient(98.94deg, #533292 -22.87%, #3e2177 94.67%);
+$bg-m6: linear-gradient(180deg, #a62a96 0%, #440f3d 100%);
+$bg-m12: linear-gradient(180deg, #7649fe 0%, #3d2094 100%);
 
 .stake-card {
   width: 260px;
@@ -43,8 +43,8 @@ $bg-m12: linear-gradient(180deg, #7649FE 0%, #3D2094 100%);
     width: 100%;
     text-align: center;
     margin: 20px 0;
-    border-top: 1px solid rgba(255,255,255, 0.2);
-    border-bottom: 1px solid rgba(255,255,255, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     @include b(mobile) {
       padding: 20px 0 20px !important;
     }

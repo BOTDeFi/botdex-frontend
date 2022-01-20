@@ -5,7 +5,7 @@ const useWithdrawalFeeTimer = (
   lastDepositedTime: number,
   userShares: BigNumber,
   withdrawalFeePeriod = 259200,
-) => {
+): any => {
   const [secondsRemaining, setSecondsRemaining] = useState<number | null>(null);
   const [hasUnstakingFee, setHasUnstakingFee] = useState(false);
   const [currentSeconds, setCurrentSeconds] = useState(Math.floor(Date.now() / 1000));

@@ -3,16 +3,15 @@ import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
+import { Button } from '@/components/atoms';
+import { ChooseTokens, TradeBox } from '@/components/sections/Trade';
 import { tokens } from '@/config';
 import { useGetHoursPairs, useGetPair } from '@/services/api/refinery-finance-pairs';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
 import { ISettings, ITokens } from '@/types';
 import { clogData, clogError } from '@/utils/logger';
-
-import MetamaskService from '../../../../services/web3';
-import { Button } from '../../../atoms';
-import { ChooseTokens, TradeBox } from '..';
 
 import './Exchange.scss';
 

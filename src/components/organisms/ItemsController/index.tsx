@@ -3,7 +3,8 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 import { SwitchClickEventHandler } from 'antd/lib/switch';
 import cn from 'classnames';
 
-import { RadioGroup, Search, SortSelect, Switch } from '@/components/atoms';
+import { RadioGroup, SortSelect, Switch } from '@/components/atoms';
+import Search from '@/components/atoms/Search';
 import { debounce } from '@/utils/debounce';
 
 import './ItemsController.scss';

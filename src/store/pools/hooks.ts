@@ -22,7 +22,7 @@ export const usePools = (): { pools: Pool[] } => {
   return { pools: poolStore.data.slice().map(transformPool as any) };
 };
 
-export const useSelectVaultData = () => {
+export const useSelectVaultData = (): any => {
   const {
     pools: {
       estimatedRefineryBountyReward: estimatedRefineryBountyRewardRaw,

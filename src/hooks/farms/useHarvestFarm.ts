@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { getContract } from '@/services/web3/contractHelpers';
 import { useCallWithGasPrice } from '@/services/web3/hooks';
 
-export const useHarvestFarm = (pid: number) => {
+export const useHarvestFarm = (pid: number): any => {
   const { callWithGasPrice } = useCallWithGasPrice();
-  const masterRefinerContract = getContract('MASTER_REFINER');
+  const masterRefinerContract = getContract('MASTER_BOTDEX');
 
   const harvestFarm = useCallback(async () => {
     if (pid === 0) {

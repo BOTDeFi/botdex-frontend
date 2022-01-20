@@ -3,11 +3,11 @@ import { Scrollbar } from 'react-scrollbars-custom';
 import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
+import Search from '@/components/atoms/Search';
+import { Modal } from '@/components/molecules';
 import { useMst } from '@/store';
 import { IToken } from '@/types';
 
-import { Search } from '../../../atoms';
-import { Modal } from '../../../molecules';
 import { ManageTokensModal } from '..';
 
 import './SelectTokenModal.scss';

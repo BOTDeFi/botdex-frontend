@@ -185,7 +185,11 @@
     &-box {
       padding: 20px 30px 40px;
 
-      background: linear-gradient(98.94deg, rgba(47,37,66,0.5) -22.87%, rgba(29,17,53,0.5) 94.67%);
+      background: linear-gradient(
+        98.94deg,
+        rgba(47, 37, 66, 0.5) -22.87%,
+        rgba(29, 17, 53, 0.5) 94.67%
+      );
       border-radius: 12px;
 
       & + & {

@@ -56,7 +56,7 @@ export const selectCurrentBalance = (data: IGetCurrentBalanceResponse): string |
   return data.user.TotalBalance;
 };
 
-export const hasCurrentBalance = (error: any, data: any): boolean => {
+export const hasCurrentBalance = ({ error, data }: { error: any; data: any }): boolean => {
   if (error || !data) return false;
   const balance = selectCurrentBalance(data);
   if (!balance || balance === '0') return false;
@@ -74,5 +74,5 @@ export const requestHasCurrentBalance = async (
     },
   });
   if (!result) return false;
-  return hasCurrentBalance(result.error, result.data);
+  return hasCurrentBalance({ error: result.error, data: result.data });
 };

@@ -100,7 +100,7 @@ export const transformGetProposalsPreview = (
   });
 };
 
-export const groupProposalsPreviewByStatus = (items: IProposalsPreview) => {
+export const groupProposalsPreviewByStatus = (items: IProposalsPreview): any => {
   const map: Record<string, IProposalsPreview> = {};
   items.forEach((it) => {
     const { status } = it;
