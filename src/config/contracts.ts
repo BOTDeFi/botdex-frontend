@@ -468,7 +468,7 @@ export const contracts = {
     ABI: RocketPropellant,
   },
   BOT: {
-    ADDRESS: '0x626176F633E30cbCff6c524FD55ce0286475a4CD',
+    ADDRESS: '0xEF331E4033A0c6923C8fb4ae072E52440A54Cd5c',
     ABI: RocketPropellant,
   },
   REFINERY_VAULT: {
@@ -476,7 +476,7 @@ export const contracts = {
     ABI: RefineryVault,
   },
   MULTICALL: {
-    ADDRESS: '0x7106996326BFC3CF3cE69b46549B62832f922111',
+    ADDRESS: '0xf00c47F7FfECAe59E98261A757f6d8Bdf19AE928',
     ABI: Multicall,
   },
   SMART_REFINER_INITIALIZABLE: {
@@ -487,7 +487,7 @@ export const contracts = {
   //   ABI: MasterRefiner,
   // },
   MASTER_BOTDEX: {
-    ADDRESS: '0x294f48a4E1C5e1D2394A1260F20D0d7dAdB63B0c',
+    ADDRESS: '0x61Ea91A4Fe616661bbd949A525e95204eDd99765',
     ABI: MasterBotdex,
   },
 };

@@ -4,7 +4,6 @@ import { useMst } from '@/store';
 import { Farm } from '@/types';
 import { BIG_ZERO } from '@/utils/constants';
 import { getBalanceAmount } from '@/utils/formatters';
-import { clog } from '@/utils/logger';
 
 export const useFarmFromLpSymbol = (lpSymbol: string): Farm => {
   const { farms } = useMst();
@@ -40,8 +39,6 @@ export const useLpTokenPrice = (symbol: string): any => {
     // Divide total value of all tokens, by the number of LP tokens
     const totalLpTokens = getBalanceAmount(new BigNumber(farm.lpTotalSupply));
     lpTokenPrice = overallValueOfAllTokensInFarm.div(totalLpTokens);
-
-    clog('TEST1', farmTokenPriceInUsd, farm.tokenAmountTotal, overallValueOfAllTokensInFarm);
   }
 
   return lpTokenPrice;

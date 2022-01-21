@@ -20,6 +20,7 @@ export const BLOCKS_PER_YEAR = new BigNumber((60 / BSC_BLOCK_TIME) * 60 * 24 * 3
 
 export const SCANNERS: Record<number, string> = {
   0x2a: 'https://kovan.etherscan.io',
+  0x61: 'https://testnet.bscscan.com/',
 };
 // RP1_PER_BLOCK details
 // 40 RP1 is minted per block

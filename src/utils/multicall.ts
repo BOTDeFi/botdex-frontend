@@ -29,14 +29,8 @@ export const multicall = async <T = any>(
     return [address.toLowerCase(), txObject.encodeABI()];
   });
 
-  multiCallContract.methods
-    .tryAggregate(requireSuccess, callData)
-    .call()
-    .then((res: any) => console.log('res', res))
-    .catch((err: any) => console.log('err', err));
-
   const returnData = await multiCallContract.methods.tryAggregate(requireSuccess, callData).call();
-  const res = returnData.map((call: any, index: number) => {
+  return returnData.map((call: any, index: number) => {
     const [result, data] = call;
     if (!result) return null;
     const methodInterface = MetamaskService.getMethodInterface(abi, calls[index].name);
@@ -50,6 +44,4 @@ export const multicall = async <T = any>(
       length: decodedResult.__length__,
     });
   });
-
-  return res;
 };
