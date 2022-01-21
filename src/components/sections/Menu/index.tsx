@@ -11,9 +11,9 @@ import LogoImg from '@/assets/img/icons/logo.png';
 // import LotteryImg from '../../../assets/img/icons/lottery.svg';
 import PoolsImg from '@/assets/img/icons/pools.svg';
 // import TeamsImg from '../../../assets/img/icons/teams.svg';
-import { ReactComponent as TgImg } from '@/assets/img/icons/tg.svg';
+// import { ReactComponent as TgImg } from '@/assets/img/icons/tg.svg';
 import TradeImg from '@/assets/img/icons/trade.svg';
-import { ReactComponent as TwImg } from '@/assets/img/icons/tw.svg';
+// import { ReactComponent as TwImg } from '@/assets/img/icons/tw.svg';
 import { Button } from '@/components/atoms';
 import { WalletModal } from '@/components/sections';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -133,14 +133,14 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
             </NavLink>
           ))}
         </div>
-        <div className="menu__socials box-f-ai-c">
-          <a href="/" className="menu__socials-item menu__socials-item-tg box-f-c">
-            <TgImg />
-          </a>
-          <a href="/" className="menu__socials-item box-f-c">
-            <TwImg />
-          </a>
-        </div>
+        {/* <div className="menu__socials box-f-ai-c"> */}
+        {/*  <a href="/" className="menu__socials-item menu__socials-item-tg box-f-c"> */}
+        {/*    <TgImg /> */}
+        {/*  </a> */}
+        {/*  <a href="/" className="menu__socials-item box-f-c"> */}
+        {/*    <TwImg /> */}
+        {/*  </a> */}
+        {/* </div> */}
       </div>
       {user.address ? (
         <WalletModal

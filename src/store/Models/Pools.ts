@@ -227,7 +227,7 @@ const PoolsModel = types
     },
 
     fetchPoolsPublicData() {
-      this.fetchPoolsPublicDataAsync();
+      // this.fetchPoolsPublicDataAsync();
       this.fetchPoolsStakingLimitsAsync();
     },
 

@@ -24,16 +24,16 @@ const gasOptions = { gas: 300000 };
 const ClaimBounty: React.FC = observer(() => {
   const [pendingTx, setPendingTx] = useState(false);
   const { tokenUsdPrice } = useRefineryUsdPrice();
-  const { user, pools: poolsStore } = useMst();
+  const { user } = useMst();
   const { connect } = useWalletConnectorContext();
   const { callWithGasPrice } = useCallWithGasPrice();
 
   const tokenSymbol = tokens.rp1.symbol;
 
   const updateViewByFetchingBlockchainData = useCallback(() => {
-    poolsStore.fetchPoolsPublicDataAsync();
-    poolsStore.fetchVaultPublicData();
-  }, [poolsStore]);
+    // poolsStore.fetchPoolsPublicDataAsync();
+    // poolsStore.fetchVaultPublicData();
+  }, []);
 
   const handleClaimBounty = async () => {
     setPendingTx(true);

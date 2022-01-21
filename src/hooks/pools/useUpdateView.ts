@@ -7,7 +7,7 @@ export const useUpdateView = (): any => {
   const updateViewByFetchingBlockchainData = useCallback(() => {
     poolsStore.fetchVaultPublicData();
     poolsStore.fetchVaultUserData(user.address);
-    poolsStore.fetchPoolsPublicDataAsync();
+    // poolsStore.fetchPoolsPublicDataAsync();
   }, [poolsStore, user.address]);
   return { updateViewByFetchingBlockchainData };
 };

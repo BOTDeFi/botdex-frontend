@@ -5,27 +5,25 @@
   overflow: hidden;
 
   border-radius: 12px;
+  padding: 41px 42px 39px;
 
+  background-color: $bg-purple;
+  background-image: url(../../../../assets/img/sections/farms/farms.png);
+  background-size: 100%;
+
+  @include b(tablet) {
+    padding: 40px 20px 19px 42px;
+
+    display: block !important;
+  }
+  @include b(desktop) {
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
   &__box {
-    padding: 41px 42px 39px;
-
-    background-color: $bg-purple;
-    background-image: url(../../../../assets/img/sections/farms/farms.png);
-    background-position: 0 0;
-    background-size: 100% 100%;
-
-    @include b(mobile) {
-      padding: 40px 20px 19px 42px;
-
-      background-image: none;
-    }
-
-    &--info {
-      @include b(mobile) {
-        button {
-          margin-top: 15px;
-        }
-      }
+    @include b(tablet) {
+      margin-bottom: 20px;
+      padding: 0 32px;
     }
   }
 

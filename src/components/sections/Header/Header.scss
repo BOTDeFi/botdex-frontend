@@ -34,9 +34,11 @@
     width: 100%;
 
     &__title {
-      margin-left: 11px;
+      margin-left: 9px;
       @include font-gemina;
+      font-size: 18.1429px;
       font-weight: 700;
+      line-height: 20px;
 
       span {
         margin-right: 5px;
