@@ -6,14 +6,13 @@ import UnknownImg from '@/assets/img/currency/unknown.svg';
 import ArrowCImg from '@/assets/img/icons/arrow-circle.svg';
 import ArrowImg from '@/assets/img/icons/arrow-cur.svg';
 import { Button, InputNumber, Popover } from '@/components/atoms';
+import SelectTokenModal from '@/components/sections/Trade/SelectTokenModal';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
 import { IToken, ITokens } from '@/types';
 import { clog, clogError } from '@/utils/logger';
-
-import { SelectTokenModal } from '..';
 
 import './ChooseTokens.scss';
 

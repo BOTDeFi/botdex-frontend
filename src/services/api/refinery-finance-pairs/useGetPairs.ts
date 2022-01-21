@@ -1,4 +1,4 @@
-import { GET_PAIR_INFO_BY_DATA, GET_PAIR_INFO_BY_DAY, GET_PAIRS } from '@/queries/pairs/index';
+import { GET_PAIR_INFO_BY_DATA, GET_PAIR_INFO_BY_DAY, GET_PAIRS } from '@/queries';
 import { apolloClient, getExchangeContext } from '@/services/apolloClient';
 
 type TPairResponseType = {

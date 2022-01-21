@@ -4,20 +4,20 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
+import {
+  ExchangeSettings,
+  ImportPool,
+  RecentTxs,
+  YourLiquidity,
+} from '@/components/sections/Trade';
+import Receive from '@/components/sections/Trade/Receive';
+import RemoveLiquidity from '@/components/sections/Trade/RemoveLiquidity';
+import TradeWrapper from '@/HOC/TradeWrapper';
 import { useMst } from '@/store';
 import { IRecentTx, ISettings } from '@/types';
 import { clog } from '@/utils/logger';
 
-import TradeWrapper from '../../../../HOC/TradeWrapper';
 import AddLiquidity from '../AddLiquidity';
-import {
-  ExchangeSettings,
-  ImportPool,
-  Receive,
-  RecentTxs,
-  RemoveLiquidity,
-  YourLiquidity,
-} from '..';
 
 const GET_USER_TRX = gql`
   query User($address: String!) {

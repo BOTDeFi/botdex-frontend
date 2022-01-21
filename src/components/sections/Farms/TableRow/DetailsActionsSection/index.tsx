@@ -12,7 +12,7 @@ import { useMst } from '@/store';
 import { useFarmUserData } from '@/store/farms/hooks';
 import { FarmWithStakedValue, Precisions } from '@/types';
 import { getBalanceAmount } from '@/utils/formatters';
-import { clog, clogError } from '@/utils/logger';
+import { clogError } from '@/utils/logger';
 import { getAddLiquidityUrl } from '@/utils/urlConstructors';
 
 import FarmsStakeUnstakeButtons from '../../FarmsStakeUnstakeButtons';
@@ -58,7 +58,6 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       if (txStatus) {
         successNotification('Contract Enabled!', `You can now stake in the ${lpSymbol} farm!`);
       } else {
-        clog(txStatus);
         errorNotification(
           'Error',
           'Please try again. Confirm the transaction and make sure you are paying enough gas!',

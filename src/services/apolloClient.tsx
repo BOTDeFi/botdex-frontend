@@ -11,7 +11,7 @@ import { SNAPSHOT_API, VOTING_API } from '@/config/constants/dao';
 import { TRADE_API } from '@/config/constants/trade';
 
 export enum ServicesEndpoints {
-  rfExchange = 'dao-exchange',
+  rfExchange = 'botdex-dao-exchange',
   rfPairs = 'refinery-finance-pairs',
   snapshot = 'snapshot',
 }

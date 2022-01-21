@@ -20,7 +20,6 @@ const Trade: React.FC = observer(() => {
   const [reversed, setReversed] = React.useState(false);
   const [currentStamp, setCurrentStamp] = React.useState<number>(0);
   const [currencyData, setCurrencyData] = React.useState<any>(null);
-
   const options = React.useMemo(
     () => ({
       chart: {

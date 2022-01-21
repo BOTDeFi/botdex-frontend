@@ -11,7 +11,7 @@ import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
 import { ISettings, ITokens } from '@/types';
-import { clogData, clogError } from '@/utils/logger';
+import { clogError } from '@/utils/logger';
 
 import './Exchange.scss';
 
@@ -55,9 +55,6 @@ const Exchange: React.FC<IExchange> = observer(
 
     const getPair = useGetPair();
     const getPairData = useGetHoursPairs();
-
-    clogData('maxFrom:', maxFrom);
-    clogData('maxTo:', maxTo);
 
     const fetchPair = useCallback(async () => {
       const normalizedAddress = pairAddress.toLowerCase();
@@ -164,8 +161,7 @@ const Exchange: React.FC<IExchange> = observer(
               settings.txDeadlineUtc,
             ];
           }
-          clogData('data:', data);
-          clogData('value:', value);
+
           await metamaskService.createTransaction({
             method,
             contractName: 'ROUTER',

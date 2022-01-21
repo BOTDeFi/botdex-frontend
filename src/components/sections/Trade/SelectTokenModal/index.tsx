@@ -23,7 +23,6 @@ interface ISelectTokenModal {
 const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
   ({ isVisible, handleClose, handleChangeToken, tokenType, handleOpen }) => {
     const { tokens: storeTokens } = useMst();
-
     const [isManageModalVisible, setManageModalVisible] = React.useState<boolean>(false);
 
     const [tokens, setTokens] = React.useState<IToken[] | []>([]);

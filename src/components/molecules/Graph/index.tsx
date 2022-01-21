@@ -29,7 +29,10 @@ const initOptions = {
   series: [],
   noData: {
     text: 'Loading...',
-    colors: ['#f4f4f4'],
+    style: {
+      color: '#f4f4f4',
+      fontSize: '16px',
+    },
   },
 };
 
