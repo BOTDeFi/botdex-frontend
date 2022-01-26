@@ -1,13 +1,17 @@
 import React from 'react';
 import nextId from 'react-id-generator';
 import { NavLink } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
+import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 
+import ArrowImg from '@/assets/img/icons/arrow-dropdown.svg';
 // import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
 import FarmsImg from '@/assets/img/icons/farms.svg';
 import HomeImg from '@/assets/img/icons/home.svg';
 // import DaoImg from '@/assets/img/icons/dao.svg';
 import LogoImg from '@/assets/img/icons/logo.png';
+import MoreImg from '@/assets/img/icons/more.svg';
 // import LotteryImg from '../../../assets/img/icons/lottery.svg';
 import PoolsImg from '@/assets/img/icons/pools.svg';
 // import TeamsImg from '../../../assets/img/icons/teams.svg';
@@ -84,7 +88,13 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     // },
   ];
 
+  const [isOpenShowMore, setOpenShowMore] = React.useState<boolean>(false);
   const [isWalletModalVisible, setWalletModalVisible] = React.useState<boolean>(false);
+
+  const handleOpenShowMore = React.useCallback(() => {
+    setOpenShowMore(!isOpenShowMore);
+    console.log(isOpenShowMore);
+  }, [isOpenShowMore]);
 
   return (
     <>
@@ -132,6 +142,38 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
               </div>
             </NavLink>
           ))}
+          <div
+            onKeyDown={() => {}}
+            role="button"
+            tabIndex={0}
+            className="menu__nav-item"
+            onClick={handleOpenShowMore}
+          >
+            <div className="menu__nav-item-box box-f-ai-c">
+              <div className="menu__nav-item-img box-f-c">
+                <img src={MoreImg} alt="" />
+              </div>
+              <span>More</span>
+              <div className={cn('menu__nav-item-arrow', isOpenShowMore && 'active')}>
+                <img src={ArrowImg} alt="" />
+              </div>
+            </div>
+          </div>
+          <CSSTransition
+            unmountOnExit
+            mountOnEnter
+            in={isOpenShowMore}
+            addEndListener={(node, done) => {
+              node.addEventListener('transitionend', done, false);
+            }}
+            classNames="show"
+          >
+            <div className="show-more-wrapper">
+              <NavLink exact to="/">
+                Audit
+              </NavLink>
+            </div>
+          </CSSTransition>
         </div>
         {/* <div className="menu__socials box-f-ai-c"> */}
         {/*  <a href="/" className="menu__socials-item menu__socials-item-tg box-f-c"> */}

@@ -63,40 +63,4 @@
       margin-left: 0;
     }
   }
-
-  .show-enter {
-    margin-top: 0;
-
-    max-height: 0;
-
-    opacity: 0;
-  }
-
-  .show-enter-active {
-    margin-top: 15px;
-
-    max-height: 45px;
-
-    opacity: 1;
-
-    transition: margin-top 300ms, max-height 300ms, opacity 500ms;
-  }
-
-  .show-exit {
-    margin-top: 15px;
-
-    max-height: 45px;
-
-    opacity: 1;
-  }
-
-  .show-exit-active {
-    margin-top: 0;
-
-    max-height: 0;
-
-    opacity: 0;
-
-    transition: margin-top 300ms, max-height 300ms, opacity 300ms;
-  }
 }

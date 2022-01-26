@@ -13,7 +13,7 @@ $outline-color: #cecece;
     flex-direction: row;
 
     @include b(mobile) {
-      padding: $section-margin / 3;
+      padding: ($section-margin / 3);
 
       flex-direction: column;
     }

@@ -82,6 +82,7 @@
       }
 
       &-box {
+        cursor: pointer;
         position: relative;
 
         padding: 12px 12px 12px 20px;
@@ -114,6 +115,18 @@
         width: 20px;
         height: 20px;
       }
+      &-arrow {
+        margin-left: auto;
+        @include flex(row, center, center);
+        transition: transform .3s;
+        img {
+          width: 8px;
+          height: 4px;
+        }
+        &.active {
+          transform: rotate(180deg);
+        }
+      }
 
       &.active &-box {
         background: $bg-sidebar-menu;
@@ -122,6 +135,45 @@
           background: $bg-accent-gradient;
         }
       }
+    }
+
+    .show-more-wrapper {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 9px 53px 12px;
+    }
+
+    .show-enter {
+      margin-top: 0;
+
+      max-height: 0;
+
+      opacity: 0;
+    }
+
+    .show-enter-active {
+
+      max-height: 45px;
+
+      opacity: 1;
+
+      transition: max-height 300ms, opacity 500ms;
+    }
+
+    .show-exit {
+
+      max-height: 45px;
+
+      opacity: 1;
+    }
+
+    .show-exit-active {
+      margin-top: 0;
+
+      max-height: 0;
+
+      opacity: 0;
+
+      transition: max-height 300ms, opacity 300ms;
     }
   }
 
