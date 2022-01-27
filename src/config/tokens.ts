@@ -2,7 +2,7 @@ import { Token } from '@/types';
 
 import { contracts } from './contracts';
 
-const NO_LOGO = 'https://kovan.etherscan.io/images/main/empty-token.png';
+import NO_LOGO from '@/assets/img/icons/empty_token.png';
 
 export const tokens: Record<
   'rp1' | 'bot' | 'fuel' | 'dai' | 'wbnb',
