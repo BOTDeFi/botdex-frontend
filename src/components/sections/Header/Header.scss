@@ -32,13 +32,16 @@
     align-items: center;
 
     width: 100%;
-
+    &__img {
+      width: 32px;
+    }
     &__title {
       margin-left: 9px;
       @include font-gemina;
-      font-size: 18.1429px;
+      font-size: 30px;
       font-weight: 700;
-      line-height: 20px;
+      line-height: 30px;
+      margin-top: 8px;
 
       span {
         margin-right: 5px;

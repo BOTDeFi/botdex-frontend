@@ -40,21 +40,6 @@ const TradeBox: React.FC<ITradeBox> = observer(
                 <span>{title}</span>
               </div>
             )}
-            {subtitle ? (
-              <div className="trade-box__subtitle text-gray-2 box-f-ai-c">
-                <span>{subtitle}</span>
-
-                {info ? (
-                  <Popover content={<span className="text-med text">{info}</span>}>
-                    <img src={InfoImg} alt="" />
-                  </Popover>
-                ) : (
-                  ''
-                )}
-              </div>
-            ) : (
-              ''
-            )}
           </div>
           {recentTxLink || settingsLink ? (
             <div className="box-f-ai-c">
@@ -69,6 +54,24 @@ const TradeBox: React.FC<ITradeBox> = observer(
                 <Link to={recentTxLink} className="trade-box__icon">
                   <img src={RecentTxImg} alt="advanced settings" />
                 </Link>
+              ) : (
+                ''
+              )}
+            </div>
+          ) : (
+            ''
+          )}
+          {subtitle ? (
+            <div className="trade-box__subtitle text-gray-2 box-f-ai-c">
+              <span>{subtitle}</span>
+
+              {info ? (
+                <Popover
+                  overlayInnerStyle={{ borderRadius: '12px' }}
+                  content={<span className="text-med text">{info}</span>}
+                >
+                  <img src={InfoImg} alt="" />
+                </Popover>
               ) : (
                 ''
               )}

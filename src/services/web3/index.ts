@@ -22,50 +22,58 @@ interface IMetamaskService {
 
 interface IChain {
   chainId: string;
-  rpcUrl: string;
-  name: string;
-  blockExp: string;
+  rpcUrls: string[];
+  chainName: string;
+  blockExplorerUrls: string[];
+  nativeCurrency: INativeCurrency;
 }
 interface IChains {
   [key: string]: IChain;
 }
+interface INativeCurrency {
+  name: string;
+  symbol: string;
+  decimals: number;
+}
 
 const chainsParams: IChains = {
-  '0x1': {
-    chainId: '0x1',
-    rpcUrl: 'https://mainnet.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
-    name: 'Ethereum Mainnet',
-    blockExp: 'https://etherscan.io/',
-  },
-  '0x3': {
-    chainId: '0x3',
-    rpcUrl: 'https://ropsten.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
-    name: 'Ropsten',
-    blockExp: 'https://ropsten.etherscan.io/',
-  },
-  '0x2a': {
-    chainId: '0x2a',
-    rpcUrl: 'https://kovan.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
-    name: 'Kovan',
-    blockExp: 'https://kovan.etherscan.io/',
-  },
-  '0x4': {
-    chainId: '0x4',
-    rpcUrl: 'https://rinkeby.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
-    name: 'Rinkeby',
-    blockExp: 'https://rinkeby.etherscan.io/',
-  },
+  // '0x1': {
+  //   chainId: '0x1',
+  //   rpcUrl: 'https://mainnet.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Ethereum Mainnet',
+  //   blockExp: 'https://etherscan.io/',
+  // },
+  // '0x3': {
+  //   chainId: '0x3',
+  //   rpcUrl: 'https://ropsten.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Ropsten',
+  //   blockExp: 'https://ropsten.etherscan.io/',
+  // },
+  // '0x2a': {
+  //   chainId: '0x2a',
+  //   rpcUrl: 'https://kovan.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Kovan',
+  //   blockExp: 'https://kovan.etherscan.io/',
+  // },
+  // '0x4': {
+  //   chainId: '0x4',
+  //   rpcUrl: 'https://rinkeby.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Rinkeby',
+  //   blockExp: 'https://rinkeby.etherscan.io/',
+  // },
   '0x61': {
     chainId: '0x61',
-    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    name: 'Binance Testnet',
-    blockExp: 'https://testnet.bscscan.com',
+    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    chainName: 'Binance Testnet',
+    blockExplorerUrls: ['https://testnet.bscscan.com'],
+    nativeCurrency: {name: 'BNB', symbol: 'BNB', decimals: 18},
   },
   '0x38': {
     chainId: '0x38',
-    rpcUrl: 'https://bsc-dataseed.binance.org/',
-    name: 'Binance Mainnet',
-    blockExp: 'https://bscscan.com/',
+    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+    chainName: 'Binance Mainnet',
+    blockExplorerUrls: ['https://bscscan.com/'],
+    nativeCurrency: {name: 'BNB', symbol: 'BNB', decimals: 18},
   },
 };
 
@@ -116,6 +124,7 @@ export default class MetamaskService {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
         if (currentChain !== this.usedChain) {
+          console.log('1');
           subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
         }
       });
@@ -195,6 +204,7 @@ export default class MetamaskService {
                   })
                   .catch(() => reject(new Error('Not authorized')));
               } else {
+                console.log('2');
                 reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
               }
             });
@@ -202,7 +212,6 @@ export default class MetamaskService {
           .catch(() => reject(new Error('Not authorized')));
       } else {
         this.checkNets().then((required) => {
-          clog(required);
           if (required) {
             this.ethRequestAccounts()
               .then((account: any) => {
@@ -214,6 +223,7 @@ export default class MetamaskService {
               })
               .catch(() => reject(new Error('Not authorized')));
           } else {
+            console.log('3');
             reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
           }
         });
@@ -348,7 +358,7 @@ export default class MetamaskService {
   }
 
   static calcTransactionAmount(amount: number | string, tokenDecimal: number): string {
-    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
+    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toFixed(0).toString();
   }
 
   static amountFromGwei(amount: number | string, tokenDecimal: number): string {

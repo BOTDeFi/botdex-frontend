@@ -275,7 +275,7 @@ const Exchange: React.FC<IExchange> = observer(
           tokensReserves !== null &&
           user.address ? (
             <Button disabled className="exchange__btn">
-              <span className="text-white text-bold text-smd">Select a Tokens</span>
+              <span className="text-white text-bold text-smd">Select Tokens</span>
             </Button>
           ) : (
             ''

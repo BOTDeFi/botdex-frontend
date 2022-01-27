@@ -10,7 +10,7 @@ import ArrowImg from '@/assets/img/icons/arrow-dropdown.svg';
 import FarmsImg from '@/assets/img/icons/farms.svg';
 import HomeImg from '@/assets/img/icons/home.svg';
 // import DaoImg from '@/assets/img/icons/dao.svg';
-import LogoImg from '@/assets/img/icons/logo.png';
+import LogoImg from '@/assets/img/icons/logo.svg';
 import MoreImg from '@/assets/img/icons/more.svg';
 // import LotteryImg from '../../../assets/img/icons/lottery.svg';
 import PoolsImg from '@/assets/img/icons/pools.svg';

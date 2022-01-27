@@ -62,10 +62,6 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
     const [exchange, setExchange] = React.useState<IPrices | undefined | null>(undefined);
     const [isLoading, setLoading] = React.useState<boolean>(false);
 
-    clogData('tokensData:', tokensData);
-    clogData('reserves:', tokensReserves);
-    clogData('settings:', settings);
-
     const handleCreatePair = async () => {
       try {
         if (tokensData.from.token && tokensData.to.token) {
@@ -226,6 +222,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
       user.address,
     ]);
 
+    console.log(+tokensData.from.amount > maxFrom, +tokensData.to.amount > maxTo);
     useEffect(() => {
       if (user.address) {
         getAmounts();

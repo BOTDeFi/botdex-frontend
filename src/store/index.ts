@@ -12,6 +12,7 @@ import {
   PoolsModel,
   TokensModel,
   UserModel,
+  StakesModel
 } from './Models';
 
 const RootModel = types.model({
@@ -22,6 +23,7 @@ const RootModel = types.model({
   farms: FarmsModel,
   dao: DaoModel,
   pairs: PairsModel,
+  stakes: StakesModel,
 });
 export const Store = RootModel.create({
   user: {
@@ -97,6 +99,9 @@ export const Store = RootModel.create({
       id: '',
     },
   },
+  stakes: {
+    data: [],
+  }
 });
 
 const rootStore = Store;

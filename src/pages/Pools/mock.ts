@@ -1,4 +1,4 @@
-export const stakes = [
+export const stakesTemp = [
   {
     name: 'm1',
     period: 'month',

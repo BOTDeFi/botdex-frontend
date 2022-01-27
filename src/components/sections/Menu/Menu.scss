@@ -40,19 +40,19 @@
 
   &__header {
     margin-bottom: 25px;
-    margin-left: 25px;
+    margin-left: 19px;
 
-    @include flex(row, center);
-    gap: 10px;
+    @include flex(row, center, flex-start, nowrap);
 
     &__logo {
-      width: 50px;
+      width: 32px;
+      margin-right: 9px;
     }
 
     &__title {
-      margin-top: 10px;
+      margin-top: 8px;
       @include font-gemina;
-      font-size: 18.1429px;
+      font-size: 18px;
       font-weight: 700;
       line-height: 20px;
 

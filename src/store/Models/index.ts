@@ -6,3 +6,4 @@ export { default as PoolsModel } from './Pools';
 export { default as FarmsModel } from './Farms';
 export { default as DaoModel } from './Dao';
 export { default as PairsModel } from './Pairs';
+export { default as StakesModel } from './Stakes';

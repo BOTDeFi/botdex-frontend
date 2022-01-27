@@ -358,6 +358,17 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       [initialTokenData, metamaskService, user.address],
     );
 
+    const handleMaxValue = React.useCallback(
+      (value) => {
+        if (value === 'from') {
+          setTokenFromQuantity(balanceFrom);
+        } else {
+          setTokenToQuantity(balanceTo);
+        }
+      },
+      [balanceFrom, balanceTo],
+    );
+
     React.useEffect(() => {
       setTokenFromQuantity(initialTokenData?.from.amount || NaN);
       setTokenToQuantity(initialTokenData?.to.amount || NaN);
@@ -425,6 +436,15 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                       handleChangeTokensQuantity('from', +value)
                     }
                   />
+                  <div
+                    onClick={() => handleMaxValue('from')}
+                    onKeyDown={() => {}}
+                    tabIndex={-1}
+                    role="button"
+                    className="choose-tokens__max"
+                  >
+                    Max
+                  </div>
                   {balanceFrom ? (
                     <Popover content={balanceFrom}>
                       <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
@@ -493,6 +513,15 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
                     max={maxTo}
                   />
+                  <div
+                    onClick={() => handleMaxValue('to')}
+                    onKeyDown={() => {}}
+                    tabIndex={-1}
+                    role="button"
+                    className="choose-tokens__max"
+                  >
+                    Max
+                  </div>
                   {balanceTo ? (
                     <Popover content={balanceTo}>
                       <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(

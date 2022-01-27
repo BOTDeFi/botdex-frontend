@@ -15,6 +15,7 @@
   }
 
   &__subtitle {
+    width: 100%;
     margin-top: 12px;
 
     span {
@@ -22,6 +23,7 @@
     }
 
     img {
+      margin-left: 9px;
       display: block;
     }
   }
@@ -32,6 +34,7 @@
       padding-bottom: 30px;
 
       border-bottom: 1px solid $bg-divider;
+      flex-wrap: wrap;
     }
   }
 

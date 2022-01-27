@@ -48,8 +48,7 @@ const TradeWrapper = (
       super(props);
 
       this.state = {
-        tokensData: (localStorage[`refinery-finance-quote`] &&
-          JSON.parse(localStorage[`refinery-finance-quote`])) || {
+        tokensData: {
           from: {
             token: undefined,
             amount: NaN,
@@ -399,7 +398,6 @@ const TradeWrapper = (
         this.setState({
           isLoadingExchange: false,
         });
-        clogError('get pair', err);
       }
     }
 
