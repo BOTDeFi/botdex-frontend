@@ -7,6 +7,7 @@ import {
   RocketPropellant,
   RouterBotdex,
   SmartRefinerInitializable,
+  BotdexStaking,
 } from './abi';
 
 // all of the current contracts are in 42 network
@@ -489,5 +490,9 @@ export const contracts = {
   MASTER_BOTDEX: {
     ADDRESS: '0x61Ea91A4Fe616661bbd949A525e95204eDd99765',
     ABI: MasterBotdex,
+  },
+  BOTDEX_STAKING: {
+    ADDRESS: '0x2356AC9d9cC79899a5A8015AC8E31F46be545Ff5',
+    ABI: BotdexStaking,
   },
 };

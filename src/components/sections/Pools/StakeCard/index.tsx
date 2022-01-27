@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import cn from 'classnames';
-
+import { observer } from 'mobx-react-lite';
 import lock from '@/assets/img/icons/lock.svg';
 import { Button } from '@/components/atoms';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
 
 import './StakeCard.scss';
 
@@ -16,10 +17,16 @@ type Stake = {
 interface IStakeCardProps {
   stake: Stake;
 }
-const StakeCard: React.FC<IStakeCardProps> = ({ stake }) => {
+const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
+  const { user } = useMst();
   const { connect } = useWalletConnectorContext();
   const [isOpenDetails, setOpenDetails] = React.useState<boolean>(false);
 
+  const handleConnect = useCallback(() => {
+    connect();
+    console.log(user);
+    console.log(user.address === '');
+  }, [connect, user]);
   const handleToggleDetailsClick = React.useCallback(() => {
     setOpenDetails((isOpen) => !isOpen);
   }, []);
@@ -35,14 +42,26 @@ const StakeCard: React.FC<IStakeCardProps> = ({ stake }) => {
         <span className="percent-token text-smd text-500">in BOT</span>
       </div>
       <div className="text-smd text-500">Start staking</div>
-      <Button
-        size="sm"
-        colorScheme="white"
-        className={cn('stake-card__btn', stake.name)}
-        onClick={connect}
-      >
-        <span className="text-ssmd text-bold">Unlock Wallet</span>
-      </Button>
+      {user.address === '' && (
+        <Button
+          size="sm"
+          colorScheme="white"
+          className={cn('stake-card__btn', stake.name)}
+          onClick={handleConnect}
+        >
+          <span className="text-ssmd text-bold">Unlock Wallet</span>
+        </Button>
+      )}
+      {user.address !== '' && (
+        <Button
+          size="sm"
+          colorScheme="white"
+          className={cn('stake-card__btn', stake.name)}
+          onClick={() => {}}
+        >
+          <span className="text-ssmd text-bold">Stake</span>
+        </Button>
+      )}
       <Button
         colorScheme="outline-purple"
         size="smd"
@@ -64,6 +83,6 @@ const StakeCard: React.FC<IStakeCardProps> = ({ stake }) => {
       />
     </div>
   );
-};
+});
 
 export default StakeCard;

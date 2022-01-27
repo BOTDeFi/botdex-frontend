@@ -15,7 +15,6 @@ import RemoveLiquidity from '@/components/sections/Trade/RemoveLiquidity';
 import TradeWrapper from '@/HOC/TradeWrapper';
 import { useMst } from '@/store';
 import { IRecentTx, ISettings } from '@/types';
-import { clog } from '@/utils/logger';
 
 import AddLiquidity from '../AddLiquidity';
 
@@ -77,7 +76,6 @@ const Liquidity: React.FC = observer(() => {
     txDeadlineUtc: moment.utc().add(20, 'm').unix(),
     isAudio: false,
   });
-  clog(settings.txDeadlineUtc, 'deadline');
 
   const handleSaveSettings = (settingsObj: ISettings): void => {
     setSettings(settingsObj);
