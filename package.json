@@ -14,7 +14,7 @@
     "lint:ts": "eslint \"{src,types}/**/*.ts{,x}\"",
     "lint-fix:ts": "eslint \"{src,types}/**/*.ts{,x}\" --fix",
     "lint:scss": "stylelint \"src/**/*.scss\"",
-    "lint-fix:scss": "stylelint \"src/**/*.scss\" --fix",
+    "lint-fix:scss": "stylelint \"src/**/*.scss\" --fix"
   },
   "dependencies": {
     "@apollo/client": "^3.3.20",
