@@ -47,7 +47,7 @@ $default-vertical-padding: 22px;
     margin-top: 40px;
 
     &-card-view {
-      @include flex(row, flex-end, space-between, wrap);
+      @include flex(row, flex-start, space-between, wrap);
       @include b(mobile) {
         flex-direction: column-reverse;
       }

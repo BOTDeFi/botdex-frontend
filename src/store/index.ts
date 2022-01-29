@@ -10,9 +10,9 @@ import {
   ModalsModel,
   PairsModel,
   PoolsModel,
+  StakesModel,
   TokensModel,
   UserModel,
-  StakesModel
 } from './Models';
 
 const RootModel = types.model({
@@ -29,6 +29,7 @@ export const Store = RootModel.create({
   user: {
     address: '',
     type: 'from',
+    balance: 0,
   },
   modals: {
     metamaskErr: {
@@ -38,9 +39,9 @@ export const Store = RootModel.create({
       state: roiInitialState,
     },
     stakeUnstake: {
-      isOpen: false,
-      isStaking: true,
-      isAutoVault: false,
+      // isOpen: false,
+      // isStaking: true,
+      // isAutoVault: false,
       poolId: 0,
     },
     poolsCollect: {},
@@ -101,7 +102,7 @@ export const Store = RootModel.create({
   },
   stakes: {
     data: [],
-  }
+  },
 });
 
 const rootStore = Store;

@@ -8,6 +8,7 @@ import {
   RouterBotdex,
   SmartRefinerInitializable,
   BotdexStaking,
+  BOT,
 } from './abi';
 
 // all of the current contracts are in 42 network
@@ -468,9 +469,13 @@ export const contracts = {
     ADDRESS: '0x46D47456454dA7f5F2f3a831D0fdF264D940AaB3',
     ABI: RocketPropellant,
   },
+  // BOT: {
+  //   ADDRESS: '0xEF331E4033A0c6923C8fb4ae072E52440A54Cd5c',
+  //   ABI: RocketPropellant,
+  // },
   BOT: {
-    ADDRESS: '0xEF331E4033A0c6923C8fb4ae072E52440A54Cd5c',
-    ABI: RocketPropellant,
+    ADDRESS: '0x27664e9acf10b97cEf84fA0682De73d0F3131D69',
+    ABI: BOT,
   },
   REFINERY_VAULT: {
     ADDRESS: '0xE7824Ea63D9ECd72A66d5a3cD7457222Ee5a6518',

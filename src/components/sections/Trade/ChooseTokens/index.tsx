@@ -408,8 +408,17 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
         <div className="choose-tokens">
           {tokenFrom ? (
             <>
-              <div className="box-f-jc-sb box-f choose-tokens__box-title">
+              <div className="box-f choose-tokens__box-title">
                 <div className="text-upper">{tokenFrom.symbol}</div>
+                <div
+                  onClick={() => handleMaxValue('from')}
+                  onKeyDown={() => {}}
+                  tabIndex={-1}
+                  role="button"
+                  className="choose-tokens__max"
+                >
+                  Max
+                </div>
                 <div className="text-sm text-gray-2 text-500">{textFrom || 'From'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
@@ -436,20 +445,11 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                       handleChangeTokensQuantity('from', +value)
                     }
                   />
-                  <div
-                    onClick={() => handleMaxValue('from')}
-                    onKeyDown={() => {}}
-                    tabIndex={-1}
-                    role="button"
-                    className="choose-tokens__max"
-                  >
-                    Max
-                  </div>
                   {balanceFrom ? (
                     <Popover content={balanceFrom}>
                       <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
                         balanceFrom,
-                      ).toFixed(5, 1)}`}</div>
+                      ).toFixed(4, 1)}`}</div>
                     </Popover>
                   ) : (
                     ''
@@ -487,8 +487,17 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           </div>
           {tokenTo ? (
             <>
-              <div className="box-f-jc-sb box-f choose-tokens__box-title">
+              <div className="box-f choose-tokens__box-title second">
                 <div className="text-upper">{tokenTo.symbol}</div>
+                <div
+                  onClick={() => handleMaxValue('to')}
+                  onKeyDown={() => {}}
+                  tabIndex={-1}
+                  role="button"
+                  className="choose-tokens__max"
+                >
+                  Max
+                </div>
                 <div className="text-sm text-gray-2 text-500">{textTo || 'To'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
@@ -513,15 +522,6 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
                     max={maxTo}
                   />
-                  <div
-                    onClick={() => handleMaxValue('to')}
-                    onKeyDown={() => {}}
-                    tabIndex={-1}
-                    role="button"
-                    className="choose-tokens__max"
-                  >
-                    Max
-                  </div>
                   {balanceTo ? (
                     <Popover content={balanceTo}>
                       <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(

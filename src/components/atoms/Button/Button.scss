@@ -141,8 +141,8 @@
 
       &.active {
         color: $text-main-color !important;
-        background: $accent-gradient;
-        border-color: transparent;
+        //background: $accent-gradient;
+        //border-color: transparent;
         background-origin: border-box;
 
         span {

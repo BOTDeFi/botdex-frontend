@@ -137,6 +137,20 @@ export interface Pool extends PoolConfig {
   userData?: PoolUserData;
 }
 
+interface StakeUserData {
+  amount: number;
+  start: number;
+}
+
+export interface Stake {
+  id: number;
+  amountStaked: number;
+  timeLockUp: number;
+  APY: number;
+  isDead: boolean;
+  userData?: StakeUserData;
+}
+
 export enum DetailsBadgeType {
   core = 'core',
 }
@@ -194,3 +208,4 @@ export enum Precisions {
 }
 
 export type TimestampSeconds = number;
+export type TNullable<T> = T | null;

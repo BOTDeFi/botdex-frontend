@@ -4,6 +4,7 @@ const UserModel = types
   .model({
     address: types.optional(types.string, ''),
     type: types.optional(types.string, 'from'),
+    balance: types.number,
   })
   .actions((self) => {
     const setAddress = (addr: string) => {
@@ -11,6 +12,9 @@ const UserModel = types
     };
     const changeType = (type: 'to' | 'from') => {
       self.type = type;
+    };
+    const setBalance = (value: number) => {
+      self.balance = value;
     };
     const disconnect = () => {
       self.address = '';
@@ -21,6 +25,7 @@ const UserModel = types
     return {
       setAddress,
       changeType,
+      setBalance,
       disconnect,
     };
   });

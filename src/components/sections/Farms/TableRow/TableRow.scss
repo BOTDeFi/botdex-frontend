@@ -183,6 +183,8 @@
     }
 
     &-box {
+      align-self: stretch;
+      @include flex(column, center, center);
       padding: 20px 30px 40px;
 
       background: linear-gradient(

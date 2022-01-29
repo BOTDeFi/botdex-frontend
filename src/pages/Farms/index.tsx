@@ -216,8 +216,6 @@ const Farms: React.FC = observer(() => {
     setSortOption(value as SortOptions);
   };
 
-  console.log('farms', filteredFarms);
-
   return (
     <main className="farms">
       <div className="row">

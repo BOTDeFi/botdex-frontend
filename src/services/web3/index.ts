@@ -66,14 +66,14 @@ const chainsParams: IChains = {
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
     chainName: 'Binance Testnet',
     blockExplorerUrls: ['https://testnet.bscscan.com'],
-    nativeCurrency: {name: 'BNB', symbol: 'BNB', decimals: 18},
+    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
   },
   '0x38': {
     chainId: '0x38',
     rpcUrls: ['https://bsc-dataseed.binance.org/'],
     chainName: 'Binance Mainnet',
     blockExplorerUrls: ['https://bscscan.com/'],
-    nativeCurrency: {name: 'BNB', symbol: 'BNB', decimals: 18},
+    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
   },
 };
 
@@ -287,6 +287,43 @@ export default class MetamaskService {
     }
   }
 
+  async checkTokenAllowance2({
+    contractName,
+    approvedAddress,
+    walletAddress,
+    amount,
+  }: {
+    contractName: 'BOT' | 'BOTDEX_STAKING';
+    approvedAddress?: string;
+    walletAddress?: string;
+    amount?: string | number;
+  }): Promise<boolean> {
+    try {
+      const contract = this.getContract(
+        contracts[contractName].ADDRESS,
+        contracts[contractName].ABI,
+      );
+      const walletAdr = walletAddress || this.walletAddress;
+
+      let result = await contract.methods
+        .allowance(walletAdr, approvedAddress || contracts[contractName].ADDRESS)
+        .call();
+
+      const tokenDecimals = await this.getTokenDecimals(contracts[contractName].ADDRESS);
+
+      result =
+        result === '0'
+          ? null
+          : +new BigNumber(result).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
+      if (result && new BigNumber(result).minus(amount || 0).isPositive()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async checkTokenAllowance({
     contractName,
     tokenDecimals,
@@ -295,7 +332,7 @@ export default class MetamaskService {
     tokenAddress,
     approveSum,
   }: {
-    contractName: 'ROUTER' | 'ERC20' | 'PAIR';
+    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOT' | 'BOTDEX_STAKING';
     tokenDecimals?: number;
     approvedAddress?: string;
     walletAddress?: string;
@@ -333,7 +370,7 @@ export default class MetamaskService {
     walletAddress,
     tokenAddress,
   }: {
-    contractName: 'ROUTER' | 'ERC20' | 'PAIR';
+    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOTDEX_STAKING' | 'BOT';
     approvedAddress?: string;
     walletAddress?: string;
     tokenAddress: string;
@@ -355,6 +392,12 @@ export default class MetamaskService {
     } catch (error) {
       return error;
     }
+  }
+
+  public async getTokenDecimals(address: string) {
+    const contract = this.getContract(address, contracts.ERC20.ABI);
+
+    return contract.methods.decimals().call();
   }
 
   static calcTransactionAmount(amount: number | string, tokenDecimal: number): string {
