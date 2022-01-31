@@ -10,7 +10,7 @@ import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
 import { useMst } from '@/store';
 import { enterStaking } from '@/store/stakes';
 import { getTokenUsdPrice } from '@/utils';
-import { BIG_ZERO, DEFAULT_TOKEN_POWER } from '@/utils/constants';
+import {BIG_TEN, BIG_ZERO, DEFAULT_TOKEN_POWER} from '@/utils/constants';
 
 import './StakeUnstakeModal.scss';
 
@@ -43,12 +43,19 @@ const StakeUnstakeModal: React.FC = observer(() => {
   const [percent, setPercent] = useState(MAX_PERCENTAGE / 4);
   const [inputValue, setInputValue] = useState(BIG_ZERO);
   const { tokenUsdPrice } = useRefineryUsdPrice();
-
   const { user, modals } = useMst();
+
+  const maxStakingValueBN = useMemo(() => new BigNumber(user.balance), [user.balance]);
+  const inputValueAsString = useMemo(() => inputValue.toFixed(), [inputValue]);
+  const inputValueUsdToDisplay = useMemo(
+    () => getTokenUsdPrice(inputValue, tokenUsdPrice),
+    [inputValue, tokenUsdPrice],
+  );
+
   const [isApproved, isApproving, handleApprove] = useApprove({
     tokenName: 'BOT',
     approvedContractName: 'BOTDEX_STAKING',
-    amount: inputValue.toString(),
+    amount: new BigNumber(inputValueAsString).times(BIG_TEN.pow(18)).toString(),
     walletAddress: user.address,
   });
 
@@ -61,8 +68,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
     // isStaking,
   } = modal;
 
-  const maxStakingValueBN = useMemo(() => new BigNumber(user.balance), [user.balance]);
-
+  const hasValidationErrors = user.balance === 0 && user.balance < inputValue.toNumber();
   const calculateValueByPercent = useCallback(
     (newPercentValue: number) => maxStakingValueBN.times(newPercentValue).dividedBy(MAX_PERCENTAGE),
     [maxStakingValueBN],
@@ -98,6 +104,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
   };
 
   const handleValueChange = (newValue: ValueType | null) => {
+    console.log(newValue);
     if (newValue === null) return;
     updateInputValue(newValue);
     updatePercentByValue(newValue);
@@ -110,8 +117,8 @@ const StakeUnstakeModal: React.FC = observer(() => {
   };
 
   const handleStake = useCallback(async () => {
-    await enterStaking(poolId, inputValue, user.address);
-  }, [user.address, inputValue, poolId]);
+    await enterStaking(poolId, inputValueAsString, user.address);
+  }, [inputValueAsString, poolId, user.address]);
 
   const handleConfirm = async () => {
     setPendingTx(true);
@@ -130,14 +137,6 @@ const StakeUnstakeModal: React.FC = observer(() => {
       modal.close();
     };
   }, [modal]);
-
-  const inputValueAsString = useMemo(() => inputValue.toFixed(), [inputValue]);
-  const inputValueUsdToDisplay = useMemo(
-    () => getTokenUsdPrice(inputValue, tokenUsdPrice),
-    [inputValue, tokenUsdPrice],
-  );
-
-  const hasValidationErrors = user.balance < inputValue.toNumber();
 
   return (
     <Modal

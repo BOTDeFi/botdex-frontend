@@ -129,7 +129,7 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
                 <div className="farms-table-row__details-staked-value text-blue-d text-smd">
                   {displayBalance()}
                 </div>
-                <div className="text-gray text-smd">
+                <div className="text-smd">
                   ~{displayBalanceAsUsd()} {CURRENCY_CONVERT_TO}
                 </div>
               </div>

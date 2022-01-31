@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
 import { Button, InputNumber, Slider } from '@/components/atoms';
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
+// import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import { Modal } from '@/components/molecules';
 import useStakeFarms from '@/hooks/farms/useStakeFarms';
 import useUnstakeFarms from '@/hooks/farms/useUnstakeFarms';
@@ -16,6 +16,7 @@ import { getBalanceAmountBN } from '@/utils/formatters';
 import { clog, clogError } from '@/utils/logger';
 
 import './FarmsStakeUnstakeModal.scss';
+import {toast} from "react-toastify";
 
 const mockData = {
   additionalCurrency: 'USD',
@@ -105,13 +106,15 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
     try {
       await onStake(inputValueAsString);
       farmsStore.fetchFarmUserDataAsync(user.address, [farmId]);
-      successNotification('Staked!', 'Your funds have been staked in the farm!');
+      // successNotification('Staked!', 'Your funds have been staked in the farm!');
+      toast.success(`Staked! Your funds have been staked in the farm!!`);
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
-      );
+      toast.success(`Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`);
+      // errorNotification(
+      //   'Error',
+      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      // );
     } finally {
       setPendingTx(false);
     }
@@ -121,13 +124,15 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
     try {
       await onUnstake(inputValueAsString);
       farmsStore.fetchFarmUserDataAsync(user.address, [farmId]);
-      successNotification('Unstaked!', 'Your earnings have also been harvested to your wallet!');
+      toast.success(`Unstaked! Your earnings have also been harvested to your wallet!`);
+      // successNotification('Unstaked!', 'Your earnings have also been harvested to your wallet!');
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
-      );
+      toast.success(`Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`);
+      // errorNotification(
+      //   'Error',
+      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      // );
     } finally {
       setPendingTx(false);
     }

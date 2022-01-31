@@ -93,7 +93,7 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
       autoCompoundFrequency: 0, // is not used for farms
       performanceFee: 0, // is not used for farms
       apr,
-      earningTokenSymbol: tokens.rp1.symbol,
+      earningTokenSymbol: tokens.bot.symbol,
       earningTokenPrice,
       stakingTokenSymbol: lpSymbol,
       stakingTokenPrice: stakingTokenPriceAsBN.toNumber(),
