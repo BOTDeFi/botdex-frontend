@@ -7,7 +7,7 @@ import { metamaskService, walletConnectorContext } from '@/services/MetamaskConn
 import MetamaskService from '@/services/web3';
 import rootStore from '@/store';
 import { IToken, ITokens } from '@/types';
-import { clog, clogError } from '@/utils/logger';
+import { clogError } from '@/utils/logger';
 
 interface ITradeWrapper {
   isAllowanceFrom: boolean;
@@ -415,7 +415,6 @@ const TradeWrapper = (
 
     handleChangeTokensData(tokensData: ITokens, type?: 'from' | 'to') {
       if (tokensData.from.amount === 0 || tokensData.to.amount === 0) {
-        clog(1);
         this.handleGetExchange(tokensData, type);
       } else if (tokensData.from.token && tokensData.to.token && type) {
         this.handleGetExchange(tokensData, type);

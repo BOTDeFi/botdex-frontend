@@ -19,7 +19,7 @@ export const getStakesData = async (stakesLength: number): Promise<Stake[]> => {
       id: i,
       amountStaked: parseInt(stakeData.amountStaked, 10),
       timeLockUp: parseInt(stakeData.timeLockUp, 10),
-      APY: parseInt(stakeData.APY, 10),
+      APY: parseInt(stakeData.APY, 10) / 10,
       isDead: stakeData.isDead,
     });
   }

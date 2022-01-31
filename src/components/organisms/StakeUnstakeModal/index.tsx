@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import UnknownImg from '@/assets/img/currency/unknown.svg';
 import { Button, InputNumber, Slider } from '@/components/atoms';
 import { Modal } from '@/components/molecules';
 import { useApprove } from '@/hooks/useApprove';
@@ -152,14 +151,6 @@ const StakeUnstakeModal: React.FC = observer(() => {
         <div className="stake-unstake-modal__title text-smd text-bold">Stake in Pool</div>
         <div className="stake-unstake-modal__subtitle box-f-ai-c box-f-jc-sb">
           <span className="text-med text">Stake</span>
-          <div className="box-f-ai-c stake-unstake-modal__currency text-smd">
-            <img
-              className="stake-unstake-modal__currency-icon"
-              src={stakingToken?.logoURI || UnknownImg}
-              alt=""
-            />
-            <span>{stakingToken?.symbol}</span>
-          </div>
         </div>
         <InputNumber
           className="stake-unstake-modal__input"
