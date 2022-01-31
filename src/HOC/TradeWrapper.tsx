@@ -416,6 +416,7 @@ const TradeWrapper = (
     handleChangeTokensData(tokensData: ITokens, type?: 'from' | 'to') {
       if (tokensData.from.amount === 0 || tokensData.to.amount === 0) {
         clog(1);
+        this.handleGetExchange(tokensData, type);
       } else if (tokensData.from.token && tokensData.to.token && type) {
         this.handleGetExchange(tokensData, type);
       } else {

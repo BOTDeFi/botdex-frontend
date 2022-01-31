@@ -5,14 +5,14 @@ import { observer } from 'mobx-react-lite';
 import UnknownImg from '@/assets/img/currency/unknown.svg';
 import ArrowCImg from '@/assets/img/icons/arrow-circle.svg';
 import ArrowImg from '@/assets/img/icons/arrow-cur.svg';
-import { Button, InputNumber, Popover } from '@/components/atoms';
+import { Button, InputNumber } from '@/components/atoms';
 import SelectTokenModal from '@/components/sections/Trade/SelectTokenModal';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
 import { IToken, ITokens } from '@/types';
-import { clog, clogError } from '@/utils/logger';
+import { clogError } from '@/utils/logger';
 
 import './ChooseTokens.scss';
 
@@ -234,95 +234,121 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       ],
     );
 
-    const handleChangeTokensQuantity = async (type: 'from' | 'to', quantity: number) => {
-      user.changeType(type);
-      if (type === 'from') {
-        setTokenFromQuantity(quantity);
-        if (time) {
-          clearTimeout(time);
-          setTime(
-            setTimeout(() => {
-              handleCheckAllowance(quantity);
-              handleChangeTokens(
-                {
-                  from: {
-                    token: tokenFrom,
-                    amount: quantity,
-                  },
-                  to: {
-                    token: tokenTo,
-                    amount: initialTokenData?.to.amount || NaN,
-                  },
-                },
-                'from',
-              );
-            }, 500),
-          );
-        } else {
-          setTime(
-            setTimeout(() => {
-              handleCheckAllowance(quantity);
-              handleChangeTokens(
-                {
-                  from: {
-                    token: tokenFrom,
-                    amount: quantity,
-                  },
-                  to: {
-                    token: tokenTo,
-                    amount: initialTokenData?.to.amount || NaN,
-                  },
-                },
-                'from',
-              );
-            }, 500),
+    const handleChangeTokensQuantity = React.useCallback(
+      async (type: 'from' | 'to', quantity: number) => {
+        user.changeType(type);
+        if (quantity === 0) {
+          handleChangeTokens(
+            {
+              from: {
+                token: tokenFrom,
+                amount: 0,
+              },
+              to: {
+                token: tokenTo,
+                amount: 0,
+              },
+            },
+            'from',
           );
         }
-      }
-      if (type === 'to') {
-        setTokenToQuantity(quantity);
-        if (time) {
-          clearTimeout(time);
-          setTime(
-            setTimeout(() => {
-              handleCheckAllowance(quantity);
-              handleChangeTokens(
-                {
-                  from: {
-                    token: tokenFrom,
-                    amount: initialTokenData?.from.amount || NaN,
+        if (type === 'from') {
+          if (time) {
+            clearTimeout(time);
+            setTime(
+              setTimeout(() => {
+                handleCheckAllowance(quantity);
+                handleChangeTokens(
+                  {
+                    from: {
+                      token: tokenFrom,
+                      amount: quantity,
+                    },
+                    to: {
+                      token: tokenTo,
+                      amount: initialTokenData?.to.amount || NaN,
+                    },
                   },
-                  to: {
-                    token: tokenTo,
-                    amount: quantity,
+                  'from',
+                );
+              }, 300),
+            );
+          } else {
+            setTime(
+              setTimeout(() => {
+                handleCheckAllowance(quantity);
+                handleChangeTokens(
+                  {
+                    from: {
+                      token: tokenFrom,
+                      amount: quantity,
+                    },
+                    to: {
+                      token: tokenTo,
+                      amount: initialTokenData?.to.amount || NaN,
+                    },
                   },
-                },
-                'to',
-              );
-            }, 500),
-          );
-        } else {
-          setTime(
-            setTimeout(() => {
-              handleCheckAllowance(quantity);
-              handleChangeTokens(
-                {
-                  from: {
-                    token: tokenFrom,
-                    amount: initialTokenData?.from.amount || NaN,
-                  },
-                  to: {
-                    token: tokenTo,
-                    amount: quantity,
-                  },
-                },
-                'to',
-              );
-            }, 500),
-          );
+                  'from',
+                );
+              }, 300),
+            );
+          }
         }
-      }
-    };
+        if (type === 'to') {
+          setTokenToQuantity(quantity);
+          if (time) {
+            clearTimeout(time);
+            setTime(
+              setTimeout(() => {
+                handleCheckAllowance(quantity);
+                handleChangeTokens(
+                  {
+                    from: {
+                      token: tokenFrom,
+                      amount: initialTokenData?.from.amount || NaN,
+                    },
+                    to: {
+                      token: tokenTo,
+                      amount: quantity,
+                    },
+                  },
+                  'to',
+                );
+              }, 300),
+            );
+          } else {
+            setTime(
+              setTimeout(() => {
+                handleCheckAllowance(quantity);
+                handleChangeTokens(
+                  {
+                    from: {
+                      token: tokenFrom,
+                      amount: initialTokenData?.from.amount || NaN,
+                    },
+                    to: {
+                      token: tokenTo,
+                      amount: quantity,
+                    },
+                  },
+                  'to',
+                );
+              }, 300),
+            );
+          }
+        }
+      },
+      [
+        handleChangeTokens,
+        handleCheckAllowance,
+        initialTokenData?.from.amount,
+        initialTokenData?.to.amount,
+        time,
+        tokenFrom,
+        tokenTo,
+        user,
+      ],
+    );
 
     const handleGetBalance = React.useCallback(
       async (type: 'from' | 'to') => {
@@ -359,14 +385,14 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     );
 
     const handleMaxValue = React.useCallback(
-      (value) => {
+      async (value) => {
         if (value === 'from') {
-          setTokenFromQuantity(balanceFrom);
+          await handleChangeTokensQuantity('from', +balanceFrom);
         } else {
-          setTokenToQuantity(balanceTo);
+          await handleChangeTokensQuantity('to', +balanceTo);
         }
       },
-      [balanceFrom, balanceTo],
+      [balanceFrom, balanceTo, handleChangeTokensQuantity],
     );
 
     React.useEffect(() => {
@@ -408,17 +434,8 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
         <div className="choose-tokens">
           {tokenFrom ? (
             <>
-              <div className="box-f choose-tokens__box-title">
+              <div className="box-f box-f-jc-sb choose-tokens__box-title">
                 <div className="text-upper">{tokenFrom.symbol}</div>
-                <div
-                  onClick={() => handleMaxValue('from')}
-                  onKeyDown={() => {}}
-                  tabIndex={-1}
-                  role="button"
-                  className="choose-tokens__max"
-                >
-                  Max
-                </div>
                 <div className="text-sm text-gray-2 text-500">{textFrom || 'From'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
@@ -445,14 +462,21 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                       handleChangeTokensQuantity('from', +value)
                     }
                   />
-                  {balanceFrom ? (
-                    <Popover content={balanceFrom}>
-                      <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
+                  {balanceFrom && (
+                    <div className="choose-tokens__b-m-cont">
+                      <div className="choose-tokens__b-m-cont__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
                         balanceFrom,
                       ).toFixed(4, 1)}`}</div>
-                    </Popover>
-                  ) : (
-                    ''
+                      <div
+                        onClick={() => handleMaxValue('from')}
+                        onKeyDown={() => {}}
+                        tabIndex={-1}
+                        role="button"
+                        className="choose-tokens__b-m-cont__max"
+                      >
+                        Max
+                      </div>
+                    </div>
                   )}
                   {maxFrom && +maxFrom < +tokenFromQuantity ? (
                     <div className="choose-tokens__err text-red text-right">{`Maximum value is ${maxFrom}`}</div>
@@ -476,28 +500,17 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
             <div
               className="box-circle box-f-c"
               onClick={handleSwapPositions}
-              onKeyDown={() => {
-                clog(1);
-              }}
-              role="button"
               tabIndex={-1}
+              role="button"
+              onKeyDown={() => {}}
             >
               <img src={ArrowCImg} alt="" />
             </div>
           </div>
           {tokenTo ? (
             <>
-              <div className="box-f choose-tokens__box-title second">
+              <div className="box-f box-f-jc-sb choose-tokens__box-title second">
                 <div className="text-upper">{tokenTo.symbol}</div>
-                <div
-                  onClick={() => handleMaxValue('to')}
-                  onKeyDown={() => {}}
-                  tabIndex={-1}
-                  role="button"
-                  className="choose-tokens__max"
-                >
-                  Max
-                </div>
                 <div className="text-sm text-gray-2 text-500">{textTo || 'To'}</div>
               </div>
               <div className="box-f box-f-jc-sb">
@@ -522,14 +535,21 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
                     max={maxTo}
                   />
-                  {balanceTo ? (
-                    <Popover content={balanceTo}>
-                      <div className="choose-tokens__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
+                  {balanceTo && (
+                    <div className="choose-tokens__b-m-cont">
+                      <div className="choose-tokens__b-m-cont__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
                         balanceTo,
                       ).toFixed(5, 1)}`}</div>
-                    </Popover>
-                  ) : (
-                    ''
+                      <div
+                        onClick={() => handleMaxValue('to')}
+                        onKeyDown={() => {}}
+                        tabIndex={-1}
+                        role="button"
+                        className="choose-tokens__b-m-cont__max"
+                      >
+                        Max
+                      </div>
+                    </div>
                   )}
                   {maxTo && +maxTo < +tokenToQuantity ? (
                     <div className="choose-tokens__err text-red text-right">{`Maximum value is ${new BigNumber(

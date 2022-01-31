@@ -124,9 +124,9 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
       <Slider
         tooltipVisible={false}
         onChange={handlePercentChange}
-        defaultValue={25}
+        defaultValue={0}
         value={percent}
-        min={25}
+        min={0}
       />
       <div className="r-liquidity__percent-btns box-f-ai-c box-f-jc-sb">
         {btns.map((btn) => (

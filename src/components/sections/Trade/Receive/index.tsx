@@ -177,7 +177,7 @@ const Receive: React.FC = observer(() => {
       ) : (
         ''
       )}
-      <div className="text text-gray">
+      <div className="text">
         Output is stimulated. If the price changes by more than 0.8% your transaction will revert.
       </div>
       {liquidityInfo?.lpTokens ? (
