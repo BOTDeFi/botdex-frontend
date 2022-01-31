@@ -7,13 +7,16 @@ import lock from '@/assets/img/icons/lock.svg';
 import { Button } from '@/components/atoms';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
-import { collectReward, convertSeconds, getUserBalance, updateStakeData } from '@/store/stakes';
+import {
+  calculateReward,
+  collectReward,
+  convertSeconds,
+  getUserBalance,
+  updateStakeData,
+} from '@/store/stakes';
 import { Stake } from '@/types';
 
 import './StakeCard.scss';
-
-const YEAR = 31536000;
-const PROCENT_BASE = 100;
 
 interface IStakeCardProps {
   stake: Stake;
@@ -23,6 +26,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   const { connect } = useWalletConnectorContext();
   const [isOpenDetails, setOpenDetails] = React.useState<boolean>(false);
   const [collecting, setCollecting] = React.useState<boolean>(false);
+  const [reward, setReward] = React.useState<any>(0);
   const handleConnect = useCallback(() => {
     connect();
   }, [connect]);
@@ -32,7 +36,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   const handleOpenStakeModal = React.useCallback(() => {
     modals.stakeUnstake.open(stake.id);
   }, [modals.stakeUnstake, stake.id]);
-  const handleCollectReward = React.useCallback(async() => {
+  const handleCollectReward = React.useCallback(async () => {
     setCollecting(true);
     await collectReward(stake.id, user.address);
     updateStakeData(stake.id, user.address).then((res) => {
@@ -41,15 +45,11 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
     });
     setCollecting(false);
   }, [stake.id, stakeStore, user.address]);
-  const calculateReward = React.useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const reward = (stake.userData?.amount * stake.APY * stake.timeLockUp) / (PROCENT_BASE * YEAR);
-    if (reward > 0) {
-      return reward.toFixed(5);
-    }
-    return reward;
-  }, [stake.APY, stake.timeLockUp, stake.userData?.amount]);
+  // const reward = React.useMemo(() => {
+  //   const result = calculateReward.then((res) => {
+  //     return result;
+  //   });
+  // }, []);
 
   const calculateCollectTime = React.useMemo(() => {
     if (stake.userData?.start === 0) {
@@ -80,6 +80,13 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
       stakeStore.setUserData(stake.id, res.userData);
       stakeStore.setAmountStaked(stake.id, res.amountStaked);
     });
+  }, [stake.id, stakeStore, user.address]);
+  useEffect(() => {
+    async function getReward() {
+      const result = await calculateReward(stake.id);
+      setReward(result);
+    }
+    getReward();
   }, [stake.id, stakeStore, user.address]);
 
   return (
@@ -146,7 +153,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
             </Button>
           )}
           <div className="label">Reward</div>
-          <div className="content">{calculateReward} BOT</div>
+          <div className="content">{reward} BOT</div>
           <div className="label">Payment Date</div>
           {calculateCollectTime !== 0 ? (
             <div className="content">{calculateCollectTime}</div>

@@ -1,4 +1,6 @@
 import {
+  BOT,
+  BotdexStaking,
   MasterBotdex,
   // MasterRefiner,
   Multicall,
@@ -7,8 +9,6 @@ import {
   RocketPropellant,
   RouterBotdex,
   SmartRefinerInitializable,
-  BotdexStaking,
-  BOT,
 } from './abi';
 
 // all of the current contracts are in 42 network
@@ -474,7 +474,7 @@ export const contracts = {
   //   ABI: RocketPropellant,
   // },
   BOT: {
-    ADDRESS: '0x27664e9acf10b97cEf84fA0682De73d0F3131D69',
+    ADDRESS: '0x39c8BAF5CE01F408378e67fDBdbF20F041A37773',
     ABI: BOT,
   },
   REFINERY_VAULT: {
@@ -497,7 +497,7 @@ export const contracts = {
     ABI: MasterBotdex,
   },
   BOTDEX_STAKING: {
-    ADDRESS: '0x2356AC9d9cC79899a5A8015AC8E31F46be545Ff5',
+    ADDRESS: '0x2F3cFe465DeE5E468cDff1A4A1a5CD187af2E2E6',
     ABI: BotdexStaking,
   },
 };

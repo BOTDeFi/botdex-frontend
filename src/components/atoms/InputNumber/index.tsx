@@ -36,7 +36,7 @@ const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> = React.me
       ...otherProps
     } = props;
 
-    const blockInvalidChar = (e: any) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault();
+    // const blockInvalidChar = (e: any) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault();
 
     return (
       <div
@@ -65,7 +65,7 @@ const InputNumber: React.ForwardRefExoticComponent<IInputNumberProps> = React.me
           onWheel={(e: any) => {
             e.target.blur();
           }}
-          onKeyDown={blockInvalidChar}
+          // onKeyDown={blockInvalidChar}
           {...otherProps}
         />
         {inputPrefix ? (

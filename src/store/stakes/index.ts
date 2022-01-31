@@ -77,6 +77,13 @@ export const updateStakeData = async (id: number, address: string) => {
   };
 };
 
+export const calculateReward = async (id: number) => {
+  const tokenContract = getContract('BOTDEX_STAKING');
+  const reward = await tokenContract.methods.calculateReward(id).call();
+  // return getBalanceAmountBN(reward, 18);
+  return reward;
+};
+
 export const collectReward = async (id: number, address: string) => {
   const stakingContract = getContract('BOTDEX_STAKING');
   await stakingContract.methods.withdrawReward(id).send({ from: address });

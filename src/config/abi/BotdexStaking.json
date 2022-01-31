@@ -36,9 +36,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "poolId",
-        "type": "uint8"
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -148,9 +148,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "poolId",
-        "type": "uint8"
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -196,9 +196,28 @@
   {
     "inputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "_poolId",
-        "type": "uint8"
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
       }
     ],
     "name": "changePoolVisability",
@@ -209,9 +228,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "_poolId",
-        "type": "uint8"
+        "type": "uint256"
       },
       {
         "internalType": "uint256",
@@ -222,35 +241,6 @@
     "name": "enterStaking",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint8",
-        "name": "_poolId",
-        "type": "uint8"
-      }
-    ],
-    "name": "getPoolInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amountStaked_",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "timeLockUp_",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "APY_",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -450,9 +440,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "userAtPoolInfo",
@@ -474,9 +464,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "_poolId",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "withdrawReward",

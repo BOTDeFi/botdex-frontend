@@ -165,7 +165,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       }
     };
 
-    const handleSwapPositions = () => {
+    const handleSwapPositions = React.useCallback(() => {
       if (initialTokenData) {
         setTokenFrom(initialTokenData.to.token);
         setTokenTo(initialTokenData.from.token);
@@ -177,7 +177,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           'from',
         );
       }
-    };
+    }, [handleChangeTokens, initialTokenData]);
 
     const handleCheckAllowance = React.useCallback(
       async (inputValue?: string | number) => {
@@ -251,94 +251,97 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
             },
             'from',
           );
-        }
-        if (type === 'from') {
-          if (time) {
-            clearTimeout(time);
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: quantity,
+        } else {
+          if (type === 'from') {
+            if (time) {
+              clearTimeout(time);
+              setTime(
+                setTimeout(() => {
+                  handleCheckAllowance(quantity);
+                  handleChangeTokens(
+                    {
+                      from: {
+                        token: tokenFrom,
+                        amount: quantity > +balanceFrom ? +balanceFrom : quantity,
+                      },
+                      to: {
+                        token: tokenTo,
+                        amount: initialTokenData?.to.amount || NaN,
+                      },
                     },
-                    to: {
-                      token: tokenTo,
-                      amount: initialTokenData?.to.amount || NaN,
+                    'from',
+                  );
+                }, 500),
+              );
+            } else {
+              setTime(
+                setTimeout(() => {
+                  handleCheckAllowance(quantity);
+                  handleChangeTokens(
+                    {
+                      from: {
+                        token: tokenFrom,
+                        amount: quantity > +balanceFrom ? +balanceFrom : quantity,
+                      },
+                      to: {
+                        token: tokenTo,
+                        amount: initialTokenData?.to.amount || NaN,
+                      },
                     },
-                  },
-                  'from',
-                );
-              }, 300),
-            );
-          } else {
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: quantity,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: initialTokenData?.to.amount || NaN,
-                    },
-                  },
-                  'from',
-                );
-              }, 300),
-            );
+                    'from',
+                  );
+                }, 500),
+              );
+            }
           }
-        }
-        if (type === 'to') {
-          setTokenToQuantity(quantity);
-          if (time) {
-            clearTimeout(time);
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: initialTokenData?.from.amount || NaN,
+          if (type === 'to') {
+            setTokenToQuantity(quantity);
+            if (time) {
+              clearTimeout(time);
+              setTime(
+                setTimeout(() => {
+                  handleCheckAllowance(quantity);
+                  handleChangeTokens(
+                    {
+                      from: {
+                        token: tokenFrom,
+                        amount: initialTokenData?.from.amount || NaN,
+                      },
+                      to: {
+                        token: tokenTo,
+                        amount: quantity > +balanceTo ? +balanceFrom : quantity,
+                      },
                     },
-                    to: {
-                      token: tokenTo,
-                      amount: quantity,
+                    'to',
+                  );
+                }, 500),
+              );
+            } else {
+              setTime(
+                setTimeout(() => {
+                  handleCheckAllowance(quantity);
+                  handleChangeTokens(
+                    {
+                      from: {
+                        token: tokenFrom,
+                        amount: initialTokenData?.from.amount || NaN,
+                      },
+                      to: {
+                        token: tokenTo,
+                        amount: quantity > +balanceTo ? +balanceFrom : quantity,
+                      },
                     },
-                  },
-                  'to',
-                );
-              }, 300),
-            );
-          } else {
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: initialTokenData?.from.amount || NaN,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: quantity,
-                    },
-                  },
-                  'to',
-                );
-              }, 300),
-            );
+                    'to',
+                  );
+                }, 500),
+              );
+            }
           }
         }
       },
       [
+        balanceFrom,
+        balanceTo,
         handleChangeTokens,
         handleCheckAllowance,
         initialTokenData?.from.amount,
@@ -396,6 +399,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     );
 
     React.useEffect(() => {
+      console.log('tt', initialTokenData?.from.amount);
       setTokenFromQuantity(initialTokenData?.from.amount || NaN);
       setTokenToQuantity(initialTokenData?.to.amount || NaN);
     }, [initialTokenData?.from.amount, initialTokenData?.to.amount]);
@@ -458,6 +462,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     value={tokenFromQuantity}
                     placeholder="0"
                     max={maxFrom}
+                    onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
                     onChange={(value: number | string) =>
                       handleChangeTokensQuantity('from', +value)
                     }
@@ -532,6 +537,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   <InputNumber
                     value={tokenToQuantity}
                     placeholder="0"
+                    onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
                     max={maxTo}
                   />

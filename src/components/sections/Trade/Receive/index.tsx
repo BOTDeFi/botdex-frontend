@@ -10,7 +10,7 @@ import { tokens } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 import { ILiquidityInfo } from '@/types';
-import { clogData, clogError } from '@/utils/logger';
+import { clogError } from '@/utils/logger';
 
 import MetamaskService from '../../../../services/web3';
 import { Button, Popover } from '../../../atoms';
@@ -31,14 +31,11 @@ const Receive: React.FC = observer(() => {
   const [liquidityInfo, setLiquidityInfo] = React.useState<IReceiveState>();
   const [isActiveTx, setIsActiveTx] = React.useState<boolean>(false);
 
-  clogData('liquidityInfo:', liquidityInfo);
-
   const handleRemoveLiquidity = async () => {
     try {
       if (liquidityInfo && liquidityInfo?.token0.receive && liquidityInfo?.token1.receive) {
         setIsActiveTx(true);
         const wbnb = tokens.wbnb.address['97'].toLowerCase();
-        clogData('wbnb:', wbnb);
         let method: string;
         if (
           liquidityInfo.token0.address.toLowerCase() === wbnb ||
@@ -46,7 +43,6 @@ const Receive: React.FC = observer(() => {
         ) {
           method = 'removeLiquidityETH';
         } else method = 'removeLiquidity';
-        clogData('method:', method);
         await metamaskService.createTransaction({
           method,
           contractName: 'ROUTER',
@@ -55,7 +51,7 @@ const Receive: React.FC = observer(() => {
               ? [
                   liquidityInfo?.token0.address,
                   liquidityInfo?.token1.address,
-                  liquidityInfo.lpTokens,
+                  new BigNumber(liquidityInfo.lpTokens).toFixed(0).toString(),
                   new BigNumber(liquidityInfo?.token0.receive)
                     .minus(
                       new BigNumber(liquidityInfo?.token0.receive).times(
@@ -77,7 +73,7 @@ const Receive: React.FC = observer(() => {
                   liquidityInfo.token0.address.toLowerCase() === wbnb
                     ? liquidityInfo.token1.address
                     : liquidityInfo.token0.address,
-                  liquidityInfo.lpTokens,
+                  new BigNumber(liquidityInfo.lpTokens).toFixed(0).toString(),
                   liquidityInfo.token0.address.toLowerCase() === wbnb
                     ? new BigNumber(liquidityInfo.token1.receive)
                         .minus(
