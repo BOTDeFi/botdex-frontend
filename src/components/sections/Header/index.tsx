@@ -50,27 +50,31 @@ const Header: React.FC = observer(() => {
           </div>
         </div>
       </section>
-      {!user.address ? (
-        <Button
-          className={`connect ${
-            (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
-          }`}
-          size="md"
-          onClick={connect}
-        >
-          <span className="text-bold">Connect Wallet</span>
-        </Button>
-      ) : (
-        <Button
-          className={`connect ${
-            (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
-          }`}
-          size="md"
-          onClick={() => setWalletModalVisible(true)}
-        >
-          <span className="text-bold text-address">{user.address}</span>
-        </Button>
-      )}
+      <div className="connect_wrapper">
+        <div className="connect_container">
+          {!user.address ? (
+            <Button
+              className={`connect ${
+                (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
+              }`}
+              size="md"
+              onClick={connect}
+            >
+              <span className="text-bold">Connect Wallet</span>
+            </Button>
+          ) : (
+            <Button
+              className={`connect ${
+                (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
+              }`}
+              size="md"
+              onClick={() => setWalletModalVisible(true)}
+            >
+              <span className="text-bold text-address">{user.address}</span>
+            </Button>
+          )}
+        </div>
+      </div>
       <OutsideClick onClick={handleClose}>
         <div className={`menu-mob ${isBurger && 'menu-mob--active'}`}>
           <Menu onClick={handleClose} />

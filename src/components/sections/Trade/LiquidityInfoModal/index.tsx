@@ -123,13 +123,13 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
     >
       {info ? (
         <div className="liquidity-info__content">
-          <div className="text-black text-smd text-bold">Your Liquidity</div>
+          <div className="text-smd text-bold">Your Liquidity</div>
           <div className="liquidity-info__title box-f-ai-c">
             <img src={UnknownImg} alt={info.token0.symbol} />
             <img src={UnknownImg} alt={info.token1.symbol} />
-            <span className="text-black text-smd">{`${info.token0.symbol}/${info.token1.symbol}`}</span>
+            <span className="text-smd">{`${info.token0.symbol}/${info.token1.symbol}`}</span>
           </div>
-          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
+          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-smd">
             <span>{`${info.token0.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
               <img src={UnknownImg} alt={info.token0.symbol} />
@@ -145,7 +145,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               </Popover>
             </div>
           </div>
-          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
+          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-smd">
             <span>{`${info.token1.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
               <img src={UnknownImg} alt={info.token1.symbol} />
@@ -161,7 +161,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               </Popover>
             </div>
           </div>
-          <div className="liquidity-info__row box-f box-f-jc-sb text-black text-smd">
+          <div className="liquidity-info__row box-f box-f-jc-sb text-smd">
             <span>Rates</span>
             <div className="text-right">
               <Popover content={new BigNumber(info.token1.rate).toString(10)}>
@@ -177,14 +177,13 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               </Popover>
             </div>
           </div>
-          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-black text-smd">
+          <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-smd">
             <span>Share of Pool</span>
             <Popover content={(+share).toString(10)}>
               <span>{(+share).toFixed(2)}%</span>
             </Popover>
           </div>
           <Button
-            colorScheme="yellow"
             size="smd"
             className="liquidity-info__btn"
             link={{
@@ -202,7 +201,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
               },
             }}
           >
-            <span className="text-bold text-black">Remove</span>
+            <span className="text-bold">Remove</span>
           </Button>
         </div>
       ) : (

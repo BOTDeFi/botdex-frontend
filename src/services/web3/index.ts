@@ -124,7 +124,6 @@ export default class MetamaskService {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
         if (currentChain !== this.usedChain) {
-          console.log('1');
           subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
         }
       });

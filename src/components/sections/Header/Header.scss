@@ -148,11 +148,22 @@
   }
 }
 
-.connect {
+.connect_wrapper {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  //padding: 0 10px;
   position: absolute;
+  .connect_container {
+    max-width: 1100px;
+    width: 100%;
+    padding: 0 10px;
+    margin: 0 auto;
+  }
+}
+.connect {
+  margin-left: auto;
   z-index: 999;
   top: 25px;
-  right: 87px;
 
   max-width: 200px;
 

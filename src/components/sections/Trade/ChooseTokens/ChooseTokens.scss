@@ -12,11 +12,6 @@
 
     &-title {
       margin-bottom: 7px;
-      &.second {
-        .choose-tokens__max {
-          margin-right: 38px;
-        }
-      }
     }
   }
 
@@ -80,19 +75,21 @@
     }
   }
 
-  &__max {
-    margin-left: auto;
-    margin-right: 20px;
-    font-size: 15px;
-    line-height: 19px;
-    margin-bottom: 3px;
-    @include flex(row, center, flex-end);
-    cursor: pointer;
-  }
+  &__b-m-cont {
+    @include flex(row, center, flex-end, nowrap);
+    margin-top: 5px;
+    &__max {
+      font-size: 15px;
+      line-height: 19px;
+      @include flex(row, center, flex-end);
+      cursor: pointer;
+    }
 
-  &__balance {
-    position: absolute;
-    left: 0;
-    bottom: calc(100% + 8px);
+    &__balance {
+      margin-right: 10px;
+      //position: absolute;
+      //left: 0;
+      //bottom: calc(100% + 8px);
+    }
   }
 }
