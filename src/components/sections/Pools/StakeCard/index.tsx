@@ -36,12 +36,16 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
     updateStakeData(stake.id, user.address).then((res) => {
       stakeStore.setUserData(stake.id, res.userData);
       stakeStore.setAmountStaked(stake.id, res.amountStaked);
+      setReward(res.reward);
     });
     setCollecting(false);
   }, [stake.id, stakeStore, user.address]);
 
   const calculateCollectTime = React.useMemo(() => {
     if (stake.userData?.start === 0) {
+      return format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM');
+    }
+    if (stake.userData?.amount === 0) {
       return format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM');
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -51,7 +55,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
       return format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM');
     }
     return 0;
-  }, [stake.timeLockUp, stake.userData?.start]);
+  }, [stake.timeLockUp, stake.userData?.amount, stake.userData?.start]);
 
   useEffect(() => {
     async function getUserData() {

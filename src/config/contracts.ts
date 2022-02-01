@@ -497,7 +497,7 @@ export const contracts = {
     ABI: MasterBotdex,
   },
   BOTDEX_STAKING: {
-    ADDRESS: '0xc52911D7D77bF3df5D194e254D125E8417Ee940F',
+    ADDRESS: '0xbafB6B6F7b96e4fc6517D8687181340Bd62e5e55',
     ABI: BotdexStaking,
   },
 };
