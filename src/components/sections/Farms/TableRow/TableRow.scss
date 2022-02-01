@@ -235,6 +235,9 @@
     }
   }
   &__value-in-usd {
+    @include b(tablet) {
+      margin-top: 20px;
+    }
     //margin-top: auto;
   }
 

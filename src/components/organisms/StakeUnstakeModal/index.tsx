@@ -45,8 +45,10 @@ const StakeUnstakeModal: React.FC = observer(() => {
   const { tokenUsdPrice } = useRefineryUsdPrice();
   const { user, modals } = useMst();
 
+  const [time, setTime] = React.useState<NodeJS.Timeout | null>(null);
+
   const maxStakingValueBN = useMemo(() => new BigNumber(user.balance), [user.balance]);
-  const inputValueAsString = useMemo(() => inputValue.toFixed(), [inputValue]);
+  const inputValueAsString = useMemo(() => inputValue.toFixed(0), [inputValue]);
   const inputValueUsdToDisplay = useMemo(
     () => getTokenUsdPrice(inputValue, tokenUsdPrice),
     [inputValue, tokenUsdPrice],
@@ -105,8 +107,15 @@ const StakeUnstakeModal: React.FC = observer(() => {
 
   const handleValueChange = (newValue: ValueType | null) => {
     if (newValue === null) return;
-    updateInputValue(newValue);
-    updatePercentByValue(newValue);
+    if (time) {
+      clearTimeout(time);
+    }
+    let timerId: NodeJS.Timeout | null = null;
+    timerId = setTimeout(() => {
+      updateInputValue(newValue);
+      updatePercentByValue(newValue);
+    }, 500);
+    setTime(timerId);
   };
 
   const handlePercentChange = (newPercentValue: number) => {

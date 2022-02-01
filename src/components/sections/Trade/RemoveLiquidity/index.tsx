@@ -232,7 +232,11 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
       )}
       <div className="r-liquidity__btns box-f-ai-c box-f-jc-e">
         {!isTokensApprove ? (
-          <Button onClick={handleApprove} loading={isTokensApproving}>
+          <Button
+            className="liquidity_remove_btn"
+            onClick={handleApprove}
+            loading={isTokensApproving}
+          >
             <span className="text-white text-bold text-md">Approve</span>
           </Button>
         ) : (
@@ -243,6 +247,7 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
         liquidityInfo.token0.deposited &&
         liquidityInfo.token1.deposited ? (
           <Button
+            className="liquidity_remove_btn"
             disabled={!isTokensApprove}
             link={{
               pathname: '/trade/liquidity/receive',

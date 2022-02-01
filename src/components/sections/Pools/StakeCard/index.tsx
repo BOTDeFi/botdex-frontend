@@ -69,12 +69,14 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   }, [stake.id, stakeStore, user]);
 
   useEffect(() => {
-    updateStakeData(stake.id, user.address).then((res) => {
-      stakeStore.setUserData(stake.id, res.userData);
-      stakeStore.setAmountStaked(stake.id, res.amountStaked);
-      setReward(res.reward);
-    });
-  }, [stake.id, stakeStore, user.address]);
+    if (modals.stakeUnstake.isOpen === false) {
+      updateStakeData(stake.id, user.address).then((res) => {
+        stakeStore.setUserData(stake.id, res.userData);
+        stakeStore.setAmountStaked(stake.id, res.amountStaked);
+        setReward(res.reward);
+      });
+    }
+  }, [modals.stakeUnstake.isOpen, stake.id, stakeStore, user.address]);
 
   return (
     <div className="stake-card">
