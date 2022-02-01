@@ -1,8 +1,9 @@
+import BigNumber from 'bignumber.js/bignumber';
+
 import { getContract } from '@/services/web3/contractHelpers';
 import { Stake } from '@/types';
-import {getBalanceAmountBN} from '@/utils/formatters';
-import {BIG_TEN} from "@/utils/constants";
-import BigNumber from 'bignumber.js/bignumber';
+import { BIG_TEN } from '@/utils/constants';
+import { getBalanceAmountBN } from '@/utils/formatters';
 
 export const getStakesLength = async (): Promise<number> => {
   const stakingContract = getContract('BOTDEX_STAKING');
@@ -61,7 +62,9 @@ export const getUserBalance = async (address: string) => {
 
 export const enterStaking = async (id: number, amount: string, address: string) => {
   const stakingContract = getContract('BOTDEX_STAKING');
-  await stakingContract.methods.enterStaking(id, new BigNumber(amount).times(BIG_TEN.pow(18)).toString()).send({ from: address });
+  await stakingContract.methods
+    .enterStaking(id, new BigNumber(amount).times(BIG_TEN.pow(18)).toString())
+    .send({ from: address });
 };
 
 export const updateStakeData = async (id: number, address: string) => {
@@ -77,9 +80,9 @@ export const updateStakeData = async (id: number, address: string) => {
   };
 };
 
-export const calculateReward = async (id: number) => {
+export const calculateReward = async (id: number, address: string) => {
   const tokenContract = getContract('BOTDEX_STAKING');
-  const reward = await tokenContract.methods.calculateReward(id).call();
+  const reward = await tokenContract.methods.calculateReward(id, address).call();
   // return getBalanceAmountBN(reward, 18);
   return reward;
 };

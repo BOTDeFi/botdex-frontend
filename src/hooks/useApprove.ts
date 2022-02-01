@@ -42,7 +42,6 @@ export const useApprove = ({
 
   React.useEffect(() => {
     if (walletAddress) {
-      console.log(approvedContractName)
       metamaskService
         .checkTokenAllowance2({
           contractName: tokenName,
@@ -52,7 +51,6 @@ export const useApprove = ({
           amount,
         })
         .then((res: boolean) => {
-          console.log('checkAllow', res)
           setApproved(res);
         })
         .catch((err: any) => {

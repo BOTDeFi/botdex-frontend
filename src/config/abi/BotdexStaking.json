@@ -199,6 +199,11 @@
         "internalType": "uint256",
         "name": "_poolId",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
       }
     ],
     "name": "calculateReward",

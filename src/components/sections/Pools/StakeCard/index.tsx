@@ -15,6 +15,7 @@ import {
   updateStakeData,
 } from '@/store/stakes';
 import { Stake } from '@/types';
+import { getBalanceAmount } from '@/utils/formatters';
 
 import './StakeCard.scss';
 
@@ -76,17 +77,16 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   }, [stake.id, stakeStore, user]);
 
   useEffect(() => {
+    async function getReward() {
+      const result = await calculateReward(stake.id, user.address);
+      console.log(getBalanceAmount(result, 18).toFixed(8));
+      setReward(getBalanceAmount(result, 18).toFixed(8));
+    }
     updateStakeData(stake.id, user.address).then((res) => {
       stakeStore.setUserData(stake.id, res.userData);
       stakeStore.setAmountStaked(stake.id, res.amountStaked);
     });
-  }, [stake.id, stakeStore, user.address]);
-  useEffect(() => {
-    async function getReward() {
-      const result = await calculateReward(stake.id);
-      setReward(result);
-    }
-    getReward();
+    getReward().catch((err) => console.log(err));
   }, [stake.id, stakeStore, user.address]);
 
   return (
