@@ -6,6 +6,9 @@ $desktop-menu-width: 240px;
 $default-horizontal-padding: 48px;
 $default-vertical-padding: 22px;
 
+.spinner {
+  @include flex(row, center, center);
+}
 .pools {
   padding: {
     top: $default-vertical-padding;

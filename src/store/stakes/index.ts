@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import { getContract } from '@/services/web3/contractHelpers';
 import { Stake } from '@/types';
 import { BIG_TEN } from '@/utils/constants';
-import { getBalanceAmountBN } from '@/utils/formatters';
+import { getBalanceAmount, getBalanceAmountBN } from '@/utils/formatters';
 
 export const getStakesLength = async (): Promise<number> => {
   const stakingContract = getContract('BOTDEX_STAKING');
@@ -78,7 +78,7 @@ export const updateStakeData = async (id: number, address: string) => {
       amount: parseInt(userData.amount, 10),
       start: parseInt(userData.start, 10),
     },
-    reward,
+    reward: getBalanceAmount(reward).toFixed(6),
   };
 };
 

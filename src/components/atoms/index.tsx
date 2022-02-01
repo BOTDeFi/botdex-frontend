@@ -10,4 +10,3 @@ export { default as Slider } from './Slider';
 export { default as SortSelect } from './SortSelect';
 export { default as Switch } from './Switch';
 export { default as WinNumber } from './WinNumber';
-export { default as Spinner } from './Spinner';

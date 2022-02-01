@@ -9,8 +9,8 @@ import { observer } from 'mobx-react-lite';
 // import { convertSharesToRefinery, getStakingBalance } from '@/store/pools/helpers';
 // import { useSelectVaultData } from '@/store/pools/hooks';
 import { Pool } from '@/types';
-// import { BIG_ZERO } from '@/utils/constants';
 
+// import { BIG_ZERO } from '@/utils/constants';
 import './StakeUnstakeButtons.scss';
 
 const StakeUnstakeButtons: React.FC<{
@@ -79,7 +79,7 @@ const StakeUnstakeButtons: React.FC<{
   //     ))}
   //   </div>
   // );
-  return <div>1</div>
+  return <div>1</div>;
 });
 
 export default StakeUnstakeButtons;

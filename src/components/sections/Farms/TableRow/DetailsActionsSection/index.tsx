@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
 
 import { Button, Skeleton } from '@/components/atoms';
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
+// import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import useApproveFarm from '@/hooks/farms/useApprove';
 import { useLpTokenPrice } from '@/hooks/farms/useFarmsPrices';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -56,19 +57,26 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       farmsStore.fetchFarmUserDataAsync(user.address, [pid]);
 
       if (txStatus) {
-        successNotification('Contract Enabled!', `You can now stake in the ${lpSymbol} farm!`);
+        toast.success(`Contract Enabled! You can now stake in the ${lpSymbol} farm!`);
+        // successNotification('Contract Enabled!', `You can now stake in the ${lpSymbol} farm!`);
       } else {
-        errorNotification(
-          'Error',
-          'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+        toast.error(
+          `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
         );
+        // errorNotification(
+        //   'Error',
+        //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+        // );
       }
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
       );
+      // errorNotification(
+      //   'Error',
+      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      // );
     } finally {
       setRequestedApproval(false);
     }

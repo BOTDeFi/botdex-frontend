@@ -110,7 +110,7 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
       toast.success(`Staked! Your funds have been staked in the farm!!`);
     } catch (error) {
       clogError(error);
-      toast.success(`Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`);
+      toast.error(`Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`);
       // errorNotification(
       //   'Error',
       //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
