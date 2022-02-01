@@ -14,37 +14,41 @@ export interface ITokenMobx extends Token {
 const StakeUnstakeModal = types
   .model({
     isOpen: types.optional(types.boolean, false),
-    isStaking: types.optional(types.boolean, true),
-    maxStakingValue: types.optional(types.number, 0),
+    // isStaking: types.optional(types.boolean, true),
+    // maxStakingValue: types.optional(types.number, 0),
     stakingToken: types.maybeNull(TokenModel),
-    isAutoVault: types.boolean,
+    // isAutoVault: types.boolean,
     poolId: types.number,
   })
   .actions((self) => ({
     close() {
       self.isOpen = false;
     },
-    open({
-      isStaking,
-      maxStakingValue,
-      stakingToken,
-      isAutoVault,
-      poolId,
-    }: {
-      isStaking: boolean;
-      maxStakingValue: number;
-      stakingToken: ITokenMobx;
-      isAutoVault: boolean;
-      poolId: number;
-    }) {
+    open(id: number) {
       self.isOpen = true;
-
-      self.isStaking = isStaking;
-      self.maxStakingValue = maxStakingValue;
-      self.stakingToken = stakingToken;
-      self.isAutoVault = isAutoVault;
-      self.poolId = poolId;
+      self.poolId = id;
     },
+    // open({
+    //   isStaking,
+    //   maxStakingValue,
+    //   stakingToken,
+    //   isAutoVault,
+    //   poolId,
+    // }: {
+    //   isStaking: boolean;
+    //   maxStakingValue: number;
+    //   stakingToken: ITokenMobx;
+    //   isAutoVault: boolean;
+    //   poolId: number;
+    // }) {
+    //   self.isOpen = true;
+    //
+    //   self.isStaking = isStaking;
+    //   self.maxStakingValue = maxStakingValue;
+    //   self.stakingToken = stakingToken;
+    //   self.isAutoVault = isAutoVault;
+    //   self.poolId = poolId;
+    // },
   }));
 
 export default StakeUnstakeModal;

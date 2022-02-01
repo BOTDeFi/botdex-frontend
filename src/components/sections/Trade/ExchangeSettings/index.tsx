@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { ISettings } from '@/types';
 
-import CrossImg from '../../../../assets/img/icons/close-white.svg';
+import CrossImg from '../../../../assets/img/icons/cross-2.svg';
 import { Button, InputNumber, Switch } from '../../../atoms';
 
 import './ExchangeSettings.scss';
@@ -28,6 +28,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
     const [slippage, setSlippage] = React.useState<IActiveSlippage>(savedSettings.slippage);
     const [txDeadline, setTxDeadline] = React.useState<number>(savedSettings.txDeadline);
     const [txDeadlineUtc, setTxDeadlineUtc] = React.useState<number>(savedSettings.txDeadlineUtc);
+    const [isAudio, setIsAudio] = React.useState<boolean>(savedSettings.isAudio);
 
     const [slippageInputValue, setSlippageInputValue] = React.useState<number>(
       savedSettings.slippage.type === 'input' ? savedSettings.slippage.value : NaN,
@@ -39,6 +40,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
         slippage,
         txDeadline,
         txDeadlineUtc,
+        isAudio,
       });
       history.goBack();
     };
@@ -78,9 +80,9 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
     };
 
     return (
-      <div className="exchange exch-settings box-shadow box-dark-grey">
+      <div className="exchange exch-settings">
         <div className="box-f-jc-sb box-f-ai-c exch-settings__box-title">
-          <div className="text-white text-md">Advanced Settings</div>
+          <div className="text-md text-500">Advanced Settings</div>
           <div
             className="exch-settings__close"
             onClick={handleClose}
@@ -93,7 +95,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
         </div>
         {isSlippage ? (
           <div className="exch-settings__section">
-            <div className="exch-settings__section-title text-white">Slippage tolerance</div>
+            <div className="exch-settings__section-title text-500">Slippage tolerance</div>
             <div className="box-f box-f-jc-sb">
               {btns.map((btn) => (
                 <Button
@@ -101,7 +103,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
                   size="sm"
                   colorScheme="outline"
                   onClick={() => handleChangeSlippage({ type: 'btn', value: btn })}
-                  className={cn('exch-settings__slippage-btn text-med', {
+                  className={cn('exch-settings__slippage-btn', {
                     active: slippage.type === 'btn' && slippage.value === btn,
                   })}
                 >
@@ -112,7 +114,8 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
                 value={slippageInputValue}
                 colorScheme="outline"
                 inputSize="sm"
-                max={100}
+                min={0.1}
+                max={20}
                 inputPrefix="%"
                 onFocus={handleFocusSlippageInput}
                 onChange={handleChangeSlippageInput}
@@ -126,7 +129,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
           ''
         )}
         <div className="exch-settings__section">
-          <div className="exch-settings__section-title text-white">Transaction deadline</div>
+          <div className="exch-settings__section-title-2 text-500">Transaction deadline</div>
           <div className="box-f-ai-c">
             <InputNumber
               colorScheme="outline"
@@ -136,12 +139,17 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
               className="exch-settings__txdeadline-input"
               placeholder="0"
             />
-            <span className="text text-white">Minutes</span>
+            <span className="text-500">Minutes</span>
           </div>
         </div>
         <div className="exch-settings__section">
-          <div className="exch-settings__section-title text-white">Audio</div>
-          <Switch colorScheme="purple" switchSize="bg" />
+          <div className="exch-settings__section-title-2 text-500">Audio</div>
+          <Switch
+            colorScheme="purple"
+            switchSize="bg"
+            value={isAudio}
+            onChange={() => setIsAudio(!isAudio)}
+          />
         </div>
         <Button className="exch-settings__btn" onClick={handleSaveSettings}>
           <span className="text-smd text-white">Save and close</span>

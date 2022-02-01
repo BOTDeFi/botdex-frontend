@@ -17,7 +17,7 @@ import useLastUpdated from '../useLastUpdated';
 
 const gasOptions = { gas: 300000 };
 
-export const useApprovePool = (lpContract: Contract, poolId: number) => {
+export const useApprovePool = (lpContract: Contract, poolId: number): any => {
   const [requestedApproval, setRequestedApproval] = useState(false);
   const { callWithGasPrice } = useCallWithGasPrice();
   const { user, pools: poolsStore } = useMst();
@@ -72,7 +72,7 @@ export const useApprovePool = (lpContract: Contract, poolId: number) => {
 };
 
 // Approve RP1 auto pool
-export const useVaultApprove = (setLastUpdated: () => void) => {
+export const useVaultApprove = (setLastUpdated: () => void): any => {
   const [requestedApproval, setRequestedApproval] = useState(false);
   const { callWithGasPrice } = useCallWithGasPrice();
 
@@ -105,7 +105,7 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
   return { handleApprove, requestedApproval };
 };
 
-export const useCheckVaultApprovalStatus = () => {
+export const useCheckVaultApprovalStatus = (): any => {
   const [isVaultApproved, setIsVaultApproved] = useState(false);
   const { user } = useMst();
   const rocketPropellantContract = getContract('RP1');

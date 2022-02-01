@@ -1,6 +1,13 @@
 @import 'src/styles/vars';
+@import 'src/styles/mixins/media';
 
 .r-liquidity {
+  min-width: 400px;
+
+  @include b(mobile) {
+    min-width: unset;
+  }
+
   &__percent {
     font-size: 77px;
     line-height: 91px;
@@ -38,6 +45,19 @@
     &-item {
       & + & {
         margin-top: 10px;
+      }
+    }
+  }
+  &__btns {
+    @include b(tablet) {
+      .liquidity_remove_btn {
+        width: 100%;
+      }
+      a {
+        width: 100%;
+        .liquidity_remove_btn {
+          width: 100%;
+        }
       }
     }
   }

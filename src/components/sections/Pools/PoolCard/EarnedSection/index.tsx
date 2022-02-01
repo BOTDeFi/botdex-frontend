@@ -25,6 +25,7 @@ const EarnedSection: React.FC<IEarnedSectionProps> = observer(({ pool, farmMode 
 
   const collectHandler = () => {
     modals.poolsCollect.open({
+      isOpen: true,
       poolId,
       farmMode,
       earningTokenSymbol: earningToken.symbol,

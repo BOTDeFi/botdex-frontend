@@ -1,9 +1,11 @@
 @import 'src/styles/vars';
+@import 'src/styles/mixins/main';
 
 .search {
   &__img {
     margin-right: 12px;
-    margin-bottom: -3px;
+    width: 24px;
+    height: 24px;
 
     cursor: pointer;
   }
@@ -14,12 +16,5 @@
     background: $gray-l;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-  }
-
-  input::placeholder {
-    font-weight: 400;
-
-    color: #fff;
-    opacity: 0.5;
   }
 }

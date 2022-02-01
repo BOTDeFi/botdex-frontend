@@ -10,7 +10,7 @@ $document-column-width: calc(100% - #{$information-column-min-width});
     padding: $section-margin;
 
     @include b(mobile) {
-      padding: $section-margin / 3;
+      padding: ($section-margin / 3);
     }
   }
 

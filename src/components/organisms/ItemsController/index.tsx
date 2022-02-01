@@ -3,7 +3,8 @@ import { RadioChangeEvent } from 'antd/lib/radio';
 import { SwitchClickEventHandler } from 'antd/lib/switch';
 import cn from 'classnames';
 
-import { RadioGroup, Search, SortSelect, Switch } from '@/components/atoms';
+import { RadioGroup, SortSelect, Switch } from '@/components/atoms';
+import Search from '@/components/atoms/Search';
 import { debounce } from '@/utils/debounce';
 
 import './ItemsController.scss';
@@ -19,6 +20,7 @@ interface IItemsController {
   onStakedSwitchChange?: SwitchClickEventHandler;
   onRadioGroupChange?: (e: RadioChangeEvent) => void;
   onSortSelectChange?: (value: any, option: any) => void;
+  hideSortAndSearch?: boolean;
 }
 
 const ItemsController: React.FC<IItemsController> = React.memo(
@@ -46,6 +48,7 @@ const ItemsController: React.FC<IItemsController> = React.memo(
     onStakedSwitchChange,
     onRadioGroupChange,
     onSortSelectChange,
+    hideSortAndSearch = false,
   }) => {
     let handleSearch: typeof onSearchChange | undefined;
     if (onSearchChange) {
@@ -58,7 +61,8 @@ const ItemsController: React.FC<IItemsController> = React.memo(
           {prefixContainer && prefixContainer}
           <Switch
             colorScheme="white"
-            text={<span className="i-contr__switch-text text-black text-bold">Staked only</span>}
+            switchSize="sm"
+            text={<span className="i-contr__switch-text text-bold">Staked only</span>}
             onChange={onStakedSwitchChange}
           />
           <RadioGroup
@@ -70,21 +74,23 @@ const ItemsController: React.FC<IItemsController> = React.memo(
             onChange={onRadioGroupChange}
           />
         </div>
-        <div className="box-f-ai-c">
-          <SortSelect
-            className="i-contr__sort"
-            label="Sort by"
-            sortOptions={sortOptions}
-            onChange={onSortSelectChange}
-          />
-          <Search
-            className="i-contr__search"
-            colorScheme="gray"
-            placeholder={searchPlaceholder}
-            realtime
-            onChange={handleSearch}
-          />
-        </div>
+        {!hideSortAndSearch && (
+          <div className="box-f-ai-c">
+            <SortSelect
+              className="i-contr__sort"
+              label="Sort by"
+              sortOptions={sortOptions}
+              onChange={onSortSelectChange}
+            />
+            <Search
+              className="i-contr__search"
+              colorScheme="gray"
+              placeholder={searchPlaceholder}
+              realtime
+              onChange={handleSearch}
+            />
+          </div>
+        )}
       </div>
     );
   },

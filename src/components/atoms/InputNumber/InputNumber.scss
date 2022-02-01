@@ -35,9 +35,11 @@
 
   &__prefix-bottom {
     margin: -20px 20px 15px;
+    margin-top: -20px;
   }
 
   &-lg {
+    border-radius: 12px;
     &-box {
       border-radius: 12px;
     }
@@ -50,6 +52,7 @@
       font-size: 25px;
       font-weight: 500;
       line-height: 30px;
+      color: $text-main-color;
     }
   }
 
@@ -72,10 +75,11 @@
     }
 
     input {
-      padding: 13px 20px 14px;
+      padding: 10px 18px;
+      color: $text-main-color;
 
       font-size: 16px;
-      line-height: 19px;
+      line-height: 20px;
     }
   }
 
@@ -93,22 +97,37 @@
     &-box {
       overflow: hidden;
 
-      color: #fff;
       background: transparent;
-      border: 3px solid $cold-blue;
+      border: 3px solid $bg-btn;
 
       &.active {
-        background: $cold-blue;
+        background: $bg-btn;
       }
     }
 
     input {
-      color: #fff;
+      background: transparent;
+      color: $text-main-color;
+      &::placeholder {
+        color: $text-main-color;
+      }
+    }
+  }
+  &-darkgray {
+    &-box {
+      background: linear-gradient(98.94deg, #2f2542 -22.87%, #1d1135 94.67%);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
+    &:hover,
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    input {
       background: transparent;
     }
   }
-
   &-gray {
     &-box {
       background: $gray-l;
@@ -122,27 +141,6 @@
 
     input {
       background: transparent;
-    }
-  }
-
-  &-gray-field {
-    &-box {
-      background: $gray-field;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    &:hover,
-    &:focus {
-      border-color: rgba(0, 0, 0, 0.1);
-    }
-
-    input {
-      color: #fff;
-      background: transparent;
-
-      &::placeholder {
-        opacity: 0.5;
-      }
     }
   }
 
@@ -168,9 +166,9 @@
     appearance: none;
   }
 
-  input[type='number'] {
-    appearance: textfield;
-  }
+  //input[type='number'] {
+  //  appearance: textfield;
+  //}
 
   .ant-input-number-handler-wrap {
     display: none;

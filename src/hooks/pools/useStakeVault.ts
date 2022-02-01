@@ -10,7 +10,7 @@ import { useUpdateView } from './useUpdateView';
 
 const gasOptions = { gas: 380000 };
 
-export const useVaultStake = (onFinally: () => void) => {
+export const useVaultStake = (onFinally: () => void): any => {
   const { updateViewByFetchingBlockchainData } = useUpdateView();
   const { callWithGasPrice } = useCallWithGasPrice();
 

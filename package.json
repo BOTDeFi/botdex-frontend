@@ -2,6 +2,9 @@
   "name": "react-template",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.17.0"
+  },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
@@ -32,6 +35,8 @@
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "antd": "^4.15.0",
+    "apexcharts": "^3.32.0",
+    "apollo-client": "^2.6.10",
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
@@ -44,6 +49,7 @@
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "classnames": "^2.3.1",
     "css-loader": "4.3.0",
+    "date-fns": "^2.28.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "easymde": "^2.15.0",
@@ -67,7 +73,7 @@
     "file-loader": "6.1.1",
     "formik": "^2.2.6",
     "fs-extra": "^9.0.1",
-    "graphql": "^15.5.1",
+    "graphql": "^16.2.0",
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
     "imagemin-webp-webpack-plugin": "^3.3.4",
@@ -98,12 +104,14 @@
     "react-copy-to-clipboard": "^5.0.3",
     "react-dev-utils": "^11.0.3",
     "react-dom": "^17.0.2",
+    "react-error-overlay": "6.0.9",
     "react-helmet": "^6.1.0",
     "react-id-generator": "^3.0.1",
     "react-markdown": "^7.0.0",
     "react-refresh": "^0.8.3",
     "react-router-dom": "^5.2.0",
     "react-scrollbars-custom": "^4.0.25",
+    "react-toastify": "^8.1.0",
     "react-transition-group": "^4.4.2",
     "remark-gfm": "^2.0.0",
     "resolve": "1.18.1",
@@ -117,7 +125,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.1.0",
     "stylelint-prettier": "^1.1.2",
-    "stylelint-scss": "^4.0.1",
+    "stylelint-scss": "^4.1.0",
     "terser-webpack-plugin": "4.2.3",
     "ts-pnp": "1.2.0",
     "typescript": "^4.1.2",
@@ -150,6 +158,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   },
   "jest": {
     "roots": [

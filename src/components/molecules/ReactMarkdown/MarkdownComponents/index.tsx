@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { NormalComponents, SpecialComponents } from 'react-markdown/lib/ast-to-react';
 
 import './MarkdownComponents.scss';

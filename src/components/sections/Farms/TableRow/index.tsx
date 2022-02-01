@@ -93,7 +93,7 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
       autoCompoundFrequency: 0, // is not used for farms
       performanceFee: 0, // is not used for farms
       apr,
-      earningTokenSymbol: tokens.rp1.symbol,
+      earningTokenSymbol: tokens.bot.symbol,
       earningTokenPrice,
       stakingTokenSymbol: lpSymbol,
       stakingTokenPrice: stakingTokenPriceAsBN.toNumber(),
@@ -113,12 +113,12 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
         tabIndex={0}
       >
         <TokensPair lpSymbol={lpSymbolWithoutLPString} token={token} quoteToken={quoteToken} />
-        <div className="farms-table-row__earned text-gray-l-2 text-smd ">
-          <div className="farms-table-row__extra-text text-gray text-ssm t-box-b">Earned</div>
+        <div className="farms-table-row__earned text-gray-2 text-smd ">
+          <div className="farms-table-row__extra-text text-gray-2 text-ssm t-box-b">Earned</div>
           <span>{earningsToDisplay}</span>
         </div>
         <div className="farms-table-row__apr box-f-ai-c text-smd farms-table-row__item t-box-b">
-          <div className="farms-table-row__extra-text text-gray text-ssm t-box-b">APR</div>
+          <div className="farms-table-row__extra-text text-gray-2 text-ssm t-box-b">APR</div>
           <span className="farms-table-row__text-md">
             {Number(apr).toFixed(2).replace('.', ',')}%
           </span>
@@ -133,11 +133,11 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
           </div>
         </div>
         <div className="farms-table-row__liquidity farms-table-row__item box-f-ai-c text-smd t-box-none">
-          <span className="farms-table-row__text text-500 text-black">${liquidityToDisplay}</span>
+          <span className="farms-table-row__text text-500">${liquidityToDisplay}</span>
           <LiquidityPopover />
         </div>
         <div className="farms-table-row__multiplier farms-table-row__item box-f-ai-c text-smd t-box-none">
-          <span className="farms-table-row__text-md text-500 text-black">{multiplier}</span>
+          <span className="farms-table-row__text-md text-500">{multiplier}</span>
           <MultiplierPopover symbol={EARNING_TOKEN_SYMBOL} />
         </div>
         <div className="farms-table-row__item box-f-jc-e box-f">
@@ -157,7 +157,7 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
               isActive={isOpenDetails}
               onToggle={handleToggleDetailsClick}
             >
-              <span>Details</span>
+              <span className="farms-table-row__details-wrapper">Details</span>
             </Button>
           </div>
         </div>
@@ -171,7 +171,7 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
         }}
         classNames="show"
       >
-        <div className="farms-table-row__details box-yellow-l-d">
+        <div className="farms-table-row__details">
           <DetailsLinks farm={farm} />
           <div className="farms-table-row__buttons box-f-ai-c t-box-b">
             <DetailsEarnedSection farm={farm} />

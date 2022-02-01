@@ -3,20 +3,14 @@ import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
 
-import UnknownImg from '@/assets/img/currency/unknown.svg';
 import { Button, InputNumber, Slider } from '@/components/atoms';
 import { Modal } from '@/components/molecules';
-import { useNonVaultStake } from '@/hooks/pools/useStakePool';
-import { useVaultStake } from '@/hooks/pools/useStakeVault';
-import { useNonVaultUnstake } from '@/hooks/pools/useUnstakePool';
-import { useVaultUnstake } from '@/hooks/pools/useUnstakeVault';
+import { useApprove } from '@/hooks/useApprove';
 import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
 import { useMst } from '@/store';
-import { Precisions } from '@/types';
+import { enterStaking } from '@/store/stakes';
 import { getTokenUsdPrice } from '@/utils';
-import { BIG_ZERO, DEFAULT_TOKEN_POWER } from '@/utils/constants';
-import { getBalanceAmountBN, getDecimalAmount } from '@/utils/formatters';
-import { clog } from '@/utils/logger';
+import { BIG_TEN, BIG_ZERO, DEFAULT_TOKEN_POWER } from '@/utils/constants';
 
 import './StakeUnstakeModal.scss';
 
@@ -49,22 +43,34 @@ const StakeUnstakeModal: React.FC = observer(() => {
   const [percent, setPercent] = useState(MAX_PERCENTAGE / 4);
   const [inputValue, setInputValue] = useState(BIG_ZERO);
   const { tokenUsdPrice } = useRefineryUsdPrice();
+  const { user, modals } = useMst();
 
-  const { modals } = useMst();
-  const modal = modals.stakeUnstake;
-  const {
-    maxStakingValue: maxStakingValueRaw,
-    stakingToken,
-    poolId,
-    isAutoVault,
-    isStaking,
-  } = modal;
+  const [time, setTime] = React.useState<NodeJS.Timeout | null>(null);
 
-  const maxStakingValueBN = useMemo(
-    () => getBalanceAmountBN(new BigNumber(maxStakingValueRaw), stakingToken?.decimals),
-    [maxStakingValueRaw, stakingToken?.decimals],
+  const maxStakingValueBN = useMemo(() => new BigNumber(user.balance), [user.balance]);
+  const inputValueAsString = useMemo(() => inputValue.toFixed(0), [inputValue]);
+  const inputValueUsdToDisplay = useMemo(
+    () => getTokenUsdPrice(inputValue, tokenUsdPrice),
+    [inputValue, tokenUsdPrice],
   );
 
+  const [isApproved, isApproving, handleApprove] = useApprove({
+    tokenName: 'BOT',
+    approvedContractName: 'BOTDEX_STAKING',
+    amount: new BigNumber(inputValueAsString).times(BIG_TEN.pow(18)).toString(),
+    walletAddress: user.address,
+  });
+
+  const modal = modals.stakeUnstake;
+  const {
+    // maxStakingValue: maxStakingValueRaw,
+    stakingToken,
+    poolId,
+    // isAutoVault,
+    // isStaking,
+  } = modal;
+
+  const hasValidationErrors = user.balance === 0 && user.balance < inputValue.toNumber();
   const calculateValueByPercent = useCallback(
     (newPercentValue: number) => maxStakingValueBN.times(newPercentValue).dividedBy(MAX_PERCENTAGE),
     [maxStakingValueBN],
@@ -101,8 +107,15 @@ const StakeUnstakeModal: React.FC = observer(() => {
 
   const handleValueChange = (newValue: ValueType | null) => {
     if (newValue === null) return;
-    updateInputValue(newValue);
-    updatePercentByValue(newValue);
+    if (time) {
+      clearTimeout(time);
+    }
+    let timerId: NodeJS.Timeout | null = null;
+    timerId = setTimeout(() => {
+      updateInputValue(newValue);
+      updatePercentByValue(newValue);
+    }, 500);
+    setTime(timerId);
   };
 
   const handlePercentChange = (newPercentValue: number) => {
@@ -111,64 +124,14 @@ const StakeUnstakeModal: React.FC = observer(() => {
     updateValueByPercent(newPercentValue);
   };
 
-  const onTxFinished = () => {
-    setPendingTx(false);
-  };
-
-  const { vaultStake } = useVaultStake(onTxFinished);
-  const { vaultUnstake } = useVaultUnstake(onTxFinished);
-
-  const { nonVaultStake } = useNonVaultStake(poolId, onTxFinished);
-  const { nonVaultUnstake } = useNonVaultUnstake(poolId, onTxFinished);
-
   const handleStake = useCallback(async () => {
-    if (isAutoVault) {
-      const valueToStakeDecimal = getDecimalAmount(inputValue, stakingToken?.decimals);
-      await vaultStake(valueToStakeDecimal);
-    } else {
-      await nonVaultStake(
-        inputValue.toFixed(),
-        stakingToken?.decimals || DEFAULT_TOKEN_POWER,
-        stakingToken?.symbol,
-      );
-    }
-  }, [
-    isAutoVault,
-    stakingToken?.decimals,
-    stakingToken?.symbol,
-    inputValue,
-    vaultStake,
-    nonVaultStake,
-  ]);
-
-  const handleUnstake = useCallback(async () => {
-    if (isAutoVault) {
-      const valueToUnstakeDecimal = getDecimalAmount(inputValue, stakingToken?.decimals);
-      await vaultUnstake(valueToUnstakeDecimal);
-    } else {
-      await nonVaultUnstake(
-        inputValue.toFixed(),
-        stakingToken?.decimals || DEFAULT_TOKEN_POWER,
-        stakingToken?.symbol,
-      );
-    }
-  }, [
-    isAutoVault,
-    stakingToken?.decimals,
-    stakingToken?.symbol,
-    inputValue,
-    vaultUnstake,
-    nonVaultUnstake,
-  ]);
+    await enterStaking(poolId, inputValueAsString, user.address);
+  }, [inputValueAsString, poolId, user.address]);
 
   const handleConfirm = async () => {
-    clog(inputValue);
     setPendingTx(true);
-    if (isStaking) {
-      await handleStake();
-    } else {
-      await handleUnstake();
-    }
+    await handleStake();
+    setPendingTx(false);
     modal.close();
   };
 
@@ -183,18 +146,6 @@ const StakeUnstakeModal: React.FC = observer(() => {
     };
   }, [modal]);
 
-  const inputValueAsString = useMemo(() => inputValue.toFixed(), [inputValue]);
-  const inputValueUsdToDisplay = useMemo(() => getTokenUsdPrice(inputValue, tokenUsdPrice), [
-    inputValue,
-    tokenUsdPrice,
-  ]);
-  const balanceToDisplay = useMemo(() => maxStakingValueBN.toFixed(Precisions.shortToken), [
-    maxStakingValueBN,
-  ]);
-
-  const isNotEnoughBalanceToStake = maxStakingValueRaw === 0;
-  const hasValidationErrors = isNotEnoughBalanceToStake || inputValue.eq(0) || inputValue.isNaN();
-
   return (
     <Modal
       isVisible={modal.isOpen}
@@ -204,19 +155,9 @@ const StakeUnstakeModal: React.FC = observer(() => {
       closeIcon
     >
       <div className="stake-unstake-modal__content">
-        <div className="stake-unstake-modal__title text-smd text-bold text-black">
-          {isStaking ? 'Stake in Pool' : 'Unstake'}
-        </div>
+        <div className="stake-unstake-modal__title text-smd text-bold">Stake in Pool</div>
         <div className="stake-unstake-modal__subtitle box-f-ai-c box-f-jc-sb">
-          <span className="text-black text-med text">{isStaking ? 'Stake' : 'Unstake'}</span>
-          <div className="box-f-ai-c stake-unstake-modal__currency text-smd text-black">
-            <img
-              className="stake-unstake-modal__currency-icon"
-              src={stakingToken?.logoURI || UnknownImg}
-              alt=""
-            />
-            <span>{stakingToken?.symbol}</span>
-          </div>
+          <span className="text-med text">Stake</span>
         </div>
         <InputNumber
           className="stake-unstake-modal__input"
@@ -234,7 +175,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
           stringMode // to support high precision decimals
           onChange={handleValueChange}
         />
-        <div className="stake-unstake-modal__balance text-right">Balance: {balanceToDisplay}</div>
+        <div className="stake-unstake-modal__balance text-right">Balance: {user.balance}</div>
         <Slider value={percent} onChange={handlePercentChange} />
         <div className="box-f-ai-c box-f-jc-sb stake-unstake-modal__btns">
           {percentBoundariesButtons.map(({ value, name = value }) => {
@@ -246,23 +187,33 @@ const StakeUnstakeModal: React.FC = observer(() => {
             );
           })}
         </div>
-        <Button
-          className="stake-unstake-modal__btn"
-          loading={pendingTx}
-          disabled={hasValidationErrors}
-          onClick={hasValidationErrors ? undefined : handleConfirm}
-        >
-          <span className="text-white text-bold text-smd">Confirm</span>
-        </Button>
-        {isStaking && (
+        {!isApproved && (
           <Button
-            className="stake-unstake-modal__btn stake-unstake-modal__btn-get-currency"
-            colorScheme="outline-purple"
-            link="/trade/swap"
+            className="stake-unstake-modal__btn"
+            loading={isApproving}
+            disabled={hasValidationErrors}
+            onClick={handleApprove}
           >
-            <span className="text-bold text-smd">Get RP1</span>
+            <span className="text-white text-bold text-smd">ApproveToken</span>
           </Button>
         )}
+        {isApproved && (
+          <Button
+            className="stake-unstake-modal__btn"
+            disabled={hasValidationErrors}
+            loading={pendingTx}
+            onClick={hasValidationErrors ? undefined : handleConfirm}
+          >
+            <span className="text-white text-bold text-smd">Confirm</span>
+          </Button>
+        )}
+        <Button
+          className="stake-unstake-modal__btn stake-unstake-modal__btn-get-currency"
+          colorScheme="outline-purple"
+          link="/trade/swap"
+        >
+          <span className="text-bold text-smd">Get BOT</span>
+        </Button>
       </div>
     </Modal>
   );

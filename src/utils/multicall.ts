@@ -21,9 +21,7 @@ export const multicall = async <T = any>(
 ): Promise<MultiCallResponse<T>> => {
   const { requireSuccess } = options;
   const multiCallContract = getContract('MULTICALL');
-
   const contract = metamaskService.getContract(calls[0].address, abi);
-
   const callData = calls.map((call) => {
     const { address, name, params } = call;
     const method = contract.methods[name];
@@ -32,7 +30,7 @@ export const multicall = async <T = any>(
   });
 
   const returnData = await multiCallContract.methods.tryAggregate(requireSuccess, callData).call();
-  const res = returnData.map((call: any, index: number) => {
+  return returnData.map((call: any, index: number) => {
     const [result, data] = call;
     if (!result) return null;
     const methodInterface = MetamaskService.getMethodInterface(abi, calls[index].name);
@@ -46,6 +44,4 @@ export const multicall = async <T = any>(
       length: decodedResult.__length__,
     });
   });
-
-  return res;
 };

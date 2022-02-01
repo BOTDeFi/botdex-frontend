@@ -1,4 +1,5 @@
 @import 'src/styles/vars';
+@import 'src/styles/mixins/main';
 
 .choose-tokens {
   &__box {
@@ -6,7 +7,7 @@
       margin-bottom: 30px;
       padding-bottom: 30px;
 
-      border-bottom: 1px solid #685096;
+      border-bottom: 1px solid $bg-divider;
     }
 
     &-title {
@@ -39,7 +40,7 @@
       width: 100%;
       height: 1px;
 
-      background: #685096;
+      background: $bg-divider;
     }
 
     div {
@@ -74,9 +75,21 @@
     }
   }
 
-  &__balance {
-    position: absolute;
-    left: 0;
-    bottom: calc(100% + 8px);
+  &__b-m-cont {
+    @include flex(row, center, flex-end, nowrap);
+    margin-top: 5px;
+    &__max {
+      font-size: 15px;
+      line-height: 19px;
+      @include flex(row, center, flex-end);
+      cursor: pointer;
+    }
+
+    &__balance {
+      margin-right: 10px;
+      //position: absolute;
+      //left: 0;
+      //bottom: calc(100% + 8px);
+    }
   }
 }

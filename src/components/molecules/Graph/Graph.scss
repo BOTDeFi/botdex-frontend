@@ -1,0 +1,13 @@
+.graph {
+  &-wrapper {
+    width: 100%;
+
+    &__body {
+      position: relative;
+
+      width: 100%;
+      min-height: 225px;
+      padding-bottom: 34px;
+    }
+  }
+}

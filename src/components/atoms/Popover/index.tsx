@@ -7,7 +7,7 @@ import './Popover.scss';
 
 const Popover: React.FC<PopoverProps> = (props) => {
   return (
-    <AntdPopover placement="bottom" className="popover" {...props}>
+    <AntdPopover placement="bottom" overlayClassName="popover" {...props}>
       {props.children}
     </AntdPopover>
   );

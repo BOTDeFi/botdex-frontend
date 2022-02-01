@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
 
 import { Button, Skeleton } from '@/components/atoms';
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
+// import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import useApproveFarm from '@/hooks/farms/useApprove';
 import { useLpTokenPrice } from '@/hooks/farms/useFarmsPrices';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -12,7 +13,7 @@ import { useMst } from '@/store';
 import { useFarmUserData } from '@/store/farms/hooks';
 import { FarmWithStakedValue, Precisions } from '@/types';
 import { getBalanceAmount } from '@/utils/formatters';
-import { clog, clogError } from '@/utils/logger';
+import { clogError } from '@/utils/logger';
 import { getAddLiquidityUrl } from '@/utils/urlConstructors';
 
 import FarmsStakeUnstakeButtons from '../../FarmsStakeUnstakeButtons';
@@ -44,6 +45,9 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
   const { pid, lpAddresses, lpSymbol, quoteToken, token } = farm;
   const lpAddress = getAddress(lpAddresses);
   const lpContract = useErc20(lpAddress);
+  // lpContract.methods.token1().call().then((res: any) => {
+  //   console.log('lp', res);
+  // });
   const { onApprove } = useApproveFarm(lpContract);
 
   const handleApprove = useCallback(async () => {
@@ -53,20 +57,26 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       farmsStore.fetchFarmUserDataAsync(user.address, [pid]);
 
       if (txStatus) {
-        successNotification('Contract Enabled!', `You can now stake in the ${lpSymbol} farm!`);
+        toast.success(`Contract Enabled! You can now stake in the ${lpSymbol} farm!`);
+        // successNotification('Contract Enabled!', `You can now stake in the ${lpSymbol} farm!`);
       } else {
-        clog(txStatus);
-        errorNotification(
-          'Error',
-          'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+        toast.error(
+          `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
         );
+        // errorNotification(
+        //   'Error',
+        //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+        // );
       }
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
       );
+      // errorNotification(
+      //   'Error',
+      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      // );
     } finally {
       setRequestedApproval(false);
     }
@@ -108,7 +118,7 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       return (
         <>
           <DetailsSectionTitle title="Start Farming" />
-          <Button size="lg" onClick={connect}>
+          <Button size="lg" className="farms-table-row__btn-mobile" onClick={connect}>
             <span className="text-smd text-white text-bold">Unlock Wallet</span>
           </Button>
         </>
@@ -121,17 +131,17 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       if (stakedBalance.gt(0)) {
         return (
           <>
-            <DetailsSectionTitle title={`${lpSymbol} Staked`} />
+            <DetailsSectionTitle className="lp-stakedw" title={`${lpSymbol} Staked`} />
             <div className="box-f box-f-jc-sb box-f-ai-e">
               <div className="farms-table-row__details-staked-values-group">
                 <div className="farms-table-row__details-staked-value text-blue-d text-smd">
                   {displayBalance()}
                 </div>
-                <div className="text-gray text-smd">
-                  ~{displayBalanceAsUsd()} {CURRENCY_CONVERT_TO}
-                </div>
               </div>
               <FarmsStakeUnstakeButtons farm={farm} />
+            </div>
+            <div className="farms-table-row__value-in-usd text-ssm">
+              ~{displayBalanceAsUsd()} {CURRENCY_CONVERT_TO}
             </div>
           </>
         );
@@ -141,7 +151,7 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       return (
         <>
           <DetailsSectionTitle title={`Stake ${lpSymbol}`} />
-          <Button size="lg" onClick={handleStake}>
+          <Button size="lg" className="farms-table-row__btn-mobile" onClick={handleStake}>
             <span className="text-smd text-white text-bold">Stake LP</span>
           </Button>
         </>
@@ -156,7 +166,12 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
     return (
       <>
         <DetailsSectionTitle title="Enable Farm" />
-        <Button size="lg" disabled={requestedApproval} onClick={handleApprove}>
+        <Button
+          size="lg"
+          className="farms-table-row__btn-mobile"
+          disabled={requestedApproval}
+          onClick={handleApprove}
+        >
           <span className="text-smd text-white text-bold">Enable</span>
         </Button>
       </>
@@ -177,7 +192,9 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
   ]);
 
   return (
-    <div className={classNames(className, 'farms-table-row__details-box')}>{renderActions}</div>
+    <div className={classNames(className, 'farms-table-row__details-box right-box')}>
+      {renderActions}
+    </div>
   );
 };
 

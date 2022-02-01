@@ -1,8 +1,10 @@
 import BigNumber from 'bignumber.js/bignumber';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
+import { Contract } from 'web3-eth-contract';
 
 import { contracts } from '@/config';
+import { clog } from '@/utils/logger';
 
 declare global {
   interface Window {
@@ -18,6 +20,63 @@ interface IMetamaskService {
   isProduction?: boolean;
 }
 
+interface IChain {
+  chainId: string;
+  rpcUrls: string[];
+  chainName: string;
+  blockExplorerUrls: string[];
+  nativeCurrency: INativeCurrency;
+}
+interface IChains {
+  [key: string]: IChain;
+}
+interface INativeCurrency {
+  name: string;
+  symbol: string;
+  decimals: number;
+}
+
+const chainsParams: IChains = {
+  // '0x1': {
+  //   chainId: '0x1',
+  //   rpcUrl: 'https://mainnet.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Ethereum Mainnet',
+  //   blockExp: 'https://etherscan.io/',
+  // },
+  // '0x3': {
+  //   chainId: '0x3',
+  //   rpcUrl: 'https://ropsten.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Ropsten',
+  //   blockExp: 'https://ropsten.etherscan.io/',
+  // },
+  // '0x2a': {
+  //   chainId: '0x2a',
+  //   rpcUrl: 'https://kovan.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Kovan',
+  //   blockExp: 'https://kovan.etherscan.io/',
+  // },
+  // '0x4': {
+  //   chainId: '0x4',
+  //   rpcUrl: 'https://rinkeby.infura.io/v3/93bd9cedc55f4d1c817829728897ea08',
+  //   name: 'Rinkeby',
+  //   blockExp: 'https://rinkeby.etherscan.io/',
+  // },
+  '0x61': {
+    chainId: '0x61',
+    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    chainName: 'Binance Testnet',
+    blockExplorerUrls: ['https://testnet.bscscan.com'],
+    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+  },
+  '0x38': {
+    chainId: '0x38',
+    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+    chainName: 'Binance Mainnet',
+    blockExplorerUrls: ['https://bscscan.com/'],
+    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+  },
+};
+
 const networks: INetworks = {
   mainnet: '0x1',
   ropsten: '0x3',
@@ -32,9 +91,9 @@ export default class MetamaskService {
 
   public web3Provider;
 
-  private testnet: string;
+  private readonly testnet: string;
 
-  private isProduction: boolean;
+  private readonly isProduction: boolean;
 
   public walletAddress = '';
 
@@ -64,7 +123,6 @@ export default class MetamaskService {
 
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
-
         if (currentChain !== this.usedChain) {
           subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
         }
@@ -82,11 +140,41 @@ export default class MetamaskService {
     });
   }
 
-  ethRequestAccounts() {
+  ethRequestAccounts(): any {
     return this.wallet.request({ method: 'eth_requestAccounts' });
   }
 
-  public connect() {
+  async checkNets(chainId = this.wallet.chainId): Promise<boolean> {
+    const requiredChain = this.usedChain;
+    if (chainId !== requiredChain) {
+      try {
+        await this.wallet.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: requiredChain }],
+        });
+        return true;
+      } catch (switchError: any) {
+        if (switchError.code === 4902) {
+          try {
+            await this.wallet.request({
+              method: 'wallet_addEthereumChain',
+              params: [chainsParams[requiredChain]],
+            });
+            return true;
+          } catch (addError: any) {
+            clog(addError);
+            return false;
+          }
+        } else {
+          clog(switchError);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public connect(): Promise<any> {
     if (!this.wallet) {
       return Promise.reject(
         new Error(`Couldn't find Metamask extension, check if it's installed and enabled.`),
@@ -99,42 +187,50 @@ export default class MetamaskService {
         reject(new Error(`metamask wallet is not injected`));
       }
 
-      if (!currentChain || currentChain === null) {
+      if (!currentChain) {
         this.wallet
           .request({ method: 'eth_chainId' })
           .then((resChain: any) => {
-            if (resChain === this.usedChain) {
-              this.ethRequestAccounts()
-                .then((account: any) => {
-                  [this.walletAddress] = account;
-                  resolve({
-                    address: account[0],
-                    network: resChain,
-                  });
-                })
-                .catch(() => reject(new Error('Not authorized')));
-            } else {
-              reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
-            }
-          })
-          .catch(() => reject(new Error('Not authorized')));
-      } else if (currentChain === this.usedChain) {
-        this.ethRequestAccounts()
-          .then((account: any) => {
-            [this.walletAddress] = account;
-            resolve({
-              address: account[0],
-              network: currentChain,
+            this.checkNets(resChain).then((required) => {
+              if (required) {
+                this.ethRequestAccounts()
+                  .then((account: any) => {
+                    [this.walletAddress] = account;
+                    resolve({
+                      address: account[0],
+                      network: resChain,
+                    });
+                  })
+                  .catch(() => reject(new Error('Not authorized')));
+              } else {
+                console.log('2');
+                reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
+              }
             });
           })
           .catch(() => reject(new Error('Not authorized')));
       } else {
-        reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
+        this.checkNets().then((required) => {
+          if (required) {
+            this.ethRequestAccounts()
+              .then((account: any) => {
+                [this.walletAddress] = account;
+                resolve({
+                  address: account[0],
+                  network: currentChain,
+                });
+              })
+              .catch(() => reject(new Error('Not authorized')));
+          } else {
+            console.log('3');
+            reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
+          }
+        });
       }
     });
   }
 
-  createContract(contractName: string, tokenAddress: string, abi: Array<any>) {
+  createContract(contractName: string, tokenAddress: string, abi: Array<any>): void {
     if (!this.contracts[contractName]) {
       const contract = this.getContract(tokenAddress, abi);
       this.contracts = {
@@ -144,32 +240,35 @@ export default class MetamaskService {
     }
   }
 
-  getContract(tokenAddress: string, abi: Array<any>) {
+  getContract(tokenAddress: string, abi: Array<any>): Contract {
     return new this.web3Provider.eth.Contract(abi, tokenAddress);
   }
 
-  getEthBalance() {
+  getEthBalance(): any {
     return this.web3Provider.eth.getBalance(this.walletAddress);
   }
 
-  static getMethodInterface(abi: Array<any>, methodName: string) {
+  static getMethodInterface(abi: Array<any>, methodName: string): any {
     return abi.filter((m) => {
       return m.name === methodName;
     })[0];
   }
 
-  encodeFunctionCall(abi: any, data: Array<any>) {
+  encodeFunctionCall(abi: any[] | any, data: Array<any>): any {
     return this.web3Provider.eth.abi.encodeFunctionCall(abi, data);
   }
 
-  async totalSupply(tokenAddress: string, abi: Array<any>, tokenDecimals: number) {
+  async totalSupply(tokenAddress: string, abi: Array<any>, tokenDecimals: number): Promise<number> {
     const contract = this.getContract(tokenAddress, abi);
     const totalSupply = await contract.methods.totalSupply().call();
 
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
-  async getTokenInfo(address: string, abi: any) {
+  async getTokenInfo(
+    address: string,
+    abi: any[],
+  ): Promise<{ name: any; decimals: any; symbol: any; address: any }> {
     try {
       const contract = this.getContract(address, abi);
       const name = await contract.methods.name().call();
@@ -187,6 +286,43 @@ export default class MetamaskService {
     }
   }
 
+  async checkTokenAllowance2({
+    contractName,
+    approvedAddress,
+    walletAddress,
+    amount,
+  }: {
+    contractName: 'BOT' | 'BOTDEX_STAKING';
+    approvedAddress?: string;
+    walletAddress?: string;
+    amount?: string | number;
+  }): Promise<boolean> {
+    try {
+      const contract = this.getContract(
+        contracts[contractName].ADDRESS,
+        contracts[contractName].ABI,
+      );
+      const walletAdr = walletAddress || this.walletAddress;
+
+      let result = await contract.methods
+        .allowance(walletAdr, approvedAddress || contracts[contractName].ADDRESS)
+        .call();
+
+      const tokenDecimals = await this.getTokenDecimals(contracts[contractName].ADDRESS);
+
+      result =
+        result === '0'
+          ? null
+          : +new BigNumber(result).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
+      if (result && new BigNumber(result).minus(amount || 0).isPositive()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async checkTokenAllowance({
     contractName,
     tokenDecimals,
@@ -195,13 +331,13 @@ export default class MetamaskService {
     tokenAddress,
     approveSum,
   }: {
-    contractName: 'ROUTER' | 'ERC20' | 'PAIR';
+    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOT' | 'BOTDEX_STAKING';
     tokenDecimals?: number;
     approvedAddress?: string;
     walletAddress?: string;
     tokenAddress: string;
     approveSum?: number;
-  }) {
+  }): Promise<boolean> {
     let decimals = NaN;
 
     const contract = this.getContract(tokenAddress, contracts[contractName].ABI);
@@ -221,10 +357,7 @@ export default class MetamaskService {
           : +new BigNumber(result)
               .dividedBy(new BigNumber(10).pow(tokenDecimals || decimals))
               .toString(10);
-      if (result && new BigNumber(result).minus(approveSum || 0).isPositive()) {
-        return true;
-      }
-      return false;
+      return !!(result && new BigNumber(result).minus(approveSum || 0).isPositive());
     } catch (error) {
       return false;
     }
@@ -232,35 +365,24 @@ export default class MetamaskService {
 
   async approveToken({
     contractName,
-    tokenDecimals,
     approvedAddress,
     walletAddress,
     tokenAddress,
   }: {
-    contractName: 'ROUTER' | 'ERC20' | 'PAIR';
-    tokenDecimals?: number;
+    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOTDEX_STAKING' | 'BOT';
     approvedAddress?: string;
     walletAddress?: string;
     tokenAddress: string;
-  }) {
+  }): Promise<any> {
     try {
-      let decimals = NaN;
-
-      if (!tokenDecimals) {
-        const tokenInfo = await this.getTokenInfo(tokenAddress, contracts[contractName].ABI);
-        decimals = tokenInfo.decimals;
-      }
-
       const approveMethod = MetamaskService.getMethodInterface(
         contracts[contractName].ABI,
         'approve',
       );
-
       const approveSignature = this.encodeFunctionCall(approveMethod, [
         approvedAddress || walletAddress || this.walletAddress,
-        new BigNumber(90071992.5474099).times(new BigNumber(10).pow(decimals || 8)).toString(10),
+        new BigNumber(2).pow(256).minus(1).toFixed(0, 1),
       ]);
-
       return this.sendTransaction({
         from: walletAddress || this.walletAddress,
         to: tokenAddress,
@@ -271,11 +393,17 @@ export default class MetamaskService {
     }
   }
 
-  static calcTransactionAmount(amount: number | string, tokenDecimal: number) {
-    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
+  public async getTokenDecimals(address: string) {
+    const contract = this.getContract(address, contracts.ERC20.ABI);
+
+    return contract.methods.decimals().call();
   }
 
-  static amountFromGwei(amount: number | string, tokenDecimal: number) {
+  static calcTransactionAmount(amount: number | string, tokenDecimal: number): string {
+    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toFixed(0).toString();
+  }
+
+  static amountFromGwei(amount: number | string, tokenDecimal: number): string {
     return new BigNumber(amount).dividedBy(new BigNumber(10).pow(tokenDecimal)).toString(10);
   }
 
@@ -295,7 +423,7 @@ export default class MetamaskService {
     toAddress?: string;
     fromAddress?: string;
     value?: any;
-  }) {
+  }): any {
     const contract = contracts[contractName];
     const { ABI, ADDRESS } = contract;
     const transactionMethod = MetamaskService.getMethodInterface(ABI, method);
@@ -319,7 +447,7 @@ export default class MetamaskService {
     });
   }
 
-  signMsg(msg: string) {
+  signMsg(msg: string): any {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }
 
@@ -329,7 +457,7 @@ export default class MetamaskService {
     data?: any[],
     contractAddress?: string,
     contractAbi?: Array<any>,
-  ) {
+  ): Promise<any> {
     try {
       if (!this.contracts[contractName] && contractAddress && contractAbi) {
         await this.createContract(contractName, contractAddress, contractAbi);
@@ -343,7 +471,6 @@ export default class MetamaskService {
         return await method().call();
       }
     } catch (err: any) {
-      debugger;
       throw new Error(err);
     }
     return new Error(`contract ${contractName} didn't created`);
@@ -354,7 +481,7 @@ export default class MetamaskService {
     abi: any[],
     methodName: string,
     data?: any[],
-  ) {
+  ): Promise<any> {
     try {
       const contract = this.getContract(contractAddress, abi);
       const method = contract.methods[methodName];
@@ -368,7 +495,7 @@ export default class MetamaskService {
     }
   }
 
-  sendTransaction(transactionConfig: any) {
+  sendTransaction(transactionConfig: any | string): any {
     return this.web3Provider.eth.sendTransaction({
       ...transactionConfig,
       from: this.walletAddress,

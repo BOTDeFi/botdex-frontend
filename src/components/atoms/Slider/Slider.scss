@@ -6,7 +6,7 @@
   &:hover {
     .ant-slider-rail,
     .ant-slider-track {
-      background: $black;
+      background: $bg-divider;
     }
   }
 
@@ -14,7 +14,7 @@
   .ant-slider-track {
     height: 1px;
 
-    background: $black;
+    background: $bg-divider;
   }
 
   .ant-slider-handle {
@@ -23,7 +23,7 @@
     width: 32px;
     height: 31px;
 
-    background: $yellow;
+    background: $bg-btn;
     border: none;
 
     &:not(:active) {

@@ -15,11 +15,11 @@ export const getContractData = (name: IContract): [string, IContractData['ABI']]
   return [contractData.ADDRESS, contractData.ABI];
 };
 
-export const getContractAddress = (name: IContract) => {
+export const getContractAddress = (name: IContract): any => {
   return (contracts[name] as IContractData).ADDRESS;
 };
 
-export const getContract = (name: IContract) => {
+export const getContract = (name: IContract): any => {
   const [address, abi] = getContractData(name) as [string, []];
   return metamaskService.getContract(address, abi);
 };

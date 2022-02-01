@@ -5,10 +5,11 @@ import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
 import OpenLinkImg from '@/assets/img/icons/open-link.svg';
+import { IS_PRODUCTION } from '@/config';
+import { useMst } from '@/store';
+import { IRecentTx } from '@/types';
 
 import CrossImg from '../../../../assets/img/icons/cross-2.svg';
-import { useMst } from '../../../../store';
-import { IRecentTx } from '../../../../types';
 import { Button, Popover } from '../../../atoms';
 
 import './RecentTxs.scss';
@@ -26,9 +27,9 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
   };
 
   return (
-    <div className="exchange recent-txs box-shadow box-white">
+    <div className="exchange recent-txs">
       <div className="box-f-jc-sb box-f-ai-c">
-        <div className=" text-black text-md">Recent transactions</div>
+        <div className="text-md">Recent transactions</div>
         <div
           className="exch-settings__close"
           onClick={handleClose}
@@ -41,7 +42,7 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
       </div>
       {!user.address ? (
         <div className="recent-txs__err">
-          <div className="recent-txs__err-text text-black">
+          <div className="recent-txs__err-text text-500">
             Please connect your wallet to view your recent transactions
           </div>
           <Button onClick={handleClose} className="recent-txs__err-btn">
@@ -62,9 +63,9 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
           {items.map((tx) => (
             <div className="recent-txs__item" key={tx.address}>
               <div className="box-f-ai-c box-f-jc-sb">
-                <span className="text-smd text-black">{tx.type}</span>
+                <span className="text-smd">{tx.type}</span>
                 <a
-                  href={`https://kovan.etherscan.io/tx/${tx.address}`}
+                  href={`https://${IS_PRODUCTION ? '' : 'testnet.'}bscscan.com/tx/${tx.address}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -76,7 +77,7 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
                   <div className=" text-smd text-address">{tx.from.value}</div>
                 </Popover>
                 <div className="box-f-ai-c recent-txs__item-currency">
-                  <div className="recent-txs__item-currency-name text-gray">{tx.from.symbol}</div>
+                  <div className="recent-txs__item-currency-name text-gray-2">{tx.from.symbol}</div>
                   <img
                     src={tx.from.img || UnknownImg}
                     alt={tx.from.symbol}
@@ -89,7 +90,7 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
                   <div className=" text-smd text-address">{tx.to.value}</div>
                 </Popover>
                 <div className="box-f-ai-c recent-txs__item-currency">
-                  <div className="recent-txs__item-currency-name text-gray">{tx.to.symbol}</div>
+                  <div className="recent-txs__item-currency-name text-gray-2">{tx.to.symbol}</div>
                   <img
                     src={tx.to.img || UnknownImg}
                     alt={tx.to.symbol}
@@ -105,7 +106,7 @@ const RecentTxs: React.FC<IRecentTxs> = observer(({ items }) => {
       )}
       {!items || (!items?.length && user.address) ? (
         <div className="recent-txs__err">
-          <div className="recent-txs__err-text text-black">Transactions not found</div>
+          <div className="recent-txs__err-text text-500">Transactions not found</div>
         </div>
       ) : (
         ''

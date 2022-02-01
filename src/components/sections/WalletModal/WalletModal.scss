@@ -1,3 +1,5 @@
+@import 'src/styles/vars';
+
 .m-wallet {
   &__content {
     padding: 20px;
@@ -7,15 +9,15 @@
     margin-bottom: 10px;
     padding-bottom: 25px;
 
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid $bg-divider;
   }
 
   &__box {
     margin: 20px 0;
     padding: 20px 0;
 
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid $bg-divider;
+    border-bottom: 1px solid $bg-divider;
   }
 
   &__item {

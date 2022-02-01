@@ -1,22 +1,23 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
-import UnkNownImg from '@/assets/img/currency/unknown.svg';
-import { Button, Slider } from '@/components/atoms';
+import UnknownImg from '@/assets/img/currency/unknown.svg';
+import { Button, Popover, Slider } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
-import { ILiquidityInfo } from '@/types';
+import { ILiquidityInfo, ISettings } from '@/types';
 import { clogError } from '@/utils/logger';
 
 import { TradeBox } from '..';
 
 import './RemoveLiquidity.scss';
 
-const RemoveLiquidity: React.FC = observer(() => {
+const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings }) => {
   const { user } = useMst();
   const { metamaskService } = useWalletConnectorContext();
 
@@ -71,11 +72,29 @@ const RemoveLiquidity: React.FC = observer(() => {
           approvedAddress: contracts.ROUTER.ADDRESS,
           tokenAddress: liquidityInfo?.address,
         });
+        toast.success('Successfully approved LP token!', {
+          position: 'bottom-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
 
         setTokensApproving(false);
         setTokensApprove(true);
       }
     } catch (err) {
+      toast.error('Something went wrong!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       clogError('approve lp', err);
       setTokensApproving(false);
       setTokensApprove(false);
@@ -95,14 +114,19 @@ const RemoveLiquidity: React.FC = observer(() => {
   }, [handleCheckApprove]);
 
   return (
-    <TradeBox className="r-liquidity" title="Remove Liguidity" titleBackLink>
+    <TradeBox
+      className="r-liquidity"
+      title="Remove Liquidity"
+      settingsLink="/trade/liquidity/settings"
+      titleBackLink
+    >
       <div className="r-liquidity__percent text-yellow">{percent}%</div>
       <Slider
         tooltipVisible={false}
         onChange={handlePercentChange}
-        defaultValue={25}
+        defaultValue={0}
         value={percent}
-        min={25}
+        min={0}
       />
       <div className="r-liquidity__percent-btns box-f-ai-c box-f-jc-sb">
         {btns.map((btn) => (
@@ -122,37 +146,61 @@ const RemoveLiquidity: React.FC = observer(() => {
       {liquidityInfo && liquidityInfo.token0.deposited && liquidityInfo.token1.deposited ? (
         <div className="r-liquidity__content">
           <div className="r-liquidity__currency box-f-ai-c box-f-jc-sb">
-            <div className="r-liquidity__currency-sum text-lmd">
-              {
-                +new BigNumber(
-                  MetamaskService.amountFromGwei(
-                    liquidityInfo.token0.deposited,
-                    +liquidityInfo.token0.decimals,
-                  ),
-                ).multipliedBy(percent / 100)
-              }
-            </div>
+            <Popover
+              content={new BigNumber(
+                MetamaskService.amountFromGwei(
+                  liquidityInfo.token0.deposited,
+                  +liquidityInfo.token0.decimals,
+                ),
+              )
+                .multipliedBy(percent / 100)
+                .toString(10)}
+            >
+              <div className="r-liquidity__currency-sum text-lmd">
+                {
+                  +new BigNumber(
+                    MetamaskService.amountFromGwei(
+                      liquidityInfo.token0.deposited,
+                      +liquidityInfo.token0.decimals,
+                    ),
+                  )
+                    .multipliedBy(percent / 100)
+                    .toFixed(5, 1)
+                }
+              </div>
+            </Popover>
             <div className="box-f-ai-c r-liquidity__currency-item">
               <div className="text-smd text-upper">{liquidityInfo?.token0.symbol}</div>
-              <img src={UnkNownImg} alt="" />
+              <img src={UnknownImg} alt="" />
             </div>
           </div>
           <div className="r-liquidity__currency box-f-ai-c box-f-jc-sb">
-            <div className="r-liquidity__currency-sum text-lmd">
-              {
-                +new BigNumber(
-                  MetamaskService.amountFromGwei(
-                    liquidityInfo.token1.deposited,
-                    +liquidityInfo.token1.decimals,
-                  ),
-                )
-                  .multipliedBy(percent / 100)
-                  .toFixed(8)
-              }
-            </div>
+            <Popover
+              content={new BigNumber(
+                MetamaskService.amountFromGwei(
+                  liquidityInfo.token1.deposited,
+                  +liquidityInfo.token1.decimals,
+                ),
+              )
+                .multipliedBy(percent / 100)
+                .toString(10)}
+            >
+              <div className="r-liquidity__currency-sum text-lmd">
+                {
+                  +new BigNumber(
+                    MetamaskService.amountFromGwei(
+                      liquidityInfo.token1.deposited,
+                      +liquidityInfo.token1.decimals,
+                    ),
+                  )
+                    .multipliedBy(percent / 100)
+                    .toFixed(5, 1)
+                }
+              </div>
+            </Popover>
             <div className="box-f-ai-c r-liquidity__currency-item">
               <div className="text-smd text-upper">{liquidityInfo?.token1.symbol}</div>
-              <img src={UnkNownImg} alt="" />
+              <img src={UnknownImg} alt="" />
             </div>
           </div>
         </div>
@@ -163,14 +211,20 @@ const RemoveLiquidity: React.FC = observer(() => {
         <div className="r-liquidity__price box-f box-f-jc-sb text-yellow">
           <span>Price</span>
           <div>
-            <div className="r-liquidity__price-item text-right">
-              1 {liquidityInfo?.token0.symbol} = {+(+liquidityInfo?.token1.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token1.symbol}
-            </div>
-            <div className="r-liquidity__price-item text-right">
-              1 {liquidityInfo?.token1.symbol} = {+(+liquidityInfo?.token0.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token0.symbol}
-            </div>
+            <Popover content={new BigNumber(liquidityInfo?.token1.rate).toString(10)}>
+              <div className="r-liquidity__price-item text-right">
+                1 {liquidityInfo?.token0.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token1.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token1.symbol}
+              </div>
+            </Popover>
+            <Popover content={new BigNumber(liquidityInfo?.token0.rate).toString(10)}>
+              <div className="r-liquidity__price-item text-right">
+                1 {liquidityInfo?.token1.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token0.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token0.symbol}
+              </div>
+            </Popover>
           </div>
         </div>
       ) : (
@@ -178,7 +232,11 @@ const RemoveLiquidity: React.FC = observer(() => {
       )}
       <div className="r-liquidity__btns box-f-ai-c box-f-jc-e">
         {!isTokensApprove ? (
-          <Button onClick={handleApprove} loading={isTokensApproving}>
+          <Button
+            className="liquidity_remove_btn"
+            onClick={handleApprove}
+            loading={isTokensApproving}
+          >
             <span className="text-white text-bold text-md">Approve</span>
           </Button>
         ) : (
@@ -189,6 +247,7 @@ const RemoveLiquidity: React.FC = observer(() => {
         liquidityInfo.token0.deposited &&
         liquidityInfo.token1.deposited ? (
           <Button
+            className="liquidity_remove_btn"
             disabled={!isTokensApprove}
             link={{
               pathname: '/trade/liquidity/receive',
@@ -209,6 +268,7 @@ const RemoveLiquidity: React.FC = observer(() => {
                     .multipliedBy(new BigNumber(percent).dividedBy(100))
                     .toString(10),
                 },
+                settings,
               },
             }}
           >

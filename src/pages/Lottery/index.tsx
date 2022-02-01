@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { Button, Search } from '../../components/atoms';
+import { Button } from '@/components/atoms';
+import Search from '@/components/atoms/Search';
+
 import {
   BuyTicketsModal,
   LotteryNotFound,
@@ -20,9 +22,8 @@ const Lottery: React.FC = () => {
   const history = useHistory();
   const { id } = useParams<ILotteryId>();
 
-  const [isWinningTicketsModalVisible, setWinningTicketsModalVisible] = React.useState<boolean>(
-    false,
-  );
+  const [isWinningTicketsModalVisible, setWinningTicketsModalVisible] =
+    React.useState<boolean>(false);
 
   const [isBuyTicketsModalVisible, setBuyTicketsModalVisible] = React.useState<boolean>(false);
 

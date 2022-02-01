@@ -3,10 +3,6 @@
 .m-select-token {
   &__content {
     padding: 20px;
-
-    color: #fff;
-
-    background: $dark-grey;
   }
 
   &__item {
@@ -27,17 +23,15 @@
 
   &__search {
     margin: 25px 0 30px;
-    padding-bottom: 10px;
+    padding-bottom: 14px;
 
-    color: #fff !important;
-
-    border-bottom: 1px solid #685096;
+    border-bottom: 1px solid $bg-divider;
   }
 
   &__manage {
     margin-top: 30px;
     padding-top: 20px;
 
-    border-top: 1px solid #685096;
+    border-top: 1px solid #e0e0e0;
   }
 }

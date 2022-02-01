@@ -8,7 +8,9 @@ import { Modal } from '../../../molecules';
 import './WinningTicketsModal.scss';
 
 interface IWinningTicketsModal {
+  // eslint-disable-next-line react/require-default-props
   isVisible?: boolean;
+  // eslint-disable-next-line react/require-default-props
   handleClose?: () => void;
 }
 

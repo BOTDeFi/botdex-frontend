@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
-import { toJS } from 'mobx';
+// import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 import { Button } from '@/components/atoms';
@@ -14,10 +14,10 @@ import {
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { getAddress, getContractData } from '@/services/web3/contractHelpers';
 import { useMst } from '@/store';
-import { ITokenMobx } from '@/store/Models/Modals/StakeUnstakeModal';
+// import { ITokenMobx } from '@/store/Models/Modals/StakeUnstakeModal';
 import { Pool } from '@/types';
 import { toBigNumber } from '@/utils';
-import { BIG_ZERO } from '@/utils/constants';
+// import { BIG_ZERO } from '@/utils/constants';
 
 const StakingSection: React.FC<{
   pool: Pool;
@@ -90,13 +90,7 @@ const StakingSection: React.FC<{
         hasConnectedWallet && (!needsApproval || isVaultApproved) && !stakedValue.toNumber(),
       title: `Stake ${tokenSymbol}`,
       handler: () => {
-        modals.stakeUnstake.open({
-          isStaking: true,
-          stakingToken: toJS(stakingToken) as ITokenMobx,
-          isAutoVault: Boolean(isAutoVault),
-          maxStakingValue: (userData?.stakingTokenBalance || BIG_ZERO).toNumber(),
-          poolId: id,
-        });
+        modals.stakeUnstake.open(id);
       },
       text: 'Stake',
     },
@@ -115,7 +109,6 @@ const StakingSection: React.FC<{
       </>
     );
   }
-
   return null;
 });
 

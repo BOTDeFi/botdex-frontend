@@ -21,25 +21,45 @@ $sort-width: 40%;
 
     width: 100%;
     grid-auto-flow: column;
-
+    background: $bg-switch;
     @include b(tablet) {
       margin: 30px 0 20px;
 
       width: 100%;
     }
   }
+  &__button {
+    height: 40px;
+    &.ant-radio-button-wrapper-checked {
+      background: $bg-accent-gradient !important;
+    }
+  }
 
   &__sort {
+    color: $text-main-color;
+    border-radius: 12px;
     @include b(tablet) {
       width: $sort-width;
+    }
+    .ant-select-selector {
+      background: $bg-switch !important;
+      border: none !important;
+      padding: 10px 15px !important;
     }
   }
 
   &__search {
+    background: $bg-switch !important;
     margin-left: 20px;
-
+    border: none;
+    padding: 13px 14px;
     max-width: 190px;
-
+    input {
+      color: $text-main-color;
+      &::placeholder {
+        color: $text-main-color;
+      }
+    }
     @include b(tablet) {
       width: calc(100% - #{$sort-width} - 20px);
       max-width: initial;

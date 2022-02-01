@@ -11,7 +11,7 @@ $default-vertical-padding: 22px;
     left: $default-horizontal-padding + $desktop-menu-width;
     bottom: $default-vertical-padding;
   }
-
+  background: $bg-farms;
   @include b(tablet) {
     padding-right: 0;
     padding-left: 0;

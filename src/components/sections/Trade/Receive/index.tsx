@@ -1,16 +1,18 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import BnbImg from '@/assets/img/currency/unknown.svg';
+import { tokens } from '@/config';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
+import { ILiquidityInfo } from '@/types';
 import { clogError } from '@/utils/logger';
 
-import { useWalletConnectorContext } from '../../../../services/MetamaskConnect';
 import MetamaskService from '../../../../services/web3';
-import { useMst } from '../../../../store';
-import { ILiquidityInfo } from '../../../../types';
 import { Button, Popover } from '../../../atoms';
 import { TradeBox } from '..';
 
@@ -33,22 +35,84 @@ const Receive: React.FC = observer(() => {
     try {
       if (liquidityInfo && liquidityInfo?.token0.receive && liquidityInfo?.token1.receive) {
         setIsActiveTx(true);
+        const wbnb = tokens.wbnb.address['97'].toLowerCase();
+        let method: string;
+        if (
+          liquidityInfo.token0.address.toLowerCase() === wbnb ||
+          liquidityInfo.token1.address.toLowerCase() === wbnb
+        ) {
+          method = 'removeLiquidityETH';
+        } else method = 'removeLiquidity';
         await metamaskService.createTransaction({
-          method: 'removeLiquidity',
+          method,
           contractName: 'ROUTER',
-          data: [
-            liquidityInfo?.token0.address,
-            liquidityInfo?.token1.address,
-            liquidityInfo.lpTokens,
-            new BigNumber(liquidityInfo?.token0.receive).multipliedBy(0.99).toFixed(0),
-            new BigNumber(liquidityInfo?.token1.receive).multipliedBy(0.99).toFixed(0),
-            user.address,
-            moment.utc().add(20, 'm').valueOf(),
-          ],
+          data:
+            method === 'removeLiquidity'
+              ? [
+                  liquidityInfo?.token0.address,
+                  liquidityInfo?.token1.address,
+                  new BigNumber(liquidityInfo.lpTokens).toFixed(0).toString(),
+                  new BigNumber(liquidityInfo?.token0.receive)
+                    .minus(
+                      new BigNumber(liquidityInfo?.token0.receive).times(
+                        liquidityInfo.settings.slippage.value,
+                      ),
+                    )
+                    .toFixed(0, 1),
+                  new BigNumber(liquidityInfo?.token1.receive)
+                    .minus(
+                      new BigNumber(liquidityInfo?.token1.receive).times(
+                        liquidityInfo.settings.slippage.value,
+                      ),
+                    )
+                    .toFixed(0, 1),
+                  user.address,
+                  moment.utc().add(20, 'm').valueOf(),
+                ]
+              : [
+                  liquidityInfo.token0.address.toLowerCase() === wbnb
+                    ? liquidityInfo.token1.address
+                    : liquidityInfo.token0.address,
+                  new BigNumber(liquidityInfo.lpTokens).toFixed(0).toString(),
+                  liquidityInfo.token0.address.toLowerCase() === wbnb
+                    ? new BigNumber(liquidityInfo.token1.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token1.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1)
+                    : new BigNumber(liquidityInfo.token0.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token0.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1),
+                  liquidityInfo.token0.address.toLowerCase() === wbnb
+                    ? new BigNumber(liquidityInfo.token0.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token0.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1)
+                    : new BigNumber(liquidityInfo.token1.receive)
+                        .minus(
+                          new BigNumber(liquidityInfo?.token1.receive).times(
+                            liquidityInfo.settings.slippage.value,
+                          ),
+                        )
+                        .toFixed(0, 1),
+                  user.address,
+                  moment.utc().add(20, 'm').valueOf(),
+                ],
         });
         history.push('/trade/liquidity');
+        toast.success('Successfully removed liquidity!');
       }
     } catch (err) {
+      toast.error('Something went wrong');
       setIsActiveTx(false);
       clogError('remove liquidity', err);
     }
@@ -109,7 +173,7 @@ const Receive: React.FC = observer(() => {
       ) : (
         ''
       )}
-      <div className="text text-gray">
+      <div className="text">
         Output is stimulated. If the price changes by more than 0.8% your transaction will revert.
       </div>
       {liquidityInfo?.lpTokens ? (
@@ -120,9 +184,19 @@ const Receive: React.FC = observer(() => {
           <div className="box-f-ai-c">
             <img src={BnbImg} alt="" />
             <img src={BnbImg} alt="" />
-            <span className=" text-address">
-              {MetamaskService.amountFromGwei(liquidityInfo?.lpTokens, 18)}
-            </span>
+            <Popover
+              content={new BigNumber(
+                MetamaskService.amountFromGwei(liquidityInfo?.lpTokens, 18),
+              ).toString(10)}
+            >
+              <span className="receive__burned__amount text-address">
+                {' '}
+                {new BigNumber(MetamaskService.amountFromGwei(liquidityInfo?.lpTokens, 18)).toFixed(
+                  5,
+                  1,
+                )}
+              </span>
+            </Popover>
           </div>
         </div>
       ) : (
@@ -132,14 +206,20 @@ const Receive: React.FC = observer(() => {
         <div className="receive__price box-f box-f-jc-sb text-smd text-yellow">
           <span>Price</span>
           <div>
-            <div className="peceive__price-item">
-              1 {liquidityInfo?.token0.symbol} = {+(+liquidityInfo?.token1.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token1.symbol}
-            </div>
-            <div className="peceive__price-item">
-              1 {liquidityInfo?.token1.symbol} = {+(+liquidityInfo?.token0.rate).toFixed(8)}{' '}
-              {liquidityInfo?.token0.symbol}
-            </div>
+            <Popover content={new BigNumber(liquidityInfo?.token1.rate).toString(10)}>
+              <div className="peceive__price-item">
+                1 {liquidityInfo?.token0.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token1.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token1.symbol}
+              </div>
+            </Popover>
+            <Popover content={new BigNumber(liquidityInfo?.token0.rate).toString(10)}>
+              <div className="peceive__price-item">
+                1 {liquidityInfo?.token1.symbol} ={' '}
+                {new BigNumber(liquidityInfo?.token0.rate).toFixed(5)}{' '}
+                {liquidityInfo?.token0.symbol}
+              </div>
+            </Popover>
           </div>
         </div>
       ) : (

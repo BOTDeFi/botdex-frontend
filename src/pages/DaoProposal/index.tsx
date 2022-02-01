@@ -159,7 +159,7 @@ const DaoProposal: React.FC = observer(() => {
     getNewCurrentBalance();
   }, [getNewCurrentBalance]);
 
-  const hasBalance = hasCurrentBalance(currentBalanceError, currentBalance);
+  const hasBalance = hasCurrentBalance({ error: currentBalanceError, data: currentBalance });
   const isAbleToPublish = hasBalance && isFormsValidated && !pendingTx;
   const isProcessingValidation = currentBalanceLoading || pendingTx;
 

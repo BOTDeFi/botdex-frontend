@@ -1,10 +1,14 @@
-@import 'src/styles/vars.scss';
-@import 'src/styles/mixins/media.scss';
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+@import 'src/styles/mixins/main';
 
 $desktop-menu-width: 240px;
 $default-horizontal-padding: 48px;
 $default-vertical-padding: 22px;
 
+.spinner {
+  @include flex(row, center, center);
+}
 .pools {
   padding: {
     top: $default-vertical-padding;
@@ -12,7 +16,7 @@ $default-vertical-padding: 22px;
     left: $default-horizontal-padding + $desktop-menu-width;
     bottom: $default-vertical-padding;
   }
-
+  background: $bg-farms;
   @include b(tablet) {
     padding-right: 0;
     padding-left: 0;
@@ -43,21 +47,28 @@ $default-vertical-padding: 22px;
   }
 
   &__content {
-    margin: 40px 0 0;
+    margin-top: 40px;
 
     &-card-view {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-
-      @include b(desktop) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
+      @include flex(row, flex-start, space-between, wrap);
       @include b(mobile) {
-        grid-template-columns: repeat(1, 1fr);
+        flex-direction: column-reverse;
       }
-      grid-column-gap: 23px;
-      grid-row-gap: 30px;
+      @include b(tablet) {
+        align-items: normal;
+      }
+      //display: grid;
+      //grid-template-columns: repeat(3, 1fr);
+      //
+      //@include b(desktop) {
+      //  grid-template-columns: repeat(2, 1fr);
+      //}
+      //
+      //@include b(mobile) {
+      //  grid-template-columns: repeat(1, 1fr);
+      //}
+      //grid-column-gap: 23px;
+      //grid-row-gap: 30px;
     }
   }
 }

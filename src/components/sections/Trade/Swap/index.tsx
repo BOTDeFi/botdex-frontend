@@ -4,9 +4,10 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
-import TradeWrapper from '../../../../HOC/TradeWrapper';
-import { useMst } from '../../../../store';
-import { IRecentTx, ISettings } from '../../../../types';
+import TradeWrapper from '@/HOC/TradeWrapper';
+import { useMst } from '@/store';
+import { IRecentTx, ISettings } from '@/types';
+
 import Exchange from '../Exchange';
 import { ExchangeSettings, RecentTxs } from '..';
 
@@ -32,10 +33,9 @@ const GET_USER_TRX = gql`
   }
 `;
 
-const ExchangeComp = TradeWrapper(Exchange, 'getAmountOut');
-
 const Swap: React.FC = observer(() => {
   const { user } = useMst();
+  const ExchangeComp = TradeWrapper(Exchange, 'swap');
 
   const [getUserTrx, { error, data: userTrx }] = useLazyQuery(GET_USER_TRX, {
     pollInterval: 60000,
@@ -50,6 +50,7 @@ const Swap: React.FC = observer(() => {
     },
     txDeadline: 20,
     txDeadlineUtc: moment.utc().add(20, 'm').valueOf(),
+    isAudio: false,
   });
 
   const handleSaveSettings = (settingsObj: ISettings): void => {
@@ -69,7 +70,6 @@ const Swap: React.FC = observer(() => {
   React.useEffect(() => {
     if (!error && userTrx && userTrx.swaps) {
       const trxData: IRecentTx[] = [];
-
       userTrx.swaps.forEach((swapObj: any) => {
         const dataItem: IRecentTx = {
           type: 'Swap',

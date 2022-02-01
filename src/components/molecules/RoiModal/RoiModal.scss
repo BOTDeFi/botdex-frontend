@@ -1,3 +1,5 @@
+@import 'src/styles/vars';
+
 .m-roi {
   &__content {
     padding: 30px;
@@ -13,6 +15,11 @@
       line-height: 14px;
     }
 
+    &-radio {
+      .ant-radio-button-wrapper-checked {
+        background: $bg-accent-gradient !important;
+      }
+    }
     &-radio-group {
       display: flex;
       justify-content: space-around;

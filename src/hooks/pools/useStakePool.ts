@@ -13,7 +13,7 @@ import { useMst } from '@/store';
 import { BIG_TEN } from '@/utils/constants';
 import { clogError } from '@/utils/logger';
 
-export const useSmartRefinerStake = (smartRefinerInitContract: Contract) => {
+export const useSmartRefinerStake = (smartRefinerInitContract: Contract): any => {
   const { callWithGasPrice } = useCallWithGasPrice();
 
   const smartRefinerStake = useCallback(
@@ -35,7 +35,7 @@ export const useSmartRefinerStake = (smartRefinerInitContract: Contract) => {
   return { smartRefinerStake };
 };
 
-const useStakePool = (poolId: number) => {
+const useStakePool = (poolId: number): any => {
   const { metamaskService } = useWalletConnectorContext();
   const { user, pools } = useMst();
 
@@ -47,7 +47,7 @@ const useStakePool = (poolId: number) => {
   const { smartRefinerStake } = useSmartRefinerStake(smartRefinerInitContract);
   // const { harvestPool } = useHarvestPoolDeposit(smartRefinerInitContract);
 
-  const masterRefinerContract = getContract('MASTER_REFINER');
+  const masterRefinerContract = getContract('MASTER_BOTDEX');
   const { stakeFarm } = useStakeFarm(masterRefinerContract);
   // const { harvestFarm } = useHarvestFarm(masterRefinerContract, 0);
 
@@ -69,7 +69,7 @@ const useStakePool = (poolId: number) => {
 
 export default useStakePool;
 
-export const useNonVaultStake = (poolId: number, onFinally: () => void) => {
+export const useNonVaultStake = (poolId: number, onFinally: () => void): any => {
   const { onStake } = useStakePool(poolId);
 
   const nonVaultStake = useCallback(

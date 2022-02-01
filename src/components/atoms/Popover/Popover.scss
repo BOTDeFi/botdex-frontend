@@ -1,7 +1,21 @@
+@import 'src/styles/vars';
+
 .ant-popover-inner-content {
   padding: 20px;
 }
 
 .ant-popover {
   max-width: 500px;
+
+  &-arrow {
+    &-content {
+      background: $bg-purple !important;
+    }
+  }
+  &-inner {
+    background: $bg-purple !important;
+    &-content {
+      color: $text-main-color !important;
+    }
+  }
 }

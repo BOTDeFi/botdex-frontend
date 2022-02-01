@@ -55,13 +55,13 @@ const DetailsEarnedSection: React.FC<IDetailsEarnedSectionProps> = observer(
 
     return (
       <div className={classNames(className, 'farms-table-row__details-box')}>
-        <DetailsSectionTitle title={`${EARNING_TOKEN_SYMBOL} Earned`} />
+        <DetailsSectionTitle title="BOT Earned" />
         <InputNumber
-          colorScheme="white"
+          colorScheme="darkgray"
           value={getBalanceAmount(new BigNumber(earnings), tokens.rp1.decimals)}
           inputPrefix={
             <Button
-              colorScheme="purple"
+              colorScheme="outline-purple"
               size="ssm"
               disabled={!hasEarnings || pendingTx}
               onClick={harvestHandler}

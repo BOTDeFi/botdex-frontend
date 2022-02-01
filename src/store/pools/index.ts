@@ -176,7 +176,7 @@ export const fetchUserStakeBalances = async (
   }, {});
 
   // RocketPropellant1 / RocketPropellant1 pool
-  const masterRefinerContract = getContract('MASTER_REFINER');
+  const masterRefinerContract = getContract('MASTER_BOTDEX');
   const { amount: masterPoolAmount } = await masterRefinerContract.methods
     .userInfo('0', accountAddress)
     .call();
@@ -203,7 +203,7 @@ export const fetchUserPendingRewards = async (
   );
 
   // RocketPropellant1 / RocketPropellant1 pool
-  const masterRefinerContract = getContract('MASTER_REFINER');
+  const masterRefinerContract = getContract('MASTER_BOTDEX');
   const pendingReward = await masterRefinerContract.methods.pendingRP1('0', accountAddress).call();
 
   return { ...pendingRewards, 0: new BigNumber(pendingReward.toString()).toJSON() };

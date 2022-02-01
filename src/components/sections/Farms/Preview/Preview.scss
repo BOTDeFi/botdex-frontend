@@ -4,50 +4,55 @@
 .farms-preview {
   overflow: hidden;
 
-  border-radius: 40px;
+  border-radius: 12px;
+  padding: 41px 42px 39px;
 
+  background-color: $bg-purple;
+  background-image: url(../../../../assets/img/sections/farms/farms.png);
+  background-size: 100%;
+
+  @include b(tablet) {
+    padding: 40px 20px 19px 42px;
+
+    display: block !important;
+  }
+  @include b(desktop) {
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
   &__box {
-    padding: 40px;
-
-    background-color: $yellow-d;
-    background-image: url(../../../../assets/img/sections/farms/bg.jpg);
-    background-position: 0 0;
-    background-size: 100% 100%;
-    border-radius: 0 0 40px 40px;
-
-    @include b(mobile) {
-      padding: 40px 10px 20px 40px;
-
-      background-image: url(../../../../assets/img/sections/farms/bg-1.svg);
-    }
-
-    &--info {
-      @include b(mobile) {
-        button {
-          margin-top: 15px;
-        }
-      }
+    @include b(tablet) {
+      margin-bottom: 20px;
+      padding: 0 32px;
     }
   }
 
   &__title {
+    color: #fff;
     @include b(mobile) {
       font-size: 40px !important;
     }
   }
 
-  &__sibtitle {
-    margin-top: 16px;
+  &__subtitle {
+    color: #fff;
+    margin-top: 12px;
   }
 
   &__auc {
+    display: none;
     padding: 21px 26px;
+    background: $bg-purple;
     @include b(mobile) {
       padding: 23px 10px;
+      display: block;
     }
 
     &-img {
       margin-right: 14px;
+    }
+    &-btn {
+      margin-left: 58px;
     }
   }
 
@@ -57,41 +62,5 @@
     @include b(mobile) {
       margin-left: 0;
     }
-  }
-
-  .show-enter {
-    margin-top: 0;
-
-    max-height: 0;
-
-    opacity: 0;
-  }
-
-  .show-enter-active {
-    margin-top: 15px;
-
-    max-height: 45px;
-
-    opacity: 1;
-
-    transition: margin-top 300ms, max-height 300ms, opacity 500ms;
-  }
-
-  .show-exit {
-    margin-top: 15px;
-
-    max-height: 45px;
-
-    opacity: 1;
-  }
-
-  .show-exit-active {
-    margin-top: 0;
-
-    max-height: 0;
-
-    opacity: 0;
-
-    transition: margin-top 300ms, max-height 300ms, opacity 300ms;
   }
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 // import UnknownImg from '@/assets/img/currency/unknown.svg';
 import { Button, RadioGroup } from '@/components/atoms';
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
+// import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import { Modal } from '@/components/molecules';
 import { PoolsCollectPopover } from '@/components/sections/Pools/Popovers';
 import useHarvestPool from '@/hooks/pools/useHarvestPool';
@@ -69,17 +70,23 @@ const CollectModal: React.FC = observer(() => {
   const compound = async () => {
     try {
       await onStake(fullBalance, earningTokenDecimals);
-      successNotification(
-        'Compounded!',
-        `Your ${earningTokenSymbol} earnings have been re-invested into the pool!`,
+      toast.success(
+        `Compounded! Your ${earningTokenSymbol} earnings have been re-invested into the pool!`,
       );
+      // successNotification(
+      //   'Compounded!',
+      //   `Your ${earningTokenSymbol} earnings have been re-invested into the pool!`,
+      // );
       poolsCollect.close();
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
       );
+      // errorNotification(
+      //   'Error',
+      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      // );
     } finally {
       setPendingTx(false);
     }
@@ -88,17 +95,23 @@ const CollectModal: React.FC = observer(() => {
   const harvest = async () => {
     try {
       await onReward();
-      successNotification(
-        'Harvested!',
-        `Your ${earningTokenSymbol} earnings have been sent to your wallet!`,
+      toast.success(
+        `Harvested! Your ${earningTokenSymbol} earnings have been sent to your wallet!`,
       );
+      // successNotification(
+      //   'Harvested!',
+      //   `Your ${earningTokenSymbol} earnings have been sent to your wallet!`,
+      // );
       poolsCollect.close();
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
       );
+      // errorNotification(
+      //   'Error',
+      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      // );
     } finally {
       setPendingTx(false);
     }

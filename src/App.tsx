@@ -1,23 +1,26 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
+import Header from '@/components/sections/Header';
+
 import { MetamaskErrModal, RoiModal } from './components/molecules';
-import { Header } from './components/sections';
 import {
-  CollectiblesPage,
-  DaoListPage,
-  DaoPage,
-  DaoProposalPage,
+  // CollectiblesPage,
+  // DaoListPage,
+  // DaoPage,
+  // DaoProposalPage,
   FarmsPage,
-  LotteryPage,
+  // LotteryPage,
   PoolsPage,
-  TeamPage,
-  TeamsPage,
+  // TeamPage,
+  // TeamsPage,
   TradePage,
 } from './pages';
 import { useMst } from './store';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
 
 const App: React.FC = observer(() => {
@@ -53,18 +56,19 @@ const App: React.FC = observer(() => {
           ]}
           component={TradePage}
         />
-        <Route exact path={['/lottery/:id', '/lottery']} component={LotteryPage} />
+        {/* <Route exact path={['/lottery/:id', '/lottery']} component={LotteryPage} /> */}
         <Route exact path="/farms" component={FarmsPage} />
-        <Route exact path="/pools" component={PoolsPage} />
-        <Route exact path="/collectibles" component={CollectiblesPage} />
-        <Route exact path="/teams" component={TeamsPage} />
-        <Route exact path="/team/:id" component={TeamPage} />
-        <Route exact path="/dao" component={DaoListPage} />
-        <Route strict exact path="/dao/:id" component={DaoPage} />
-        <Route exact path="/dao/proposal/create" component={DaoProposalPage} />
+        <Route exact path="/staking" component={PoolsPage} />
+        {/* <Route exact path="/collectibles" component={CollectiblesPage} /> */}
+        {/* <Route exact path="/teams" component={TeamsPage} /> */}
+        {/* <Route exact path="/team/:id" component={TeamPage} /> */}
+        {/* <Route exact path="/dao" component={DaoListPage} /> */}
+        {/* <Route strict exact path="/dao/:id" component={DaoPage} /> */}
+        {/* <Route exact path="/dao/proposal/create" component={DaoProposalPage} /> */}
       </Switch>
       <MetamaskErrModal />
       <RoiModal />
+      <ToastContainer position="bottom-right" theme="dark" />
     </div>
   );
 });

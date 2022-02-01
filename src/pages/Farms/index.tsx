@@ -31,6 +31,7 @@ type IFilterFunc = (farm: Farm) => boolean | typeof Array.prototype.filter;
 enum FarmsType {
   live = 'live',
   finished = 'finished',
+  // discontinued = 'discontinued',
 }
 type IFarmsType = keyof typeof FarmsType;
 
@@ -60,7 +61,7 @@ const Farms: React.FC = observer(() => {
   const [sortOption, setSortOption] = useState(SortOptions.hot);
 
   const farmsWithoutFirstLpFarmWithStakedValue = useMemo((): FarmWithStakedValue[] => {
-    const farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsWithoutFirstLpFarm.map((farm) => {
+    return farmsWithoutFirstLpFarm.map((farm) => {
       if (!farm.lpTotalInQuoteToken || !farm.quoteToken.busdPrice) {
         return farm;
       }
@@ -78,8 +79,6 @@ const Farms: React.FC = observer(() => {
 
       return { ...farm, apr: refineryRewardsApr, lpRewardsApr, liquidity: totalLiquidity };
     });
-
-    return farmsToDisplayWithAPR;
   }, [farmsWithoutFirstLpFarm, isActive, refineryPrice]);
 
   // console.log(farmsWithoutFirstLpFarmWithStakedValue);
@@ -231,6 +230,10 @@ const Farms: React.FC = observer(() => {
               text: 'Finished',
               value: FarmsType.finished,
             },
+            // {
+            //   text: 'Discontinued',
+            //   value: FarmsType.discontinued,
+            // },
           ]}
           radioGroupClassName="farms__i-contr"
           searchPlaceholder="Search Farms"

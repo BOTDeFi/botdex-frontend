@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 
 import { farms as farmsConfig } from '@/config';
-import priceHelperLpsConfig from '@/config/priceHelperLps';
+// import priceHelperLpsConfig from '@/config/priceHelperLps';
 import { FarmWithoutUserData } from '@/types';
 
 import {
@@ -60,9 +60,10 @@ const FarmsModel = types
       const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid));
 
       // Add price helper farms
-      const farmsWithPriceHelpers = farmsToFetch.concat(priceHelperLpsConfig);
+      // concat(priceHelperLpsConfig )
+      // const farmsWithPriceHelpers = farmsToFetch; // .concat(priceHelperLpsConfig);
 
-      const farms = await fetchFarms(farmsWithPriceHelpers);
+      const farms = await fetchFarms(farmsToFetch);
       const farmsWithPrices = await fetchFarmsPrices(farms);
 
       // Filter out price helper LP config farms (there can be farms with "pid: -1" which must be excluded)
@@ -105,7 +106,6 @@ const FarmsModel = types
       const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsToFetch);
       const userStakedBalances = await fetchFarmUserStakedBalances(account, farmsToFetch);
       const userFarmEarnings = await fetchFarmUserEarnings(account, farmsToFetch);
-
       this.fetchFarmUserDataAsyncSuccess(
         userFarmAllowances.map((farmAllowance: any, index: number) => {
           return {

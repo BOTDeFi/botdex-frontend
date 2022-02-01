@@ -1,11 +1,15 @@
-@import 'src/styles/vars';
-
+@import '@/styles/vars';
+@import '@/styles/mixins/media';
 .modal {
   padding-bottom: 0;
 
   overflow: hidden;
-
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+  color: $text-main-color;
+  @include b(extramobile) {
+    width: calc(100% - 20px) !important;
+  }
 
   .ant-modal-close {
     top: 5px;
@@ -18,6 +22,9 @@
     }
   }
 
+  .ant-modal-content {
+    background: $bg-dop;
+  }
   .ant-modal-body {
     padding: 0;
   }

@@ -27,7 +27,7 @@ const useHarvestPoolDeposit = (smartRefinerInitContract: Contract) => {
   return { harvestPool };
 };
 
-const useHarvestPool = (poolId: number) => {
+const useHarvestPool = (poolId: number): any => {
   const { user, pools } = useMst();
 
   const [foundPool] = poolsConfig.filter((pool) => pool.id === poolId);

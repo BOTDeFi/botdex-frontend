@@ -27,6 +27,7 @@ export interface ISettings {
   slippage: IActiveSlippage;
   txDeadline: number;
   txDeadlineUtc: number;
+  isAudio: boolean;
 }
 
 export interface IActiveSlippage {
@@ -79,6 +80,7 @@ export interface ILiquidityInfo {
     deposited?: number | string;
     receive?: number | string;
   };
+  settings: ISettings;
 }
 
 export enum PoolFarmingMode {
@@ -133,6 +135,20 @@ export interface Pool extends PoolConfig {
   earningTokenPrice?: number;
   isAutoVault?: boolean;
   userData?: PoolUserData;
+}
+
+interface StakeUserData {
+  amount: number;
+  start: number;
+}
+
+export interface Stake {
+  id: number;
+  amountStaked: number;
+  timeLockUp: number;
+  APY: number;
+  isDead: boolean;
+  userData?: StakeUserData;
 }
 
 export enum DetailsBadgeType {
@@ -192,3 +208,4 @@ export enum Precisions {
 }
 
 export type TimestampSeconds = number;
+export type TNullable<T> = T | null;

@@ -8,7 +8,7 @@ import { Button } from '@/components/atoms';
 import { contracts } from '@/config';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
-import { ILiquidityInfo } from '@/types';
+import { ILiquidityInfo, ISettings } from '@/types';
 import { clogError } from '@/utils/logger';
 
 import { LiquidityInfoModal, TradeBox } from '..';
@@ -23,6 +23,7 @@ const USER_PAIRS = gql`
           id
           reserve0
           reserve1
+          totalSupply
           token0Price
           token1Price
           token0 {
@@ -41,7 +42,7 @@ const USER_PAIRS = gql`
   }
 `;
 
-const YourLiquidity: React.FC = observer(() => {
+const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings }) => {
   const { user } = useMst();
   const { metamaskService } = useWalletConnectorContext();
 
@@ -113,7 +114,7 @@ const YourLiquidity: React.FC = observer(() => {
         <Button className="y-liquidity__btn" link="/trade/liquidity/add">
           <span className="text-md text-white text-bold">Add liquidity</span>
         </Button>
-        <div className="y-liquidity__title text-black  text-md">Your Liquidity</div>
+        <div className="y-liquidity__title text-md">Your Liquidity</div>
         <div className="y-liquidity__box">
           {user.address && loading ? 'Loading' : ''}
 
@@ -146,6 +147,7 @@ const YourLiquidity: React.FC = observer(() => {
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
                       },
+                      settings,
                     })
                   }
                   onKeyDown={() =>
@@ -165,6 +167,7 @@ const YourLiquidity: React.FC = observer(() => {
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
                       },
+                      settings,
                     })
                   }
                   role="button"
@@ -172,7 +175,7 @@ const YourLiquidity: React.FC = observer(() => {
                 >
                   <img src={UnknownImg} alt="" />
                   <img src={UnknownImg} alt="" />
-                  <span className="text-black text-smd">{`${liquidity.pair.token0.symbol}/${liquidity.pair.token1.symbol}`}</span>
+                  <span className="text-smd">{`${liquidity.pair.token0.symbol}/${liquidity.pair.token1.symbol}`}</span>
                 </div>
               ))}
             </Scrollbar>
@@ -181,7 +184,7 @@ const YourLiquidity: React.FC = observer(() => {
           )}
 
           {user.address && !loading && !liquidities.length ? (
-            <div className="text-center  text-black box-f-fd-c box-f-ai-c">
+            <div className="text-center box-f-fd-c box-f-ai-c">
               <div className="y-liquidity__text">No liquidity found.</div>
             </div>
           ) : (
@@ -189,14 +192,12 @@ const YourLiquidity: React.FC = observer(() => {
           )}
 
           {!user.address ? (
-            <div className="text-center  text-black">
-              Connect to a wallet to view your liquidity.
-            </div>
+            <div className="text-center">Connect to a wallet to view your liquidity.</div>
           ) : (
             ''
           )}
         </div>
-        <div className="text-gray">
+        <div className="text-gray-2">
           <p>Don&lsquo;t see a pool you joined?</p>
           <p>If you staked your LP tokens in a farm, unstake them to see them here.</p>
         </div>

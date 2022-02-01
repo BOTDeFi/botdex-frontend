@@ -16,7 +16,7 @@ const gasOptions = {
   gas: 300000,
 };
 
-export const useSmartRefinerUnstake = (smartRefinerInitContract: Contract) => {
+export const useSmartRefinerUnstake = (smartRefinerInitContract: Contract): any => {
   const { callWithGasPrice } = useCallWithGasPrice();
 
   const smartRefinerUnstake = useCallback(
@@ -36,7 +36,7 @@ export const useSmartRefinerUnstake = (smartRefinerInitContract: Contract) => {
   return { smartRefinerUnstake };
 };
 
-const useUnstakePool = (poolId: number) => {
+const useUnstakePool = (poolId: number): any => {
   const { metamaskService } = useWalletConnectorContext();
   const { user, pools } = useMst();
 
@@ -47,7 +47,7 @@ const useUnstakePool = (poolId: number) => {
   );
   const { smartRefinerUnstake } = useSmartRefinerUnstake(smartRefinerInitContract);
 
-  const masterRefinerContract = getContract('MASTER_REFINER');
+  const masterRefinerContract = getContract('MASTER_BOTDEX');
   const { unstakeFarm } = useUnstakeFarm(masterRefinerContract);
 
   const handleUnstake = useCallback(
@@ -57,9 +57,9 @@ const useUnstakePool = (poolId: number) => {
       } else {
         await smartRefinerUnstake(amount, decimals);
       }
-      pools.updateUserStakedBalance(poolId, user.address);
-      pools.updateUserBalance(poolId, user.address);
-      pools.updateUserPendingReward(poolId, user.address);
+      await pools.updateUserStakedBalance(poolId, user.address);
+      await pools.updateUserBalance(poolId, user.address);
+      await pools.updateUserPendingReward(poolId, user.address);
     },
     [poolId, pools, user.address, smartRefinerUnstake, unstakeFarm],
   );
@@ -69,7 +69,7 @@ const useUnstakePool = (poolId: number) => {
 
 export default useUnstakePool;
 
-export const useNonVaultUnstake = (poolId: number, onFinally: () => void) => {
+export const useNonVaultUnstake = (poolId: number, onFinally: () => void): any => {
   const { onUnstake } = useUnstakePool(poolId);
 
   const nonVaultUnstake = useCallback(

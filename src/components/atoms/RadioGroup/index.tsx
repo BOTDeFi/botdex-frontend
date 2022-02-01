@@ -29,7 +29,7 @@ const RadioGroup: React.FC<IRadioGroup> = React.memo(
             value={item.value}
             className={cn('r-group__btn', buttonClassName)}
           >
-            <span className="text">{item.text}</span>
+            <span className="text text-white">{item.text}</span>
           </Button>
         ))}
       </Group>

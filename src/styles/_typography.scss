@@ -1,5 +1,4 @@
-@import 'vars';
-@import 'mixins/media';
+@import './mixins/media';
 
 .h1 {
   font-size: 70px;
@@ -16,7 +15,7 @@
 
   &-lg {
     font-size: 60px;
-    line-height: 71px;
+    line-height: 75px;
   }
 }
 
@@ -26,13 +25,14 @@
 
   &-lg {
     font-size: 40px;
-    line-height: 47px;
+    line-height: 60px;
   }
 }
 
 .text {
   font-size: 16px;
-  line-height: 19px;
+  line-height: 20px;
+  letter-spacing: -0.1px;
 
   &-ssm {
     font-size: 14px;
@@ -46,17 +46,17 @@
 
   &-sm {
     font-size: 15px;
-    line-height: 18px;
+    line-height: 19px;
   }
 
   &-smd {
     font-size: 18px;
-    line-height: 21px;
+    line-height: 22px;
   }
 
   &-md {
     font-size: 20px;
-    line-height: 24px;
+    line-height: 25px;
   }
 
   &-lmd {
@@ -91,12 +91,11 @@
   }
 
   &-white {
-    color: #fff;
+    color: $text-main-color;
   }
 
   &-gray {
     color: $gray;
-    opacity: 0.5;
   }
 
   &-gray-2 {
@@ -159,9 +158,15 @@
     display: block;
     overflow: hidden;
 
-    max-width: 220px;
+    max-width: 180px;
 
     white-space: nowrap;
     text-overflow: ellipsis;
+    @include b(extramobile) {
+      max-width: 220px;
+    }
+  }
+  &-inter {
+    font-family: 'Inter', sans-serif;
   }
 }

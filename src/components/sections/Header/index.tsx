@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 
-import Burger from '@/assets/img/icons/burger-white.svg';
-import Close from '@/assets/img/icons/close-white.svg';
-import logo from '@/assets/img/icons/logo-m-new.svg';
-
-import { Menu } from '../index';
+import logo from '@/assets/img/icons/logo.svg';
+import { Button } from '@/components/atoms';
+import { OutsideClick, WalletModal } from '@/components/sections';
+import Menu from '@/components/sections/Menu';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import { useMst } from '@/store';
 
 import './Header.scss';
 
-const Header: React.FC = React.memo(() => {
+const Header: React.FC = observer(() => {
   const [isBurger, setIsBurger] = useState(false);
+  const [isWalletModalVisible, setWalletModalVisible] = useState(false);
+  const { user } = useMst();
+  const { connect } = useWalletConnectorContext();
+  const location = useLocation();
 
   const handleClose = () => {
     setIsBurger(false);
@@ -20,7 +27,7 @@ const Header: React.FC = React.memo(() => {
     if (isBurger) {
       document.body.classList.add('hide-scroll');
     } else document.body.classList.remove('hide-scroll');
-  }, [isBurger]);
+  }, [location, isBurger]);
 
   return (
     <>
@@ -32,20 +39,55 @@ const Header: React.FC = React.memo(() => {
           className={classNames('header-burger', { 'header-burger--active': isBurger })}
           onClick={() => setIsBurger(!isBurger)}
         >
-          {isBurger ? (
-            <img src={Close} alt="close white icon" />
-          ) : (
-            <img src={Burger} alt="nav burger white" />
-          )}
+          <div className="header-burger__line header-burger__line--1" />
+          <div className="header-burger__line header-burger__line--2" />
+          <div className="header-burger__line header-burger__line--3" />
         </div>
         <div className="header__logo">
-          <img src={logo} alt="logo" />
-          <div className="header__logo__title">BOTDEX</div>
+          <img src={logo} alt="logo" className="header__logo__img" />
+          <div className="header__logo__title">
+            <span>BOT</span>Swap
+          </div>
         </div>
       </section>
-      <div className={`menu-mob ${isBurger && 'menu-mob--active'}`}>
-        <Menu onClick={handleClose} />
+      <div className="connect_wrapper">
+        <div className="connect_container">
+          {!user.address ? (
+            <Button
+              className={`connect ${
+                (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
+              }`}
+              size="md"
+              onClick={connect}
+            >
+              <span className="text-bold">Connect Wallet</span>
+            </Button>
+          ) : (
+            <Button
+              className={`connect ${
+                (location.pathname === '/farms' || location.pathname === '/staking') && 'hide'
+              }`}
+              size="md"
+              onClick={() => setWalletModalVisible(true)}
+            >
+              <span className="text-bold text-address">{user.address}</span>
+            </Button>
+          )}
+        </div>
       </div>
+      <OutsideClick onClick={handleClose}>
+        <div className={`menu-mob ${isBurger && 'menu-mob--active'}`}>
+          <Menu onClick={handleClose} />
+        </div>
+      </OutsideClick>
+      {user.address ? (
+        <WalletModal
+          isVisible={isWalletModalVisible}
+          handleClose={() => setWalletModalVisible(false)}
+        />
+      ) : (
+        ''
+      )}
     </>
   );
 });

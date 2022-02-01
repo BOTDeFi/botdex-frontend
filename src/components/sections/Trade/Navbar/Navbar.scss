@@ -1,14 +1,22 @@
 @import 'src/styles/vars';
+@import 'src/styles/mixins/media';
 
 .trade__nav {
+  margin: 0 auto;
   padding: 5px 8px;
 
   width: 100%;
+  max-width: 420px;
 
-  background: $dark-grey;
+  background: $bg-dop;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+
+  @include b(mobile) {
+    max-width: calc(100% - 20px);
+  }
 
   &-item {
-    padding: 13px 0 14px;
+    padding: 12px;
 
     display: block;
 
@@ -19,8 +27,7 @@
     border-radius: 12px;
 
     &.active {
-      color: #fff;
-      background: $purple;
+      background: $accent-gradient;
     }
   }
 }

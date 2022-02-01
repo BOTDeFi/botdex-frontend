@@ -6,6 +6,9 @@
 .farms-table {
   margin-top: 45px;
   padding: 35px 0;
+  border-radius: 40px;
+  background: $bg-dop;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   @include b(tablet) {
     margin-top: 30px;
@@ -23,8 +26,6 @@
 
     display: grid;
     align-items: center;
-
-    border-bottom: 1px solid #eaeaea;
     grid-template-columns: $columns;
     grid-column-gap: 20px;
   }

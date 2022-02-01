@@ -4,11 +4,10 @@ import { useMst } from '@/store';
 import { Farm } from '@/types';
 import { BIG_ZERO } from '@/utils/constants';
 import { getBalanceAmount } from '@/utils/formatters';
-import { clog } from '@/utils/logger';
 
 export const useFarmFromLpSymbol = (lpSymbol: string): Farm => {
   const { farms } = useMst();
-  const [farm] = farms.data.filter((f) => f.lpSymbol === lpSymbol);
+  const [farm] = farms.data.filter((f: any) => f.lpSymbol === lpSymbol);
   return farm as Farm;
 };
 
@@ -27,7 +26,7 @@ export const useBusdPriceFromPid = (pid: number): BigNumber => {
   return BIG_ZERO;
 };
 
-export const useLpTokenPrice = (symbol: string) => {
+export const useLpTokenPrice = (symbol: string): any => {
   const farm = useFarmFromLpSymbol(symbol);
   const farmTokenPriceInUsd = useBusdPriceFromPid(farm.pid);
   let lpTokenPrice = BIG_ZERO;
@@ -40,8 +39,6 @@ export const useLpTokenPrice = (symbol: string) => {
     // Divide total value of all tokens, by the number of LP tokens
     const totalLpTokens = getBalanceAmount(new BigNumber(farm.lpTotalSupply));
     lpTokenPrice = overallValueOfAllTokensInFarm.div(totalLpTokens);
-
-    clog('TEST1', farmTokenPriceInUsd, farm.tokenAmountTotal, overallValueOfAllTokensInFarm);
   }
 
   return lpTokenPrice;

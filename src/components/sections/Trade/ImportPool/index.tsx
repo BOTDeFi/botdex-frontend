@@ -1,8 +1,8 @@
 import React from 'react';
 
 import BnbImg from '@/assets/img/currency/bnb.svg';
+import { ITokens } from '@/types';
 
-import { ITokens } from '../../../../types';
 import { ChooseTokens, TradeBox } from '..';
 
 import './ImportPool.scss';

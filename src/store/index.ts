@@ -4,7 +4,16 @@ import { Instance, onSnapshot, types } from 'mobx-state-tree';
 import { clogData } from '@/utils/logger';
 
 import { initialState as roiInitialState } from './Models/Modals/RoiModal';
-import { DaoModel, FarmsModel, ModalsModel, PoolsModel, TokensModel, UserModel } from './Models';
+import {
+  DaoModel,
+  FarmsModel,
+  ModalsModel,
+  PairsModel,
+  PoolsModel,
+  StakesModel,
+  TokensModel,
+  UserModel,
+} from './Models';
 
 const RootModel = types.model({
   user: UserModel,
@@ -13,10 +22,14 @@ const RootModel = types.model({
   pools: PoolsModel,
   farms: FarmsModel,
   dao: DaoModel,
+  pairs: PairsModel,
+  stakes: StakesModel,
 });
 export const Store = RootModel.create({
   user: {
     address: '',
+    type: 'from',
+    balance: 0,
   },
   modals: {
     metamaskErr: {
@@ -26,14 +39,12 @@ export const Store = RootModel.create({
       state: roiInitialState,
     },
     stakeUnstake: {
-      isOpen: false,
-      isStaking: true,
-      isAutoVault: false,
+      // isOpen: false,
+      // isStaking: true,
+      // isAutoVault: false,
       poolId: 0,
     },
-    poolsCollect: {
-      isOpen: false,
-    },
+    poolsCollect: {},
     farmsStakeUnstake: {
       isOpen: false,
       farmId: 0,
@@ -66,6 +77,31 @@ export const Store = RootModel.create({
   },
   dao: {
     blockNumber: '0',
+  },
+  pairs: {
+    pair: {
+      name: '',
+      id: '',
+      token0: {
+        symbol: '',
+        name: '',
+        id: '',
+        derivedUSD: '',
+      },
+      token1: {
+        symbol: '',
+        name: '',
+        id: '',
+        derivedUSD: '',
+      },
+    },
+    currentPairData: {
+      points: [],
+      id: '',
+    },
+  },
+  stakes: {
+    data: [],
   },
 });
 

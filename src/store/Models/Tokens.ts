@@ -22,23 +22,23 @@ const TokensModel = types
   .actions((self) => {
     const getTokens = flow(function* getTokens(type: 'top' | 'default' | 'extended' | 'imported') {
       try {
-        let responce: any = {};
+        let response: any = {};
         switch (type) {
           case 'top':
-            responce = yield tokensApi.getTopTokens();
+            response = yield tokensApi.getTopTokens();
             break;
           case 'extended':
-            responce = yield tokensApi.getExtendedTokens();
+            response = yield tokensApi.getExtendedTokens();
             break;
           case 'imported':
-            responce.data = localStorage.importTokens ? JSON.parse(localStorage.importTokens) : [];
+            response.data = localStorage.importTokens ? JSON.parse(localStorage.importTokens) : [];
             break;
           default:
-            responce = yield tokensApi.getDefaultTokens();
+            response = yield tokensApi.getDefaultTokens();
             break;
         }
 
-        self[type] = responce.data;
+        self[type] = response.data;
       } catch (err) {
         clogError(err);
       }

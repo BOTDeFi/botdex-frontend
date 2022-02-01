@@ -6,13 +6,7 @@ const DetailsSectionTitle: React.FC<{ className?: string; title: string | JSX.El
   title,
 }) => {
   return (
-    <div
-      className={classNames(
-        className,
-        'farms-table-row__details-title',
-        'text-black text-ssm text-upper',
-      )}
-    >
+    <div className={classNames(className, 'farms-table-row__details-title', 'text-ssm text-upper')}>
       {title}
     </div>
   );

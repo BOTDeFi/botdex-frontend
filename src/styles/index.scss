@@ -1,5 +1,6 @@
 @import './reset';
 @import 'mixins/media';
+@import 'mixins/displays.scss';
 @import './fonts';
 @import './vars';
 @import './components/index.scss';
@@ -12,10 +13,11 @@ body {
   height: max-content;
   min-height: 100vh;
 
-  font-family: ReadexPro, sans-serif;
+  font-family: 'Readex Pro', sans-serif;
   font-weight: 400;
 
-  color: #fff;
+  color: $text-main-color;
+  background: $bg-main-color;
 
   &.hide-scroll {
     overflow: hidden;
@@ -24,6 +26,23 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+
+  color: $text-main-color;
+
+  &:hover {
+    color: $text-main-color;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $text-main-color;
 }
 
 #root {
@@ -42,8 +61,10 @@ body {
   height: 100%;
 
   font-size: 16px;
-  line-height: 19px;
+  line-height: 20px;
   flex-grow: 2;
+
+  background: $bg-main-color;
 
   &__connect {
     @include b(tablet) {
@@ -114,6 +135,9 @@ main {
   padding-right: 25px !important;
 }
 
-a:hover {
-  color: #fff;
+.Toastify__toast-theme--dark {
+  background: $bg-dop;
+  color: $text-main-color;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }

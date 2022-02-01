@@ -1,6 +1,6 @@
 import { FarmConfig } from '@/types';
-
-import { tokens } from './tokens';
+//
+// import { tokens } from './tokens';
 
 const priceHelperLps: FarmConfig[] = [
   /**
@@ -20,16 +20,16 @@ const priceHelperLps: FarmConfig[] = [
   //   quoteToken: tokens.wbnb,
   //   categoryType: 'core',
   // },
-  {
-    pid: -1,
-    lpSymbol: 'BUSD-BNB LP',
-    lpAddresses: {
-      97: '0x112Dc48d876F4179627F0A29a016E6F130b07E7E',
-    },
-    token: tokens.busd,
-    quoteToken: tokens.wbnb,
-    categoryType: 'core',
-  },
+  // {
+  //   pid: -1,
+  //   lpSymbol: 'BUSD-BNB LP',
+  //   lpAddresses: {
+  //     97: '0x112Dc48d876F4179627F0A29a016E6F130b07E7E',
+  //   },
+  //   token: tokens.busd,
+  //   quoteToken: tokens.wbnb,
+  //   categoryType: 'core',
+  // },
 ];
 
 export default priceHelperLps;

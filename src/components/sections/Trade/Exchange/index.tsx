@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
+import { Button } from '@/components/atoms';
+import { ChooseTokens, TradeBox } from '@/components/sections/Trade';
+import { tokens } from '@/config';
+import { useGetHoursPairs, useGetPair } from '@/services/api/refinery-finance-pairs';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
+import { ISettings, ITokens } from '@/types';
 import { clogError } from '@/utils/logger';
-
-import MetamaskService from '../../../../services/web3';
-import { ISettings, ITokens } from '../../../../types';
-import { Button } from '../../../atoms';
-import { ChooseTokens, TradeBox } from '..';
 
 import './Exchange.scss';
 
@@ -21,11 +24,12 @@ interface IExchange {
   isAllowanceTo: boolean;
   handleApproveTokens: () => void;
   settings: ISettings;
-  tokensResurves: any;
+  tokensReserves: any;
   maxFrom: '';
   maxTo: '';
   isLoadingExchange: boolean;
   isApproving: boolean;
+  pairAddress?: any;
 }
 
 const Exchange: React.FC<IExchange> = observer(
@@ -40,32 +44,129 @@ const Exchange: React.FC<IExchange> = observer(
     maxFrom,
     maxTo,
     settings,
-    tokensResurves,
+    tokensReserves,
     isLoadingExchange,
     isApproving,
+    pairAddress,
   }) => {
     const { connect, metamaskService } = useWalletConnectorContext();
-    const { user } = useMst();
+    const { user, pairs } = useMst();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const getPair = useGetPair();
+    const getPairData = useGetHoursPairs();
+
+    const fetchPair = useCallback(async () => {
+      const normalizedAddress = pairAddress.toLowerCase();
+      const [pair] = (await getPair(normalizedAddress)).pairs;
+      if (pair?.id) {
+        pairs.setPair(pair);
+        const pairData = (await getPairData(24, normalizedAddress)).pairHourDatas;
+        pairs.setCurrentPairData(normalizedAddress, pairData);
+      }
+    }, [pairAddress, getPair, getPairData, pairs]);
+
+    useEffect(() => {
+      if (pairs.pair.id !== pairAddress) {
+        fetchPair();
+      }
+    }, [fetchPair, pairAddress, pairs]);
 
     const handleSwap = async () => {
       if (tokensData.to.token && tokensData.from.token) {
+        setIsLoading(true);
+        let method;
+        if (tokensData.to.token.address && tokensData.from.token.address) {
+          method = user.type === 'from' ? 'swapExactTokensForTokens' : 'swapTokensForExactTokens';
+        } else if (tokensData.to.token.address) {
+          method = user.type === 'from' ? 'swapExactETHForTokens' : 'swapETHForExactTokens';
+        } else {
+          method = user.type === 'from' ? 'swapExactTokensForETH' : 'swapTokensForExactETH';
+        }
         try {
-          await metamaskService.createTransaction({
-            method: 'swapExactTokensForTokens',
-            contractName: 'ROUTER',
-            data: [
-              MetamaskService.calcTransactionAmount(
-                tokensData.from.amount,
-                +tokensData.from.token?.decimals,
-              ),
+          let data: any[];
+          let value;
+          if (method === 'swapETHForExactTokens') {
+            data = [
               MetamaskService.calcTransactionAmount(
                 tokensData.to.amount,
                 +tokensData.to.token?.decimals,
               ),
-              [tokensData.from.token.address, tokensData.to.token.address],
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
               user.address,
               settings.txDeadlineUtc,
-            ],
+            ];
+            value = MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token?.decimals,
+            );
+          } else if (method === 'swapExactETHForTokens') {
+            data = [
+              (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.to.amount)
+                  .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
+                  .toString(10),
+                +tokensData.to.token?.decimals,
+              )).toFixed(0),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
+            value = MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token?.decimals,
+            );
+          } else if (method === 'swapExactTokensForETH' || method === 'swapExactTokensForTokens') {
+            data = [
+              MetamaskService.calcTransactionAmount(
+                tokensData.from.amount,
+                +tokensData.from.token?.decimals,
+              ),
+              (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.to.amount)
+                  .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
+                  .toString(10),
+                +tokensData.to.token?.decimals,
+              )).toFixed(0),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
+          } else {
+            data = [
+              MetamaskService.calcTransactionAmount(
+                tokensData.to.amount,
+                +tokensData.to.token?.decimals,
+              ),
+              (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.from.amount)
+                  .plus(new BigNumber(tokensData.from.amount).times(settings.slippage.value / 100))
+                  .toString(10),
+                +tokensData.from.token?.decimals,
+              )).toFixed(0),
+              [
+                tokensData.from.token.address || tokens.wbnb.address['97'],
+                tokensData.to.token.address || tokens.wbnb.address['97'],
+              ],
+              user.address,
+              settings.txDeadlineUtc,
+            ];
+          }
+
+          await metamaskService.createTransaction({
+            method,
+            contractName: 'ROUTER',
+            data,
+            value: value ?? '0',
           });
           delete localStorage['refinery-finance-getAmountOut'];
           setTokensData({
@@ -78,8 +179,12 @@ const Exchange: React.FC<IExchange> = observer(
               amount: NaN,
             },
           });
+          toast.success('Successfully swapped tokens!');
+          setIsLoading(false);
         } catch (err) {
           clogError('swap err', err);
+          toast.error('Something went wrong');
+          setIsLoading(false);
         }
       }
     };
@@ -109,12 +214,21 @@ const Exchange: React.FC<IExchange> = observer(
           tokensData.to.amount &&
           tokensData.from.amount &&
           user.address &&
-          tokensResurves !== null ? (
+          tokensReserves !== null ? (
             <Button
               className="exchange__btn"
               onClick={handleSwap}
-              loading={isLoadingExchange}
-              loadingText={isLoadingExchange ? 'Geting exchange' : ''}
+              disabled={
+                !tokensData.from.amount ||
+                !tokensData.to.amount ||
+                +tokensData.from.amount > +maxFrom ||
+                +tokensData.to.amount > +maxTo
+              }
+              loading={isLoadingExchange || isLoading}
+              loadingText={
+                // eslint-disable-next-line no-nested-ternary
+                isLoadingExchange ? 'Getting exchange' : isLoading ? 'In progress...' : ''
+              }
             >
               <span className="text-white text-bold text-smd">Swap</span>
             </Button>
@@ -131,7 +245,7 @@ const Exchange: React.FC<IExchange> = observer(
           {tokensData.from.token &&
           tokensData.to.token &&
           (!tokensData.to.amount || !tokensData.from.amount) &&
-          tokensResurves !== null &&
+          tokensReserves !== null &&
           user.address ? (
             <Button
               className="exchange__btn"
@@ -144,30 +258,31 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {(!isAllowanceFrom || !isAllowanceTo) &&
-          tokensData.from.token &&
-          tokensData.to.token &&
           tokensData.to.amount &&
           tokensData.from.amount &&
-          tokensResurves !== null &&
+          tokensReserves !== null &&
           user.address ? (
             <Button className="exchange__btn" onClick={handleApproveTokens} loading={isApproving}>
-              <span className="text-white text-bold text-smd">Approve tokens</span>
+              <span className="text-white text-bold text-smd">
+                Approve{' '}
+                {!isAllowanceFrom ? tokensData.from.token?.symbol : tokensData.to.token?.symbol}
+              </span>
             </Button>
           ) : (
             ''
           )}
           {(!tokensData.from.token || !tokensData.to.token) &&
-          tokensResurves !== null &&
+          tokensReserves !== null &&
           user.address ? (
             <Button disabled className="exchange__btn">
-              <span className="text-white text-bold text-smd">Select a Tokens</span>
+              <span className="text-white text-bold text-smd">Select Tokens</span>
             </Button>
           ) : (
             ''
           )}
           {tokensData.from.token &&
           tokensData.to.token &&
-          tokensResurves === null &&
+          tokensReserves === null &&
           user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">

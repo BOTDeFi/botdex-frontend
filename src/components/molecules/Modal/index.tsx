@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Modal as ModalAntd } from 'antd';
 import classNames from 'classnames';
 
 import 'antd/lib/modal/style/css';
 
-import { ReactComponent as ClearImg } from '../../../assets/img/icons/close-new.svg';
+import { ReactComponent as ClearImg } from '../../../assets/img/icons/cross.svg';
 
 import './Modal.scss';
 
@@ -15,6 +15,7 @@ interface IModal {
   className?: string;
   destroyOnClose?: boolean;
   closeIcon?: boolean;
+  maskStyle?: CSSProperties;
 }
 
 const Modal: React.FC<IModal> = ({
@@ -25,6 +26,7 @@ const Modal: React.FC<IModal> = ({
   className,
   destroyOnClose = false,
   closeIcon = false,
+  maskStyle,
 }) => {
   return (
     <ModalAntd
@@ -38,6 +40,7 @@ const Modal: React.FC<IModal> = ({
       destroyOnClose={destroyOnClose}
       width={width}
       className={classNames('modal', className)}
+      maskStyle={maskStyle}
     >
       {children}
     </ModalAntd>

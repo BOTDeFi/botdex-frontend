@@ -43,14 +43,8 @@ const PoolCard: React.FC<IPoolCard> = observer(({ className, farmMode, pool }) =
       fees: { performanceFee: globalPerformanceFee },
     },
   } = useMst();
-  const {
-    earningToken,
-    stakingToken,
-    apr,
-    earningTokenPrice,
-    stakingTokenPrice,
-    isFinished,
-  } = pool;
+  const { earningToken, stakingToken, apr, earningTokenPrice, stakingTokenPrice, isFinished } =
+    pool;
   const { tokenUsdPrice: refineryUsdPrice } = useRefineryUsdPrice();
 
   const performanceFee =

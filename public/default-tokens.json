@@ -1,21 +1,9 @@
 [
   {
-    "address": "",
-    "decimals": "18",
-    "name": "bnb",
-    "symbol": "BNB"
-  },
-  {
     "address": "0xA520feb43893Cfa59845cdbBCBDdf4f6f991fbB6",
     "decimals": "18",
-    "name": "MortumToken",
+    "name": "Dai",
     "symbol": "DAI"
-  },
-  {
-    "address": "0x6053E666Fd5bF0B93779B98b502ef13599BD6443",
-    "decimals": "18",
-    "name": "UGABUGA",
-    "symbol": "UGA"
   },
   {
     "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",

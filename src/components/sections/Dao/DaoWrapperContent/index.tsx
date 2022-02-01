@@ -65,9 +65,11 @@ const getPercents = (amount: BigNumber, totalAmount: BigNumber) => {
 };
 
 const DaoWrapperContent: React.FC<IDaoWrapperContentProps> = observer(({ proposal }) => {
-  const { votes: votesRaw, votingPowersLoading, updateProposalVotes } = useProposalVotes(
-    proposal?.id,
-  );
+  const {
+    votes: votesRaw,
+    votingPowersLoading,
+    updateProposalVotes,
+  } = useProposalVotes(proposal?.id);
   const { user } = useMst();
 
   if (!proposal) return <DaoWrapperContentSkeleton />;
