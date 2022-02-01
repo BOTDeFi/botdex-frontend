@@ -7,7 +7,7 @@ import { metamaskService, walletConnectorContext } from '@/services/MetamaskConn
 import MetamaskService from '@/services/web3';
 import rootStore from '@/store';
 import { IToken, ITokens } from '@/types';
-import { clogError } from '@/utils/logger';
+import { clog, clogError } from '@/utils/logger';
 
 interface ITradeWrapper {
   isAllowanceFrom: boolean;
@@ -190,39 +190,36 @@ const TradeWrapper = (
         );
 
         if (pairAddress === '0x0000000000000000000000000000000000000000') {
-          if (type === 'from') {
-            this.setState((prev) => ({
+          this.setState((prev) => {
+            const tokensData =
+              type === 'from'
+                ? {
+                    to: tokens.to,
+                    from: {
+                      token: tokens.from.token,
+                      amount:
+                        prev.tokensData.from.token?.symbol !== tokens.from.token?.symbol
+                          ? NaN
+                          : tokens.from.amount,
+                    },
+                  }
+                : {
+                    from: tokens.from,
+                    to: {
+                      token: tokens.to.token,
+                      amount:
+                        prev.tokensData.to.token?.symbol !== tokens.to.token?.symbol
+                          ? NaN
+                          : tokens.to.amount,
+                    },
+                  };
+            return {
               tokensReserves: null,
               pairAddress: '',
               isLoadingExchange: false,
-              tokensData: {
-                to: tokens.to,
-                from: {
-                  token: tokens.from.token,
-                  amount:
-                    prev.tokensData.from.token?.symbol !== tokens.from.token?.symbol
-                      ? NaN
-                      : tokens.from.amount,
-                },
-              },
-            }));
-          } else {
-            this.setState((prev) => ({
-              tokensReserves: null,
-              pairAddress: '',
-              isLoadingExchange: false,
-              tokensData: {
-                from: tokens.from,
-                to: {
-                  token: tokens.to.token,
-                  amount:
-                    prev.tokensData.to.token?.symbol !== tokens.to.token?.symbol
-                      ? NaN
-                      : tokens.to.amount,
-                },
-              },
-            }));
-          }
+              tokensData,
+            };
+          });
           return;
         }
         this.setState({
@@ -391,10 +388,9 @@ const TradeWrapper = (
             tokensData: tokens,
           });
         }
-        this.setState({
-          isLoadingExchange: false,
-        });
       } catch (err) {
+        clog('TradeWrapper.handleGetExchange()', err);
+      } finally {
         this.setState({
           isLoadingExchange: false,
         });
@@ -415,7 +411,19 @@ const TradeWrapper = (
 
     handleChangeTokensData(tokensData: ITokens, type?: 'from' | 'to') {
       if (tokensData.from.amount === 0 || tokensData.to.amount === 0) {
-        this.handleGetExchange(tokensData, type);
+        this.handleGetExchange(
+          {
+            from: {
+              ...tokensData.from,
+              amount: 0,
+            },
+            to: {
+              ...tokensData.to,
+              amount: 0,
+            },
+          },
+          type,
+        );
       } else if (tokensData.from.token && tokensData.to.token && type) {
         this.handleGetExchange(tokensData, type);
       } else {

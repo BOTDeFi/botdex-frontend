@@ -41,7 +41,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     const { user } = useMst();
     const { metamaskService } = useWalletConnectorContext();
 
-    const [time, setTime] = React.useState<any>(null);
+    const [time, setTime] = React.useState<NodeJS.Timeout | null>(null);
 
     const [tokenFrom, setTokenFrom] = React.useState<IToken | undefined>(
       initialTokenData ? initialTokenData.from.token : undefined,
@@ -63,7 +63,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     const [balanceFrom, setBalanceFrom] = React.useState<string>('');
     const [balanceTo, setBalanceTo] = React.useState<string>('');
 
-    const balanceInterval = React.useRef<any>(null);
+    const balanceInterval = React.useRef<NodeJS.Timeout | null>(null);
 
     const handleCloseSelectTokenModal = (): void => {
       setModalVisible(false);
@@ -237,134 +237,70 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
     const handleChangeTokensQuantity = React.useCallback(
       async (type: 'from' | 'to', quantity: number) => {
         user.changeType(type);
+        if (time) {
+          clearTimeout(time);
+        }
+        let timerId: NodeJS.Timeout | null = null;
         if (type === 'from') {
           // setTokenFromQuantity(quantity);
-          if (time) {
-            clearTimeout(time);
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: quantity > +balanceFrom ? +balanceFrom : quantity,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: quantity === 0 ? initialTokenData?.to.amount || NaN : 0,
-                    },
-                  },
-                  'from',
-                );
-              }, 500),
+          timerId = setTimeout(() => {
+            handleCheckAllowance(quantity);
+            handleChangeTokens(
+              {
+                from: {
+                  token: tokenFrom,
+                  amount: quantity > +balanceFrom ? +balanceFrom : quantity,
+                },
+                to: {
+                  token: tokenTo,
+                  amount: initialTokenData?.to.amount || NaN,
+                  // amount: quantity === 0 ? initialTokenData?.to.amount || NaN : 0,
+                },
+              },
+              'from',
             );
-          } else {
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: quantity > +balanceFrom ? +balanceFrom : quantity,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: quantity === 0 ? initialTokenData?.to.amount || NaN : 0,
-                    },
-                  },
-                  'from',
-                );
-              }, 500),
-            );
-          }
+          }, 500);
         }
         if (type === 'to') {
           // setTokenToQuantity(quantity);
-          if (time) {
-            clearTimeout(time);
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: quantity === 0 ? initialTokenData?.from.amount || NaN : 0,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: quantity > +balanceTo ? +balanceFrom : quantity,
-                    },
-                  },
-                  'to',
-                );
-              }, 500),
+          timerId = setTimeout(() => {
+            handleCheckAllowance(quantity);
+            handleChangeTokens(
+              {
+                from: {
+                  token: tokenFrom,
+                  amount: initialTokenData?.from.amount || NaN,
+                  // amount: quantity === 0 ? initialTokenData?.from.amount || NaN : 0,
+                },
+                to: {
+                  token: tokenTo,
+                  amount: quantity > +balanceTo ? +balanceFrom : quantity,
+                },
+              },
+              'to',
             );
-          } else {
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: quantity === 0 ? initialTokenData?.from.amount || NaN : 0,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: quantity > +balanceTo ? +balanceFrom : quantity,
-                    },
-                  },
-                  'to',
-                );
-              }, 500),
-            );
-          }
+          }, 500);
         }
-        if (quantity === 0) {
-          if (time) {
-            clearTimeout(time);
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: 0,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: 0,
-                    },
-                  },
-                  'to',
-                );
-              }, 500),
-            );
-          } else {
-            setTime(
-              setTimeout(() => {
-                handleCheckAllowance(quantity);
-                handleChangeTokens(
-                  {
-                    from: {
-                      token: tokenFrom,
-                      amount: 0,
-                    },
-                    to: {
-                      token: tokenTo,
-                      amount: 0,
-                    },
-                  },
-                  'to',
-                );
-              }, 500),
-            );
-          }
-        }
+        // if (quantity === 0) {
+        //   const timerId = setTimeout(() => {
+        //     handleCheckAllowance(quantity);
+        //     handleChangeTokens(
+        //       {
+        //         from: {
+        //           token: tokenFrom,
+        //           amount: 0,
+        //         },
+        //         to: {
+        //           token: tokenTo,
+        //           amount: 0,
+        //         },
+        //       },
+        //       'to',
+        //     );
+        //   }, 500);
+        //   setTime(timerId);
+        // }
+        setTime(timerId);
       },
       [
         balanceFrom,
@@ -488,7 +424,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     value={tokenFromQuantity}
                     placeholder="0"
                     max={maxFrom}
-                    onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
+                    // onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
                     onChange={(value: number | string) =>
                       handleChangeTokensQuantity('from', +value)
                     }
@@ -563,7 +499,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   <InputNumber
                     value={tokenToQuantity}
                     placeholder="0"
-                    onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
+                    // onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}
                     max={maxTo}
                   />
