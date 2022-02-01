@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
+import { Spinner } from '@/components/atoms';
 import { CollectModal, StakeUnstakeModal } from '@/components/organisms';
 import { PoolsPreview, StakeCard } from '@/components/sections/Pools';
 // import useRefresh from '@/hooks/useRefresh';
@@ -26,9 +27,13 @@ const Pools: React.FC = observer(() => {
         <div className="row">
           <PoolsPreview />
           <div className="pools__content">
-            <div className="pools__content-card-view">
-              {stakes && stakes.map((stake: any) => <StakeCard key={stake.id} stake={stake} />)}
-            </div>
+            {stakeStore.data.length > 0 ? (
+              <div className="pools__content-card-view">
+                {stakes && stakes.map((stake: any) => <StakeCard key={stake.id} stake={stake} />)}
+              </div>
+            ) : (
+              <Spinner />
+            )}
           </div>
         </div>
       </main>

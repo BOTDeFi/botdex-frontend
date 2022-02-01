@@ -183,6 +183,10 @@
     }
 
     &-box {
+      &.right-box {
+        padding: 20px 30px;
+        @include flex(column, center, space-between);
+      }
       align-self: stretch;
       @include flex(column, center, center);
       padding: 20px 30px 40px;
@@ -218,6 +222,9 @@
     &-title {
       margin-bottom: 13px;
     }
+    .lp-staked {
+      margin-bottom: 0;
+    }
 
     &-staked-values-group {
       margin-right: 10px;
@@ -226,6 +233,9 @@
     &-staked-value {
       margin-bottom: 5px;
     }
+  }
+  &__value-in-usd {
+    //margin-top: auto;
   }
 
   &__btn-mobile {

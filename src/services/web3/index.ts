@@ -368,24 +368,20 @@ export default class MetamaskService {
     approvedAddress,
     walletAddress,
     tokenAddress,
-    amount,
   }: {
     contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOTDEX_STAKING' | 'BOT';
     approvedAddress?: string;
     walletAddress?: string;
     tokenAddress: string;
-    amount?: string | number;
   }): Promise<any> {
     try {
       const approveMethod = MetamaskService.getMethodInterface(
         contracts[contractName].ABI,
         'approve',
       );
-      const approveAmount = amount || '115792089237316195423570985008687907853269984665640564039457584007913129639935';
-      console.log(approveAmount);
       const approveSignature = this.encodeFunctionCall(approveMethod, [
         approvedAddress || walletAddress || this.walletAddress,
-        approveAmount,
+        new BigNumber(2).pow(256).minus(1).toFixed(0, 1),
       ]);
       return this.sendTransaction({
         from: walletAddress || this.walletAddress,

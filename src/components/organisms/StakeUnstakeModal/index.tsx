@@ -10,7 +10,7 @@ import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
 import { useMst } from '@/store';
 import { enterStaking } from '@/store/stakes';
 import { getTokenUsdPrice } from '@/utils';
-import {BIG_TEN, BIG_ZERO, DEFAULT_TOKEN_POWER} from '@/utils/constants';
+import { BIG_TEN, BIG_ZERO, DEFAULT_TOKEN_POWER } from '@/utils/constants';
 
 import './StakeUnstakeModal.scss';
 
@@ -104,7 +104,6 @@ const StakeUnstakeModal: React.FC = observer(() => {
   };
 
   const handleValueChange = (newValue: ValueType | null) => {
-    console.log(newValue);
     if (newValue === null) return;
     updateInputValue(newValue);
     updatePercentByValue(newValue);

@@ -71,12 +71,14 @@ export const updateStakeData = async (id: number, address: string) => {
   const stakingContract = getContract('BOTDEX_STAKING');
   const stakeData = await stakingContract.methods.pools(id).call();
   const userData = await stakingContract.methods.userAtPoolInfo(address, id).call();
+  const reward = await calculateReward(id, address);
   return {
     amountStaked: parseInt(stakeData.amountStaked, 10),
     userData: {
       amount: parseInt(userData.amount, 10),
       start: parseInt(userData.start, 10),
     },
+    reward,
   };
 };
 

@@ -123,17 +123,17 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       if (stakedBalance.gt(0)) {
         return (
           <>
-            <DetailsSectionTitle title={`${lpSymbol} Staked`} />
+            <DetailsSectionTitle className="lp-stakedw" title={`${lpSymbol} Staked`} />
             <div className="box-f box-f-jc-sb box-f-ai-e">
               <div className="farms-table-row__details-staked-values-group">
                 <div className="farms-table-row__details-staked-value text-blue-d text-smd">
                   {displayBalance()}
                 </div>
-                <div className="text-smd">
-                  ~{displayBalanceAsUsd()} {CURRENCY_CONVERT_TO}
-                </div>
               </div>
               <FarmsStakeUnstakeButtons farm={farm} />
+            </div>
+            <div className="farms-table-row__value-in-usd text-ssm">
+              ~{displayBalanceAsUsd()} {CURRENCY_CONVERT_TO}
             </div>
           </>
         );
@@ -184,7 +184,9 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
   ]);
 
   return (
-    <div className={classNames(className, 'farms-table-row__details-box')}>{renderActions}</div>
+    <div className={classNames(className, 'farms-table-row__details-box right-box')}>
+      {renderActions}
+    </div>
   );
 };
 

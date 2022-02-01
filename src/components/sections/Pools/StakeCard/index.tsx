@@ -7,15 +7,8 @@ import lock from '@/assets/img/icons/lock.svg';
 import { Button } from '@/components/atoms';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
-import {
-  calculateReward,
-  collectReward,
-  convertSeconds,
-  getUserBalance,
-  updateStakeData,
-} from '@/store/stakes';
+import { collectReward, convertSeconds, getUserBalance, updateStakeData } from '@/store/stakes';
 import { Stake } from '@/types';
-import { getBalanceAmount } from '@/utils/formatters';
 
 import './StakeCard.scss';
 
@@ -46,11 +39,6 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
     });
     setCollecting(false);
   }, [stake.id, stakeStore, user.address]);
-  // const reward = React.useMemo(() => {
-  //   const result = calculateReward.then((res) => {
-  //     return result;
-  //   });
-  // }, []);
 
   const calculateCollectTime = React.useMemo(() => {
     if (stake.userData?.start === 0) {
@@ -77,16 +65,11 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   }, [stake.id, stakeStore, user]);
 
   useEffect(() => {
-    async function getReward() {
-      const result = await calculateReward(stake.id, user.address);
-      console.log(getBalanceAmount(result, 18).toFixed(8));
-      setReward(getBalanceAmount(result, 18).toFixed(8));
-    }
     updateStakeData(stake.id, user.address).then((res) => {
       stakeStore.setUserData(stake.id, res.userData);
       stakeStore.setAmountStaked(stake.id, res.amountStaked);
+      setReward(res.reward);
     });
-    getReward().catch((err) => console.log(err));
   }, [stake.id, stakeStore, user.address]);
 
   return (
