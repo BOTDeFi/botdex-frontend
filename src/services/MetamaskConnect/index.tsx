@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
 import { contracts } from '@/config';
+import { IS_PRODUCTION } from '@/config/contracts';
 import MetamaskService from '@/services/web3';
 import rootStore from '@/store';
 
@@ -14,7 +15,7 @@ export interface IWalletConnectorContext {
 
 export const metamaskService = new MetamaskService({
   testnet: 'bsct',
-  // isProduction: process.env.NODE_ENV === 'production',
+  isProduction: IS_PRODUCTION,
 });
 
 export const walletConnectorContext = createContext<IWalletConnectorContext>({

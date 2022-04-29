@@ -5,6 +5,7 @@
 
 .farms-table-row {
   position: relative;
+
   &::after {
     content: '';
 
@@ -46,8 +47,9 @@
   &__extra-text {
     display: none;
     @include b(tablet) {
-      display: block;
       margin-bottom: 5px;
+
+      display: block;
     }
   }
 
@@ -77,10 +79,14 @@
     }
   }
 
+  &__apr-wrapper {
+    @include flex(row, center);
+  }
+
   &__apr-button {
-    @include b(tablet) {
-      display: none;
-    }
+    //@include b(tablet) {
+    //  display: none;
+    //}
   }
 
   &__item {
@@ -141,7 +147,8 @@
     overflow: hidden;
     align-items: center;
     grid-template-columns: 1fr 3fr;
-    background: $bg-purple;
+
+    background: rgba(255, 255, 255, 0.1);
 
     @include b(tablet) {
       padding: 8px 10px;
@@ -151,11 +158,13 @@
 
     &-badge {
       .badge-wrapper {
+        padding: 2px 6px;
+
         border: 1px solid $bg-white;
         border-radius: 12px;
         @include flex(row, center, space-between);
-        padding: 2px 6px;
       }
+
       img {
         margin-right: 2px;
       }
@@ -183,24 +192,22 @@
     }
 
     &-box {
-      &.right-box {
-        padding: 20px 30px;
-        @include flex(column, center, space-between);
-      }
       align-self: stretch;
-      @include flex(column, center, center);
+
       padding: 20px 30px 40px;
 
-      background: linear-gradient(
-        98.94deg,
-        rgba(47, 37, 66, 0.5) -22.87%,
-        rgba(29, 17, 53, 0.5) 94.67%
-      );
+      background: $bg-farms-table;
       border-radius: 12px;
+
+      &.right-box {
+        padding: 20px 30px 55px;
+        @include flex(column, center, space-between);
+      }
 
       & + & {
         margin-left: 10px;
       }
+      @include flex(column, center, center);
 
       @include b(tablet) {
         padding: 20px 10px;
@@ -222,6 +229,7 @@
     &-title {
       margin-bottom: 13px;
     }
+
     .lp-staked {
       margin-bottom: 0;
     }
@@ -234,6 +242,7 @@
       margin-bottom: 5px;
     }
   }
+
   &__value-in-usd {
     @include b(tablet) {
       margin-top: 20px;
@@ -242,8 +251,9 @@
   }
 
   &__btn-mobile {
-    width: 100%;
     padding: 17px 40px;
+
+    width: 100%;
   }
 
   .show-enter {

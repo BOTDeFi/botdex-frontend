@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
@@ -16,7 +17,6 @@ import { getBalanceAmountBN } from '@/utils/formatters';
 import { clog, clogError } from '@/utils/logger';
 
 import './FarmsStakeUnstakeModal.scss';
-import {toast} from "react-toastify";
 
 const mockData = {
   additionalCurrency: 'USD',
@@ -107,10 +107,12 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
       await onStake(inputValueAsString);
       farmsStore.fetchFarmUserDataAsync(user.address, [farmId]);
       // successNotification('Staked!', 'Your funds have been staked in the farm!');
-      toast.success(`Staked! Your funds have been staked in the farm!!`);
+      toast.success(`Staked! Your funds have been staked in the farm!`);
     } catch (error) {
       clogError(error);
-      toast.error(`Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`);
+      toast.error(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
+      );
       // errorNotification(
       //   'Error',
       //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
@@ -128,7 +130,9 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
       // successNotification('Unstaked!', 'Your earnings have also been harvested to your wallet!');
     } catch (error) {
       clogError(error);
-      toast.success(`Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`);
+      toast.success(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
+      );
       // errorNotification(
       //   'Error',
       //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
@@ -215,7 +219,7 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
         <div className="box-f-ai-c box-f-jc-sb farms-stake-unstake-modal__btns">
           {percentBoundariesButtons.map(({ value, name = value }) => (
             <Button
-              colorScheme="yellow-l"
+              colorScheme="pink"
               size="smd"
               key={name}
               onClick={() => handlePercentChange(value)}
@@ -225,6 +229,7 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
           ))}
         </div>
         <Button
+          colorScheme="pink"
           className="farms-stake-unstake-modal__btn"
           loading={pendingTx}
           disabled={hasValidationErrors}

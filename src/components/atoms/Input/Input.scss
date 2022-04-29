@@ -3,7 +3,7 @@
 .input {
   padding: 0;
 
-  color: #3c079d;
+  color: $text-main-color;
   border: none;
 
   &:hover,
@@ -53,6 +53,21 @@
     &:focus {
       border: 3px solid #cecece;
       box-shadow: none !important;
+    }
+
+    input {
+      background: transparent;
+    }
+  }
+
+  &-darkgray {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+
+    &:hover,
+    &:focus {
+      border-color: rgba(0, 0, 0, 0.1);
     }
 
     input {

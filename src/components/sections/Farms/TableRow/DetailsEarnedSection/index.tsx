@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 import { Button, InputNumber } from '@/components/atoms';
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import { tokens } from '@/config/tokens';
 import { useHarvestFarm } from '@/hooks/farms/useHarvestFarm';
 import { useMst } from '@/store';
@@ -33,14 +33,12 @@ const DetailsEarnedSection: React.FC<IDetailsEarnedSectionProps> = observer(
       setPendingTx(true);
       try {
         await harvestFarm();
-        successNotification(
-          'Harvested!',
-          `Your ${EARNING_TOKEN_SYMBOL} earnings have been sent to your wallet!`,
+        toast.success(
+          `Harvested! Your ${EARNING_TOKEN_SYMBOL} earnings have been sent to your wallet!`,
         );
       } catch (e) {
-        errorNotification(
-          'Error',
-          'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+        toast.error(
+          'Error. Please try again. Confirm the transaction and make sure you are paying enough gas!',
         );
       } finally {
         setPendingTx(false);
@@ -61,7 +59,7 @@ const DetailsEarnedSection: React.FC<IDetailsEarnedSectionProps> = observer(
           value={getBalanceAmount(new BigNumber(earnings), tokens.rp1.decimals)}
           inputPrefix={
             <Button
-              colorScheme="outline-purple"
+              colorScheme="pink"
               size="ssm"
               disabled={!hasEarnings || pendingTx}
               onClick={harvestHandler}

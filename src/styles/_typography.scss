@@ -77,6 +77,9 @@
   &-yellow {
     color: $yellow;
   }
+  &-pink {
+    color: $c-text-purple;
+  }
 
   &-bold {
     font-weight: 700;
@@ -166,7 +169,47 @@
       max-width: 220px;
     }
   }
+
   &-inter {
     font-family: 'Inter', sans-serif;
+  }
+}
+
+h1 {
+  width: fit-content;
+
+  font-family: Gemina;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 45.47px;
+  text-align: center;
+
+  @include b(tablet) {
+    font-size: 24px;
+  }
+
+  strong {
+    font-weight: 400;
+
+    color: $c-text-purple;
+  }
+}
+
+h2 {
+  width: fit-content;
+
+  font-family: Gemina;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 27.22px;
+
+  @include b(tablet) {
+    font-size: 18px;
+  }
+
+  strong {
+    font-weight: 400;
+
+    color: $c-text-purple;
   }
 }

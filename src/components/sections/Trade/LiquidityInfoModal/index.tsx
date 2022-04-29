@@ -106,7 +106,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
 
   React.useEffect(() => {
     getDeposites();
-  }, [getDeposites]);
+  }, [getDeposites, info]);
 
   // React.useEffect(() => {
   //   handleGetShareOfPool();
@@ -164,16 +164,24 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
           <div className="liquidity-info__row box-f box-f-jc-sb text-smd">
             <span>Rates</span>
             <div className="text-right">
-              <Popover content={new BigNumber(info.token1.rate).toString(10)}>
-                <div>{`1 ${info.token0.symbol} = ${new BigNumber(info.token1.rate).toFixed(5)} ${
-                  info.token1.symbol
-                }`}</div>
+              <Popover
+                content={new BigNumber(+info.token1.reserve)
+                  .dividedBy(+info.token0.reserve)
+                  .toString(10)}
+              >
+                <div>{`1 ${info.token0.symbol} = ${new BigNumber(+info.token1.reserve)
+                  .dividedBy(+info.token0.reserve)
+                  .toFixed(5)} ${info.token1.symbol}`}</div>
               </Popover>
               <br />
-              <Popover content={new BigNumber(info.token0.rate).toString(10)}>
-                <div>{`1 ${info.token1.symbol} = ${new BigNumber(info.token0.rate).toFixed(5)} ${
-                  info.token0.symbol
-                }`}</div>
+              <Popover
+                content={new BigNumber(+info.token0.reserve)
+                  .dividedBy(+info.token1.reserve)
+                  .toString(10)}
+              >
+                <div>{`1 ${info.token1.symbol} = ${new BigNumber(+info.token0.reserve)
+                  .dividedBy(+info.token1.reserve)
+                  .toFixed(5)} ${info.token0.symbol}`}</div>
               </Popover>
             </div>
           </div>
@@ -185,6 +193,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
           </div>
           <Button
             size="smd"
+            colorScheme="pink"
             className="liquidity-info__btn"
             link={{
               pathname: '/trade/liquidity/remove',

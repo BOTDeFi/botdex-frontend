@@ -1,8 +1,9 @@
+/* eslint-disable */
 import BigNumber from 'bignumber.js/bignumber';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
-
+import rootStore from '@/store';
 import { contracts } from '@/config';
 import { clog } from '@/utils/logger';
 
@@ -16,7 +17,7 @@ interface INetworks {
 }
 
 interface IMetamaskService {
-  testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bsct';
+  testnet: 'ropsten' | 'kovan' | 'rinkeby' | 'bsct' | 'polygont';
   isProduction?: boolean;
 }
 
@@ -75,15 +76,31 @@ const chainsParams: IChains = {
     blockExplorerUrls: ['https://bscscan.com/'],
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
   },
+  '0x89': {
+    chainId: '0x89',
+    rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
+    chainName: 'Polygon Mainnet',
+    blockExplorerUrls: ['https://polygonscan.com/'],
+    nativeCurrency: { name: 'POLYGON', decimals: 18, symbol: 'POLYGON' },
+  },
+  '0x13881': {
+    chainId: '0x13881',
+    rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+    chainName: 'Polygon Testnet',
+    blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/'],
+    nativeCurrency: { name: 'POLYGON', decimals: 18, symbol: 'MATIC' },
+  },
 };
 
 const networks: INetworks = {
-  mainnet: '0x1',
+  mainnet: '0x38' || '0x89',
+  mainnet2: '0x89', // polygon
   ropsten: '0x3',
   kovan: '0x2a',
   rinkeby: '0x4',
   bsct: '0x61',
   bsc: '0x38',
+  polygont: '0x13881',
 };
 
 export default class MetamaskService {
@@ -103,7 +120,7 @@ export default class MetamaskService {
 
   public usedNetwork: string;
 
-  public usedChain: string;
+  public usedChain: string[];
 
   public contracts: any = {};
 
@@ -114,7 +131,7 @@ export default class MetamaskService {
     this.isProduction = isProduction;
 
     this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
-    this.usedChain = this.isProduction ? networks.mainnet : networks[this.testnet];
+    this.usedChain = this.isProduction ? [networks.mainnet, networks.mainnet2] : [networks.bsct, networks.polygont];
 
     this.chainChangedObs = new Observable((subscriber) => {
       if (!this.wallet) {
@@ -122,9 +139,14 @@ export default class MetamaskService {
       }
 
       this.wallet.on('chainChanged', () => {
-        const currentChain = this.wallet.chainId;
-        if (currentChain !== this.usedChain) {
+        const currentChain: string = this.wallet.chainId;
+        if (!this.usedChain.includes(currentChain)) {
           subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
+        } else {
+          rootStore.modals.metamaskErr.close();
+        }
+        if (this.usedChain.includes(currentChain)) {
+          this.connect();
         }
       });
     });
@@ -146,11 +168,11 @@ export default class MetamaskService {
 
   async checkNets(chainId = this.wallet.chainId): Promise<boolean> {
     const requiredChain = this.usedChain;
-    if (chainId !== requiredChain) {
+    if (requiredChain.includes(chainId)) {
       try {
         await this.wallet.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: requiredChain }],
+          params: [{ chainId: chainId }],
         });
         return true;
       } catch (switchError: any) {
@@ -158,7 +180,7 @@ export default class MetamaskService {
           try {
             await this.wallet.request({
               method: 'wallet_addEthereumChain',
-              params: [chainsParams[requiredChain]],
+              params: [chainsParams[requiredChain[0]]],
             });
             return true;
           } catch (addError: any) {
@@ -171,7 +193,7 @@ export default class MetamaskService {
         }
       }
     }
-    return true;
+    return false;
   }
 
   public connect(): Promise<any> {
@@ -203,7 +225,6 @@ export default class MetamaskService {
                   })
                   .catch(() => reject(new Error('Not authorized')));
               } else {
-                console.log('2');
                 reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
               }
             });
@@ -222,7 +243,6 @@ export default class MetamaskService {
               })
               .catch(() => reject(new Error('Not authorized')));
           } else {
-            console.log('3');
             reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
           }
         });
@@ -314,10 +334,7 @@ export default class MetamaskService {
         result === '0'
           ? null
           : +new BigNumber(result).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
-      if (result && new BigNumber(result).minus(amount || 0).isPositive()) {
-        return true;
-      }
-      return false;
+      return !!(result && new BigNumber(result).minus(amount || 0).isPositive());
     } catch (error) {
       return false;
     }
@@ -393,7 +410,7 @@ export default class MetamaskService {
     }
   }
 
-  public async getTokenDecimals(address: string) {
+  public async getTokenDecimals(address: string): Promise<any> {
     const contract = this.getContract(address, contracts.ERC20.ABI);
 
     return contract.methods.decimals().call();
@@ -418,7 +435,7 @@ export default class MetamaskService {
   }: {
     method: string;
     data: Array<any>;
-    contractName: 'ROUTER' | 'FACTORY';
+    contractName: 'ROUTER' | 'FACTORY' | 'PAIR';
     tx?: any;
     toAddress?: string;
     fromAddress?: string;

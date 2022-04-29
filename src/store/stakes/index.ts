@@ -28,7 +28,7 @@ export const getStakesData = async (stakesLength: number): Promise<Stake[]> => {
   return result;
 };
 
-export const getUserData = async (id: number, accountAddress: string) => {
+export const getUserData = async (id: number, accountAddress: string): Promise<any> => {
   const stakingContract = getContract('BOTDEX_STAKING');
   const userData = await stakingContract.methods.userAtPoolInfo(accountAddress, id).call();
   return {
@@ -38,36 +38,43 @@ export const getUserData = async (id: number, accountAddress: string) => {
 };
 
 export const convertSeconds = (time: number): string => {
-  let result = time / 60;
-  if (result >= 60) {
-    result = Math.ceil(result / 60);
-    return `${result} hours`;
+  let result = time / 60; // in minutes
+  if (result >= 518400) {
+    result = Math.ceil(result / 60 / 24 / 30 / 12);
+    if (result === 1) {
+      return 'year';
+    }
+    return `${result} years`;
+  }
+  if (result >= 43200) {
+    result = Math.ceil(result / 60 / 24 / 30);
+    return `${result} month`;
   }
   if (result >= 3600) {
     result = Math.ceil(result / 60 / 24);
     return `${result} days`;
   }
-  if (result >= 2592000) {
-    result = Math.ceil(result / 60 / 24 / 30);
-    return `${result} month`;
+  if (result >= 60) {
+    result = Math.ceil(result / 60);
+    return `${result} hours`;
   }
   return `${result} min`;
 };
 
-export const getUserBalance = async (address: string) => {
+export const getUserBalance = async (address: string): Promise<any> => {
   const tokenContract = getContract('BOT');
   const balance = await tokenContract.methods.balanceOf(address).call();
   return getBalanceAmountBN(balance, 18);
 };
 
-export const enterStaking = async (id: number, amount: string, address: string) => {
+export const enterStaking = async (id: number, amount: string, address: string): Promise<any> => {
   const stakingContract = getContract('BOTDEX_STAKING');
   await stakingContract.methods
     .enterStaking(id, new BigNumber(amount).times(BIG_TEN.pow(18)).toString())
     .send({ from: address });
 };
 
-export const updateStakeData = async (id: number, address: string) => {
+export const updateStakeData = async (id: number, address: string): Promise<any> => {
   const stakingContract = getContract('BOTDEX_STAKING');
   const stakeData = await stakingContract.methods.pools(id).call();
   const userData = await stakingContract.methods.userAtPoolInfo(address, id).call();
@@ -82,14 +89,14 @@ export const updateStakeData = async (id: number, address: string) => {
   };
 };
 
-export const calculateReward = async (id: number, address: string) => {
+export const calculateReward = async (id: number, address: string): Promise<any> => {
   const tokenContract = getContract('BOTDEX_STAKING');
   const reward = await tokenContract.methods.calculateReward(id, address).call();
   // return getBalanceAmountBN(reward, 18);
   return reward;
 };
 
-export const collectReward = async (id: number, address: string) => {
+export const collectReward = async (id: number, address: string): Promise<any> => {
   const stakingContract = getContract('BOTDEX_STAKING');
   await stakingContract.methods.withdrawReward(id).send({ from: address });
 };

@@ -70,6 +70,7 @@ export interface ILiquidityInfo {
     decimals: number | string;
     deposited?: number | string;
     receive?: number | string;
+    reserve: number | string;
   };
   token1: {
     address: string;
@@ -79,6 +80,7 @@ export interface ILiquidityInfo {
     decimals: number | string;
     deposited?: number | string;
     receive?: number | string;
+    reserve: number | string;
   };
   settings: ISettings;
 }
@@ -98,6 +100,7 @@ export interface IReceipt extends Transaction {
 export interface Address extends Record<string, string> {
   // [key: string]: string;
   '97': string;
+  '56': string;
 }
 export interface Token {
   symbol: string;
@@ -197,7 +200,7 @@ export interface Farm extends FarmWithoutUserData {
 
 export interface FarmWithStakedValue extends Farm {
   apr?: number;
-  lpRewardsApr?: number;
+  lpRewardsApr?: number | null;
   liquidity?: BigNumber;
 }
 
@@ -209,3 +212,8 @@ export enum Precisions {
 
 export type TimestampSeconds = number;
 export type TNullable<T> = T | null;
+
+export type IBlogType = {
+  post_link: string;
+  image_link: string;
+};

@@ -3,11 +3,14 @@
 @import 'src/styles/mixins/media';
 @import 'src/styles/vars';
 
+$bg-blue: #0a42ea;
+
 .time-selector {
   &__body {
     position: absolute;
     top: 28px;
     right: 20px;
+
     padding: 6px 7px;
     @include flex(row, center, center, nowrap);
     @include b(extramobile) {
@@ -15,19 +18,18 @@
     }
 
     &-btn {
-      padding: 12px 9.5px;
       margin-right: 6px;
-      &:last-of-type {
-        margin-right: 0;
-      }
+      padding: 12px 9.5px;
+
       width: 50.25px;
       height: 44px;
-      @include b(extramobile) {
-        width: 70px;
-      }
 
       background: $bg-time-selector;
       border: 1px solid #402b99;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
 
       &:hover {
         color: $text-main-color;
@@ -36,8 +38,11 @@
 
       &.selected {
         color: $text-main-color;
+        background: $bg-blue;
         border: 1px solid #402b99;
-        background: $bg-accent-gradient;
+      }
+      @include b(extramobile) {
+        width: 70px;
       }
     }
   }

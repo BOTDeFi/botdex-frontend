@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 // import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -31,8 +32,6 @@ enum Duration {
   fiveYears = '5Y',
 }
 
-const principalAmountOptions = ['100', '1000', 'My Balance'];
-
 // values as indexes to retrieve stakingDuration from array (like [1, 7, 30, 365, 1825]) as O(1)
 const stakedForOptions = [
   Duration.day,
@@ -58,10 +57,20 @@ const compoundingEveryOptions = [
 const FIAT = 'USD';
 
 const RoiModal: React.FC = observer(() => {
+  const histroy = useHistory();
   const { modals } = useMst();
 
   const modal = modals.roi;
   const { options, state } = modal;
+
+  const principalAmountOptions = useMemo(
+    () => [
+      { value: '100', label: '$100' },
+      { value: '1000', label: '$1000' },
+      { value: 'userBalance', label: 'My Balance' },
+    ],
+    [],
+  );
 
   // const [compounding, setIsCompounding] = useState(true);
 
@@ -97,6 +106,7 @@ const RoiModal: React.FC = observer(() => {
 
   const handleClose = () => {
     modals.roi.close();
+    histroy.push('/farms');
   };
 
   // TODO: /trade/swap page must apply for outputCurrency (or other) as a param
@@ -168,17 +178,14 @@ const RoiModal: React.FC = observer(() => {
             />
           </div>
           <div className="m-roi__staked-row-principal-amounts box-f-ai-c box-f-jc-sb">
-            {principalAmountOptions.map((principalAmountAsText, index, arr) => (
+            {principalAmountOptions.map((principalAmountAsText) => (
               <Button
-                key={principalAmountAsText}
+                key={principalAmountAsText.label}
                 colorScheme="yellow-l"
                 size="ssm"
-                onClick={() => setPrincipalFromUSDValue(principalAmountAsText)}
+                onClick={() => setPrincipalFromUSDValue(principalAmountAsText.value)}
               >
-                <span className="text-white text-ssmd">
-                  {index !== arr.length - 1 && '$'}
-                  {principalAmountAsText}
-                </span>
+                <span className="text-white text-ssmd">{principalAmountAsText.label}</span>
               </Button>
             ))}
           </div>

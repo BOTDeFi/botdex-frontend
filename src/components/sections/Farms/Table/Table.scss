@@ -1,13 +1,15 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins/media';
+@import 'src/styles/mixins/main';
 
 @import '../styles';
 
 .farms-table {
   margin-top: 45px;
   padding: 35px 0;
+
+  background: $bg-farms-table;
   border-radius: 40px;
-  background: $bg-dop;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   @include b(tablet) {
@@ -28,5 +30,19 @@
     align-items: center;
     grid-template-columns: $columns;
     grid-column-gap: 20px;
+  }
+
+  &-row__content_no-result {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  &__no-results {
+    padding: 30px 0 0;
+    @include b(tablet) {
+      padding: 20px 0;
+    }
+    color: $gray-2;
   }
 }

@@ -2,24 +2,24 @@
 @import 'src/styles/mixins/media';
 
 .farms-preview {
-  overflow: hidden;
-
-  border-radius: 12px;
   padding: 41px 42px 39px;
 
-  background-color: $bg-purple;
-  background-image: url(../../../../assets/img/sections/farms/farms.png);
-  background-size: 100%;
+  overflow: hidden;
 
+  background-image: url('../../../../assets/img/sections/farms/farms_bg.png');
+  background-size: cover;
+
+  border-radius: 12px;
+  @include b(mobile) {
+    background-image: url('../../../../assets/img/sections/farms/farms_bg_sm.png');
+    background-size: cover;
+  }
   @include b(tablet) {
     padding: 40px 20px 19px 42px;
 
     display: block !important;
   }
-  @include b(desktop) {
-    background-repeat: no-repeat;
-    background-size: auto;
-  }
+
   &__box {
     @include b(tablet) {
       margin-bottom: 20px;
@@ -35,22 +35,27 @@
   }
 
   &__subtitle {
-    color: #fff;
     margin-top: 12px;
+
+    color: #fff;
   }
 
   &__auc {
-    display: none;
     padding: 21px 26px;
+
+    display: none;
+
     background: $bg-purple;
     @include b(mobile) {
       padding: 23px 10px;
+
       display: block;
     }
 
     &-img {
       margin-right: 14px;
     }
+
     &-btn {
       margin-left: 58px;
     }

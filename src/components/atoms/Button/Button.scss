@@ -1,6 +1,10 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins/main';
 
+$bg-blue: #0a42ea;
+$shadow-blue: #223687;
+$text-default: #fff;
+
 .btn {
   padding: 20px 40px;
 
@@ -9,12 +13,14 @@
   width: fit-content;
   height: fit-content;
 
+  cursor: pointer;
+
   border: none;
   border-radius: 12px;
 
   &__arrow {
-    margin-left: 10px;
     margin-bottom: 2px;
+    margin-left: 10px;
   }
 
   span {
@@ -42,6 +48,74 @@
     &:active,
     &:focus {
       background: $accent-gradient;
+    }
+  }
+
+  &-blue {
+    padding: 6px !important;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 26px;
+
+    color: $text-default;
+    background: $bg-blue;
+    border-radius: 11px;
+    box-shadow: 0 5px 0 $shadow-blue;
+
+    svg {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      color: $text-default;
+      background: $bg-blue;
+      box-shadow: 0 0 10px 5px rgb(170, 170, 170);
+    }
+
+    &:active,
+    &:focus {
+      color: $text-default;
+      background: $bg-blue;
+    }
+  }
+
+  &-icon {
+    padding: 0;
+
+    background: transparent;
+    border-radius: none;
+    box-shadow: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: transparent;
+    }
+  }
+
+  &-pink {
+    padding: 20px;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 26px;
+
+    color: $text-default;
+    background: #c630f6;
+    border-radius: 11px;
+    box-shadow: 0 5px 0 #6e1989;
+
+    &:hover {
+      color: $text-default;
+      background: #c630f6;
+      box-shadow: 0 0 15px 5px #c25ce0;
+    }
+
+    &:active,
+    &:focus {
+      color: $text-default;
+      background: #c630f6;
     }
   }
 
@@ -77,7 +151,7 @@
   }
 
   &-smd {
-    padding: 10px 18px;
+    padding: 15px 20px;
   }
 
   &-lg {
@@ -89,13 +163,14 @@
   }
 
   &-gray {
-    background: $gray-l;
     color: $text-main-color;
+    background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.1);
+
     &:hover {
       color: $text-main-color;
-      border-color: $bg-btn;
       background: transparent;
+      border-color: $bg-btn;
     }
 
     &:active,
@@ -106,25 +181,27 @@
   }
 
   &-outline {
-    background: transparent;
-    border: 3px solid $bg-btn;
     color: $text-main-color;
+    background: transparent;
+    background-clip: padding-box;
+    border: 3px solid $bg-btn;
 
     &:hover {
       color: $text-main-color;
-      border-color: $bg-btn;
       background: transparent;
+      border-color: $bg-btn;
     }
 
     &:active,
     &:focus {
       color: $text-main-color;
-      border-color: $bg-btn;
+      background: $bg-btn;
     }
 
     &.active {
       color: $text-main-color;
       background: $bg-btn;
+      border-color: transparent;
     }
 
     &-purple {
@@ -207,6 +284,53 @@
     }
   }
 
+  &-purple-light {
+    color: $text-main-color;
+    background: $bg-purple-light;
+    border: none;
+
+    &:hover,
+    &:focus {
+      color: $text-main-color;
+      background: $bg-purple-light;
+      border: none;
+      box-shadow: 0 0 10px 2px rgb(91, 70, 255);
+    }
+
+    &.active {
+      color: $text-main-color !important;
+      //background: $accent-gradient;
+      //border-color: transparent;
+      background-origin: border-box;
+
+      span {
+        color: $text-main-color !important;
+      }
+
+      svg {
+        transform: rotate(-180deg);
+
+        path {
+          stroke: #fff;
+        }
+      }
+    }
+
+    &.noclick {
+      cursor: default;
+
+      &:active,
+      &.active {
+        color: $yellow !important;
+        background: transparent;
+
+        span {
+          color: $yellow !important;
+        }
+      }
+    }
+  }
+
   &-yellow-l {
     background: $accent-gradient;
 
@@ -219,10 +343,12 @@
   &[disabled] {
     color: $text-main-color;
     background: rgba(197, 196, 195, 0.5);
+
     &:hover,
     &:focus {
       background: rgba(197, 196, 195, 0.5);
     }
+
     span {
       color: $text-main-color !important;
     }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { observer } from 'mobx-react-lite';
 
-import { IS_PRODUCTION } from '@/config';
+import { IS_PRODUCTION } from '@/config/contracts';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 

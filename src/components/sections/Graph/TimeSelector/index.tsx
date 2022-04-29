@@ -30,6 +30,7 @@ const TimeSelector: VFC<ITimeSelectorProps> = ({ selectors, currentSelector }) =
           className={`time-selector__body-btn ${
             currentSelector === i || currentSelector === s.key ? 'selected' : ''
           }`}
+          colorScheme="blue"
           key={s.key || s.text}
           onClick={s.onClick}
         >

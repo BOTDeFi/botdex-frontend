@@ -245,61 +245,46 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
           // setTokenFromQuantity(quantity);
           timerId = setTimeout(() => {
             handleCheckAllowance(quantity);
-            handleChangeTokens(
-              {
-                from: {
-                  token: tokenFrom,
-                  amount: quantity > +balanceFrom ? +balanceFrom : quantity,
+            if (+balanceFrom > 0) {
+              handleChangeTokens(
+                {
+                  from: {
+                    token: tokenFrom,
+                    amount: quantity > +balanceFrom ? +balanceFrom : quantity,
+                  },
+                  to: {
+                    token: tokenTo,
+                    amount: initialTokenData?.to.amount || NaN,
+                    // amount: quantity === 0 ? initialTokenData?.to.amount || NaN : 0,
+                  },
                 },
-                to: {
-                  token: tokenTo,
-                  amount: initialTokenData?.to.amount || NaN,
-                  // amount: quantity === 0 ? initialTokenData?.to.amount || NaN : 0,
-                },
-              },
-              'from',
-            );
+                'from',
+              );
+            }
           }, 500);
         }
         if (type === 'to') {
           // setTokenToQuantity(quantity);
           timerId = setTimeout(() => {
             handleCheckAllowance(quantity);
-            handleChangeTokens(
-              {
-                from: {
-                  token: tokenFrom,
-                  amount: initialTokenData?.from.amount || NaN,
-                  // amount: quantity === 0 ? initialTokenData?.from.amount || NaN : 0,
+            if (+balanceFrom > 0 && +balanceTo > 0) {
+              handleChangeTokens(
+                {
+                  from: {
+                    token: tokenFrom,
+                    amount: initialTokenData?.from.amount || NaN,
+                    // amount: quantity === 0 ? initialTokenData?.from.amount || NaN : 0,
+                  },
+                  to: {
+                    token: tokenTo,
+                    amount: quantity > +balanceTo ? +balanceTo : quantity,
+                  },
                 },
-                to: {
-                  token: tokenTo,
-                  amount: quantity > +balanceTo ? +balanceFrom : quantity,
-                },
-              },
-              'to',
-            );
+                'to',
+              );
+            }
           }, 500);
         }
-        // if (quantity === 0) {
-        //   const timerId = setTimeout(() => {
-        //     handleCheckAllowance(quantity);
-        //     handleChangeTokens(
-        //       {
-        //         from: {
-        //           token: tokenFrom,
-        //           amount: 0,
-        //         },
-        //         to: {
-        //           token: tokenTo,
-        //           amount: 0,
-        //         },
-        //       },
-        //       'to',
-        //     );
-        //   }, 500);
-        //   setTime(timerId);
-        // }
         setTime(timerId);
       },
       [
@@ -422,6 +407,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                 <div className="choose-tokens__err-wrapper">
                   <InputNumber
                     value={tokenFromQuantity}
+                    colorScheme="darkgray"
                     placeholder="0"
                     max={maxFrom}
                     // onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
@@ -433,7 +419,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                     <div className="choose-tokens__b-m-cont">
                       <div className="choose-tokens__b-m-cont__balance text-sm text-gray-2 text-address">{`Balance: ${new BigNumber(
                         balanceFrom,
-                      ).toFixed(4, 1)}`}</div>
+                      ).toFixed(5, 1)}`}</div>
                       <div
                         onClick={() => handleMaxValue('from')}
                         onKeyDown={() => {}}
@@ -498,6 +484,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                 <div className="choose-tokens__err-wrapper">
                   <InputNumber
                     value={tokenToQuantity}
+                    colorScheme="darkgray"
                     placeholder="0"
                     // onKeyDown={(e: any) => handleChangeTokensQuantity('from', +e.target.value)}
                     onChange={(value: number | string) => handleChangeTokensQuantity('to', +value)}

@@ -1,15 +1,15 @@
 /* eslint-disable object-shorthand */
 import React, { useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 
 import { Graph } from '@/components/molecules';
 import { CurrencyInfo, TimeSelector } from '@/components/sections/Graph';
 import { TTimestampSelector } from '@/components/sections/Graph/TimeSelector';
+import { Liquidity, Swap } from '@/components/sections/Trade';
 import { useGetDaysPairs, useGetHoursPairs } from '@/services/api/refinery-finance-pairs';
 import { useMst } from '@/store';
-
-import { Liquidity, Swap, TradeNavbar } from '../../components/sections/Trade';
 
 import './Trade.scss';
 
@@ -20,6 +20,10 @@ const Trade: React.FC = observer(() => {
   const [reversed, setReversed] = React.useState(false);
   const [currentStamp, setCurrentStamp] = React.useState<number>(0);
   const [currencyData, setCurrencyData] = React.useState<any>(null);
+  const [isGraphVisible, setGraphVisible] = React.useState(true);
+
+  const location = useLocation();
+
   const options = React.useMemo(
     () => ({
       chart: {
@@ -54,8 +58,8 @@ const Trade: React.FC = observer(() => {
       },
       xaxis: {
         type: 'datetime',
+        tickPlacement: 'on',
         tickAmount: 6,
-        hideOverlappingLabels: true,
         axisTicks: {
           show: false,
         },
@@ -64,6 +68,7 @@ const Trade: React.FC = observer(() => {
         },
         labels: {
           rotate: 0,
+          hideOverlappingLabels: true,
           style: {
             fontFamily: 'Poppins',
             cssClass: 'xaxis-label',
@@ -90,7 +95,7 @@ const Trade: React.FC = observer(() => {
                 break;
               }
             }
-            return moment(timestamp).format(format);
+            return ` ${moment(timestamp).format(format)} `;
           },
         },
         tooltip: {
@@ -179,36 +184,54 @@ const Trade: React.FC = observer(() => {
     setReversed(!reversed);
   }, [reversed]);
 
+  useEffect(() => {
+    if (
+      window.innerWidth < 1024 &&
+      (location.pathname === '/trade/swap/settings' ||
+        location.pathname === '/trade/swap/history' ||
+        location.pathname === '/trade/liquidity/remove' ||
+        location.pathname === '/trade/liquidity/receive' ||
+        location.pathname === '/trade/liquidity/history' ||
+        location.pathname === '/trade/liquidity/settings')
+    ) {
+      setGraphVisible(false);
+    } else {
+      setGraphVisible(true);
+    }
+  }, [location]);
+
   return (
-    <main className="trade">
-      <div className="trade__body">
-        <TradeNavbar />
-        <div className="trade__blocks">
-          <div className="trade__content">
-            <Swap />
-            <Liquidity />
-          </div>
-          {window.location.pathname === '/trade/bridge' ? (
-            ''
-          ) : (
-            <div className="trade__graph">
-              <div className="trade__graph-body">
-                <div className="trade__graph-body__info">
-                  {currencyData && <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />}
-                  <TimeSelector currentSelector={currentStamp} selectors={selectors} />
-                </div>
-                <Graph
-                  id="exchange-graph"
-                  series={data}
-                  options={options}
-                  onHovered={onGraphHovered}
-                />
-              </div>
+    <div className="trade-wrapper">
+      <main className="trade">
+        <div className="trade__body">
+          {/* <TradeNavbar /> */}
+          <div className="trade__blocks">
+            <div className="trade__content">
+              <Swap />
+              <Liquidity />
             </div>
-          )}
+            {isGraphVisible && (
+              <div className="trade__graph">
+                <div className="trade__graph-body">
+                  <div className="trade__graph-body__info">
+                    {currencyData && (
+                      <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />
+                    )}
+                    <TimeSelector currentSelector={currentStamp} selectors={selectors} />
+                  </div>
+                  <Graph
+                    id="exchange-graph"
+                    series={data}
+                    options={options}
+                    onHovered={onGraphHovered}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 });
 

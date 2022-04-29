@@ -3,8 +3,10 @@
 
 .trade-box {
   padding: 30px;
+
   background: $bg-trade-box;
   border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   @include b(extramobile) {
     padding: 20px;
@@ -15,8 +17,9 @@
   }
 
   &__subtitle {
-    width: 100%;
     margin-top: 12px;
+
+    width: 100%;
 
     span {
       width: fit-content;
@@ -24,6 +27,7 @@
 
     img {
       margin-left: 9px;
+
       display: block;
     }
   }

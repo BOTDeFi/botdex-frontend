@@ -24,3 +24,10 @@
   align-items: $alignment;
   flex-wrap: $wrap;
 }
+
+@mixin m-left($value: 0) {
+  margin-left: $value;
+  @media (max-width: 1412px) {
+    margin: 0 auto;
+  }
+}

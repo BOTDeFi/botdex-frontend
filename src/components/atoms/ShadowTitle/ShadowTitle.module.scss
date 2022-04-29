@@ -1,0 +1,65 @@
+@import '/src/styles/index.scss';
+@import 'src/styles/vars';
+@import 'src/styles/mixins/main';
+
+.title {
+  position: relative;
+  @include b(preTablet) {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  span {
+    &:first-child {
+      color: transparent;
+      -webkit-text-stroke: 0.8px rgb(212, 0, 255);
+    }
+
+    &:last-child {
+      position: absolute;
+      top: -4px;
+      right: 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+
+  &Max {
+    position: relative;
+
+    font-size: 120px;
+    line-height: 120px;
+    @include b(tablet) {
+      font-size: 60px;
+      line-height: 60px;
+    }
+    @include b(mobile) {
+      font-size: 45px;
+      line-height: 45px;
+    }
+
+    span {
+      &:first-child {
+        color: transparent;
+        -webkit-text-stroke: 0.8px rgb(212, 0, 255);
+      }
+
+      &:last-child {
+        position: absolute;
+        top: -4px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.white {
+  color: rgba(255, 255, 255, 1);
+}
+
+.purple {
+  color: rgb(212, 0, 255);
+}

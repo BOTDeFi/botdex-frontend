@@ -7,16 +7,6 @@
         "type": "address"
       },
       {
-        "internalType": "contract FuelBar",
-        "name": "_fuel",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_devaddr",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_propellantPerBlock",
         "type": "uint256"
@@ -85,48 +75,25 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "msg",
-        "type": "string"
-      },
+        "internalType": "address",
+        "name": "migrator",
+        "type": "address"
+      }
+    ],
+    "name": "MigratorChanges",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "val1",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "val2",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "val3",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "val4",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "val5",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "val6",
+        "name": "multiplierNumber",
         "type": "uint256"
       }
     ],
-    "name": "Log",
+    "name": "MultiplierUpdate",
     "type": "event"
   },
   {
@@ -230,32 +197,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_devaddr",
-        "type": "address"
-      }
-    ],
-    "name": "dev",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "devaddr",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_pid",
         "type": "uint256"
@@ -264,32 +205,6 @@
     "name": "emergencyWithdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "enterStaking",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "fuel",
-    "outputs": [
-      {
-        "internalType": "contract FuelBar",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -317,19 +232,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "leaveStaking",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "massUpdatePools",
     "outputs": [],
@@ -354,7 +256,7 @@
     "name": "migrator",
     "outputs": [
       {
-        "internalType": "contract IMigratorRefiner",
+        "internalType": "contract IMigratorBotdex",
         "name": "",
         "type": "address"
       }
@@ -426,7 +328,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "accRP1PerShare",
+        "name": "accBOTPerShare",
         "type": "uint256"
       }
     ],
@@ -505,12 +407,25 @@
   {
     "inputs": [
       {
-        "internalType": "contract IMigratorRefiner",
+        "internalType": "contract IMigratorBotdex",
         "name": "_migrator",
         "type": "address"
       }
     ],
     "name": "setMigrator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_treasure",
+        "type": "address"
+      }
+    ],
+    "name": "setTreasure",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -552,6 +467,19 @@
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "treasure",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

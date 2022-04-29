@@ -97,3 +97,7 @@ export const addressShortener = (address: string, charsCountToShow = 10): string
 export const ipfsShortener = (ipfsHash: string, charsCountToShow = 6): string => {
   return `#${ipfsHash.slice(0, charsCountToShow)}`;
 };
+
+export const addressWithDots = (address: string): string => {
+  return `${address.slice(0, 6)}....${address.slice(-4)}`;
+};

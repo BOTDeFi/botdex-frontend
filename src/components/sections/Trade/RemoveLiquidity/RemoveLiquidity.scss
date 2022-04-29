@@ -48,13 +48,16 @@
       }
     }
   }
+
   &__btns {
     @include b(tablet) {
       .liquidity_remove_btn {
         width: 100%;
       }
+
       a {
         width: 100%;
+
         .liquidity_remove_btn {
           width: 100%;
         }

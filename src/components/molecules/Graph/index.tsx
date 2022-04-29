@@ -9,6 +9,7 @@ interface IGraphProps {
   series?: any;
   options?: any;
   onHovered?: (event: any, chartContext: any, config: any) => void;
+  className?: string;
 }
 
 const initOptions = {
@@ -36,7 +37,7 @@ const initOptions = {
   },
 };
 
-const Graph: VFC<IGraphProps> = ({ id, series, options, onHovered }) => {
+const Graph: VFC<IGraphProps> = ({ id, series, options, onHovered, className }) => {
   const chart = useRef<ApexCharts | null>(null);
 
   // initialize chart
@@ -78,7 +79,7 @@ const Graph: VFC<IGraphProps> = ({ id, series, options, onHovered }) => {
   }, [series.length]);
 
   return (
-    <section className="graph-wrapper">
+    <section className={`graph-wrapper ${className}`}>
       <div className="graph-wrapper__body" id={id} />
     </section>
   );

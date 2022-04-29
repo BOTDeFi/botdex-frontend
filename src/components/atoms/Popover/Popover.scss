@@ -1,5 +1,9 @@
 @import 'src/styles/vars';
 
+.ant-popover-content {
+  margin-top: 10px;
+}
+
 .ant-popover-inner-content {
   padding: 20px;
 }
@@ -8,12 +12,16 @@
   max-width: 500px;
 
   &-arrow {
+    margin-top: 10px;
+
     &-content {
       background: $bg-purple !important;
     }
   }
+
   &-inner {
     background: $bg-purple !important;
+
     &-content {
       color: $text-main-color !important;
     }

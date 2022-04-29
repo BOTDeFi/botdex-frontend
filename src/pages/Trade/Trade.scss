@@ -2,7 +2,19 @@
 @import '/src/styles/mixins/main';
 @import '/src/styles/mixins/displays';
 
+.trade-wrapper {
+  width: 100%;
+  min-height: 100vh;
+
+  background: linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px
+      no-repeat,
+    url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
+    url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat, #110847 center;
+}
+
 .trade {
+  z-index: 10;
+
   margin-left: 240px;
   padding-top: 90px;
   padding-left: 0;
@@ -10,8 +22,10 @@
 
   &__body {
     @include container;
-    width: 100%;
+    // margin-left: 240px;
     padding: 0 10px;
+
+    width: 100%;
   }
 
   @include flexbox(center);
@@ -25,8 +39,9 @@
 
   &__blocks {
     margin-top: 35px;
+
     max-width: 1100px;
-    @include flex(row, flex-start, flex-start, nowrap);
+    @include flex(row, flex-start, center, nowrap);
     @include b(tablet) {
       @include flex(column, center, center, nowrap);
     }
@@ -34,19 +49,21 @@
 
   &__graph {
     margin-left: 10px;
+
     width: 670px;
     height: fit-content;
     @include b(tablet) {
-      width: 100%;
-      margin-left: 0;
       margin-top: 10px;
+      margin-left: 0;
+
+      width: 100%;
     }
 
     &-body {
-      background: linear-gradient(159.55deg, #1d1238 10.58%, #581368 56.54%, #12168c 98.7%),
-        linear-gradient(157.08deg, #8f1ba9 -57.13%, #170c4e 58.18%);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      background: $bg-trade-box;
       border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+
       &__info {
         position: relative;
 
@@ -56,9 +73,12 @@
   }
 
   .xaxis-label {
+    min-width: calc(100% + 10px);
+
     font-family: 'Poppins', sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 21px;
+
     color: $text-main-color;
   }
 

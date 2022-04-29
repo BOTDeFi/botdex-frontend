@@ -4,9 +4,9 @@ import { observer } from 'mobx-react-lite';
 import ArrowImg from '@/assets/img/icons/arrow-btn.svg';
 import InfoRImg from '@/assets/img/icons/info-r.svg';
 import LinkImg from '@/assets/img/icons/open-link.svg';
+import { useMst } from '@/store';
+import { IToken } from '@/types';
 
-import { useMst } from '../../../../store';
-import { IToken } from '../../../../types';
 import { Button, Switch } from '../../../atoms';
 import { Modal } from '../../../molecules';
 
@@ -63,7 +63,7 @@ const ImportTokensModal: React.FC<IImportTokensModal> = observer(
             tabIndex={0}
           >
             <img src={ArrowImg} alt="arrow" />
-            <span className="text-bold text-black text-smd">Import Tokens</span>
+            <span className="text-bold text-smd">Import Tokens</span>
           </div>
           <div className="m-import-tokens__text text-smd">
             <p>
@@ -80,12 +80,17 @@ const ImportTokensModal: React.FC<IImportTokensModal> = observer(
           {token ? (
             <div className="m-import-tokens__token box-f box-f-ai-e box-f-jc-sb">
               <div>
-                <div className="text m-import-tokens__token-name">{`${token.name} (${token.symbol})`}</div>
-                <div className="text-gray text-ssm m-import-tokens__token-address">
+                <div className="text m-import-tokens__token-name text-white">{`${token.name} (${token.symbol})`}</div>
+                <div className="text-ssm text-white m-import-tokens__token-address ">
                   {token.address}
                 </div>
               </div>
-              <a href="/" className="m-import-tokens__token-link text-black text-ssm box-f-ai-c">
+              <a
+                target="_blank"
+                href={`https://testnet.bscscan.com/address/${token.address}`}
+                className="m-import-tokens__token-link text-ssm box-f-ai-c text-white"
+                rel="noreferrer"
+              >
                 <span>View BscScan</span>
                 <img src={LinkImg} alt="" />
               </a>
@@ -94,10 +99,20 @@ const ImportTokensModal: React.FC<IImportTokensModal> = observer(
             ''
           )}
           <div className="m-import-tokens__switch box-f-ai-c">
-            <Switch onChange={handleChangeUnderstand} defaultChecked={isUnderstand} />
-            <span className="text-bold text-black">I Understand</span>
+            <Switch
+              colorScheme="white"
+              switchSize="sm"
+              onChange={handleChangeUnderstand}
+              defaultChecked={isUnderstand}
+            />
+            <span className="text-bold text-white">I Understand</span>
           </div>
-          <Button className="m-import-tokens__btn" disabled={!isUnderstand} onClick={handleEnd}>
+          <Button
+            colorScheme="pink"
+            className="m-import-tokens__btn"
+            disabled={!isUnderstand}
+            onClick={handleEnd}
+          >
             <span className="text-bold text-white text-md">Import</span>
           </Button>
         </div>

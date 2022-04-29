@@ -21,6 +21,7 @@ $sort-width: 40%;
 
     width: 100%;
     grid-auto-flow: column;
+
     background: $bg-switch;
     @include b(tablet) {
       margin: 30px 0 20px;
@@ -28,10 +29,18 @@ $sort-width: 40%;
       width: 100%;
     }
   }
+
   &__button {
     height: 40px;
+
+    background: #170f39;
+    border-radius: 10px;
+    box-shadow: 0 5px 0 #170f39;
+
     &.ant-radio-button-wrapper-checked {
-      background: $bg-accent-gradient !important;
+      background: #c630f6 !important;
+      border-radius: 10px;
+      box-shadow: 0 5px 0 #6e1989;
     }
   }
 
@@ -41,21 +50,27 @@ $sort-width: 40%;
     @include b(tablet) {
       width: $sort-width;
     }
+
     .ant-select-selector {
+      padding: 10px 15px !important;
+
       background: $bg-switch !important;
       border: none !important;
-      padding: 10px 15px !important;
     }
   }
 
   &__search {
-    background: $bg-switch !important;
     margin-left: 20px;
-    border: none;
     padding: 13px 14px;
+
     max-width: 190px;
+
+    background: $bg-switch !important;
+    border: none;
+
     input {
       color: $text-main-color;
+
       &::placeholder {
         color: $text-main-color;
       }

@@ -7,7 +7,7 @@ import moment from 'moment';
 import { ISettings } from '@/types';
 
 import CrossImg from '../../../../assets/img/icons/cross-2.svg';
-import { Button, InputNumber, Switch } from '../../../atoms';
+import { Button, InputNumber } from '../../../atoms';
 
 import './ExchangeSettings.scss';
 
@@ -28,7 +28,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
     const [slippage, setSlippage] = React.useState<IActiveSlippage>(savedSettings.slippage);
     const [txDeadline, setTxDeadline] = React.useState<number>(savedSettings.txDeadline);
     const [txDeadlineUtc, setTxDeadlineUtc] = React.useState<number>(savedSettings.txDeadlineUtc);
-    const [isAudio, setIsAudio] = React.useState<boolean>(savedSettings.isAudio);
+    const [isAudio] = React.useState<boolean>(savedSettings.isAudio);
 
     const [slippageInputValue, setSlippageInputValue] = React.useState<number>(
       savedSettings.slippage.type === 'input' ? savedSettings.slippage.value : NaN,
@@ -115,7 +115,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
                 colorScheme="outline"
                 inputSize="sm"
                 min={0.1}
-                max={20}
+                max={49}
                 inputPrefix="%"
                 onFocus={handleFocusSlippageInput}
                 onChange={handleChangeSlippageInput}
@@ -143,15 +143,15 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
           </div>
         </div>
         <div className="exch-settings__section">
-          <div className="exch-settings__section-title-2 text-500">Audio</div>
+          {/* <div className="exch-settings__section-title-2 text-500">Audio</div>
           <Switch
             colorScheme="purple"
             switchSize="bg"
             value={isAudio}
             onChange={() => setIsAudio(!isAudio)}
-          />
+          /> */}
         </div>
-        <Button className="exch-settings__btn" onClick={handleSaveSettings}>
+        <Button colorScheme="pink" className="exch-settings__btn" onClick={handleSaveSettings}>
           <span className="text-smd text-white">Save and close</span>
         </Button>
       </div>

@@ -1,12 +1,11 @@
-@import 'src/styles/mixins/displays.scss';
-@import 'src/styles/vars';
+@import 'src/styles/index.scss';
 
 .currency-info {
   &__body {
     width: 100%;
 
     &-currencies {
-      @include flexbox(flex-start, center, row, 15px);
+      @include flexbox(flex-start, center, row, 5px);
       margin-bottom: 14.5px;
 
       &-icon {
@@ -53,7 +52,7 @@
       }
 
       &-statistic {
-        @include flexbox(flex-start, flex-start, row, 15px, wrap);
+        @include flexbox(flex-start, flex-start, row, 5px, wrap);
         margin-bottom: 5px;
 
         &__price {
@@ -78,8 +77,9 @@
 
         &__date {
           font-family: 'Poppins', sans-serif;
-          color: $text-main-color;
           line-height: 24px;
+
+          color: $text-main-color;
           opacity: 0.6;
         }
       }

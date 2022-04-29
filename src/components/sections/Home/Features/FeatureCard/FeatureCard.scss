@@ -1,0 +1,25 @@
+@import '/src/styles/index';
+
+.feature-card {
+  padding: 53px 28px 55px 155px;
+
+  width: 330px;
+  height: 210px;
+
+  text-align: left;
+
+  border-radius: 28px;
+
+  &_title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+
+  &_text {
+    font-size: 14px;
+    line-height: 17.15px;
+
+    color: $c-text-gray;
+  }
+}

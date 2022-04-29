@@ -6,11 +6,16 @@ import { observer } from 'mobx-react-lite';
 import { Button } from '@/components/atoms';
 import { ChooseTokens, TradeBox } from '@/components/sections/Trade';
 import { tokens } from '@/config';
-import { useGetHoursPairs, useGetPair } from '@/services/api/refinery-finance-pairs';
+import {
+  useGetAllPairs,
+  useGetHoursPairs,
+  useGetPair,
+} from '@/services/api/refinery-finance-pairs';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import MetamaskService from '@/services/web3';
 import { useMst } from '@/store';
 import { ISettings, ITokens } from '@/types';
+import { findPath } from '@/utils/findPath';
 import { clogError } from '@/utils/logger';
 
 import './Exchange.scss';
@@ -40,7 +45,7 @@ const Exchange: React.FC<IExchange> = observer(
     setAllowanceTo,
     isAllowanceFrom,
     handleApproveTokens,
-    isAllowanceTo,
+    // isAllowanceTo,
     maxFrom,
     maxTo,
     settings,
@@ -51,10 +56,12 @@ const Exchange: React.FC<IExchange> = observer(
   }) => {
     const { connect, metamaskService } = useWalletConnectorContext();
     const { user, pairs } = useMst();
+    const [allPairs] = useState<string[][]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const getPair = useGetPair();
     const getPairData = useGetHoursPairs();
+    const getAllPairs = useGetAllPairs();
 
     const fetchPair = useCallback(async () => {
       const normalizedAddress = pairAddress.toLowerCase();
@@ -66,15 +73,42 @@ const Exchange: React.FC<IExchange> = observer(
       }
     }, [pairAddress, getPair, getPairData, pairs]);
 
+    const fetchAllPairs = React.useCallback(async () => {
+      const result = await getAllPairs();
+      result.pairs.forEach((pair: any) => {
+        allPairs.push([pair.token0.id, pair.token1.id]);
+      });
+    }, [getAllPairs, allPairs]);
+
+    useEffect(() => {
+      if (allPairs.length === 0) {
+        fetchAllPairs().catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(err);
+        });
+      }
+
+      // findPath(tokensData, allPairs);
+    }, [allPairs, fetchAllPairs]);
+
     useEffect(() => {
       if (pairs.pair.id !== pairAddress) {
         fetchPair();
       }
-    }, [fetchPair, pairAddress, pairs]);
+    }, [fetchPair, metamaskService, pairAddress, pairs]);
 
-    const handleSwap = async () => {
+    const handleSwap = React.useCallback(async () => {
       if (tokensData.to.token && tokensData.from.token) {
         setIsLoading(true);
+        let path;
+        if (!settings.isAudio) {
+          path = [
+            tokensData.from.token.address || tokens.wbnb.address['97'],
+            tokensData.to.token.address || tokens.wbnb.address['97'],
+          ];
+        } else {
+          path = findPath(tokensData, allPairs);
+        }
         let method;
         if (tokensData.to.token.address && tokensData.from.token.address) {
           method = user.type === 'from' ? 'swapExactTokensForTokens' : 'swapTokensForExactTokens';
@@ -92,10 +126,11 @@ const Exchange: React.FC<IExchange> = observer(
                 tokensData.to.amount,
                 +tokensData.to.token?.decimals,
               ),
-              [
-                tokensData.from.token.address || tokens.wbnb.address['97'],
-                tokensData.to.token.address || tokens.wbnb.address['97'],
-              ],
+              path,
+              // [
+              //   tokensData.from.token.address || tokens.wbnb.address['97'],
+              //   tokensData.to.token.address || tokens.wbnb.address['97'],
+              // ],
               user.address,
               settings.txDeadlineUtc,
             ];
@@ -111,10 +146,11 @@ const Exchange: React.FC<IExchange> = observer(
                   .toString(10),
                 +tokensData.to.token?.decimals,
               )).toFixed(0),
-              [
-                tokensData.from.token.address || tokens.wbnb.address['97'],
-                tokensData.to.token.address || tokens.wbnb.address['97'],
-              ],
+              path,
+              // [
+              //   tokensData.from.token.address || tokens.wbnb.address['97'],
+              //   tokensData.to.token.address || tokens.wbnb.address['97'],
+              // ],
               user.address,
               settings.txDeadlineUtc,
             ];
@@ -123,6 +159,7 @@ const Exchange: React.FC<IExchange> = observer(
               +tokensData.from.token?.decimals,
             );
           } else if (method === 'swapExactTokensForETH' || method === 'swapExactTokensForTokens') {
+            // MAIN SWAP
             data = [
               MetamaskService.calcTransactionAmount(
                 tokensData.from.amount,
@@ -134,10 +171,11 @@ const Exchange: React.FC<IExchange> = observer(
                   .toString(10),
                 +tokensData.to.token?.decimals,
               )).toFixed(0),
-              [
-                tokensData.from.token.address || tokens.wbnb.address['97'],
-                tokensData.to.token.address || tokens.wbnb.address['97'],
-              ],
+              path,
+              // [
+              //   tokensData.from.token.address || tokens.wbnb.address['97'],
+              //   tokensData.to.token.address || tokens.wbnb.address['97'],
+              // ],
               user.address,
               settings.txDeadlineUtc,
             ];
@@ -153,10 +191,11 @@ const Exchange: React.FC<IExchange> = observer(
                   .toString(10),
                 +tokensData.from.token?.decimals,
               )).toFixed(0),
-              [
-                tokensData.from.token.address || tokens.wbnb.address['97'],
-                tokensData.to.token.address || tokens.wbnb.address['97'],
-              ],
+              path,
+              // [
+              //   tokensData.from.token.address || tokens.wbnb.address['97'],
+              //   tokensData.to.token.address || tokens.wbnb.address['97'],
+              // ],
               user.address,
               settings.txDeadlineUtc,
             ];
@@ -187,7 +226,7 @@ const Exchange: React.FC<IExchange> = observer(
           setIsLoading(false);
         }
       }
-    };
+    }, [allPairs, metamaskService, setTokensData, settings, tokensData, user.address, user.type]);
 
     return (
       <>
@@ -208,7 +247,6 @@ const Exchange: React.FC<IExchange> = observer(
             maxTo={maxTo}
           />
           {isAllowanceFrom &&
-          isAllowanceTo &&
           tokensData.from.token &&
           tokensData.to.token &&
           tokensData.to.amount &&
@@ -217,6 +255,7 @@ const Exchange: React.FC<IExchange> = observer(
           tokensReserves !== null ? (
             <Button
               className="exchange__btn"
+              colorScheme="pink"
               onClick={handleSwap}
               disabled={
                 !tokensData.from.amount ||
@@ -236,8 +275,8 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {!user.address ? (
-            <Button className="exchange__btn" onClick={connect}>
-              <span className="text-bold text-md text-white">Connect</span>
+            <Button className="exchange__btn" colorScheme="pink" onClick={connect}>
+              <span className="text-bold text-md text-white">Unlock Wallet</span>
             </Button>
           ) : (
             ''
@@ -257,12 +296,17 @@ const Exchange: React.FC<IExchange> = observer(
           ) : (
             ''
           )}
-          {(!isAllowanceFrom || !isAllowanceTo) &&
+          {!isAllowanceFrom &&
           tokensData.to.amount &&
           tokensData.from.amount &&
           tokensReserves !== null &&
           user.address ? (
-            <Button className="exchange__btn" onClick={handleApproveTokens} loading={isApproving}>
+            <Button
+              className="exchange__btn"
+              colorScheme="pink"
+              onClick={handleApproveTokens}
+              loading={isApproving}
+            >
               <span className="text-white text-bold text-smd">
                 Approve{' '}
                 {!isAllowanceFrom ? tokensData.from.token?.symbol : tokensData.to.token?.symbol}

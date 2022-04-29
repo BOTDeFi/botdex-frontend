@@ -4,12 +4,11 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 import ArrowImg from '@/assets/img/icons/arrow-btn.svg';
-import InfoImg from '@/assets/img/icons/info.svg';
+// import InfoImg from '@/assets/img/icons/info.svg';
 import RecentTxImg from '@/assets/img/icons/recent-tx.svg';
 import SettingsImg from '@/assets/img/icons/settings.svg';
 
-import { Popover } from '../../../atoms';
-
+// import { Popover } from '../../../atoms';
 import './TradeBox.scss';
 
 interface ITradeBox {
@@ -65,7 +64,7 @@ const TradeBox: React.FC<ITradeBox> = observer(
             <div className="trade-box__subtitle text-gray-2 box-f-ai-c">
               <span>{subtitle}</span>
 
-              {info ? (
+              {/* {info ? (
                 <Popover
                   overlayInnerStyle={{ borderRadius: '12px' }}
                   content={<span className="text-med text">{info}</span>}
@@ -74,7 +73,7 @@ const TradeBox: React.FC<ITradeBox> = observer(
                 </Popover>
               ) : (
                 ''
-              )}
+              )} */}
             </div>
           ) : (
             ''

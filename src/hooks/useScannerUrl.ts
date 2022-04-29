@@ -10,11 +10,11 @@ import { getBaseScannerUrl } from '@/utils/urlConstructors';
  */
 export const useScannerUrl = (postfix: string): string => {
   const { metamaskService } = useWalletConnectorContext();
-  const baseScannerUrl = getBaseScannerUrl(metamaskService.usedChain);
+  const baseScannerUrl = getBaseScannerUrl(metamaskService.usedChain[0]);
   return `${baseScannerUrl}/${postfix}`;
 };
 
 export const getScannerUrl = (postfix: string): string => {
-  const baseScannerUrl = getBaseScannerUrl(metamaskServiceModule.usedChain);
+  const baseScannerUrl = getBaseScannerUrl(metamaskServiceModule.usedChain[0]);
   return `${baseScannerUrl}/${postfix}`;
 };

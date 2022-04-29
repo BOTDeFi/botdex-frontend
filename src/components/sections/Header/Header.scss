@@ -4,7 +4,7 @@
 
 .header {
   position: fixed;
-  z-index: 10;
+  z-index: 9999;
 
   padding: 0 22px;
 
@@ -13,47 +13,66 @@
   width: 100%;
   height: 72px;
 
-  background-color: $bg-dop;
-  border-radius: 0 0 14px 14px;
-  box-shadow: $shadow;
+  background: $bg-primary;
 
   @include b(tablet) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex(row, center, flex-start, nowrap);
   }
 
   &__logo {
-    margin: 0 auto;
+    margin-left: 17px;
+  }
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  .audits_sm {
+    margin-left: auto;
 
-    width: 100%;
-    &__img {
-      width: 32px;
+    :first-child {
+      margin-right: 15px;
     }
-    &__title {
-      margin-left: 9px;
-      @include font-gemina;
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 30px;
-      margin-top: 8px;
 
-      span {
-        margin-right: 5px;
+    :nth-child(2) {
+      margin-right: 23px;
+    }
 
-        background: $accent-gradient;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    a {
+      margin: 0;
+      padding-top: 3px;
+
+      width: fit-content;
+      height: fit-content;
+    }
+    @include b(mobile) {
+      @include flex(row, center, center, nowrap);
+      gap: 17px;
+
+      :first-child {
+        margin: 0;
+      }
+
+      :nth-child(2) {
+        margin-right: 20px;
       }
     }
+    @media (max-width: 380px) {
+      width: 100%;
+      gap: 15px;
 
-    img {
-      width: 40px;
+      :first-child {
+        margin: 0;
+      }
+
+      :nth-child(2) {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  &__connect_btn {
+    font-size: 10px !important;
+    line-height: 26px !important;
+
+    span {
+      @include flex(row, center);
     }
   }
 
@@ -119,25 +138,52 @@
 // TODO: fix min-width to bb
 .menu-mob {
   position: fixed;
-  z-index: 15;
+  z-index: 1000;
   top: 0;
   left: -100%;
+
+  width: 100%;
+
+  max-width: 200px;
+  height: 100%;
+
+  border-radius: 12px;
+
+  transition: 0.4s ease;
   @include bb(laptop, desktop) {
     display: none !important;
   }
 
-  max-width: 240px;
-  width: 100%;
-  height: 100%;
+  .sidebar_cover {
+    display: none;
 
-  transition: 0.4s ease;
+    background-color: rgba(0, 0, 0, 0.4);
+    @include b(tablet) {
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      right: 0;
+
+      display: none;
+
+      width: 200vh;
+      height: 100vh;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
 
   &--active {
     left: 0;
-    max-width: 316px;
+
+    max-width: 200px;
 
     .menu {
+      z-index: 100;
       left: 0;
+      //background: $bg-primary;
     }
   }
 
@@ -149,23 +195,61 @@
 }
 
 .connect_wrapper {
-  margin-left: 240px;
-  width: calc(100% - 240px);
   //padding: 0 10px;
+  //margin-top: 25px;
   position: absolute;
+
+  margin-left: 240px;
+
+  width: calc(100% - 240px);
+
+  &.hide {
+    display: none;
+  }
+
   .connect_container {
-    max-width: 1100px;
-    width: 100%;
-    padding: 0 10px;
     margin: 0 auto;
+    padding: 0 10px;
+
+    width: 100%;
+    max-width: 900px;
+    height: 62px;
+    //background: rgba(255,255,255,0.1);
+    border-radius: 12px 0 0 12px;
+    @include flex(row, center, flex-end);
+
+    .audits {
+      margin-left: auto;
+      @include flex(row, center);
+      @include b(tablet) {
+        display: none;
+      }
+
+      :first-child {
+        margin-right: 26px;
+      }
+
+      :nth-child(2) {
+        margin-right: 21px;
+      }
+
+      a {
+        margin: 0;
+        padding-top: 5px;
+
+        width: fit-content;
+        height: fit-content;
+      }
+    }
   }
 }
-.connect {
-  margin-left: auto;
-  z-index: 999;
-  top: 25px;
 
-  max-width: 200px;
+.connect {
+  z-index: 999;
+
+  span {
+    @include flex(row, center);
+  }
 
   @include b(tablet) {
     display: none !important;

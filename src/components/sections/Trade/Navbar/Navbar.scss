@@ -3,12 +3,12 @@
 
 .trade__nav {
   margin: 0 auto;
-  padding: 5px 8px;
+  padding: 6px;
 
   width: 100%;
   max-width: 420px;
 
-  background: $bg-dop;
+  background: $bg-trade-box;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   @include b(mobile) {
@@ -16,6 +16,7 @@
   }
 
   &-item {
+    margin-right: 6px;
     padding: 12px;
 
     display: block;
@@ -24,10 +25,17 @@
 
     text-align: center;
 
-    border-radius: 12px;
+    background: #170f39;
+
+    border-radius: 10px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
 
     &.active {
-      background: $accent-gradient;
+      background: #0a42ea;
+      box-shadow: 0 5px 0 #223687;
     }
   }
 }

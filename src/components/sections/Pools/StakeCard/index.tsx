@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { CSSTransition } from 'react-transition-group';
 import { format, millisecondsToSeconds } from 'date-fns';
 import { observer } from 'mobx-react-lite';
@@ -21,6 +22,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   const [isOpenDetails, setOpenDetails] = React.useState<boolean>(false);
   const [collecting, setCollecting] = React.useState<boolean>(false);
   const [reward, setReward] = React.useState<any>(0);
+  const [collectTime, setCollectTime] = React.useState('');
   const handleConnect = useCallback(() => {
     connect();
   }, [connect]);
@@ -39,23 +41,23 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
       setReward(res.reward);
     });
     setCollecting(false);
+    toast.success('Successfuly unstake!');
   }, [stake.id, stakeStore, user.address]);
 
-  const calculateCollectTime = React.useMemo(() => {
-    if (stake.userData?.start === 0) {
-      return format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM');
-    }
-    if (stake.userData?.amount === 0) {
-      return format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM');
-    }
+  const calculateCollectTime = React.useCallback(() => {
+    // if (stake.userData?.start === 0) {
+    //   setCollectTime(format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM'));
+    // }
+    // if (stake.userData?.amount === 0) {
+    //   setCollectTime(format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM'));
+    // }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const timeGap = millisecondsToSeconds(Date.now()) - stake.userData?.start;
     if (timeGap < stake.timeLockUp) {
-      return format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM');
+      setCollectTime(format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM'));
     }
-    return 0;
-  }, [stake.timeLockUp, stake.userData?.amount, stake.userData?.start]);
+  }, [stake.timeLockUp, stake.userData?.start]);
 
   useEffect(() => {
     async function getUserData() {
@@ -63,7 +65,10 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
       stakeStore.setUserData(stake.id, data);
     }
     if (user.address !== '') {
-      getUserData().catch((err) => console.log(err));
+      getUserData().catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      });
       getUserBalance(user.address).then((res) => user.setBalance(res.toNumber()));
     }
   }, [stake.id, stakeStore, user]);
@@ -77,6 +82,10 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
       });
     }
   }, [modals.stakeUnstake.isOpen, stake.id, stakeStore, user.address]);
+
+  useEffect(() => {
+    calculateCollectTime();
+  }, [calculateCollectTime]);
 
   return (
     <div className="stake-card">
@@ -143,10 +152,13 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
           )}
           <div className="label">Reward</div>
           <div className="content">{reward} BOT</div>
-          <div className="label">Payment Date</div>
-          {calculateCollectTime !== 0 ? (
-            <div className="content">{calculateCollectTime}</div>
-          ) : (
+          {collectTime !== '' ? (
+            <>
+              <div className="label">Payment Date</div>
+              <div className="content">{collectTime}</div>
+            </>
+          ) : null}
+          {collectTime === '' && +reward > 0 && (
             <Button
               colorScheme="outline-purple"
               size="sm"

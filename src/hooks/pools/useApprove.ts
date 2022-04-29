@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { Contract } from 'web3-eth-contract';
 
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import { pools as poolsConfig, tokens } from '@/config';
 import { SmartRefinerInitializable as SmartRefinerInitializableAbi } from '@/config/abi';
 import { metamaskService } from '@/services/MetamaskConnect';
@@ -40,22 +40,19 @@ export const useApprovePool = (lpContract: Contract, poolId: number): any => {
 
       poolsStore.updateUserAllowance(poolId, user.address);
       if ((tx as IReceipt).status) {
-        successNotification(
-          'Contract Enabled!',
-          `You can now stake in the ${foundPool.earningToken.symbol} pool!`,
+        toast.success(
+          `Contract Enabled! You can now stake in the ${foundPool.earningToken.symbol} pool!`,
         );
       } else {
-        errorNotification(
-          'Error',
-          'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+        toast.error(
+          'Error. Please try again. Confirm the transaction and make sure you are paying enough gas!',
         );
       }
       setRequestedApproval(false);
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        'Error. Please try again. Confirm the transaction and make sure you are paying enough gas!',
       );
     }
   }, [
@@ -88,15 +85,11 @@ export const useVaultApprove = (setLastUpdated: () => void): any => {
     });
     setRequestedApproval(true);
     if ((tx as IReceipt).status) {
-      successNotification(
-        'Contract Enabled!',
-        `You can now stake in the ${tokens.rp1.symbol} vault!`,
-      );
+      toast.success(`Contract Enabled! You can now stake in the ${tokens.rp1.symbol} vault!`);
       setLastUpdated();
     } else {
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        'Error. Please try again. Confirm the transaction and make sure you are paying enough gas!',
       );
     }
     setRequestedApproval(false);

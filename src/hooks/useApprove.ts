@@ -32,6 +32,7 @@ export const useApprove = ({
         setApproved(true);
       })
       .catch((err: any) => {
+        // eslint-disable-next-line no-console
         console.log('err approve stake', err);
         setApproved(false);
       })
@@ -55,6 +56,7 @@ export const useApprove = ({
         })
         .catch((err: any) => {
           setApproved(false);
+          // eslint-disable-next-line no-console
           console.log('check approve stake modal', err);
         });
     }

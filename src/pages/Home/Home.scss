@@ -1,0 +1,11 @@
+@import '/src/styles/index';
+
+.home {
+  &-wrapper {
+    // background: #241678;
+    overflow-x: hidden;
+
+    width: 100%;
+    min-height: 100vh;
+  }
+}

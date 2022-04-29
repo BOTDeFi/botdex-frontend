@@ -2,9 +2,13 @@ $text-main-color: #f4f4f4;
 $gray-2: rgba(#f4f4f4, 0.6);
 $green: #00aa59;
 $white: #fff;
+$c-text-purple: #c630f6;
+$c-text-gray: rgba(244, 244, 244, 0.5);
 
 $accent-gradient: linear-gradient(90deg, #d715ff 0.34%, #1a26ff 100.02%);
 
+$bg-primary: #110847;
+$bg-footer: #060028;
 $bg-white: #f4f4f4;
 $bg-purple: #7649fe;
 $bg-dop: #1f1645;
@@ -12,14 +16,20 @@ $bg-farms: #1d1135;
 $bg-farms-gradient: linear-gradient(98.94deg, #2f2542 -22.87%, #1d1135 94.67%);
 $bg-main-color: linear-gradient(133.45deg, #622883 -7.75%, #070d62 89.89%);
 $bg-sidebar-color: linear-gradient(159.02deg, #300a36 20.74%, #1c0fc6 77.56%, #0511ec 98.67%);
-$bg-sidebar-menu: linear-gradient(90.99deg, #25144c 0.33%, #1d1135 87.24%);
+$bg-sidebar-menu: #0a42ea;
 $bg-accent-gradient: linear-gradient(179.58deg, #d715ff 6.77%, #1a26ff 113.25%);
-$bg-trade-box: linear-gradient(159.55deg, #1d1238 10.58%, #581368 56.54%, #12168c 98.7%);
+$bg-trade-box: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
 $bg-divider: #685096;
 $bg-table-divider: #b8b8b8;
-$bg-btn: #7649fe;
+$bg-btn: rgba(255, 255, 255, 0.2);
+$bg-purple-light: rgba(85, 65, 208, 1);
 $bg-time-selector: #170f39;
+$bg-partners-card: rgba(7, 8, 61, 0.9);
 $bg-switch: #2f2542;
+$bg-table: rgba(29, 18, 91, 1);
+$bg-farms-table: #1d125b;
+
+$bg-preview-value-card: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
 
 $yellow: #fc0;
 $yellow-d: #ffeeb0;
@@ -42,7 +52,10 @@ $gray: rgba($black, 0.5);
 $bg-gradient: linear-gradient(98.94deg, #ffd335 -22.87%, #f9f9f9 94.67%);
 $shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
+$bsh-table: 0 12px 40px 0 rgba(0, 0, 0, 0.1);
+$bsh-partners-card: 0 12px 40px 0 rgba(0, 0, 0, 0.1);
 $mediaWidthLaptop: 1440px;
 $mediaWidthDesktop: 1024px;
+$mediaWidthLessDesktop: 1412px;
 $mediaWidthTablet: 768px;
 $mediaWidthMobile: 550px;

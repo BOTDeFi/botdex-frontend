@@ -12,7 +12,7 @@ import { getAddress } from '@/services/web3/contractHelpers';
 import { useFarms, usePollFarmsData } from '@/store/farms/hooks';
 import { Farm, FarmWithStakedValue } from '@/types';
 import { toBigNumber } from '@/utils';
-import { getFarmApr } from '@/utils/apr';
+import { useGetFarmApr } from '@/utils/apr';
 
 import './Farms.scss';
 
@@ -69,14 +69,13 @@ const Farms: React.FC = observer(() => {
         farm.quoteToken.busdPrice,
       );
       const { refineryRewardsApr, lpRewardsApr } = isActive
-        ? getFarmApr(
+        ? useGetFarmApr(
             new BigNumber(String(farm.poolWeight)),
             new BigNumber(refineryPrice),
             totalLiquidity,
-            // farm.lpAddresses[ChainId.MAINNET],
+            getAddress(farm.lpAddresses),
           )
         : { refineryRewardsApr: 0, lpRewardsApr: 0 };
-
       return { ...farm, apr: refineryRewardsApr, lpRewardsApr, liquidity: totalLiquidity };
     });
   }, [farmsWithoutFirstLpFarm, isActive, refineryPrice]);
@@ -96,8 +95,8 @@ const Farms: React.FC = observer(() => {
   const getFilterByFarmsType = (isOpenedLiveTab: boolean): [IFilterBy, IFilterFunc] => {
     return [
       FilterBy.farmsType,
-      ({ multiplier }) => {
-        return isOpenedLiveTab && multiplier !== '0X'; // multiplier is set to 0X when farm is finished
+      ({ multiplier, pid }) => {
+        return isOpenedLiveTab && multiplier !== '0X' && pid !== 252; // multiplier is set to 0X when farm is finished
       },
     ];
   };

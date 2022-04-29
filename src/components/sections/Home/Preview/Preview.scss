@@ -1,0 +1,227 @@
+@import '/src/styles/index.scss';
+
+.h-preview {
+  padding-top: 153px;
+
+  width: 100%;
+  min-height: 100vh;
+  @include flex(column, flex-start, center, nowrap);
+  @include b(tablet) {
+    padding: 153px 0 0;
+    @include flex(column, center, center, nowrap);
+  }
+  background: linear-gradient(0deg, #110847 0%, rgba(17, 8, 71, 0) 89.36%) bottom/100% 148px
+      no-repeat,
+    url(../../../../assets/img/sections/home/preview-bg.png) center/cover no-repeat;
+
+  &_body {
+    margin: 0 auto;
+
+    width: 100%;
+    max-width: 1100px;
+  }
+
+  &_top {
+    width: 100%;
+    gap: 70px;
+
+    &-left {
+      @include b(preTablet) {
+        padding: 0 5px;
+      }
+
+      &-title {
+        max-width: 500px;
+        @include flex(row, center, space-between, wrap);
+        @include b(preTablet) {
+          max-width: 290px;
+
+          h2 {
+            text-align: left;
+          }
+        }
+      }
+
+      &_subtitle {
+        margin: 20px 0 26px;
+
+        width: 100%;
+        @include b(preTablet) {
+          padding: 0 5px;
+        }
+      }
+
+      &_btn {
+        span {
+          font-weight: 400;
+        }
+      }
+
+      &_info {
+        margin-top: 30px;
+
+        width: 100%;
+        gap: 30px;
+        @include flex(row, center, space-between, nowrap);
+
+        @media (max-width: 380px) {
+          @include flex(column, center, center, nowrap);
+          gap: 10px;
+        }
+      }
+    }
+
+    &-right {
+      width: 530px;
+      height: 330px;
+      @include flex(column, center, space-between);
+      @include b(preTablet) {
+        height: 340px;
+      }
+      @include b(tablet) {
+        width: 100%;
+        height: auto;
+
+        background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
+        box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.1);
+      }
+      @include b(mobile) {
+        width: calc(100% - 10px);
+
+        border-radius: 12px;
+      }
+      background: url(../../../../assets/img/sections/home/graph-bg.svg) center/100% auto no-repeat;
+
+      .graph-wrapper {
+        width: 430px;
+
+        @include b(tablet) {
+          width: 100%;
+
+          .graph-wrapper__body {
+            margin: 0 auto;
+
+            width: calc(100% - 10px);
+          }
+        }
+
+        &__body {
+          width: 430px;
+          height: 125px;
+          min-height: 100px;
+          @include b(tablet) {
+            width: 300px;
+          }
+        }
+      }
+    }
+    @include m-left(70px);
+    @include flex(row, center, space-between, nowrap);
+
+    @include b(preTablet) {
+      @include flex(column, center, center);
+    }
+  }
+
+  &_slides {
+    margin-top: 91px;
+
+    width: 100%;
+
+    &_top_item {
+      a {
+        img {
+          width: 360px;
+          height: 197px;
+
+          border-radius: 12px;
+        }
+      }
+    }
+
+    &_body {
+      max-width: 1100px;
+      height: 250px;
+      @include m-left(70px);
+      @include flex(row, center, flex-start, nowrap);
+      @include b(preTablet) {
+        margin: 0 auto;
+
+        max-width: 350px;
+        @include flex(row, center, center, nowrap);
+      }
+      @include b(mobile) {
+        max-width: 340px;
+      }
+      @media (max-width: 380px) {
+        max-width: 310px;
+      }
+
+      &_item {
+        width: 360px;
+        height: 197px;
+
+        border-radius: 12px;
+        @include flex(row, center, center);
+      }
+
+      .swiper_btn_left {
+        position: absolute;
+        top: 100px;
+        left: -10px;
+      }
+
+      .swiper_btn_right {
+        position: absolute;
+        top: 100px;
+        right: 0;
+        @include b(preTablet) {
+          right: -10px;
+        }
+      }
+
+      .swiper-wrapper {
+        height: 250px;
+      }
+
+      .swiper-container {
+        height: 250px;
+      }
+
+      .swiper-slide {
+        height: 250px;
+
+        img {
+          @include b(mobile) {
+            width: 340px;
+          }
+          @media (max-width: 380px) {
+            max-width: 310px;
+          }
+        }
+        @include b(mobile) {
+          width: 340px;
+        }
+        @media (max-width: 380px) {
+          max-width: 310px;
+        }
+      }
+    }
+  }
+
+  .trade__graph-body__info-main {
+    padding: 35px 60px 0;
+
+    .currency-info__body-currencies {
+      margin-bottom: 0;
+    }
+    @include b(tablet) {
+      padding: 20px 15px 0;
+    }
+  }
+
+  .graph-wrapper {
+    margin-top: -15px;
+    padding-bottom: 10px;
+  }
+}

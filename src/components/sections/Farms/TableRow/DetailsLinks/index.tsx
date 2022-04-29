@@ -33,10 +33,10 @@ const DetailsLinks: React.FC<IDetailsLinksProps> = ({ farm }) => {
       text: 'View Contract',
     },
     // TODO: correct redirect to pair info
-    {
-      href: viewContractLink, // `/pool/${lpAddress}`,
-      text: 'See Pair Info',
-    },
+    // {
+    //   href: viewContractLink, // `/pool/${lpAddress}`,
+    //   text: 'See Pair Info',
+    // },
   ];
   return (
     <div className="farms-table-row__details-links">

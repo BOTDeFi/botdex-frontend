@@ -22,7 +22,10 @@ export const usePollFarmsData = (): any => {
     farmsStore.fetchFarmsPublicDataAsync(pids);
 
     if (user.address) {
-      farmsStore.fetchFarmUserDataAsync(user.address, pids);
+      farmsStore.fetchFarmUserDataAsync(
+        user.address,
+        pids.filter((pid) => pid !== 252),
+      );
     }
   }, [farmsStore, user.address, slowRefresh]);
 };

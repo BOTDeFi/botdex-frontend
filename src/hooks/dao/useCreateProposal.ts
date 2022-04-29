@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import { SNAPSHOT_SPACE } from '@/config/constants/dao';
 import { useSnapshotService } from '@/services/api/snapshot.org';
 import { ProposalVotingSystem } from '@/services/api/snapshot.org/types';
@@ -48,11 +48,11 @@ export const useCreateProposal = ({
         })) as ICreateProposalResult;
 
         onSuccessTx(result);
-        successNotification('Success', 'Created a new proposal!');
+        toast.success('Success. Created a new proposal!');
       } catch (error: any) {
         clogError(error);
         const errorMessage = error?.message ? error.message : new Error(error).message;
-        errorNotification('Error', errorMessage);
+        toast.error(`Error. ${errorMessage}`);
       } finally {
         onEndTx();
       }

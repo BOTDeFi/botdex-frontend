@@ -209,14 +209,18 @@ const Receive: React.FC = observer(() => {
             <Popover content={new BigNumber(liquidityInfo?.token1.rate).toString(10)}>
               <div className="peceive__price-item">
                 1 {liquidityInfo?.token0.symbol} ={' '}
-                {new BigNumber(liquidityInfo?.token1.rate).toFixed(5)}{' '}
+                {new BigNumber(+liquidityInfo.token1.reserve)
+                  .dividedBy(+liquidityInfo.token0.reserve)
+                  .toFixed(5)}{' '}
                 {liquidityInfo?.token1.symbol}
               </div>
             </Popover>
             <Popover content={new BigNumber(liquidityInfo?.token0.rate).toString(10)}>
               <div className="peceive__price-item">
                 1 {liquidityInfo?.token1.symbol} ={' '}
-                {new BigNumber(liquidityInfo?.token0.rate).toFixed(5)}{' '}
+                {new BigNumber(+liquidityInfo.token0.reserve)
+                  .dividedBy(+liquidityInfo.token1.reserve)
+                  .toFixed(5)}{' '}
                 {liquidityInfo?.token0.symbol}
               </div>
             </Popover>
@@ -225,7 +229,12 @@ const Receive: React.FC = observer(() => {
       ) : (
         ''
       )}
-      <Button className="receive__btn" onClick={handleRemoveLiquidity} loading={isActiveTx}>
+      <Button
+        className="receive__btn"
+        colorScheme="pink"
+        onClick={handleRemoveLiquidity}
+        loading={isActiveTx}
+      >
         <span className="text-white text-bold text-md">Confirm</span>
       </Button>
     </TradeBox>

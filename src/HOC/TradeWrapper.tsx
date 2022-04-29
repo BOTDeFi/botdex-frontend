@@ -311,10 +311,17 @@ const TradeWrapper = (
                 'ROUTER',
                 'getAmountIn',
                 [
-                  MetamaskService.calcTransactionAmount(
-                    tokens.to.amount,
-                    +tokens.to.token.decimals,
-                  ),
+                  new BigNumber(
+                    MetamaskService.calcTransactionAmount(
+                      tokens.to.amount,
+                      +tokens.to.token.decimals,
+                    ),
+                  ).isGreaterThanOrEqualTo(reserve2)
+                    ? new BigNumber(reserve2).minus(1).toString()
+                    : MetamaskService.calcTransactionAmount(
+                        tokens.to.amount,
+                        +tokens.to.token.decimals,
+                      ),
                   reserve1,
                   reserve2,
                 ],

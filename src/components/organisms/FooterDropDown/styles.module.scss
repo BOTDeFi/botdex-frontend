@@ -1,0 +1,27 @@
+@import '/src/styles/index';
+
+.container {
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+
+  padding: 10px;
+
+  width: 195px;
+  height: 150px;
+
+  background: rgba(10, 0, 44, 0.9);
+  border-radius: 12px;
+  @include flex(column, flex-start, center, nowrap);
+  gap: 15px;
+
+  @include b(tablet) {
+    right: -10px;
+  }
+
+  img {
+    padding-left: 10px;
+    // width: 151px;
+    height: 23px;
+  }
+}

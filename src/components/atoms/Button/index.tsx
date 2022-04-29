@@ -18,7 +18,12 @@ export type ColorScheme =
   | 'outline-black'
   | 'purple'
   | 'gray'
-  | 'yellow-l';
+  | 'yellow-l'
+  | 'blue'
+  | 'pink'
+  | 'purple-light'
+  | 'icon';
+
 export interface IColorScheme {
   colorScheme?: ColorScheme;
 }
@@ -44,6 +49,7 @@ export interface ButtonProps extends IColorScheme, ISize {
   noclick?: boolean;
   title?: string;
   onKeyDown?: (e: any) => void;
+  id?: string;
 }
 
 const Button: React.FC<ButtonProps> = React.memo(
@@ -66,6 +72,7 @@ const Button: React.FC<ButtonProps> = React.memo(
     loadingText,
     title,
     onKeyDown,
+    id,
   }) => {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!link) e.stopPropagation();
@@ -96,6 +103,7 @@ const Button: React.FC<ButtonProps> = React.memo(
             noclick,
           },
         )}
+        id={id}
         title={title}
         disabled={disabled || loading}
         onClick={handleClick}

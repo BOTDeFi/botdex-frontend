@@ -1,0 +1,154 @@
+@import '/src/styles/index.scss';
+
+.preview-tables {
+  padding-top: 50px;
+
+  width: 100%;
+  min-height: 100vh;
+  @include b(tablet) {
+    padding: 50px 0 130px;
+
+    min-height: auto;
+  }
+  background: linear-gradient(0deg, #110847 0%, rgba(17, 8, 71, 0) 89.36%) bottom/100% 148px
+      no-repeat,
+    url(../../../../assets/img/sections/home/preview-bg-second.png) bottom/100% auto no-repeat,
+    #110847 center/cover no-repeat;
+
+  &_body {
+    margin: 0 auto;
+
+    width: 100%;
+    max-width: 1100px;
+    @include flex(row, center, flex-start);
+
+    &_content {
+      gap: 30px;
+
+      @include m-left(70px);
+
+      @include flex(row, flex-start, space-between, nowrap);
+      @include b(preTablet) {
+        margin: 0 auto;
+
+        max-width: 600px;
+        @include flex(column, center, center);
+      }
+      @include b(mobile) {
+        max-width: 90%;
+      }
+
+      &_earn-table,
+      &_staking-table {
+        margin-top: 27px;
+        padding: 0 20px;
+
+        @include b(tablet) {
+          padding: 0;
+
+          height: 90px;
+        }
+
+        @include b(mobile) {
+          padding: 0;
+
+          width: 100%;
+          max-width: 100% !important;
+          height: 140px;
+        }
+      }
+
+      &_earn {
+        @include flex(column, center, center, nowrap);
+        @include b(tablet) {
+          width: 95%;
+        }
+
+        &-table {
+          background: $bg-table;
+          border-radius: 12px;
+          box-shadow: $bsh-table;
+
+          &_item {
+            padding: 0 !important;
+
+            max-width: 490px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            @include b(tablet) {
+              max-width: 95%;
+
+              height: 90px;
+            }
+            @include b(mobile) {
+              // padding: 10px !important;
+              height: 140px;
+            }
+
+            &:last-child {
+              border: none;
+            }
+          }
+        }
+      }
+
+      &_staking {
+        width: 100%;
+        @include flex(column, center, flex-end, nowrap);
+
+        &-table {
+          padding: 0;
+
+          width: 100%;
+
+          &_item {
+            background: $bg-table;
+            border-radius: 12px;
+            box-shadow: $bsh-table;
+
+            &:not(:last-child) {
+              margin-bottom: 30px;
+            }
+          }
+        }
+
+        h2 {
+          span {
+            @include b(mobile) {
+              padding-left: 10px;
+            }
+          }
+        }
+
+        .table-card_btn {
+          right: 17px;
+        }
+      }
+
+      .swiper-wrapper {
+        max-width: 95%;
+      }
+
+      .swiper-container {
+        max-width: 95%;
+      }
+
+      &_title {
+        width: 100%;
+        @include flex(row, flex-start, space-between, nowrap);
+
+        h2 {
+          width: 100%;
+
+          text-align: left !important;
+        }
+      }
+    }
+  }
+}
+
+.btn-staking {
+  @include b(tablet) {
+    padding-right: 10px;
+  }
+}

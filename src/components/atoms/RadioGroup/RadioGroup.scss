@@ -35,10 +35,14 @@
     &:hover {
       color: rgba(0, 0, 0, 0.5);
     }
+
+    //&:first-child{
+    //  background-color: transparent;
+    //}
   }
 
   .ant-radio-button-wrapper-checked {
-    color: $black !important;
+    color: #000 !important;
     background: $yellow !important;
   }
 }

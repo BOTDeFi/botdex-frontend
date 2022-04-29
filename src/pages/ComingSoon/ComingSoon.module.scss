@@ -1,0 +1,66 @@
+@import 'src/styles/mixins/main';
+@import 'src/styles/mixins/media';
+
+.coming_soon_wrapper {
+  width: 100%;
+  height: 100vh;
+  @include flex(column, center, center, nowrap);
+  @include b(tablet) {
+    padding: 72px 10px 0;
+  }
+  background: url(../../assets/img/mothership.png) center/316px 370px no-repeat,
+    linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
+    url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
+    url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat, #110847 center;
+
+  .logo_wrapper {
+    margin-top: 20px;
+    padding-top: 100px;
+    @include flex(row, center, flex-start, nowrap);
+
+    :nth-child(2) {
+      margin-top: 9px;
+      margin-left: 1px;
+    }
+  }
+
+  .coming_soon {
+    // position: relative;
+    margin: 260px 220px 0 0;
+
+    width: 316px;
+    @include b(tablet) {
+      margin: 70px 0 0 0;
+    }
+    @include b(extramobile) {
+      margin: 0;
+
+      width: 70%;
+    }
+
+    // img {
+    //   max-width: 100%;
+    //   object-fit: cover;
+    // }
+    .title {
+      // position: absolute;
+      // left: -148px;
+
+      // bottom: -55px;
+      font-family: 'Gemina', sans-serif;
+      font-size: 120px;
+      line-height: 100%;
+      text-align: center;
+      // @include b(tablet) {
+      //   left: 0;
+      //   bottom: 130px;
+      // }
+      // @include b(extramobile) {
+      //   left: -10px;
+      //   bottom: 0;
+
+      //   font-size: 60px;
+      // }
+    }
+  }
+}

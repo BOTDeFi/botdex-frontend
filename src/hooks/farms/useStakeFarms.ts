@@ -11,6 +11,7 @@ const useStakeFarms = (pid: number): any => {
   const handleStake = useCallback(
     async (amount: string) => {
       const txHash = await stakeFarm(pid, amount);
+      // eslint-disable-next-line no-console
       console.info(txHash);
     },
     [pid, stakeFarm],

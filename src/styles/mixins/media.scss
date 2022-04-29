@@ -10,6 +10,10 @@
     @media (max-width: $mediaWidthDesktop) {
       @content;
     }
+  } @else if $point==preTablet {
+    @media (max-width: $mediaWidthLessDesktop) {
+      @content;
+    }
   } @else if $point==mobile {
     @media (max-width: $mediaWidthTablet) {
       @content;

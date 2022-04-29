@@ -1,0 +1,232 @@
+@import '/src/styles/index.scss';
+
+.footer_wrapper {
+  position: relative;
+  z-index: 10;
+
+  padding: 63px 10px 67px;
+  @include b('tablet') {
+    padding: 63px 10px 100px;
+  }
+  overflow: hidden;
+
+  width: 100%;
+
+  background: $bg-footer;
+
+  .footer {
+    position: relative;
+    z-index: 10;
+    @include flex(column, center, center);
+  }
+
+  .logo {
+    margin-bottom: 47px;
+
+    @include flex(row, center, flex-start, nowrap);
+
+    img {
+      width: 351px;
+      @include b(tablet) {
+        width: 217px;
+      }
+    }
+  }
+
+  .links {
+    @include flex(row, normal, normal, nowrap);
+    max-width: 450px;
+
+    .link_block {
+      @include flex(column, flex-start);
+      @include b(tablet) {
+        align-items: center;
+      }
+
+      &:nth-of-type(2) {
+        margin-right: 29px;
+        margin-left: 60px;
+        @include b(tablet) {
+          margin: 0 25px;
+        }
+      }
+
+      .link {
+        margin-bottom: 13px;
+
+        white-space: nowrap;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+        @include b(tablet) {
+          font-size: 13px;
+          line-height: 16px;
+        }
+      }
+    }
+  }
+
+  .join {
+    &_wrapper {
+      margin-top: 52px;
+      margin-bottom: 59px;
+      @include flex(row, center, center, nowrap);
+      gap: 30px;
+
+      @include b(preTablet) {
+        @include flex(column, center, center, nowrap);
+      }
+
+      .title {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 22px;
+      }
+
+      .subtitle {
+        margin-top: 6px;
+        margin-bottom: 17px;
+
+        font-size: 14px;
+        line-height: 17px;
+
+        opacity: 0.5;
+      }
+
+      .socials {
+        @include flex(row, center, space-between, nowrap);
+        // @include b(mobile) {
+        //   max-width: 250px;
+        //   @include flex(row, center, center, wrap);
+        // }
+        gap: 10px;
+        @media (max-width: 380px) {
+          gap: 5px;
+
+          svg {
+            width: 25px;
+          }
+        }
+
+        a {
+          width: 36px;
+          height: 36px;
+
+          img {
+            width: 36px;
+            height: auto;
+
+            opacity: 0.5;
+            @media (max-width: 380px) {
+              width: 30px;
+            }
+          }
+        }
+      }
+
+      .controls {
+        @include flex(row, center, space-between, nowrap);
+        gap: 10px;
+        @include b(tablet) {
+          @include flex(row, center, center, nowrap);
+          gap: 2px;
+        }
+
+        .joinBtn {
+          width: 120px;
+          height: 40px;
+
+          font-weight: 400;
+          @include b(mobile) {
+            width: fit-content;
+          }
+        }
+
+        .input {
+          padding: 0 10px;
+
+          width: 311px;
+          height: 43px;
+
+          color: rgba(255, 255, 255, 1);
+          background: rgba(24, 13, 65, 1);
+          border-radius: 10px;
+          @include b(mobile) {
+            width: 50%;
+          }
+
+          &:hover,
+          &:focus {
+            box-shadow: 0 0 10px 3px rgb(255, 255, 255);
+          }
+        }
+      }
+    }
+
+    &_left {
+      @include flex(column, center, center, nowrap);
+      @include b(mobile) {
+        max-width: 290px;
+
+        text-align: center;
+      }
+      position: relative;
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        right: -20px;
+
+        width: 1px;
+        height: 106px;
+
+        background: rgba(255, 255, 255, 0.5);
+        @include b(preTablet) {
+          display: none;
+        }
+      }
+    }
+
+    &_right {
+      @include flex(column, center, center, nowrap);
+    }
+  }
+
+  .policies {
+    margin-top: 50px;
+
+    :first-child {
+      margin-right: 24px;
+    }
+  }
+
+  .copyright {
+    margin-top: 20px;
+
+    color: rgba(244, 244, 244, 0.5);
+  }
+
+  .bg {
+    position: absolute;
+    z-index: 0;
+    left: calc(50% - 437px);
+    bottom: -568px;
+
+    width: 875px;
+    height: 875px;
+
+    background: rgba(215, 21, 255, 0.2);
+    filter: blur(250px);
+    @include b(tablet) {
+      left: calc(50% - 98px);
+      bottom: -49px;
+
+      width: 196px;
+      height: 196px;
+      filter: blur(100px);
+    }
+  }
+}

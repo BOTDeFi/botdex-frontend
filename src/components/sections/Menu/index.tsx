@@ -6,23 +6,27 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 import ArrowImg from '@/assets/img/icons/arrow-dropdown.svg';
-// import CollectiblesImg from '../../../assets/img/icons/collectibles.svg';
+import BridgeImg from '@/assets/img/icons/bridge.svg';
 import FarmsImg from '@/assets/img/icons/farms.svg';
+import GamefiImg from '@/assets/img/icons/gamefi.svg';
 import HomeImg from '@/assets/img/icons/home.svg';
-// import DaoImg from '@/assets/img/icons/dao.svg';
-import LogoImg from '@/assets/img/icons/logo.svg';
+import LiquidityImg from '@/assets/img/icons/liquidity.svg';
+// import { ReactComponent as LogoText } from '@/assets/img/icons/logo_text.svg';
+import { ReactComponent as Logo } from '@/assets/img/icons/logo.svg';
+import LotteryImg from '@/assets/img/icons/lottery_menu.svg';
+import MarketplaceImg from '@/assets/img/icons/marketplace.svg';
+import MessengerImg from '@/assets/img/icons/messenger.svg';
 import MoreImg from '@/assets/img/icons/more.svg';
-// import LotteryImg from '../../../assets/img/icons/lottery.svg';
 import PoolsImg from '@/assets/img/icons/pools.svg';
-// import TeamsImg from '../../../assets/img/icons/teams.svg';
-// import { ReactComponent as TgImg } from '@/assets/img/icons/tg.svg';
 import TradeImg from '@/assets/img/icons/trade.svg';
-// import { ReactComponent as TwImg } from '@/assets/img/icons/tw.svg';
-import { Button } from '@/components/atoms';
+import WalletMenuImg from '@/assets/img/icons/wallet_menu.svg';
+// import { ReactComponent as WalletImg } from '@/assets/img/icons/wallet.svg';
+// import { Button } from '@/components/atoms';
 import { WalletModal } from '@/components/sections';
-import { useWalletConnectorContext } from '@/services/MetamaskConnect';
+// import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 
+// import { addressWithDots } from '@/utils/formatters';
 import './Menu.scss';
 
 interface IMenuProps {
@@ -30,7 +34,7 @@ interface IMenuProps {
 }
 
 const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
-  const { connect } = useWalletConnectorContext();
+  // const { connect } = useWalletConnectorContext();
   const { user } = useMst();
   const navItems = [
     {
@@ -39,10 +43,15 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       img: HomeImg,
     },
     {
-      text: 'Trade',
+      text: 'Swap',
       link: '/trade/swap',
+      activePaths: ['/trade/swap', '/trade/swap/settings', '/trade/swap/history'],
+      img: TradeImg,
+    },
+    {
+      text: 'Liquidity',
+      link: '/trade/liquidity',
       activePaths: [
-        '/trade/swap',
         '/trade/liquidity',
         '/trade/liquidity/settings',
         '/trade/liquidity/history',
@@ -50,26 +59,48 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
         '/trade/liquidity/add',
         '/trade/liquidity/remove',
         '/trade/liquidity/receive',
-        '/trade/bridge',
-        '/trade/swap/settings',
-        '/trade/swap/history',
       ],
-      img: TradeImg,
+      img: LiquidityImg,
     },
     {
-      text: 'Farms',
+      text: 'Farming',
       link: '/farms',
       img: FarmsImg,
     },
-    // {
-    //   text: 'Lottery',
-    //   link: '/lottery',
-    //   img: LotteryImg,
-    // },
     {
       text: 'Staking',
       link: '/staking',
       img: PoolsImg,
+    },
+    {
+      text: 'Bridge',
+      link: '/coming-soon/bridge',
+      img: BridgeImg,
+    },
+    {
+      text: 'Wallet',
+      link: '/coming-soon/wallet',
+      img: WalletMenuImg,
+    },
+    {
+      text: 'Marketplace',
+      link: '/coming-soon/marketplace',
+      img: MarketplaceImg,
+    },
+    {
+      text: 'Gamefi',
+      link: '/coming-soon/gamefi',
+      img: GamefiImg,
+    },
+    {
+      text: 'Lottery',
+      link: '/coming-soon/lottery',
+      img: LotteryImg,
+    },
+    {
+      text: 'Messenger',
+      link: '/coming-soon/messenger',
+      img: MessengerImg,
     },
     // {
     //   text: 'Collectibles',
@@ -93,28 +124,14 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
 
   const handleOpenShowMore = React.useCallback(() => {
     setOpenShowMore(!isOpenShowMore);
-    console.log(isOpenShowMore);
   }, [isOpenShowMore]);
 
   return (
     <>
       <div className="menu box-f-fd-c">
         <div className="menu__header">
-          <img src={LogoImg} alt="BOTDEX logo" className="menu__header__logo" />
-          <div className="menu__header__title">
-            <span>Bot</span>Swap
-          </div>
-        </div>
-        <div className="menu__connect-box">
-          {!user.address ? (
-            <Button className="menu__connect" size="md" onClick={connect}>
-              <span className="text-bold text-white">Connect Wallet</span>
-            </Button>
-          ) : (
-            <Button className="menu__connect" size="md" onClick={() => setWalletModalVisible(true)}>
-              <span className="text-bold text-white text-address">{user.address}</span>
-            </Button>
-          )}
+          <Logo />
+          {/* <LogoText /> */}
         </div>
         <div className="menu__nav">
           {navItems.map((item) => (
@@ -139,6 +156,9 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
                   <img src={item.img} alt="" />
                 </div>
                 <span>{item.text}</span>
+                {item.link.split('/')[1] === 'coming-soon' && (
+                  <div className="menu__nav-item-box__soon">Soon</div>
+                )}
               </div>
             </NavLink>
           ))}
@@ -149,7 +169,7 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
             className="menu__nav-item"
             onClick={handleOpenShowMore}
           >
-            <div className="menu__nav-item-box box-f-ai-c">
+            <div className={cn('menu__nav-item-box box-f-ai-c', isOpenShowMore && 'active')}>
               <div className="menu__nav-item-img box-f-c">
                 <img src={MoreImg} alt="" />
               </div>
@@ -169,9 +189,38 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
             classNames="show"
           >
             <div className="show-more-wrapper">
-              <NavLink exact to="/">
-                Audit
-              </NavLink>
+              <a href="https://www.certik.com/projects/bot-planet" target="_blank" rel="noreferrer">
+                Audit CertiK
+              </a>
+              <a href="https://hacken.io/audits/#bot_planet" target="_blank" rel="noreferrer">
+                Audit Hacken
+              </a>
+              <a href="https://www.botpla.net/#aboutus" target="_blank" rel="noreferrer">
+                About $BOT
+              </a>
+              <a href="https://www.botpla.net/#team" target="_blank" rel="noreferrer">
+                Team
+              </a>
+              <a
+                href="https://www.botpla.net/wp-content/uploads/2022/02/White-Paper.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Whitepaper
+              </a>
+              <a
+                href="https://www.botpla.net/wp-content/uploads/2022/02/Deck.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Deck
+              </a>
+              <a href="https://www.botpla.net/#team" target="_blank" rel="noreferrer">
+                Partners
+              </a>
+              <a href="https://www.botpla.net/blog" target="_blank" rel="noreferrer">
+                Blog
+              </a>
             </div>
           </CSSTransition>
         </div>

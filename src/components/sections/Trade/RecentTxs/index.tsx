@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
 import OpenLinkImg from '@/assets/img/icons/open-link.svg';
-import { IS_PRODUCTION } from '@/config';
+import { IS_PRODUCTION } from '@/config/contracts';
 import { useMst } from '@/store';
 import { IRecentTx } from '@/types';
 

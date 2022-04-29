@@ -1,4 +1,6 @@
 import React from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Input as AntdInput } from 'antd';
 import cn from 'classnames';
 
@@ -33,6 +35,8 @@ const Search: React.FC<ISearch> = React.memo(
   }) => {
     const [inputValue, setInputValue] = React.useState<number | string>(value || '');
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const inputRef = React.useRef<AntdInput>(null);
     const inputNumberRef = React.useRef<HTMLInputElement>(null);
 

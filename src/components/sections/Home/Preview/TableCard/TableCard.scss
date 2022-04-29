@@ -1,0 +1,137 @@
+@import '/src/styles/index.scss';
+
+.table-card {
+  position: relative;
+
+  padding: 26px 2px 26px 20px;
+
+  width: 530px;
+  height: 90px;
+
+  @include flex(row, center, space-between, nowrap);
+
+  @include b(tablet) {
+    padding: 26px 2px 26px 20px;
+
+    width: 95%;
+  }
+  @include b(mobile) {
+    padding: 10px;
+
+    height: 140px;
+    @include flex(column, flex-start, center, nowrap);
+    gap: 5px;
+  }
+
+  &_name {
+    @include flex(row, center, space-between, nowrap);
+    // @include b(tablet) {
+    //   padding-left: 20px;
+    // }
+    &-images {
+      position: relative;
+
+      img {
+        width: 48px;
+        height: 48px;
+
+        border-radius: 50%;
+
+        &:last-child {
+          position: absolute;
+          z-index: 10;
+          left: 30px;
+          bottom: -5px;
+
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      &_pair {
+        position: relative;
+
+        img {
+          // position: absolute;
+          // top: -15px;
+          width: 32px;
+          height: 32px;
+
+          &:first-child {
+            left: 0;
+          }
+
+          &:last-child {
+            position: absolute;
+            z-index: 10;
+            top: 0;
+            left: 25px;
+          }
+        }
+      }
+    }
+
+    &_text {
+      margin-left: 30px;
+      @include flex(column, flex-start, center, nowrap);
+
+      span {
+        margin-top: 8px;
+
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 15px;
+
+        color: $c-text-gray;
+      }
+    }
+  }
+
+  &_apy {
+    &-title {
+      @include flex(row, center, flex-start);
+
+      span {
+        font-family: Readex Pro;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 15px;
+
+        color: $c-text-gray;
+      }
+    }
+
+    &-value {
+      margin-top: 10px;
+
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 22.5px;
+
+      color: $c-text-purple;
+      @include flex(row, center, flex-start);
+    }
+
+    img {
+      margin-left: 5px;
+    }
+  }
+
+  &_btn {
+    min-width: 115px;
+    max-height: 38px !important;
+    @include b(tablet) {
+      position: absolute;
+      right: 3px;
+      bottom: 20px;
+    }
+
+    span {
+      font-family: Readex Pro;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 26px;
+      letter-spacing: 0.3px;
+    }
+  }
+}

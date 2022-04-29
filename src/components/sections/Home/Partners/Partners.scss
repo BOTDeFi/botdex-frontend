@@ -1,0 +1,154 @@
+@import '/src/styles/index.scss';
+
+.partners {
+  padding-top: 50px;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: url(../../../../assets/img/sections/home/moon.png) 450px 630px no-repeat,
+    linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
+    url(../../../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
+    url(../../../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat,
+    #110847 center;
+
+  &_body {
+    margin: 0 auto;
+
+    width: 100%;
+    max-width: 1100px;
+
+    @include flex(column, flex-start, center);
+    @include b(preTablet) {
+      @include flex(column, center, center);
+      max-width: 600px;
+    }
+
+    &_row {
+      margin-bottom: 205px;
+
+      max-width: 1100px;
+      @include m-left(70px);
+      @include flex(row, flex-start, space-between, nowrap);
+      gap: 65px;
+
+      @include b(preTablet) {
+        @include flex(column, center, center);
+      }
+      @include b(tablet) {
+        margin: 0 auto;
+        gap: 0;
+
+        width: 100%;
+      }
+
+      &_title {
+        padding-top: 60px;
+
+        width: 400px;
+        height: 100%;
+        @include b(tablet) {
+          width: 300px;
+        }
+
+        h1 {
+          margin-bottom: 25px;
+
+          text-align: left;
+        }
+      }
+
+      &_slider {
+        position: relative;
+
+        width: 100%;
+        max-width: 600px;
+        @include flex(row, center, center, nowrap);
+        @include b(preTablet) {
+          max-width: 300px;
+          @include flex(column, center, center);
+        }
+
+        .swiper-wrapper {
+          max-width: 600px;
+          max-height: 250px;
+          @include b(preTablet) {
+            margin: 0 auto;
+
+            max-width: 300px;
+          }
+        }
+
+        .swiper-slide {
+          max-width: 370px;
+          max-height: 250px;
+        }
+
+        .swiper_btn_left {
+          position: absolute;
+          top: 130px;
+          @include b(preTablet) {
+            left: 0;
+          }
+        }
+
+        .swiper_btn_right {
+          position: absolute;
+          top: 130px;
+          right: 0;
+
+          width: fit-content;
+        }
+      }
+    }
+
+    &_grid {
+      margin-bottom: 100px;
+
+      width: 100%;
+      @include b(preTablet) {
+        max-width: 100%;
+      }
+
+      &_content {
+        @include m-left(70px);
+        @include flex(column, flex-start, center);
+        @include b(preTablet) {
+          @include flex(row, center, center, wrap);
+        }
+
+        h1 {
+          margin: 0 auto 60px;
+
+          max-width: 374px;
+        }
+
+        &_cards {
+          margin: 0 auto;
+
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 10px;
+          @include b(preTablet) {
+            margin: 0 auto;
+
+            width: 100%;
+            @include flex(row, center, center, wrap);
+          }
+          @include b(mobile) {
+            padding: 0 5px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+      }
+    }
+  }
+}
+
+.mt-first-grid {
+  @include b(mobile) {
+    padding-top: 100px;
+  }
+}

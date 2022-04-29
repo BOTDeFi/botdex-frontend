@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+import { IS_PRODUCTION } from '@/config/contracts';
+
 export const localApi = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/'
-      : 'https://botswap.herokuapp.com/', // TODO: remove this when `git rebase` or `git merge`
+  baseURL: IS_PRODUCTION ? 'https://botswap.app' : 'http://localhost:3000/', // https://botswap.herokuapp.com/
+});
+
+export const coinGeckoApi = axios.create({
+  baseURL: 'https://api.coingecko.com/api/v3/coins/',
 });

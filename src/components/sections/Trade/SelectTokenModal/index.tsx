@@ -134,13 +134,7 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
                     role="button"
                     tabIndex={-2}
                   >
-                    <img
-                      onError={(e: any) => {
-                        e.target.src = UnknownImg;
-                      }}
-                      src={token.logoURI}
-                      alt=""
-                    />
+                    <img src={token.logoURI || UnknownImg} alt="" />
                     <div>
                       <div className="text">{token.name}</div>
                       <div className="text-ssm text-gray-2 text-inter">{token.symbol}</div>
@@ -151,15 +145,15 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
             ) : (
               <span className="text">Not found</span>
             )}
-            {/* <div */}
-            {/*  className="m-select-token__manage text-black text-center box-pointer" */}
-            {/*  onClick={handleOpenManageModal} */}
-            {/*  onKeyDown={handleOpenManageModal} */}
-            {/*  role="button" */}
-            {/*  tabIndex={0} */}
-            {/* > */}
-            {/*  Manage Tokens */}
-            {/* </div> */}
+            <div
+              className="m-select-token__manage text-white text-center box-pointer"
+              onClick={handleOpenManageModal}
+              onKeyDown={handleOpenManageModal}
+              role="button"
+              tabIndex={0}
+            >
+              Manage Tokens
+            </div>
           </div>
         </Modal>
         <ManageTokensModal

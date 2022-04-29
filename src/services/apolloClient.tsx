@@ -18,7 +18,7 @@ export enum ServicesEndpoints {
 
 // @see https://github.com/apollographql/apollo-client/issues/84#issuecomment-763833895
 // @see https://www.apollographql.com/docs/react/api/link/introduction/#providing-to-apollo-client
-const rfExchangeGql = new HttpLink({ uri: TRADE_API });
+export const rfExchangeGql = new HttpLink({ uri: TRADE_API });
 const rfPairsGql = new HttpLink({ uri: VOTING_API });
 const snapshotGql = new HttpLink({ uri: SNAPSHOT_API });
 

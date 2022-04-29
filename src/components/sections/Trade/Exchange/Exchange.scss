@@ -2,12 +2,13 @@
 @import 'src/styles/mixins/media';
 
 .exchange {
-  background: $bg-dop;
-  border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   padding: 30px;
 
   min-width: 400px;
+
+  background: $bg-trade-box;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
   @include b(mobile) {
     min-width: 100%;

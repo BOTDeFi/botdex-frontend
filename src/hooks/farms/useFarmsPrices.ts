@@ -30,10 +30,11 @@ export const useLpTokenPrice = (symbol: string): any => {
   const farm = useFarmFromLpSymbol(symbol);
   const farmTokenPriceInUsd = useBusdPriceFromPid(farm.pid);
   let lpTokenPrice = BIG_ZERO;
-
   if (farm.lpTotalSupply && farm.lpTotalInQuoteToken) {
     // Total value of base token in LP
-    const valueOfBaseTokenInFarm = farmTokenPriceInUsd.times(farm.tokenAmountTotal || BIG_ZERO);
+    const valueOfBaseTokenInFarm = farmTokenPriceInUsd.times(
+      farm.tokenAmountTotal || BIG_ZERO.toNumber(),
+    );
     // Double it to get overall value in LP
     const overallValueOfAllTokensInFarm = valueOfBaseTokenInFarm.times(2);
     // Divide total value of all tokens, by the number of LP tokens

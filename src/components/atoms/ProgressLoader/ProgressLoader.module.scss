@@ -1,0 +1,53 @@
+@import '/src/styles/index';
+
+.loader {
+  position: fixed;
+  z-index: 100000;
+
+  width: 100%;
+  height: 100vh;
+
+  background: rgba(1, 1, 1, 1);
+  @include flex(row, center, center, nowrap);
+
+  &_progress {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    width: 1%;
+    height: 15px;
+
+    background: linear-gradient(90deg, #2824f5 0.29%, #c02ff6 94.19%);
+
+    transition: width 1s ease-in;
+  }
+
+  &_body {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    @include flex(row, center, center, nowrap);
+
+    img {
+      transform: perspective(750px) translate3d(0, 0, -250px) rotateX(27deg) scale(0.9, 0.9);
+      animation: mooving 5s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes mooving {
+  0% {
+    transform: perspective(750px) translate3d(0, 0, -250px) rotateX(27deg) scale(0.9, 0.9);
+  }
+
+  50% {
+    transform: translate3d(0, 0, -250px);
+  }
+
+  100% {
+    transform: perspective(750px) translate3d(0, 0, -250px) rotateX(27deg) scale(0.9, 0.9);
+  }
+}

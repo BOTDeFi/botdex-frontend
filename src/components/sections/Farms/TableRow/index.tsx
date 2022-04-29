@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
@@ -14,7 +15,6 @@ import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
 import { useMst } from '@/store';
 import { FarmWithStakedValue, Precisions, Token } from '@/types';
 import { getBalanceAmount, numberWithCommas } from '@/utils/formatters';
-import { clog } from '@/utils/logger';
 
 import { LiquidityPopover, MultiplierPopover } from '../Popovers';
 
@@ -52,6 +52,7 @@ const TokensPair: React.FC<ITokensPairProps> = ({ lpSymbol, token, quoteToken })
 };
 
 const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
+  const { pathname } = useLocation();
   const { modals } = useMst();
   const [isOpenDetails, setOpenDetails] = React.useState<boolean>(false);
 
@@ -72,8 +73,8 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
 
   const { lpSymbol } = farm;
   const [lpSymbolWithoutLPString] = lpSymbol.split(' ');
+  const { userData, token, quoteToken, multiplier, liquidity, lpRewardsApr } = farm;
 
-  const { userData, token, quoteToken, multiplier, liquidity, apr = 0 } = farm;
   const { earnings = '0', stakedBalance = '0', tokenBalance = '0' } = userData || {};
   const earningsToDisplay = getBalanceAmount(new BigNumber(earnings), tokens.rp1.decimals).toFixed(
     Precisions.shortToken,
@@ -81,27 +82,44 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
 
   const { tokenUsdPrice: earningTokenPrice } = useRefineryUsdPrice();
   const stakingTokenPriceAsBN = useLpTokenPrice(lpSymbol);
-  clog(earningTokenPrice, stakingTokenPriceAsBN.toString());
   const stakingTokenBalance = new BigNumber(stakedBalance)
     .plus(new BigNumber(tokenBalance))
     .toString();
 
-  const handleOpenRoiModal = (e: React.MouseEvent | React.KeyboardEvent): void => {
-    e.stopPropagation();
-    modals.roi.open({
-      isFarmPage: true,
-      autoCompoundFrequency: 0, // is not used for farms
-      performanceFee: 0, // is not used for farms
-      apr,
-      earningTokenSymbol: tokens.bot.symbol,
+  const handleOpenRoiModal = useCallback(
+    (e?: React.MouseEvent | React.KeyboardEvent): void => {
+      if (e) {
+        e.stopPropagation();
+      }
+      modals.roi.open({
+        isFarmPage: true,
+        autoCompoundFrequency: 0, // is not used for farms
+        performanceFee: 0, // is not used for farms
+        apr: lpRewardsApr ?? 0,
+        earningTokenSymbol: tokens.bot.symbol,
+        earningTokenPrice,
+        stakingTokenSymbol: lpSymbol,
+        stakingTokenPrice: stakingTokenPriceAsBN.toNumber(),
+        stakingTokenBalance,
+      });
+    },
+    [
       earningTokenPrice,
-      stakingTokenSymbol: lpSymbol,
-      stakingTokenPrice: stakingTokenPriceAsBN.toNumber(),
+      lpRewardsApr,
+      lpSymbol,
+      modals.roi,
       stakingTokenBalance,
-    });
-  };
+      stakingTokenPriceAsBN,
+    ],
+  );
 
   const liquidityToDisplay = numberWithCommas(Number(liquidity?.toFixed(Precisions.fiat)) || 0);
+
+  useEffect(() => {
+    if (pathname.includes('calc')) {
+      handleOpenRoiModal();
+    }
+  }, [handleOpenRoiModal, pathname]);
 
   return (
     <div className="farms-table-row">
@@ -115,29 +133,34 @@ const TableRow: React.FC<ITableRowProps> = observer(({ farm }) => {
         <TokensPair lpSymbol={lpSymbolWithoutLPString} token={token} quoteToken={quoteToken} />
         <div className="farms-table-row__earned text-gray-2 text-smd ">
           <div className="farms-table-row__extra-text text-gray-2 text-ssm t-box-b">Earned</div>
-          <span>{earningsToDisplay}</span>
+          <span>{earningsToDisplay || '-'}</span>
         </div>
         <div className="farms-table-row__apr box-f-ai-c text-smd farms-table-row__item t-box-b">
           <div className="farms-table-row__extra-text text-gray-2 text-ssm t-box-b">APR</div>
-          <span className="farms-table-row__text-md">
-            {Number(apr).toFixed(2).replace('.', ',')}%
-          </span>
-          <div
-            className="farms-table-row__apr-button"
-            onClick={handleOpenRoiModal}
-            onKeyDown={handleOpenRoiModal}
-            role="button"
-            tabIndex={0}
-          >
-            <img src={CalcImg} alt="calc" />
+          <div className="farms-table-row__apr-wrapper">
+            <span className="farms-table-row__text-md">
+              {Number(lpRewardsApr ?? 0)
+                .toFixed(2)
+                .replace('.', ',')}
+              %
+            </span>
+            <div
+              className="farms-table-row__apr-button"
+              onClick={handleOpenRoiModal}
+              onKeyDown={handleOpenRoiModal}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={CalcImg} alt="calc" />
+            </div>
           </div>
         </div>
         <div className="farms-table-row__liquidity farms-table-row__item box-f-ai-c text-smd t-box-none">
-          <span className="farms-table-row__text text-500">${liquidityToDisplay}</span>
+          <span className="farms-table-row__text text-500">${liquidityToDisplay || '-'}</span>
           <LiquidityPopover />
         </div>
         <div className="farms-table-row__multiplier farms-table-row__item box-f-ai-c text-smd t-box-none">
-          <span className="farms-table-row__text-md text-500">{multiplier}</span>
+          <span className="farms-table-row__text-md text-500">{multiplier || '-'}</span>
           <MultiplierPopover symbol={EARNING_TOKEN_SYMBOL} />
         </div>
         <div className="farms-table-row__item box-f-jc-e box-f">

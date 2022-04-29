@@ -1,0 +1,58 @@
+@import '/src/styles/index.scss';
+
+.wrapper {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+
+  background: rgba(9, 1, 42, 0.9);
+}
+
+.container {
+  margin: 0 auto;
+  padding: 15px;
+
+  width: 100%;
+  max-width: 1230px;
+  min-height: 120px;
+
+  @include flex(row, center, space-between, wrap);
+  @include b(mobile) {
+    gap: 20px;
+  }
+
+  &_content {
+    max-width: 600px;
+    @include flex(column, flex-start, center, nowrap);
+
+    ul {
+      padding-top: 16px;
+
+      max-width: 300px;
+      @include flex(row, center, space-between, nowrap);
+      gap: 20px;
+
+      li {
+        a {
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+    }
+  }
+
+  &_btn {
+    min-height: 50px !important;
+
+    span {
+      width: 110px;
+    }
+
+    .ant-btn {
+      min-height: 50px !important;
+    }
+  }
+}

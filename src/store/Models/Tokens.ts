@@ -1,7 +1,9 @@
-import { flow, types } from 'mobx-state-tree';
+import { flow, Instance, types } from 'mobx-state-tree';
 
 import { tokensApi } from '@/services/api';
 import { clogError } from '@/utils/logger';
+
+import { baseApi } from '../api';
 
 const TokenModel = types.model({
   name: types.string,
@@ -11,6 +13,7 @@ const TokenModel = types.model({
   decimals: types.union(types.number, types.string),
   logoURI: types.optional(types.string, ''),
 });
+export type ITokenModel = Instance<typeof TokenModel>;
 
 const TokensModel = types
   .model({
@@ -23,6 +26,7 @@ const TokensModel = types
     const getTokens = flow(function* getTokens(type: 'top' | 'default' | 'extended' | 'imported') {
       try {
         let response: any = {};
+        let tokenLogos;
         switch (type) {
           case 'top':
             response = yield tokensApi.getTopTokens();
@@ -35,6 +39,13 @@ const TokensModel = types
             break;
           default:
             response = yield tokensApi.getDefaultTokens();
+
+            tokenLogos = yield baseApi.getTokenAllLogos(
+              response.data.map(({ address }: any) => address),
+            );
+            tokenLogos.data.logo_links.forEach((logo: string, index: number) => {
+              response.data[index].logoURI = logo || '';
+            });
             break;
         }
 

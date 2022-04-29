@@ -6,10 +6,11 @@ import { contracts } from './contracts';
 export const pools: PoolConfig[] = [
   {
     id: 0,
-    stakingToken: tokens.rp1,
-    earningToken: tokens.rp1,
+    stakingToken: tokens.bot,
+    earningToken: tokens.bot,
     contractAddress: {
       97: contracts.MASTER_BOTDEX.ADDRESS,
+      56: contracts.MASTER_BOTDEX.ADDRESS,
     },
     tokenPerBlock: '1',
   },

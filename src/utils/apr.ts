@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js/bignumber';
 
 import { BLOCKS_PER_YEAR, RP1_PER_YEAR } from '@/config';
+import { useGetApr } from '@/scripts';
 /**
  * Get the APR value in %
  * @param stakingTokenPrice Token price in the same quote currency
@@ -30,12 +31,12 @@ export const getPoolApr = (
  * @param poolLiquidityUsd Total pool liquidity in USD
  * @returns
  */
-export const getFarmApr = (
+export const useGetFarmApr = (
   poolWeight: BigNumber,
   refineryPriceUsd: BigNumber,
   poolLiquidityUsd: BigNumber,
-  // farmAddress: string,
-): { refineryRewardsApr: number; lpRewardsApr: number } => {
+  farmAddress: string,
+): { refineryRewardsApr: number; lpRewardsApr: number | null } => {
   const yearlyRefineryRewardAllocation = RP1_PER_YEAR.times(poolWeight);
   const refineryRewardsApr = yearlyRefineryRewardAllocation
     .times(refineryPriceUsd)
@@ -45,9 +46,6 @@ export const getFarmApr = (
   if (!refineryRewardsApr.isNaN() && refineryRewardsApr.isFinite()) {
     refineryRewardsAprAsNumber = refineryRewardsApr.toNumber();
   }
-  // TODO: @see https://github.com/pancakeswap/pancake-frontend/pull/1564
-  //       There using some Github Action script to update APR's via Graphql on TheGraph
-  // const lpRewardsApr = lpAprs[farmAddress?.toLocaleLowerCase()] ?? 0;
-  const lpRewardsApr = 0;
+  const lpRewardsApr = useGetApr(farmAddress) || 25;
   return { refineryRewardsApr: refineryRewardsAprAsNumber, lpRewardsApr };
 };

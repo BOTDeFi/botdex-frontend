@@ -23,6 +23,14 @@ const Table: React.FC<ITableProps> = React.memo(({ data }) => {
       {data.map((farm) => {
         return <TableRow key={farm.pid} farm={farm} />;
       })}
+      {data.length === 0 && (
+        <div className="farms-table-row">
+          <div className="farms-table-row__content_no-result">
+            {/* <div /> */}
+            <div className="farms-table__no-results">No results</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });

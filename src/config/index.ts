@@ -1,12 +1,13 @@
 import BigNumber from 'bignumber.js/bignumber';
 
+import { IS_PRODUCTION } from '@/config/contracts';
+
 export { contracts } from './contracts';
 export { tokens } from './tokens';
 export { pools } from './pools';
 export { farms } from './farms';
 
 export const SHOW_LOGS = true;
-export const IS_PRODUCTION = false;
 
 export enum GAS_PRICE_ETHERS {
   default = '5',
@@ -15,12 +16,17 @@ export enum GAS_PRICE_ETHERS {
   testnet = '10',
 }
 
+export const BOT_BNB_ADDRESS = IS_PRODUCTION
+  ? '0x82291baa88c7d0f042493877bf15d472280aa7cb'
+  : '0x92e999ccb3a368678422e5814abdd177700ccf93'; // TODO change for current mainnet
+
 export const BSC_BLOCK_TIME = 3;
 export const BLOCKS_PER_YEAR = new BigNumber((60 / BSC_BLOCK_TIME) * 60 * 24 * 365); // 10512000
 
 export const SCANNERS: Record<number, string> = {
   0x2a: 'https://kovan.etherscan.io',
   0x61: 'https://testnet.bscscan.com/',
+  0x38: 'https://bscscan.com',
 };
 // RP1_PER_BLOCK details
 // 40 RP1 is minted per block

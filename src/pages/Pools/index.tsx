@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { Spin } from 'antd';
+import React, { useEffect } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+import { observer } from 'mobx-react-lite';
 
 import { CollectModal, StakeUnstakeModal } from '@/components/organisms';
 import { PoolsPreview, StakeCard } from '@/components/sections/Pools';
+import useRefresh from '@/hooks/useRefresh';
 // import useRefresh from '@/hooks/useRefresh';
 import { useMst } from '@/store';
 
@@ -14,15 +15,12 @@ const antIcon = <LoadingOutlined style={{ fontSize: 96 }} spin />;
 
 const Pools: React.FC = observer(() => {
   const { stakes: stakeStore, user } = useMst();
-  const [stakes, setStakes] = useState<any>(null);
-console.log(stakes)
-  // const { slowRefresh, fastRefresh } = useRefresh();
+  const { fastRefresh } = useRefresh();
   useEffect(() => {
-    if (user.address !== '' && stakeStore.data.length === 0) {
+    if (user.address !== '') {
       stakeStore.fetchStakesData();
-      setStakes(stakeStore.data);
     }
-  }, [user.address, stakeStore]);
+  }, [stakeStore, user.address, fastRefresh]);
 
   return (
     <>
@@ -32,10 +30,12 @@ console.log(stakes)
           <div className="pools__content">
             {stakeStore.data.length > 0 ? (
               <div className="pools__content-card-view">
-                {stakes && stakes.map((stake: any) => <StakeCard key={stake.id} stake={stake} />)}
+                {stakeStore.data.map((stake: any) => (
+                  <StakeCard key={stake.id} stake={stake} />
+                ))}
               </div>
             ) : (
-              <Spin className="spinner" size="large"  indicator={antIcon} />
+              <Spin className="spinner" size="large" indicator={antIcon} />
             )}
           </div>
         </div>

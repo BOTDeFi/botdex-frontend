@@ -52,3 +52,41 @@ export const GET_PAIRS = gql`
     }
   }
 `;
+
+export const GET_ALL_PAIRS = gql`
+  query GetAllPairs {
+    pairs {
+      id
+      name
+      token0 {
+        id
+        name
+        symbol
+      }
+      token1 {
+        id
+        name
+        symbol
+      }
+    }
+  }
+`;
+
+export const GET_TOKEN_PAIRS = gql`
+  query GetTokenPairs($tokenAddress: String) {
+    pairs(where: { token0: $tokenAddress }) {
+      id
+      name
+      token0 {
+        id
+        name
+        symbol
+      }
+      token1 {
+        id
+        name
+        symbol
+      }
+    }
+  }
+`;

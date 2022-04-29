@@ -30,9 +30,9 @@
   &__item {
     padding: 20px 20px 17px;
 
-    background: $gray-l;
-    border: 1px solid rgba(244, 244, 244, 0.1);
-    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.4);
+    //border: 1px solid rgba(244, 244, 244, 0.1);
+    border-radius: 11px;
 
     & + & {
       margin-top: 10px;
@@ -44,7 +44,7 @@
       & + & {
         padding-top: 16px;
 
-        border-top: 1px solid $bg-divider;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
 

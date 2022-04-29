@@ -52,6 +52,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
 
   const [liquidityInfo, setLiquidityInfo] = React.useState<ILiquidityInfo | undefined>(undefined);
   const [liquidities, setLiquidities] = React.useState<any>([]);
+  const [reserves, setReserves] = React.useState<any>([]);
 
   const handleCloseLiquidityInfoModal = (): void => {
     setLiquidityInfo(undefined);
@@ -80,6 +81,22 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
             .catch((err) => {
               clogError('check lp balance', err);
             });
+          metamaskService
+            .callContractMethodFromNewContract(
+              data.user.liquidityPositions[i].pair.id,
+              contracts.PAIR.ABI,
+              'getReserves',
+            )
+            .then((res: any) => {
+              setReserves((arr: any) => [
+                ...arr,
+                // eslint-disable-next-line no-underscore-dangle
+                { reserve0: res._reserve0, reserve1: res._reserve1 },
+              ]);
+            })
+            .catch((err) => {
+              clogError('check lp balance', err);
+            });
         }
       }
     },
@@ -97,6 +114,12 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
   }, [user.address, getUserLiquidities]);
 
   React.useEffect(() => {
+    return () => {
+      setLiquidities([]);
+    };
+  }, []);
+
+  React.useEffect(() => {
     if (userLiquidities && userLiquidities.user && !loading) {
       handleCheckLiquidity(userLiquidities);
     }
@@ -111,7 +134,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
         settingsLink="/trade/liquidity/settings"
         recentTxLink="/trade/liquidity/history"
       >
-        <Button className="y-liquidity__btn" link="/trade/liquidity/add">
+        <Button className="y-liquidity__btn" colorScheme="pink" link="/trade/liquidity/add">
           <span className="text-md text-white text-bold">Add liquidity</span>
         </Button>
         <div className="y-liquidity__title text-md">Your Liquidity</div>
@@ -126,7 +149,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                 height: liquidities.length > 3 ? '50vh' : `${liquidities.length * 76}px`,
               }}
             >
-              {liquidities.map((liquidity: any) => (
+              {liquidities.map((liquidity: any, index: number) => (
                 <div
                   key={liquidity.pair.id}
                   className="y-liquidity__item box-f-ai-c box-pointer"
@@ -139,6 +162,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         balance: liquidity.pair.reserve0,
                         rate: liquidity.pair.token0Price,
                         decimals: liquidity.pair.token0.decimals,
+                        reserve: reserves[index].reserve0,
                       },
                       token1: {
                         address: liquidity.pair.token1.id,
@@ -146,6 +170,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         balance: liquidity.pair.reserve1,
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
+                        reserve: reserves[index].reserve1,
                       },
                       settings,
                     })
@@ -159,6 +184,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         balance: liquidity.pair.reserve0,
                         rate: liquidity.pair.token0Price,
                         decimals: liquidity.pair.token0.decimals,
+                        reserve: reserves[index],
                       },
                       token1: {
                         address: liquidity.pair.token1.id,
@@ -166,6 +192,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         balance: liquidity.pair.reserve1,
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
+                        reserve: reserves,
                       },
                       settings,
                     })

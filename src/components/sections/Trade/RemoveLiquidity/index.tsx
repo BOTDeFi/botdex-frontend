@@ -120,7 +120,7 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
       settingsLink="/trade/liquidity/settings"
       titleBackLink
     >
-      <div className="r-liquidity__percent text-yellow">{percent}%</div>
+      <div className="r-liquidity__percent">{percent}%</div>
       <Slider
         tooltipVisible={false}
         onChange={handlePercentChange}
@@ -130,16 +130,11 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
       />
       <div className="r-liquidity__percent-btns box-f-ai-c box-f-jc-sb">
         {btns.map((btn) => (
-          <Button
-            colorScheme="yellow-l"
-            size="smd"
-            key={btn}
-            onClick={() => handlePercentChange(btn)}
-          >
+          <Button colorScheme="pink" size="sm" key={btn} onClick={() => handlePercentChange(btn)}>
             <span className="text-ssmd">{btn}%</span>
           </Button>
         ))}
-        <Button colorScheme="yellow-l" size="smd" onClick={() => handlePercentChange(100)}>
+        <Button colorScheme="pink" size="sm" onClick={() => handlePercentChange(100)}>
           <span className="text-ssmd">Max</span>
         </Button>
       </div>
@@ -211,17 +206,29 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
         <div className="r-liquidity__price box-f box-f-jc-sb text-yellow">
           <span>Price</span>
           <div>
-            <Popover content={new BigNumber(liquidityInfo?.token1.rate).toString(10)}>
+            <Popover
+              content={new BigNumber(+liquidityInfo.token1.reserve)
+                .dividedBy(+liquidityInfo.token0.reserve)
+                .toString(10)}
+            >
               <div className="r-liquidity__price-item text-right">
                 1 {liquidityInfo?.token0.symbol} ={' '}
-                {new BigNumber(liquidityInfo?.token1.rate).toFixed(5)}{' '}
+                {new BigNumber(+liquidityInfo.token1.reserve)
+                  .dividedBy(+liquidityInfo.token0.reserve)
+                  .toFixed(5)}{' '}
                 {liquidityInfo?.token1.symbol}
               </div>
             </Popover>
-            <Popover content={new BigNumber(liquidityInfo?.token0.rate).toString(10)}>
+            <Popover
+              content={new BigNumber(+liquidityInfo.token0.reserve)
+                .dividedBy(+liquidityInfo.token1.reserve)
+                .toString(10)}
+            >
               <div className="r-liquidity__price-item text-right">
                 1 {liquidityInfo?.token1.symbol} ={' '}
-                {new BigNumber(liquidityInfo?.token0.rate).toFixed(5)}{' '}
+                {new BigNumber(+liquidityInfo.token0.reserve)
+                  .dividedBy(+liquidityInfo.token1.reserve)
+                  .toFixed(5)}{' '}
                 {liquidityInfo?.token0.symbol}
               </div>
             </Popover>
@@ -233,6 +240,7 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
       <div className="r-liquidity__btns box-f-ai-c box-f-jc-e">
         {!isTokensApprove ? (
           <Button
+            colorScheme="pink"
             className="liquidity_remove_btn"
             onClick={handleApprove}
             loading={isTokensApproving}
@@ -247,6 +255,7 @@ const RemoveLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings 
         liquidityInfo.token0.deposited &&
         liquidityInfo.token1.deposited ? (
           <Button
+            colorScheme="pink"
             className="liquidity_remove_btn"
             disabled={!isTokensApprove}
             link={{

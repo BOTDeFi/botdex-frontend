@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 import { ValueType } from 'rc-input-number/lib/utils/MiniDecimal';
@@ -125,7 +126,15 @@ const StakeUnstakeModal: React.FC = observer(() => {
   };
 
   const handleStake = useCallback(async () => {
-    await enterStaking(poolId, inputValueAsString, user.address);
+    try {
+      await enterStaking(poolId, inputValueAsString, user.address);
+      toast.success(`Staked! Your funds have been staked!`);
+    } catch (err) {
+      // console.log(err);
+      toast.error(
+        `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
+      );
+    }
   }, [inputValueAsString, poolId, user.address]);
 
   const handleConfirm = async () => {
@@ -181,7 +190,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
           {percentBoundariesButtons.map(({ value, name = value }) => {
             const percentChangeHandler = () => handlePercentChange(value);
             return (
-              <Button key={name} colorScheme="yellow-l" size="smd" onClick={percentChangeHandler}>
+              <Button key={name} colorScheme="pink" size="smd" onClick={percentChangeHandler}>
                 <span className="text-ssmd">{name}</span>
               </Button>
             );
@@ -189,6 +198,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
         </div>
         {!isApproved && (
           <Button
+            colorScheme="pink"
             className="stake-unstake-modal__btn"
             loading={isApproving}
             disabled={hasValidationErrors}
@@ -199,6 +209,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
         )}
         {isApproved && (
           <Button
+            colorScheme="pink"
             className="stake-unstake-modal__btn"
             disabled={hasValidationErrors}
             loading={pendingTx}

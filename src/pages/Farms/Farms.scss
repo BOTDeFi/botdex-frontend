@@ -5,21 +5,27 @@ $default-horizontal-padding: 48px;
 $default-vertical-padding: 22px;
 
 .farms {
+  z-index: 10;
+
+  background: linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px
+      no-repeat,
+    url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
+    url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat, #110847 center;
   padding: {
     top: $default-vertical-padding;
     right: $default-horizontal-padding;
     left: $default-horizontal-padding + $desktop-menu-width;
     bottom: $default-vertical-padding;
   }
-  background: $bg-farms;
-  @include b(tablet) {
-    padding-right: 0;
-    padding-left: 0;
-  }
 
   &__i-contr {
-    grid-template-columns: 0.5fr 1.5fr;
+    padding: 6px 6px 8px;
 
+    background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    grid-template-columns: 0.5fr 1.5fr;
+    gap: 6px;
     @include b(tablet) {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -27,5 +33,11 @@ $default-vertical-padding: 22px;
 
   &__content {
     margin: 40px 0 0;
+  }
+  @include b(tablet) {
+    z-index: 100;
+
+    padding-right: 0;
+    padding-left: 0;
   }
 }

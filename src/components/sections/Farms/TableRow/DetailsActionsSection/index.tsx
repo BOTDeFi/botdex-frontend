@@ -4,7 +4,6 @@ import BigNumber from 'bignumber.js/bignumber';
 import classNames from 'classnames';
 
 import { Button, Skeleton } from '@/components/atoms';
-// import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import useApproveFarm from '@/hooks/farms/useApprove';
 import { useLpTokenPrice } from '@/hooks/farms/useFarmsPrices';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -58,7 +57,6 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
 
       if (txStatus) {
         toast.success(`Contract Enabled! You can now stake in the ${lpSymbol} farm!`);
-        // successNotification('Contract Enabled!', `You can now stake in the ${lpSymbol} farm!`);
       } else {
         toast.error(
           `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
@@ -73,10 +71,6 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       toast.error(
         `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
       );
-      // errorNotification(
-      //   'Error',
-      //   'Please try again. Confirm the transaction and make sure you are paying enough gas!',
-      // );
     } finally {
       setRequestedApproval(false);
     }
@@ -118,7 +112,12 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       return (
         <>
           <DetailsSectionTitle title="Start Farming" />
-          <Button size="lg" className="farms-table-row__btn-mobile" onClick={connect}>
+          <Button
+            size="lg"
+            colorScheme="pink"
+            className="farms-table-row__btn-mobile"
+            onClick={connect}
+          >
             <span className="text-smd text-white text-bold">Unlock Wallet</span>
           </Button>
         </>
@@ -151,7 +150,12 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
       return (
         <>
           <DetailsSectionTitle title={`Stake ${lpSymbol}`} />
-          <Button size="lg" className="farms-table-row__btn-mobile" onClick={handleStake}>
+          <Button
+            size="lg"
+            colorScheme="pink"
+            className="farms-table-row__btn-mobile"
+            onClick={handleStake}
+          >
             <span className="text-smd text-white text-bold">Stake LP</span>
           </Button>
         </>
@@ -168,6 +172,7 @@ const DetailsActionsSection: React.FC<IDetailsActionsSectionProps> = ({ classNam
         <DetailsSectionTitle title="Enable Farm" />
         <Button
           size="lg"
+          colorScheme="pink"
           className="farms-table-row__btn-mobile"
           disabled={requestedApproval}
           onClick={handleApprove}

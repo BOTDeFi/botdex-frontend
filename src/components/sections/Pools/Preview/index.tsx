@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { Button, Skeleton } from '@/components/atoms';
-import { errorNotification, successNotification } from '@/components/atoms/Notification';
 import { tokens } from '@/config';
 import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
@@ -45,17 +45,13 @@ const ClaimBounty: React.FC = observer(() => {
         options: gasOptions,
       });
       if ((tx as IReceipt).status) {
-        successNotification(
-          'Bounty collected!',
-          `${tokenSymbol} bounty has been sent to your wallet.`,
-        );
+        toast.success(`Bounty collected! ${tokenSymbol} bounty has been sent to your wallet.`);
         updateViewByFetchingBlockchainData();
       }
     } catch (error) {
       clogError(error);
-      errorNotification(
-        'Error',
-        'Please try again. Confirm the transaction and make sure you are paying enough gas!',
+      toast.error(
+        'Error. Please try again. Confirm the transaction and make sure you are paying enough gas!',
       );
     } finally {
       setPendingTx(false);

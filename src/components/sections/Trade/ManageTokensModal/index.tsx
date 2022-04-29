@@ -11,7 +11,7 @@ import CrossImg from '@/assets/img/icons/cross.svg';
 import OpenLinkImg from '@/assets/img/icons/open-link.svg';
 import { Button, Input } from '@/components/atoms';
 import { Modal } from '@/components/molecules';
-import { contracts, IS_PRODUCTION } from '@/config';
+import { contracts, IS_PRODUCTION } from '@/config/contracts';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 // import { RadioGroup, Input, Switch, Button } from '../../../atoms';
@@ -64,6 +64,7 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
 
     const handleCloseImportTokensModal = (): void => {
       setSelectedToken(undefined);
+      setSearchedValue('');
     };
 
     const handleBackToManageTokensModal = (): void => {
@@ -126,7 +127,7 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
               tabIndex={0}
             >
               <img src={ArrowImg} alt="" />
-              <span className="text-black text-bold text-smd">Manage</span>
+              <span className="text-white text-bold text-smd">Manage</span>
             </div>
             {/* <RadioGroup
               className="m-manage-tokens__radio"
@@ -215,14 +216,14 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
             <Input
               className="m-manage-tokens__input"
               placeholder="0x00"
-              colorScheme="outline"
+              colorScheme="darkgray"
               inputSize="lg"
               value={searchedValue}
               onChange={handleChangeTokensInput}
             />
             {isLoading ? <div className="text-smd m-manage-tokens__info">Loading</div> : ''}
             {!isLoading && searchedValue && !unknownToken ? (
-              <div className="text-smd text-red m-manage-tokens__info">not found</div>
+              <div className="text-smd text-red m-manage-tokens__info">Not found</div>
             ) : (
               ''
             )}
@@ -237,18 +238,22 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
                     alt={unknownToken.name}
                     className="m-manage-tokens__token-img"
                   />
-                  <div>
+                  <div className="box-f-ai-c">
                     <div className="text m-manage-tokens__token-name">{unknownToken.name}</div>
-                    <div className="text-gray text-ssm">{unknownToken.symbol}</div>
+                    {/* <div className="text-gray text-ssm">{unknownToken.symbol}</div> */}
                   </div>
                 </div>
                 {tokens.imported &&
                 [...tokens.imported, ...tokens.default].find(
                   (token: IToken) => token.address === unknownToken.address,
                 ) ? (
-                  <span className="text-yellow text-med text-ssm">Active</span>
+                  <span className="text-pink text-med text-ssm">Active</span>
                 ) : (
-                  <Button size="smd" onClick={() => handleOpenImportTokensModal(unknownToken)}>
+                  <Button
+                    size="smd"
+                    colorScheme="pink"
+                    onClick={() => handleOpenImportTokensModal(unknownToken)}
+                  >
                     <span className="text-bold text-white text-smd">Import</span>
                   </Button>
                 )}
@@ -275,9 +280,9 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
                         alt={token.name}
                         className="m-manage-tokens__token-img"
                       />
-                      <div>
+                      <div className="box-f-ai-c">
                         <div className="text m-manage-tokens__token-name">{token.name}</div>
-                        <div className="text-gray text-ssm">{token.symbol}</div>
+                        {/* <div className="text-gray text-ssm">{unknownToken.symbol}</div> */}
                       </div>
                     </div>
                     <div className="box-f-ai-c">
@@ -307,7 +312,7 @@ const ManageTokensModal: React.FC<IManageTokensModal> = observer(
             ) : (
               ''
             )}
-            <div className="text-med text text-black m-manage-tokens__text">
+            <div className="text-med text text-white m-manage-tokens__text">
               {tokens.imported.length || 0} Custom Tokens
             </div>
             {/* </>

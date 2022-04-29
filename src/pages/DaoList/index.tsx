@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { v1 as uuid } from 'uuid';
 
 import { Skeleton } from '@/components/atoms';
 import { DaoPreview, DaoWrapper } from '@/components/sections/Dao';
@@ -17,10 +18,10 @@ import './DaoList.scss';
 
 const ITEMS_PER_PAGE = 20;
 
-const LoaderSkeleton = new Array(3).fill('').map((_, index) => {
+const LoaderSkeleton = new Array(3).fill('').map(() => {
   return (
     <Skeleton.Input
-      key={String(index)}
+      key={uuid()}
       className="dao-list__list-skeleton-loader"
       style={{ height: 60 }}
       active

@@ -9,15 +9,15 @@ import './Input.scss';
 
 interface IInput extends InputProps {
   // eslint-disable-next-line react/no-unused-prop-types
-  colorScheme?: 'transparent' | 'outline';
+  colorScheme?: 'transparent' | 'outline' | 'darkgray';
   // eslint-disable-next-line react/no-unused-prop-types
   inputSize?: 'sm' | 'md' | 'lg';
   // eslint-disable-next-line react/no-unused-prop-types
-  ref?: React.ForwardedRef<AntdInput>;
+  ref?: any;
 }
 
 const Input: React.ForwardRefExoticComponent<IInput> = React.memo(
-  React.forwardRef<AntdInput, IInput>((props, ref) => {
+  React.forwardRef<typeof AntdInput, IInput>((props, ref) => {
     const { colorScheme = 'transparent', inputSize = 'sm', className, ...otherProps } = props;
     return (
       <AntdInput

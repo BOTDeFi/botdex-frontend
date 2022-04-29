@@ -14,11 +14,12 @@ interface MulticallOptions {
 
 export type MultiCallResponse<T> = T | null;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const multicall = async <T = any>(
   abi: any[],
   calls: Call[],
   options: MulticallOptions = { requireSuccess: true },
-): Promise<MultiCallResponse<T>> => {
+): Promise<any> => {
   const { requireSuccess } = options;
   const multiCallContract = getContract('MULTICALL');
   const contract = metamaskService.getContract(calls[0].address, abi);
@@ -28,20 +29,33 @@ export const multicall = async <T = any>(
     const txObject = params ? method(...params) : method();
     return [address.toLowerCase(), txObject.encodeABI()];
   });
+  try {
+    const returnData = await multiCallContract.methods
+      .tryAggregate(requireSuccess, callData)
+      .call();
+    return returnData.map((call: any, index: number) => {
+      const [result, data] = call;
+      if (!result) return null;
+      const methodInterface = MetamaskService.getMethodInterface(abi, calls[index].name);
+      let decodedResult: any = [];
+      try {
+        decodedResult = metamaskService.web3Provider.eth.abi.decodeParameters(
+          methodInterface.outputs,
+          data,
+        );
+      } catch (e: unknown) {
+        // eslint-disable-next-line no-console
+        console.log(e, index, calls[index].name, calls[index].address);
+      }
 
-  const returnData = await multiCallContract.methods.tryAggregate(requireSuccess, callData).call();
-  return returnData.map((call: any, index: number) => {
-    const [result, data] = call;
-    if (!result) return null;
-    const methodInterface = MetamaskService.getMethodInterface(abi, calls[index].name);
-    const decodedResult = metamaskService.web3Provider.eth.abi.decodeParameters(
-      methodInterface.outputs,
-      data,
-    );
-    return Array.from({
-      ...decodedResult,
-      // eslint-disable-next-line no-underscore-dangle
-      length: decodedResult.__length__,
+      return Array.from({
+        ...decodedResult,
+        // eslint-disable-next-line no-underscore-dangle
+        length: decodedResult.__length__,
+      });
     });
-  });
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 };

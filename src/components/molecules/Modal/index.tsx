@@ -16,6 +16,7 @@ interface IModal {
   destroyOnClose?: boolean;
   closeIcon?: boolean;
   maskStyle?: CSSProperties;
+  wrapClassName?: string;
 }
 
 const Modal: React.FC<IModal> = ({
@@ -27,6 +28,7 @@ const Modal: React.FC<IModal> = ({
   destroyOnClose = false,
   closeIcon = false,
   maskStyle,
+  wrapClassName,
 }) => {
   return (
     <ModalAntd
@@ -41,6 +43,7 @@ const Modal: React.FC<IModal> = ({
       width={width}
       className={classNames('modal', className)}
       maskStyle={maskStyle}
+      wrapClassName={wrapClassName}
     >
       {children}
     </ModalAntd>

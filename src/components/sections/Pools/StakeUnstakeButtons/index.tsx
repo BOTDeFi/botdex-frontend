@@ -16,6 +16,7 @@ import './StakeUnstakeButtons.scss';
 const StakeUnstakeButtons: React.FC<{
   className?: string;
   pool: Pool;
+  // eslint-disable-next-line no-unused-vars
 }> = observer(({ className, pool }) => {
   // const { id: poolId, isAutoVault, stakingToken, userData, isFinished } = pool;
   // const {

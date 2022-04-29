@@ -60,8 +60,8 @@ export const useGetHoursPairs = (orderBy = 'hourStartUnix', orderDir = 'desc') =
   };
 };
 
-interface IGetDaysPairsResponse {
-  pairDayDatas: Array<any>;
+export interface IGetDaysPairsResponse<T = any> {
+  pairDayDatas: Array<T>;
 }
 
 /**

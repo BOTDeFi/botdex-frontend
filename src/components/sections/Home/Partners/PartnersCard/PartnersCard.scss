@@ -1,0 +1,35 @@
+@import '/src/styles/index';
+
+.partners-card {
+  padding: 25px 18px;
+
+  width: 170px;
+  height: 90px;
+
+  background: $bg-partners-card;
+  border-radius: 12px;
+  box-shadow: $bsh-partners-card;
+  @include flex(row, center, center);
+  @include b(preTablet) {
+    margin: 0 auto;
+  }
+  @include b(mobile) {
+    padding: 10px;
+
+    width: 100%;
+    height: 90px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  &.inSwiper {
+    width: 290px;
+    height: 220px;
+
+    background: $bg-table;
+    box-shadow: $bsh-partners-card;
+  }
+}

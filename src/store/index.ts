@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
+import { IS_PRODUCTION } from '@/config/contracts';
 import { clogData } from '@/utils/logger';
 
 import { initialState as roiInitialState } from './Models/Modals/RoiModal';
@@ -108,7 +109,9 @@ export const Store = RootModel.create({
 const rootStore = Store;
 
 onSnapshot(rootStore, (snapshot) => {
-  clogData('Snapshot: ', snapshot);
+  if (!IS_PRODUCTION) {
+    clogData('Snapshot: ', snapshot);
+  }
 });
 
 export type RootInstance = Instance<typeof RootModel>;

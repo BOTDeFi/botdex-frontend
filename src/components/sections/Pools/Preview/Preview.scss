@@ -1,19 +1,14 @@
 @import 'src/styles/mixins/media.scss';
 
 .pools-preview {
-  position: relative;
+  padding: 41px 41px 19px;
 
-  padding: 30px 30px 30px 40px;
-
-  background-color: $bg-purple;
-  background-image: url('../../../../assets/img/sections/pools/pools.png');
-  background-position: center;
-  background-size: 100%;
+  background-image: url('../../../../assets/img/sections/pools/staking_preview.png');
+  background-size: cover;
   border-radius: 12px;
-  @include b(extramobile) {
-    //background-size: 75% 75%;
-    background-size: 150%;
-    background-position: center;
+  @include b(mobile) {
+    background-image: url('../../../../assets/img/sections/pools/staking_preview_sm.png');
+    background-size: cover;
   }
   @include b(tablet) {
     padding: 40px 10px 10px;
@@ -24,15 +19,17 @@
   &__title {
     position: relative;
     z-index: 2;
-    color: #fff;
 
     margin-bottom: 15px;
+
+    color: #fff;
     @include b(tablet) {
       margin-bottom: 0;
 
       font-size: 35px !important;
     }
   }
+
   &__subtitle {
     color: #fff;
   }
@@ -51,20 +48,21 @@
   &__box {
     @include b(tablet) {
       margin-bottom: 20px;
-      padding: 0 32px;
+      padding: 0 10px;
     }
   }
 
   &__bounty {
-    display: none;
     padding: 20px 15px 20px 24px;
+
+    display: none;
+
     background: $bg-farms-gradient;
-    box-shadow: 0 12px 40px rgba(85, 32, 142, 0.25);
     border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(85, 32, 142, 0.25);
     //@include b(tablet) {
     //  display: block;
     //}
-
     &-title {
       span {
         margin-right: 7px;

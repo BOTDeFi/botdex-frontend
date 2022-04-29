@@ -64,7 +64,7 @@ const getFarmBaseTokenPrice = (
     return toBigNumber(farm.tokenPriceVsQuote);
   }
 
-  if (farm.quoteToken.symbol === 'wBNB') {
+  if (farm.quoteToken.symbol === 'WBNB') {
     return farm.tokenPriceVsQuote ? bnbPriceBusd.times(farm.tokenPriceVsQuote) : BIG_ZERO;
   }
 
@@ -204,7 +204,6 @@ export const fetchPublicFarmData = async (farm: Farm): Promise<PublicFarmData> =
     tokenDecimals,
     quoteTokenDecimals,
   ] = await multicall(erc20Abi, calls);
-
   // Ratio in % of LP tokens that are staked in the MC, vs the total number in circulation
   const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply));
 
@@ -223,7 +222,7 @@ export const fetchPublicFarmData = async (farm: Farm): Promise<PublicFarmData> =
 
   // Only make masterchef calls if farm has pid (there can be farms with "pid: -1" which must be excluded)
   const [info, totalAllocPoint] =
-    pid >= 0
+    pid >= 0 && pid !== 252
       ? await multicall(masterRefinerAbi, [
           {
             address: masterRefinerAddress,
@@ -236,11 +235,9 @@ export const fetchPublicFarmData = async (farm: Farm): Promise<PublicFarmData> =
           },
         ])
       : [null, null];
-
   const [, allocPointRaw] = info || [];
   const allocPoint = toBigNumber(allocPointRaw);
   const poolWeight = totalAllocPoint ? allocPoint.div(new BigNumber(totalAllocPoint)) : BIG_ZERO;
-
   return {
     tokenAmountMc: tokenAmountMc.toJSON(),
     quoteTokenAmountMc: quoteTokenAmountMc.toJSON(),

@@ -1,3 +1,4 @@
+export { default as HomePage } from './Home';
 export { default as TradePage } from './Trade';
 export { default as LotteryPage } from './Lottery';
 export { default as FarmsPage } from './Farms';
@@ -8,3 +9,4 @@ export { default as TeamPage } from './Team';
 export { default as DaoListPage } from './DaoList';
 export { default as DaoPage } from './Dao';
 export { default as DaoProposalPage } from './DaoProposal';
+export { default as ComingSoonPage } from './ComingSoon';

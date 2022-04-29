@@ -30,6 +30,6 @@ export const getContract = (name: IContract): any => {
 // };
 
 export const getAddress = (address: Address): string => {
-  const chainId = metamaskService.usedChain;
+  const chainId = metamaskService.usedChain[0];
   return address[Number(chainId)];
 };

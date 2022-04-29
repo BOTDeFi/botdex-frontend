@@ -1,0 +1,91 @@
+@import '/src/styles/index.scss';
+
+.v-card {
+  position: relative;
+
+  padding: 9px;
+
+  width: fit-content;
+  min-width: 240px;
+  height: 66px;
+
+  background: $bg-preview-value-card;
+  border-radius: 12px;
+
+  @include flex(column, flex-start, center, nowrap);
+  @include b(tablet) {
+    min-width: 175px;
+    height: 80px;
+  }
+  @media (max-width: 380px) {
+    @include flex(row, center, flex-start, nowrap);
+    min-width: 97%;
+    height: 80px;
+  }
+
+  & > div {
+    margin-left: 55px;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16.25px;
+    @include b(mobile) {
+      width: 82px;
+
+      font-size: 12px;
+    }
+    @media (max-width: 380px) {
+      width: 100%;
+    }
+  }
+
+  span {
+    font-family: Gemina;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 26.14px;
+
+    color: $c-text-purple;
+
+    @include b(tablet) {
+      font-size: 18px;
+    }
+  }
+
+  img {
+    position: absolute;
+    left: -5px;
+
+    @include b(mobile) {
+      top: 20px;
+
+      // width: 60px;
+      // height: 60px;
+    }
+  }
+}
+
+.comet {
+  top: -10px;
+  @include b(mobile) {
+    top: 0 !important;
+    left: -7px !important;
+  }
+  @media (max-width: 380px) {
+    top: 5px !important;
+    left: 0 !important;
+  }
+}
+
+.alian {
+  left: -10px !important;
+  @include b(tablet) {
+    top: 15px !important;
+    left: -7px !important;
+  }
+  @media (max-width: 380px) {
+    left: -5px !important;
+  }
+}

@@ -119,17 +119,19 @@ const RoiStateModel = types
     // Handler for principal input when in USD mode
     const setPrincipalFromUSDValue = (principalAmountAsText: string | number) => {
       if (!parent.options) return;
+
       const { stakingTokenPrice, stakingTokenBalance } = parent.options;
       const principalAmount = Number(principalAmountAsText);
-
       let amount: number;
-      if (Number.isNaN(principalAmount)) {
+
+      if (!Number.isFinite(principalAmount)) {
         amount = getBalanceAmount(new BigNumber(stakingTokenBalance).times(stakingTokenPrice));
       } else {
         amount = principalAmount;
       }
-
-      const principalAsTokenBN = new BigNumber(amount).div(stakingTokenPrice);
+      const principalAsTokenBN = new BigNumber(stakingTokenPrice).gt(0)
+        ? new BigNumber(amount).div(stakingTokenPrice)
+        : new BigNumber(0);
       const principalAsToken = principalAsTokenBN.gt(0)
         ? principalAsTokenBN.toFixed(Precisions.token)
         : DEFAULT_PRINCIPAL_AS_TOKEN;
@@ -145,7 +147,6 @@ const RoiStateModel = types
       const principalAsUsdString = principalAsUsdBN.gt(0)
         ? principalAsUsdBN.toFixed(Precisions.fiat)
         : DEFAULT_PRINCIPAL_AS_USD;
-
       setPrincipal(principalAsUsdString, String(amount));
     };
 

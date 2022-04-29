@@ -1,0 +1,117 @@
+@import '/src/styles/index';
+
+.bot {
+  position: fixed;
+  z-index: 100;
+  right: 0;
+  bottom: 0;
+
+  padding: 27px 20px;
+
+  min-width: 480px;
+
+  max-width: 480px;
+  max-height: 78px;
+
+  background: rgba(10, 0, 44, 0.9);
+  border-radius: 10px 10px 0 0;
+  @include flex(row, center, center, nowrap);
+
+  @include b(tablet) {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+
+    border-radius: none;
+  }
+
+  img {
+    margin-right: 5px;
+  }
+
+  &_price {
+    margin-right: 5px;
+  }
+
+  &_cap {
+    margin-right: 5px;
+
+    width: 33px;
+    height: 33px;
+  }
+
+  &_scaner {
+    margin-right: 5px;
+
+    width: 29px;
+    height: 29px;
+  }
+
+  .btn {
+    padding: 20px;
+
+    width: fit-content;
+    max-width: 145px;
+    height: fit-content;
+    height: 45px;
+
+    font-size: 16px;
+
+    font-weight: 400;
+    font-weight: 700;
+    line-height: 26px;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    color: #fff;
+    background: #c630f6;
+
+    border: none;
+    border-radius: 12px;
+    border-radius: 11px;
+    box-shadow: 0 5px 0 #6e1989;
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      color: #fff;
+      background: #c630f6;
+      box-shadow: 0 0 15px 5px #c25ce0;
+    }
+
+    &:active,
+    &:focus {
+      color: #fff;
+      background: #c630f6;
+    }
+
+    img {
+      margin-left: 5px;
+    }
+    @include flex(row, center, center, nowrap);
+    @include b(tablet) {
+      width: 135px;
+      height: 30px;
+    }
+  }
+
+  .isOpen {
+    background: #780c8e !important;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+  }
+}
+
+.dropDown {
+  padding: 10px;
+
+  width: 195px;
+  height: 60px;
+
+  background: rgba(10, 0, 44, 0.9);
+  border-radius: 10px;
+  @include flex(row, center, center, nowrap);
+}

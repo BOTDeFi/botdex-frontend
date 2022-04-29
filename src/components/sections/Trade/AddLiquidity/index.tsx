@@ -222,7 +222,6 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
       user.address,
     ]);
 
-    console.log(+tokensData.from.amount > maxFrom, +tokensData.to.amount > maxTo);
     useEffect(() => {
       if (user.address) {
         getAmounts();
@@ -241,7 +240,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
       >
         {exchange === null || tokensReserves === null ? (
           <div className="add-liquidity__first text-smd">
-            <p className="text-bold">You are the first liquidity provider.</p>
+            <p>You are the first liquidity provider.</p>
             <p>The ratio of tokens you add will set the price of this pool.</p>
           </div>
         ) : (
@@ -267,9 +266,9 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             </div>
             <div className="add-liquidity__info-content text-med">
               <div className="add-liquidity__info-item">
-                <Popover content={<span>{new BigNumber(exchange.first).toString(10)}</span>}>
+                <Popover content={<span>{new BigNumber(exchange.second).toString(10)}</span>}>
                   <div className="text text-center text-yellow add-liquidity__info-item-title">
-                    {new BigNumber(exchange.first).toFixed(5, 1)}
+                    {new BigNumber(exchange.second).toFixed(5, 1)}
                   </div>
                 </Popover>
                 <div className="text-sm text-center text-gray-2 text-center text-yellow">
@@ -278,9 +277,9 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
                 </div>
               </div>
               <div className="add-liquidity__info-item">
-                <Popover content={<span>{new BigNumber(exchange.second).toString(10)}</span>}>
+                <Popover content={<span>{new BigNumber(exchange.first).toString(10)}</span>}>
                   <div className="text text-center text-yellow add-liquidity__info-item-title">
-                    {new BigNumber(exchange.second).toFixed(5, 1)}
+                    {new BigNumber(exchange.first).toFixed(5, 1)}
                   </div>
                 </Popover>
                 <div className="text-sm text-center text-gray-2 text-center text-yellow">
@@ -305,7 +304,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
           ''
         )}
         {!user.address ? (
-          <Button className="exchange__btn" onClick={connect}>
+          <Button className="exchange__btn" colorScheme="pink" onClick={connect}>
             <span className="text-bold text-md text-white">Connect</span>
           </Button>
         ) : (
@@ -319,6 +318,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
         tokensData.to.amount &&
         tokensData.from.amount ? (
           <Button
+            colorScheme="pink"
             className="add-liquidity__btn"
             disabled={
               !tokensData.from.amount ||
@@ -357,6 +357,7 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
         tokensData.to.amount &&
         tokensData.from.amount ? (
           <Button
+            colorScheme="pink"
             className="add-liquidity__btn"
             onClick={handleApproveTokens}
             loading={isApproving}

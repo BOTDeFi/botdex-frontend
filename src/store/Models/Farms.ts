@@ -62,7 +62,6 @@ const FarmsModel = types
       // Add price helper farms
       // concat(priceHelperLpsConfig )
       // const farmsWithPriceHelpers = farmsToFetch; // .concat(priceHelperLpsConfig);
-
       const farms = await fetchFarms(farmsToFetch);
       const farmsWithPrices = await fetchFarmsPrices(farms);
 
