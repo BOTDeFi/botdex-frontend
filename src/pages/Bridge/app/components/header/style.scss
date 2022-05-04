@@ -1,0 +1,11 @@
+@import '../../config/config.scss';
+
+.header{
+    display: flex;
+    justify-content: center;
+    padding: $header_padding_tb 0;
+    &__img{
+        width: $header_logo_width;
+        height: $header_logo_height;
+    }
+}

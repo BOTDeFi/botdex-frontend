@@ -74,7 +74,7 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     },
     {
       text: 'Bridge',
-      link: '/coming-soon/bridge',
+      link: '/trade/bridge',
       img: BridgeImg,
     },
     {
