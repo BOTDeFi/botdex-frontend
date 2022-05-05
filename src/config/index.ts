@@ -17,7 +17,7 @@ export enum GAS_PRICE_ETHERS {
 }
 
 export const BOT_BNB_ADDRESS = IS_PRODUCTION
-  ? '0x24a3e89a41b20b739a9b0d632ca55404fac6d864'
+  ? '0x82291baa88c7d0f042493877bf15d472280aa7cb'
   : '0x92e999ccb3a368678422e5814abdd177700ccf93'; // TODO change for current mainnet
 
 export const BSC_BLOCK_TIME = 3;

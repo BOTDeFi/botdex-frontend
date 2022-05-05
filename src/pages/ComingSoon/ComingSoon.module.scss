@@ -5,13 +5,16 @@
   width: 100%;
   height: 100vh;
   @include flex(column, center, center, nowrap);
+
   @include b(tablet) {
     padding: 72px 10px 0;
   }
-  background: url(../../assets/img/mothership.png) center/316px 370px no-repeat,
-    linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
-    url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
-    url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat, #110847 center;
+
+  background: url(../../assets/img/mothership.png) 50% 210px /316px 370px no-repeat,
+  linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
+  url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
+  url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat,
+  #110847 center;
 
   .logo_wrapper {
     margin-top: 20px;
@@ -29,9 +32,11 @@
     margin: 260px 220px 0 0;
 
     width: 316px;
+
     @include b(tablet) {
       margin: 70px 0 0 0;
     }
+
     @include b(extramobile) {
       margin: 0;
 

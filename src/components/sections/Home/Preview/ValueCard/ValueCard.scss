@@ -13,17 +13,24 @@
   border-radius: 12px;
 
   @include flex(column, flex-start, center, nowrap);
+
   @include b(tablet) {
     min-width: 175px;
-    height: 80px;
+    width: 100%;
+    height: 85px;
   }
+
+  @include b(mobile) {
+    min-width: 150px;
+  }
+
   @media (max-width: 380px) {
     @include flex(row, center, flex-start, nowrap);
     min-width: 97%;
     height: 80px;
   }
 
-  & > div {
+  &>div {
     margin-left: 55px;
   }
 
@@ -31,11 +38,13 @@
     font-size: 13px;
     font-weight: 500;
     line-height: 16.25px;
+
     @include b(mobile) {
       width: 82px;
 
       font-size: 12px;
     }
+
     @media (max-width: 380px) {
       width: 100%;
     }
@@ -47,7 +56,7 @@
     font-weight: 400;
     line-height: 26.14px;
 
-    color: $c-text-purple;
+    color: $white;
 
     @include b(tablet) {
       font-size: 18px;
@@ -69,10 +78,12 @@
 
 .comet {
   top: -10px;
+
   @include b(mobile) {
     top: 0 !important;
     left: -7px !important;
   }
+
   @media (max-width: 380px) {
     top: 5px !important;
     left: 0 !important;
@@ -81,10 +92,12 @@
 
 .alian {
   left: -10px !important;
+
   @include b(tablet) {
     top: 15px !important;
     left: -7px !important;
   }
+
   @media (max-width: 380px) {
     left: -5px !important;
   }

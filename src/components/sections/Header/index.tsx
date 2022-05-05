@@ -17,6 +17,7 @@ import { useMst } from '@/store';
 import { addressWithDots } from '@/utils/formatters';
 
 import './Header.scss';
+// import { useSmoothTopScroll } from '@/hooks/useSmoothTopScroll';
 
 const Header: React.FC = observer(() => {
   const { pathname } = useLocation();
@@ -28,9 +29,14 @@ const Header: React.FC = observer(() => {
   const { user } = useMst();
   const { connect } = useWalletConnectorContext();
   const location = useLocation();
+  // useSmoothTopScroll();
 
   const handleToggleSidebar = React.useCallback(() => {
     setIsBurger(!isBurger);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, [isBurger]);
   const handleClose = () => {
     setIsBurger(false);
@@ -48,7 +54,7 @@ const Header: React.FC = observer(() => {
         <div
           tabIndex={0}
           role="button"
-          onKeyDown={() => {}}
+          onKeyDown={() => { }}
           className={classNames('header-burger', { 'header-burger--active': isBurger })}
           onClick={handleToggleSidebar}
         >
@@ -67,7 +73,10 @@ const Header: React.FC = observer(() => {
             <CertikSmImg />
           </a>
         </div>
-        {!user.address ? (
+        <Button className="header__connect_btn" colorScheme="blue" size="sm" onClick={connect}>
+          <span className="text-500">Connect Wallet</span>
+        </Button>
+        {/* {!user.address ? (
           <Button className="header__connect_btn" colorScheme="blue" size="sm" onClick={connect}>
             <span className="text-bold">Connect Wallet</span>
           </Button>
@@ -80,7 +89,7 @@ const Header: React.FC = observer(() => {
           >
             <span className="text-bold text-address">{addressWithDots(user.address)}</span>
           </Button>
-        )}
+        )} */}
       </section>
       <div className={`connect_wrapper ${headerCondition}`}>
         <div className="connect_container">
@@ -94,17 +103,17 @@ const Header: React.FC = observer(() => {
           </div>
           {!user.address ? (
             <Button
-              className={`connect ${headerCondition}`}
+              className={`connect btn-hover-down ${headerCondition}`}
               colorScheme="blue"
               size="sm"
               onClick={connect}
             >
               <WalletImg />
-              <span className="text-bold">Connect Wallet</span>
+              <span className="text-500">Connect Wallet</span>
             </Button>
           ) : (
             <Button
-              className={`connect ${headerCondition}`}
+              className={`connect btn-hover-down ${headerCondition}`}
               colorScheme="blue"
               size="sm"
               onClick={() => setWalletModalVisible(true)}
@@ -120,7 +129,7 @@ const Header: React.FC = observer(() => {
           role="button"
           aria-label="Sidebar Cover"
           tabIndex={0}
-          onKeyDown={() => {}}
+          onKeyDown={() => { }}
           onClick={handleClose}
           className={classNames('sidebar_cover', { active: isBurger })}
         />

@@ -5,15 +5,20 @@
 
   width: 100%;
   min-height: 100vh;
+
   @include b(tablet) {
     padding: 50px 0 130px;
 
     min-height: auto;
   }
-  background: linear-gradient(0deg, #110847 0%, rgba(17, 8, 71, 0) 89.36%) bottom/100% 148px
-      no-repeat,
-    url(../../../../assets/img/sections/home/preview-bg-second.png) bottom/100% auto no-repeat,
-    #110847 center/cover no-repeat;
+
+  @include b(mobile) {
+    padding: 50px 22px 130px;
+  }
+
+  background: linear-gradient(0deg, #110847 0%, rgba(17, 8, 71, 0) 89.36%) bottom/100% 148px no-repeat,
+  url(../../../../assets/img/sections/home/preview-bg-second.png) bottom/100% auto no-repeat,
+  #110847 center/cover no-repeat;
 
   &_body {
     margin: 0 auto;
@@ -22,20 +27,39 @@
     max-width: 1100px;
     @include flex(row, center, flex-start);
 
+    @media (min-width: 1921px) {
+      max-width: 1400px;
+    }
+
+    @media (min-width: 2000px) {
+      max-width: 1500px;
+    }
+
+    @media (min-width: 2100px) {
+      max-width: 1600px;
+    }
+
     &_content {
       gap: 30px;
 
       @include m-left(70px);
 
       @include flex(row, flex-start, space-between, nowrap);
+
+      @media (min-width:1921px) {
+        width: 100%;
+        margin: 0;
+      }
+
       @include b(preTablet) {
         margin: 0 auto;
 
         max-width: 600px;
         @include flex(column, center, center);
       }
+
       @include b(mobile) {
-        max-width: 90%;
+        max-width: 100%;
       }
 
       &_earn-table,
@@ -43,10 +67,15 @@
         margin-top: 27px;
         padding: 0 20px;
 
+        @media (min-width: 1921px) {
+          width: 100%;
+          max-width: 100% !important;
+        }
+
         @include b(tablet) {
           padding: 0;
 
-          height: 90px;
+          // height: 90px;
         }
 
         @include b(mobile) {
@@ -54,14 +83,23 @@
 
           width: 100%;
           max-width: 100% !important;
-          height: 140px;
+          // height: 140px;
         }
       }
 
       &_earn {
         @include flex(column, center, center, nowrap);
+
+        @media (min-width:1921px) {
+          width: 50%;
+        }
+
         @include b(tablet) {
-          width: 95%;
+          width: 100%;
+
+          a {
+            padding: 0 10px 0 0;
+          }
         }
 
         &-table {
@@ -75,14 +113,26 @@
             max-width: 490px;
 
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+            @media (min-width: 1921px) {
+              width: 100%;
+              max-width: 100% !important;
+            }
+
             @include b(tablet) {
-              max-width: 95%;
+              max-width: 100%;
+              padding: 0 10px 0 20px !important;
 
               height: 90px;
             }
+
             @include b(mobile) {
-              // padding: 10px !important;
+              padding: 10px !important;
               height: 140px;
+
+              .table-card_btn {
+                right: 17px;
+              }
             }
 
             &:last-child {
@@ -96,6 +146,10 @@
         width: 100%;
         @include flex(column, center, flex-end, nowrap);
 
+        @media (min-width:1921px) {
+          width: 50%;
+        }
+
         &-table {
           padding: 0;
 
@@ -105,6 +159,15 @@
             background: $bg-table;
             border-radius: 12px;
             box-shadow: $bsh-table;
+
+            @media (min-width: 1921px) {
+              width: 100%;
+              max-width: 100% !important;
+            }
+
+            @include b(mobile) {
+              max-width: 100%;
+            }
 
             &:not(:last-child) {
               margin-bottom: 30px;
@@ -136,6 +199,32 @@
       &_title {
         width: 100%;
         @include flex(row, flex-start, space-between, nowrap);
+
+        @include b(mobile) {
+          a {
+            &.btn-link {
+              padding: 0;
+            }
+          }
+        }
+
+        button {
+          &:hover {
+            span {
+              img {
+                opacity: 1;
+              }
+            }
+          }
+
+          span {
+            img {
+              width: 40px;
+              opacity: .5;
+              transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            }
+          }
+        }
 
         h2 {
           width: 100%;

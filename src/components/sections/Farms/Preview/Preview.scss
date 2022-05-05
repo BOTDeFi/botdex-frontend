@@ -10,10 +10,12 @@
   background-size: cover;
 
   border-radius: 12px;
+
   @include b(mobile) {
     background-image: url('../../../../assets/img/sections/farms/farms_bg_sm.png');
     background-size: cover;
   }
+
   @include b(tablet) {
     padding: 40px 20px 19px 42px;
 
@@ -29,9 +31,16 @@
 
   &__title {
     color: #fff;
+
     @include b(mobile) {
       font-size: 40px !important;
     }
+  }
+
+  &__descr {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
   }
 
   &__subtitle {
@@ -46,6 +55,7 @@
     display: none;
 
     background: $bg-purple;
+
     @include b(mobile) {
       padding: 23px 10px;
 
@@ -64,6 +74,7 @@
   &__details {
     margin-top: 15px;
     margin-left: 58px;
+
     @include b(mobile) {
       margin-left: 0;
     }

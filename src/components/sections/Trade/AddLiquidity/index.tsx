@@ -255,11 +255,11 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
           changeTokenToAllowance={(value: boolean) => setAllowanceTo(value)}
         />
         {tokensData.from.token &&
-        tokensData.to.token &&
-        exchange &&
-        (exchange.first || exchange.first === 0) &&
-        (exchange.second || exchange.second === 0) &&
-        (exchange.share || exchange.share === 0) ? (
+          tokensData.to.token &&
+          exchange &&
+          (exchange.first || exchange.first === 0) &&
+          (exchange.second || exchange.second === 0) &&
+          (exchange.share || exchange.share === 0) ? (
           <div className="add-liquidity__info">
             <div className="add-liquidity__info-title text-smd text-yellow">
               Prices and pool share
@@ -304,19 +304,19 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
           ''
         )}
         {!user.address ? (
-          <Button className="exchange__btn" colorScheme="pink" onClick={connect}>
+          <Button className="exchange__btn btn-hover-down" colorScheme="pink" onClick={connect}>
             <span className="text-bold text-md text-white">Connect</span>
           </Button>
         ) : (
           ''
         )}
         {user.address &&
-        isAllowanceFrom &&
-        isAllowanceTo &&
-        tokensData.from.token &&
-        tokensData.to.token &&
-        tokensData.to.amount &&
-        tokensData.from.amount ? (
+          isAllowanceFrom &&
+          isAllowanceTo &&
+          tokensData.from.token &&
+          tokensData.to.token &&
+          tokensData.to.amount &&
+          tokensData.from.amount ? (
           <Button
             colorScheme="pink"
             className="add-liquidity__btn"
@@ -336,9 +336,9 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
           ''
         )}
         {user.address &&
-        tokensData.from.token &&
-        tokensData.to.token &&
-        (!tokensData.to.amount || !tokensData.from.amount) ? (
+          tokensData.from.token &&
+          tokensData.to.token &&
+          (!tokensData.to.amount || !tokensData.from.amount) ? (
           <Button
             className="add-liquidity__btn"
             disabled={!tokensData.from.amount || !tokensData.to.amount}
@@ -351,14 +351,14 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
           ''
         )}
         {user.address &&
-        (!isAllowanceFrom || !isAllowanceTo) &&
-        tokensData.from.token &&
-        tokensData.to.token &&
-        tokensData.to.amount &&
-        tokensData.from.amount ? (
+          (!isAllowanceFrom || !isAllowanceTo) &&
+          tokensData.from.token &&
+          tokensData.to.token &&
+          tokensData.to.amount &&
+          tokensData.from.amount ? (
           <Button
             colorScheme="pink"
-            className="add-liquidity__btn"
+            className="add-liquidity__btn btn-hover-down"
             onClick={handleApproveTokens}
             loading={isApproving}
             loadingText="Waiting for approve..."

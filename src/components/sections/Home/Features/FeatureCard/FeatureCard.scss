@@ -10,6 +10,10 @@
 
   border-radius: 28px;
 
+  @media (min-width: 1921px) {
+    width: 100%;
+  }
+
   &_title {
     font-size: 16px;
     font-weight: 700;

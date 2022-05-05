@@ -21,6 +21,7 @@
   min-height: 120px;
 
   @include flex(row, center, space-between, wrap);
+
   @include b(mobile) {
     gap: 20px;
   }

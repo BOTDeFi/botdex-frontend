@@ -12,6 +12,11 @@
     url(../../../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat,
     #110847 center;
 
+  @include b(mobile) {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
   &_body {
     margin: 0 auto;
 
@@ -19,6 +24,19 @@
     max-width: 1100px;
 
     @include flex(column, flex-start, center);
+
+    @media (min-width: 1921px) {
+      max-width: 1400px;
+    }
+
+    @media (min-width: 2000px) {
+      max-width: 1500px;
+    }
+
+    @media (min-width: 2100px) {
+      max-width: 1600px;
+    }
+
     @include b(preTablet) {
       @include flex(column, center, center);
       max-width: 600px;
@@ -32,9 +50,24 @@
       @include flex(row, flex-start, space-between, nowrap);
       gap: 65px;
 
+      @media (min-width: 1921px) {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0;
+      }
+
+      @media (min-width: 2000px) {
+        max-width: 1500px;
+      }
+
+      @media (min-width: 2100px) {
+        max-width: 1600px;
+      }
+
       @include b(preTablet) {
         @include flex(column, center, center);
       }
+
       @include b(tablet) {
         margin: 0 auto;
         gap: 0;
@@ -47,6 +80,7 @@
 
         width: 400px;
         height: 100%;
+
         @include b(tablet) {
           width: 300px;
         }
@@ -64,17 +98,35 @@
         width: 100%;
         max-width: 600px;
         @include flex(row, center, center, nowrap);
+
+        @media (min-width: 2100px) {
+          max-width: 890px;
+        }
+
         @include b(preTablet) {
-          max-width: 300px;
+          max-width: 610px;
           @include flex(column, center, center);
+        }
+
+        @include b(mobile) {
+          max-width: 300px;
         }
 
         .swiper-wrapper {
           max-width: 600px;
           max-height: 250px;
+
+          @media (min-width: 2100px) {
+            max-width: 890px;
+          }
+
           @include b(preTablet) {
             margin: 0 auto;
 
+            max-width: 610px;
+          }
+
+          @include b(mobile) {
             max-width: 300px;
           }
         }
@@ -87,6 +139,7 @@
         .swiper_btn_left {
           position: absolute;
           top: 130px;
+
           @include b(preTablet) {
             left: 0;
           }
@@ -106,6 +159,7 @@
       margin-bottom: 100px;
 
       width: 100%;
+
       @include b(preTablet) {
         max-width: 100%;
       }
@@ -113,6 +167,11 @@
       &_content {
         @include m-left(70px);
         @include flex(column, flex-start, center);
+
+        @media (min-width: 1921px) {
+          margin: 0;
+        }
+
         @include b(preTablet) {
           @include flex(row, center, center, wrap);
         }
@@ -129,14 +188,20 @@
           display: grid;
           grid-template-columns: repeat(6, 1fr);
           gap: 10px;
+
+          @media (min-width: 1921px) {
+            width: 100%;
+          }
+
           @include b(preTablet) {
             margin: 0 auto;
 
             width: 100%;
             @include flex(row, center, center, wrap);
           }
+
           @include b(mobile) {
-            padding: 0 5px;
+            padding: 0;
 
             display: grid;
             grid-template-columns: repeat(3, 1fr);

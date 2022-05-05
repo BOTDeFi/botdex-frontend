@@ -41,6 +41,7 @@
       width: fit-content;
       height: fit-content;
     }
+
     @include b(mobile) {
       @include flex(row, center, center, nowrap);
       gap: 17px;
@@ -53,6 +54,7 @@
         margin-right: 20px;
       }
     }
+
     @media (max-width: 380px) {
       width: 100%;
       gap: 15px;
@@ -150,6 +152,7 @@
   border-radius: 12px;
 
   transition: 0.4s ease;
+
   @include bb(laptop, desktop) {
     display: none !important;
   }
@@ -158,6 +161,7 @@
     display: none;
 
     background-color: rgba(0, 0, 0, 0.4);
+
     @include b(tablet) {
       position: fixed;
       z-index: 50;
@@ -221,6 +225,7 @@
     .audits {
       margin-left: auto;
       @include flex(row, center);
+
       @include b(tablet) {
         display: none;
       }

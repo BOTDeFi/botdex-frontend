@@ -5,9 +5,11 @@
   z-index: 10;
 
   padding: 63px 10px 67px;
+
   @include b('tablet') {
     padding: 63px 10px 100px;
   }
+
   overflow: hidden;
 
   width: 100%;
@@ -27,6 +29,7 @@
 
     img {
       width: 351px;
+
       @include b(tablet) {
         width: 217px;
       }
@@ -39,6 +42,7 @@
 
     .link_block {
       @include flex(column, flex-start);
+
       @include b(tablet) {
         align-items: center;
       }
@@ -46,6 +50,7 @@
       &:nth-of-type(2) {
         margin-right: 29px;
         margin-left: 60px;
+
         @include b(tablet) {
           margin: 0 25px;
         }
@@ -59,6 +64,7 @@
         &:last-of-type {
           margin-bottom: 0;
         }
+
         @include b(tablet) {
           font-size: 13px;
           line-height: 16px;
@@ -95,12 +101,17 @@
       }
 
       .socials {
-        @include flex(row, center, space-between, nowrap);
+        @include flex(row, flex-end, space-between, nowrap);
         // @include b(mobile) {
         //   max-width: 250px;
         //   @include flex(row, center, center, wrap);
         // }
         gap: 10px;
+
+        @include b(mobile) {
+          @include flex(row, flex-end, center, wrap);
+        }
+
         @media (max-width: 380px) {
           gap: 5px;
 
@@ -113,11 +124,32 @@
           width: 36px;
           height: 36px;
 
+          &:hover {
+            img {
+              &:first-child {
+                display: none;
+              }
+
+              &:last-child {
+                display: block;
+              }
+            }
+          }
+
+          &.smaller {
+            img {
+              height: 33px;
+            }
+          }
+
           img {
             width: 36px;
-            height: auto;
+            height: 36px;
 
-            opacity: 0.5;
+            &:last-child {
+              display: none;
+            }
+
             @media (max-width: 380px) {
               width: 30px;
             }
@@ -128,6 +160,7 @@
       .controls {
         @include flex(row, center, space-between, nowrap);
         gap: 10px;
+
         @include b(tablet) {
           @include flex(row, center, center, nowrap);
           gap: 2px;
@@ -138,6 +171,7 @@
           height: 40px;
 
           font-weight: 400;
+
           @include b(mobile) {
             width: fit-content;
           }
@@ -152,6 +186,7 @@
           color: rgba(255, 255, 255, 1);
           background: rgba(24, 13, 65, 1);
           border-radius: 10px;
+
           @include b(mobile) {
             width: 50%;
           }
@@ -166,11 +201,13 @@
 
     &_left {
       @include flex(column, center, center, nowrap);
+
       @include b(mobile) {
         max-width: 290px;
 
         text-align: center;
       }
+
       position: relative;
 
       &::after {
@@ -184,6 +221,7 @@
         height: 106px;
 
         background: rgba(255, 255, 255, 0.5);
+
         @include b(preTablet) {
           display: none;
         }
@@ -220,6 +258,7 @@
 
     background: rgba(215, 21, 255, 0.2);
     filter: blur(250px);
+
     @include b(tablet) {
       left: calc(50% - 98px);
       bottom: -49px;

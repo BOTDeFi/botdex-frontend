@@ -18,7 +18,7 @@ const useGetOptions = (currentStamp: any): any => {
           sizeOffset: 6,
         },
       },
-      legend: {
+      legeng: {
         show: false,
       },
       fill: {
