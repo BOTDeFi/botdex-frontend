@@ -80,8 +80,6 @@ const Farms: React.FC = observer(() => {
     });
   }, [farmsWithoutFirstLpFarm, isActive, refineryPrice]);
 
-  // console.log(farmsWithoutFirstLpFarmWithStakedValue);
-
   const filterByStakedOnly = (value: BigNumber, isStaked: boolean) => {
     if (!isStaked) return true; // show all
     return !Number.isNaN(value.toNumber()) && value.gt(0);
