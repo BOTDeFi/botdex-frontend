@@ -24,6 +24,7 @@ import {
   // TeamPage,
   // TeamsPage,
   TradePage,
+  BridgePage
 } from './pages';
 import { useMst } from './store';
 
@@ -103,7 +104,6 @@ const App: React.FC = observer(() => {
               '/trade',
               '/trade/swap',
               '/trade/liquidity',
-              '/trade/bridge',
               '/trade/swap/settings',
               '/trade/swap/history',
               '/trade/liquidity/settings',
@@ -121,6 +121,7 @@ const App: React.FC = observer(() => {
           <Route exact path="/farms/calc" component={FarmsPage} />
           <Route exact path="/staking" component={PoolsPage} />
           <Route exact path="/coming-soon/:page" component={ComingSoonPage} />
+          <Route exact path="/trade/bridge" component={BridgePage}/>
           {/* <Route exact path="/collectibles" component={CollectiblesPage} /> */}
           {/* <Route exact path="/teams" component={TeamsPage} /> */}
           {/* <Route exact path="/team/:id" component={TeamPage} /> */}

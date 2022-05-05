@@ -1,0 +1,32 @@
+@import '../../../config/config.scss';
+
+.dropdown{
+    position: relative;
+    &__empty{
+        pointer-events: none;
+    }
+    &__arrow{
+        transition: all 0.5s;
+    }
+    &_opened &__arrow {
+        transform: rotate(180deg);
+    }
+    &__options{
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 62px;
+        width: 100%;
+        margin-top: $dropdown_options_mt;
+        background: $dropdown_options_bg;
+        padding: 10px;
+        border-radius: $form_border_radius;
+        z-index: 10;
+        transition: all 0.5s;
+        &_opened{
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+}

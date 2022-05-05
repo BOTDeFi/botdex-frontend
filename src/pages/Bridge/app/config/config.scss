@@ -1,0 +1,265 @@
+@import './fonts.scss';
+@import './mixins.scss';
+
+//colors and images
+$main_color: #D715FF;
+$main_color_pale: #b329cf;
+$main_color_light: #e45eff;
+$text_color: #FFFFFF;
+$title_all_color: #FFFFFF;
+$opacity_color: rgba(#FFFFFF, 0.5);
+$opacity_color_light: #F1A5FF;
+$note_color: #b329cf;
+$light_color: #ffffff;
+$error_color: #f83b54;
+$bg_color: linear-gradient(180deg, #2E1D8F 0%, #1F1080 100%);;
+
+$background: #000000 center/cover no-repeat;
+
+$logo: none;
+
+$main_font: "Readex Pro", sans-serif;
+$second_font: "gemina", sans-serif;
+
+$container_width_desktop: 900px;
+$container_padding_desktop: 20px;
+$container_width_tablet: 800px;
+$container_padding_tablet: 10px;
+$container_width_mobile: none;
+
+:export {
+    mainColor: $main_color;
+}
+
+//transition time
+$transition_time: .5s;
+
+//header
+$header_padding_tb: 40px;
+$header_logo_width: 193px;
+$header_logo_height: 68px;
+
+//input label
+$title_weight: 400;
+$title_size: 13px;
+$title_height: 14px;
+$title_style: uppercase;
+$title_mb: 4px;
+$title_color: $title_all_color;
+
+//input label right column
+$title_right_size: 12px;
+$title_right_height: 12px;
+$title_right_style: uppercase;
+$title_right_color: $title_all_color;
+
+//input
+$input_weight: 400;
+$input_size: 20px;
+$input_height: 23px;
+$input_style: uppercase;
+$input_color: $text_color;
+$input_padding: 20px 23px;
+$input_mb: 25px;
+$input_last_mb: 15px;
+$input_first_mb: 5px;
+$input_border_radius: 12px;
+$input_border: 1px solid transparent;
+$background_input_color: rgba(0, 0, 0, 0.5);;
+
+//dropdown
+$dropdown_size: 16px;
+$dropdown_height: 18px;
+$dropdown_padding: 15px 23px;
+$dropdown_mb: 15px;
+$dropdown_last_mb: 30px;
+$dropdown_color: $text_color;
+$dropdown_icon_mr: 12px;
+$dropdown_options_mt: 15px;
+$dropdown_options_spacebetween: 5px;
+$dropdown_options_bg: $bg_color;
+$dropdown_bg: $background_input_color;
+
+//input placeholder
+$placeholder_weight: 400;
+$placeholder_size: 13px;
+$placeholder_height: 15px;
+$placeholder_style: uppercase;
+$placeholder_color: $text_color;
+
+//note
+$note_size: 13px;
+$note_weight: 300;
+$note_height: 15px;
+$note_mb: 30px;
+$note_mr: 11px;
+$note_width: 18px;
+$note_font_color: $opacity_color;
+$note_fill: $main_color;
+
+//note popup
+$popup_note_size: 12px;
+$popup_note_weight: bold;
+$popup_note_height: 14px;
+$popup_note_padding: 12px;
+$popup_note_color: $text_color;
+$popup_note_border: $note_color;
+$popup_note_border_radius: 24px;
+$popup_note_bg: $background_input_color;
+$popup_note_box_shadow: 0px 12px 20px rgba(0, 0, 0, 0.1);
+$popup_note_info_width: 24px;
+$popup_note_close_width: 18px;
+$popup_note_close_color: $title_all_color;
+$popup_note_text_m: 0 10px;
+
+
+//outter form
+$form_padding: 30px;
+$form_border_radius: 30px;
+$form_box_shadow: none;
+$form_bg: $bg_color;
+$form_max_width: 420px;
+
+//progress outline
+$progress_bg: linear-gradient(180deg, #2E1D8F 0%, #1F1080 100%);
+$progress_padding: 30px 20px;
+$progress_padding_mobile: 15px;
+$progress_border_radius: 30px;
+$progress_text_size: 16px;
+$progress_text_height: 18px;
+$progress_text_color: $text_color;
+$progress_m: 0 30px 12px 0;
+$progress_min_width: 300px;
+
+$progress_title_size: 14px;
+$progress_title_height: 16px;
+$progress_title_style: uppercase;
+$progress_title_mb: 25px;
+$progress_title_color: $text_color;
+
+$progress_point_mb: 10px;
+$progress_point_width: 267px;
+$progress_point_line_mb: 15px;
+$progress_point_line_color: $main_color; 
+$progress_point_line_color_inactive: $opacity_color; 
+$progress_circle_size: 32px;
+$progress_circle_border: 1px solid $main_color;
+$progress_circle_text_size: 14px;
+$progress_circle_text_color: $title_all_color;
+$porgress_circle_bg: #130A43;
+$progress_circle_mr: 15px;
+
+//buttons
+$btn_size: 16px;
+$btn_height: 27px;
+$btn_weight: bold;
+$btn_padding: 15px;
+$btn_bg: $main_color;
+$btn_border_radius: 12px;
+$btn_border: 2px solid $main_color;
+$btn_color: $light_color;
+$btn_inactive_color: $title_all_color;
+$btn_inactive_border: 2px solid $main_color;
+$btn_inactive_bg: transparent;
+$btn_max_size: 11px;
+$btn_max_height: 13px;
+$btn_max_border_radius: 12px;
+$btn_max_padding: 6px 18px;
+$btn_max_weight: 400;
+$btn_max_width: 60px;
+$btn_approve_mb: 15px;
+$btn_approve_bg: #0A42EA;
+$btn_approve_border: $btn_approve_bg;
+
+$btn_hover_box_shadow: -3px 3px 3px 1px $main_color_pale;
+
+$fee_size: 13px;
+$fee_height: 15px;
+$fee_weight: 300;
+$fee_color: $opacity_color;
+
+//transaction
+$transaction_mt: 50px;
+$transaction_mb: 50px;
+
+$transaction_title_size: 13px;
+$transaction_title_weight: 700;
+$transaction_title_mb: 14px;
+
+$transaction_container_max_width: 550px;
+$transaction_container_padding: 20px;
+$transaction_container_border_radius: 30px;
+$transaction_container_box_shadow: none;
+$transaction_container_box_shadow_hover: none;
+$transaction_container_bg: $bg_color;
+
+//transaction status
+$transaction_status_mb: 16px;
+$transaction_status_circle_width: 14px;
+$transaction_status_circle_height: 14px;
+$transaction_status_circle_mr: 12px;
+$transaction_status_circle_border_radius: 50%;
+$transaction_status_circle_pending_background: #FCD600;
+$transaction_status_circle_complete_background: #1CD170;
+
+$transaction_status_text_size: 13px;
+$transaction_status_text_color: $title_all_color;
+$transaction_status_date_size: 12px;
+
+$transaction_status_link_ml: 4px;
+
+$transaction_status_img_height: 12px;
+
+//transaction info
+$transaction_info_grid: 1fr 2fr 3fr 1fr;
+$transaction_info_weight: 400;
+$transaction_info_min_height: 96px;
+$transaction_info_padding: 20px;
+$transaction_info_background: $background_input_color;
+$transaction_info_border: 1px solid $background_input_color;
+$transaction_info_border_radius: 12px;
+$transaction_info_color: $text_color;
+
+$transaction_info_title_size: 13px;
+$transaction_info_title_opacity: .4;
+
+$transaction_info_from_img_m: -5px 5px 0 0;
+
+$transaction_info_to_img_m: 0 5px -5px 0;
+
+$transaction_info_amount_size: 16px;
+$transaction_info_amount_after_opacity: 1;
+$transaction_info_amount_after_height: 1px;
+$transaction_info_amount_after_background: #323232;
+
+$transaction_info_img: 24px;
+
+//footer
+$footer_mb: 30px;
+
+$footer_icons_mb: 20px;
+
+$footer_icon_height: 36px;
+$footer_icon_mr: 24px;
+$footer_icon_transition: $transition_time;
+$footer_icon_hover_transform: scale(1.5);
+$footer_icon_fc_ml: 24px;
+
+$footer_copyright_size: 13px;
+$footer_copyright_opacity: 1;
+$footer_copyright_color: $text_color;
+
+//modals
+$modal_padding: 20px;
+$modal_border_radius: 30px;
+$modal_bg: $bg_color;
+$modal_color: $text_color;
+$modal_overlay_bg: #000000;
+$modal_size: 14px;
+$modal_title_weight: bold;
+$modal_title_size: 18px;
+$modal_title_mb: 25px;
+
+body{
+    font-family: $main_font;
+}

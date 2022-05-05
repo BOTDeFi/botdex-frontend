@@ -1,0 +1,27 @@
+@import '../../config/config.scss';
+
+.progressbar{
+    min-width: $progress_min_width;
+    padding: $progress_padding;
+    border-radius: $progress_border_radius;
+    background: $progress_bg;
+    margin: $progress_m;
+    @include _480{
+        width: 100%; 
+    }
+    @include _900{
+        padding: $progress_padding_mobile;
+        margin-right: 0;
+    }
+    &__title{
+        font-family: $second_font;
+        margin-bottom: $progress_title_mb;
+        font-size: $progress_title_size;
+        line-height: $progress_title_height;
+        text-transform: $progress_title_style;
+        color: $progress_title_color;
+        @include _480{
+            text-align: center;
+        }
+    }
+}

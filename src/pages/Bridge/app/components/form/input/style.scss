@@ -1,0 +1,47 @@
+@import "../../../config/config.scss";
+
+.input{
+    position: relative;
+    width: 100%;
+    padding: $input_padding;
+    border: $input_border;
+    border-radius: $input_border_radius;
+    font-family: $main_font;
+    font-weight: $input_weight;
+    font-size: $input_size;
+    text-transform: $input_style;
+    line-height: $input_height;
+    color: $input_color;  
+    background: $background_input_color;
+    transition: all 0.7s;
+    &__wrapper{
+        position: relative;
+        margin-bottom: $input_mb;
+    } 
+    &__last{
+        margin-bottom: $input_last_mb;
+    }
+    &__first{
+        margin-bottom: $input_first_mb;
+    }
+    &__invalid{
+        border: 1px solid $error_color;
+    }
+    &__amount{
+        input{
+            padding-right: $btn_max_width + 13px;
+        }
+    }
+    &::placeholder{
+        font-weight: $placeholder_weight;
+        font-size: $placeholder_size;
+        text-transform: $placeholder_style;
+        line-height: $placeholder_height;
+        color: $placeholder_color; 
+    }
+    &:hover,
+    &:focus {
+        border: $input_border;
+        box-shadow: none;
+    }
+}

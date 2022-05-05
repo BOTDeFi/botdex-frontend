@@ -158,4 +158,5 @@ module.exports = {
       },
     },
   },
+  ignorePatterns: ['src/pages/Bridge/*']
 };
