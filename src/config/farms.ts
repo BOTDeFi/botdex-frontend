@@ -63,13 +63,24 @@ export const farms: FarmConfig[] = !IS_PRODUCTION
         categoryType: 'core',
       },
       {
-        pid: 1,
+        pid: 7,
         lpSymbol: 'BUSD-BNB LP',
         lpAddresses: {
           97: '0xAf5e8AA68dd1b61376aC4F6fa4D06A5A4AB6cafD',
-          56: '0x82291BaA88C7d0F042493877BF15d472280Aa7cb',
+          56: '0x0dfeb5187817a6121B430aB6dC7b55CF41D82f6F',
         },
         token: tokens.busd,
+        quoteToken: tokens.wbnb,
+        categoryType: 'core',
+      },
+      {
+        pid: 8,
+        lpSymbol: 'BOT-BNB LP',
+        lpAddresses: {
+          97: '0xAf5e8AA68dd1b61376aC4F6fa4D06A5A4AB6cafD',
+          56: '0x24A3E89a41b20B739A9B0D632CA55404fAC6D864',
+        },
+        token: tokens.bot,
         quoteToken: tokens.wbnb,
         categoryType: 'core',
       },

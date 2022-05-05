@@ -76,7 +76,7 @@ const Tables: FC = observer(() => {
                         />
                       );
                     }
-                    return '';
+                    return null;
                   })}
               </div>
             )}

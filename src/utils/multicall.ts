@@ -55,7 +55,7 @@ export const multicall = async <T = any>(
       });
     });
   } catch (e) {
-    console.log(e);
+    console.error('multicall error', e);
     return [];
   }
 };
