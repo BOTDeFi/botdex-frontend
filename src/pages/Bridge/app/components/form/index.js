@@ -34,6 +34,7 @@ import { ClipLoader } from "react-spinners";
 import { ReactComponent as ArrowIcon } from '../../assets/images/arrow_right.svg';
 import { css } from "@emotion/react";
 
+
 import TransactionService from '../../services/transaction';
 
 const transactionService = new TransactionService();
@@ -81,10 +82,11 @@ const Form = () => {
     const [networkFrom, setNetworkFrom] = React.useState(
         config.networksFrom.filter(item => item.key === wallet.networkFrom)[0]
     );
+    const [isCorrectNet, setCorrectNet] = React.useState(true);
 
     const handleSetNetworkFromSelected = value => {
         try {
-            dispatch(walletActions.default.setWalletType(null));
+            // dispatch(walletActions.default.setWalletType(null));
             // dispatch(userActions.default.setUserData({ address: null }));
             setNetworkFrom(value);
             setToStorage("defaultNetworkFrom", value);
@@ -164,21 +166,26 @@ const Form = () => {
     }, [userAddress, amount]);
     //change toList, when fromListSelect was selected
     React.useEffect(() => {
-        console.log(111, networkFrom);
-        userAddress &&
-        contractService.switchNetwork(networkFrom).then(res => {
-            if (res?.code === 4001) {
-                addNote(`Please choose ${configBack?.netType} network in your metamask wallet`);
-                dispatch(userActions.default.setUserData({ address: '' }));
-            }
-        });
+        console.log(userAddress);
+        if(!userAddress){
+            setCorrectNet(false);
+        } else{
+            contractService.switchNetwork(networkFrom).then(res => {
+                if (res?.code === 4001) {
+                    setCorrectNet(false);
+                    addNote(`Please choose ${configBack?.netType} network in your metamask wallet`);
+                } else {
+                    setCorrectNet(true);
+                }
+            });
+        }
 
         localStorage.setItem("defaultNetworkFrom", JSON.stringify(networkFrom.key));
         setWalletNetworkFrom(networkFrom.key);
         setNetworkToList(config.networksTo.filter(item =>
             item.name !== networkFrom.name
         ));
-    }, [networkFrom]);
+    }, [networkFrom, userAddress]);
 
     React.useEffect(async () => {
         setWalletNetworkTo(networkTo.key);
@@ -315,17 +322,8 @@ const Form = () => {
                 </>) : <Note/>}
 
             {/* buttons */}
-            <Button text={"Connect wallet"}
-                arrow="arrow_right.svg"
-                specialClass={isWalletValid ? `button_hidden` : ""}
-                clickFunc={e => {
-                    e.preventDefault();
-                    toggleChooseWalletModal();
-                }}
-                disabled={!!userAddress}
-            />
             { !config.isOldFashined ?
-                <div className={`form__buttons${!isWalletValid ? " button_hidden" : ""}`}>
+                <div className={`form__buttons${!isWalletValid || !isCorrectNet ? " button_hidden" : ""}`}>
                     <Button text={!approving ? "Allow the bridge to use your tokens" : "Waiting..."}
                         arrow="arrow_right.svg"
                         specialClass={`button__approve`}
@@ -357,7 +355,7 @@ const Form = () => {
                         } }
                         disabled={!approved || !isValidForm} />
                 </div> :
-                <div className={`form__buttons_old${!isWalletValid ? " button_hidden" : ""}`}>
+                <div className={`form__buttons_old${!isWalletValid || !isCorrectNet ? " button_hidden" : ""}`}>
                     <Button text={!approving ? "Approve" : "Waiting..."}
                         specialClass={`button__approve button_old`}
                         clickFunc={e => {

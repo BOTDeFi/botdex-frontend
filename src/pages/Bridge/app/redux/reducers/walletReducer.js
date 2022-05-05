@@ -8,7 +8,7 @@ const defaultNetworkType = getFromStorage('defaultNetworkType');
 const networkType = defaultNetworkType ? defaultNetworkType : config.defaultNetType;
 
 const initialState = {
-    type: '',
+    type: 'metamask',
     networkType,
     networkFrom,
     networkTo: '',
