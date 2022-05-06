@@ -31,6 +31,10 @@ const Header: React.FC = observer(() => {
 
   const handleToggleSidebar = React.useCallback(() => {
     setIsBurger(!isBurger);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, [isBurger]);
   const handleClose = () => {
     setIsBurger(false);
@@ -48,7 +52,7 @@ const Header: React.FC = observer(() => {
         <div
           tabIndex={0}
           role="button"
-          onKeyDown={() => {}}
+          onKeyDown={() => { }}
           className={classNames('header-burger', { 'header-burger--active': isBurger })}
           onClick={handleToggleSidebar}
         >
@@ -94,17 +98,17 @@ const Header: React.FC = observer(() => {
           </div>
           {!user.address ? (
             <Button
-              className={`connect ${headerCondition}`}
+              className={`connect btn-hover-down ${headerCondition}`}
               colorScheme="blue"
               size="sm"
               onClick={connect}
             >
               <WalletImg />
-              <span className="text-bold">Connect Wallet</span>
+              <span className="text-500">Connect Wallet</span>
             </Button>
           ) : (
             <Button
-              className={`connect ${headerCondition}`}
+              className={`connect btn-hover-down ${headerCondition}`}
               colorScheme="blue"
               size="sm"
               onClick={() => setWalletModalVisible(true)}
@@ -120,7 +124,7 @@ const Header: React.FC = observer(() => {
           role="button"
           aria-label="Sidebar Cover"
           tabIndex={0}
-          onKeyDown={() => {}}
+          onKeyDown={() => { }}
           onClick={handleClose}
           className={classNames('sidebar_cover', { active: isBurger })}
         />

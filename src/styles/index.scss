@@ -13,7 +13,7 @@ body {
   height: max-content;
   min-height: 100vh;
 
-  font-family: 'Readex Pro', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-weight: 400;
 
   color: $text-main-color;
@@ -58,6 +58,7 @@ main {
 
   min-height: 100vh;
   flex-grow: 2;
+
   @include b(tablet) {
     padding-top: 92px !important;
     padding-left: 0;
@@ -83,6 +84,7 @@ main {
     @include b(tablet) {
       display: none !important;
     }
+
     position: fixed !important;
     top: 25px;
     right: 100px;
@@ -140,6 +142,22 @@ main {
 
   max-width: 1120px;
 
+  @media (min-width: 1921px) {
+    max-width: 1420px;
+  }
+
+  @media (min-width: 2000px) {
+    max-width: 1520px;
+  }
+
+  @media (min-width: 2100px) {
+    max-width: 1620px;
+  }
+
+  @include b(mobile) {
+    padding: 0 22px;
+  }
+
   &-md {
     max-width: 990px;
   }
@@ -158,6 +176,7 @@ main {
 
   &-desktop {
     display: none !important;
+
     @include b('tablet') {
       display: block !important;
     }
@@ -195,6 +214,7 @@ main {
 
   width: 100%;
   max-width: 1100px;
+
   @include b(preTablet) {
     max-width: 600px;
   }

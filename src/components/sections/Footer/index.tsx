@@ -1,12 +1,7 @@
 import React from 'react';
 
 import { ReactComponent as Bsc } from '@/assets/img/icons/bsc.svg';
-import { ReactComponent as Discord } from '@/assets/img/icons/discord.svg';
-import { ReactComponent as Github } from '@/assets/img/icons/github.svg';
-import { ReactComponent as Insta } from '@/assets/img/icons/insta.svg';
-import { ReactComponent as Tg } from '@/assets/img/icons/tg.svg';
-import { ReactComponent as Twitter } from '@/assets/img/icons/twitter.svg';
-import { BitTalk, LinkedIn, Logo, Medium } from '@/assets/img/sections';
+import { Logo, TgWhite, TgBlue, TwWhite, TwBlue, DsWhite, DsBlue, InstWhite, InstBlue, GitWhite, GitBlue, MdWhite, MdBlue, InWhite, InBlue, BitWhite, BitBlue, FbWhite, FbBlue, RedWhite, RedBlue, YtWhite, YtBlue } from '@/assets/img/sections';
 
 // import { Button, Input } from '@/components/atoms';
 // import BotBlock from './BotBlock';
@@ -14,7 +9,7 @@ import { links } from './mock';
 
 import s from './Footer.module.scss';
 
-const Footer: React.FC  = () => {
+const Footer: React.FC = () => {
   // const [email, setEmail] = useState('');
 
   // const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,36 +66,71 @@ const Footer: React.FC  = () => {
             <div className={s.subtitle}>We will keep you posted!</div>
             <div className={s.socials}>
               <a href="https://t.me/botplanetnews" target="_blank" rel="noreferrer">
-                <Tg />
+                <img src={TgWhite} alt="icon" />
+                <img src={TgBlue} alt="icon" />
               </a>
               <a href="https://twitter.com/BotPlanet_" target="_blank" rel="noreferrer">
-                <Twitter />
+                <img src={TwWhite} alt="icon" />
+                <img src={TwBlue} alt="icon" />
               </a>
               <a href="https://discord.com/invite/Fzt2MjghYh" target="_blank" rel="noreferrer">
-                <Discord />
+                <img src={DsWhite} alt="icon" />
+                <img src={DsBlue} alt="icon" />
               </a>
               <a href="https://www.instagram.com/bot.planet/" target="_blank" rel="noreferrer">
-                <Insta />
+                <img src={InstWhite} alt="icon" />
+                <img src={InstBlue} alt="icon" />
               </a>
               <a href="https://github.com/BOTDeFi" target="_blank" rel="noreferrer">
-                <Github />
+                <img src={GitWhite} alt="icon" />
+                <img src={GitBlue} alt="icon" />
               </a>
               <a href="https://botplanet.medium.com/" target="_blank" rel="noreferrer">
-                <img src={Medium} alt="icon" />
+                <img src={MdWhite} alt="icon" />
+                <img src={MdBlue} alt="icon" />
               </a>
               <a
                 href="https://www.linkedin.com/company/botplanetltd"
                 target="_blank"
                 rel="noreferrer"
+                className={s.smaller}
               >
-                <img src={LinkedIn} alt="icon" />
+                <img src={InWhite} alt="icon" />
+                <img src={InBlue} alt="icon" />
               </a>
               <a
                 href="https://bitcointalk.org/index.php?topic=5357949.msg57845384#msg57845384"
                 target="_blank"
                 rel="noreferrer"
+                className={s.smaller}
               >
-                <img src={BitTalk} alt="icon" />
+                <img src={BitWhite} alt="icon" />
+                <img src={BitBlue} alt="icon" />
+              </a>
+              <a
+                href="https://www.facebook.com/BotDefi"
+                target="_blank"
+                rel="noreferrer"
+                className={s.smaller}
+              >
+                <img src={FbWhite} alt="icon" />
+                <img src={FbBlue} alt="icon" />
+              </a>
+              <a
+                href="https://www.reddit.com/r/Bot_Planet_Ecosystem/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={RedWhite} alt="icon" />
+                <img src={RedBlue} alt="icon" />
+              </a>
+              <a
+                href="https://www.youtube.com/channel/UClMahaW1s5jyH31LT3XuFbQ"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={YtWhite} alt="icon" />
+                <img src={YtBlue} alt="icon" />
               </a>
             </div>
           </div>

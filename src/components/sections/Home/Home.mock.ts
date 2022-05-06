@@ -156,33 +156,33 @@ export const stakingItems = [
 
 export const featuresItems = [
   {
-    title: 'Flawless in-game transactions',
-    text: 'so seamless that you would not even notice there is a blockchain involved',
+    title: 'Lowest fee in DeFi',
+    text: 'Swap Fast & Easy! Transaction Fee 0,01%',
     img: Feature1,
   },
   {
-    title: 'Easily accessible',
-    text: 'great accessibility to all of our products through BOT Wallet',
+    title: 'Fixed staking APY',
+    text: 'Staking Fixed Interest Staking APY up to 120%',
     img: Feature2,
   },
   {
-    title: 'Diverse staking rewards',
-    text: 'from earning experience in the game to earning tokens',
+    title: 'Farming',
+    text: 'Farm season with high yield',
     img: Feature3,
   },
   {
-    title: 'Separate NFT marketplace',
-    text: 'providing a place to publish and trade your NFTs',
+    title: 'NFT Staking',
+    text: 'Stake your NFT and get a huge gaming experience!',
     img: Feature4,
   },
   {
-    title: 'Daily lottery',
-    text: 'giving you the opportunity to multiply your earnings',
+    title: 'Cross-chain',
+    text: 'Cross-chain swaps between any arbitrary assets in one transaction!',
     img: Feature5,
   },
   {
-    title: 'Unique messenger',
-    text: 'earn through engaging with the ads',
+    title: 'Diverse staking rewards',
+    text: 'From earning experience in the game to earning tokens',
     img: Feature6,
   },
 ];

@@ -17,11 +17,13 @@
   max-width: 240px;
   height: 100vh;
 
-  background: transparent;
+  background: rgba(10, 0, 44, 0.9);
 
   transition: 0.4s ease;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 
   &::-webkit-scrollbar {
     display: none;
@@ -56,9 +58,12 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
       @include font-gemina;
     }
+
     @include flex(row, flex-start, flex-start, nowrap);
+
     @include b(tablet) {
       margin-top: 18px;
 
@@ -69,8 +74,10 @@
   &__nav {
     overflow-y: scroll;
     flex-grow: 2;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 
     &::-webkit-scrollbar {
       display: none;
@@ -84,7 +91,7 @@
       width: 100%;
       min-width: 227px;
 
-      & + & {
+      &+& {
         margin-top: 12px;
       }
 
@@ -112,6 +119,7 @@
 
           background: linear-gradient(132.83deg, #d715ff 0%, #1a26ff 75.95%);
           border-radius: 12px;
+
           @include b(tablet) {
             padding: 4px;
 
@@ -119,8 +127,9 @@
             line-height: 11px;
           }
         }
+
         @include b(tablet) {
-          padding: 12px 5px;
+          padding: 12px 10px 12px 22px;
 
           font-size: 12px;
           line-height: 15px;
@@ -132,6 +141,7 @@
 
         width: 20px;
         height: 20px;
+
         @include b(tablet) {
           margin-right: 6px;
 
@@ -157,6 +167,7 @@
         &.active {
           transform: rotate(180deg);
         }
+
         @include flex(row, center, center);
       }
 
@@ -167,6 +178,7 @@
           background: $bg-accent-gradient;
         }
       }
+
       @include b(tablet) {
         padding-right: 0;
 
@@ -186,9 +198,11 @@
           margin-bottom: 0;
         }
       }
+
       @include flex(column, flex-start);
+
       @include b(tablet) {
-        padding: 19px 10px;
+        padding: 19px 10px 19px 15px;
 
         font-size: 12px;
         line-height: 15px;
@@ -226,9 +240,10 @@
 
       transition: max-height 300ms, opacity 300ms;
     }
+
     @include b(tablet) {
       //padding-top: 116px;
-      background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%) !important;
+      // background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%) !important;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
     }
   }
@@ -260,7 +275,7 @@
       border: 1px solid $bg-white;
       border-radius: 50%;
 
-      & + & {
+      &+& {
         margin-left: 12px;
       }
 
@@ -293,10 +308,12 @@
         display: block;
       }
     }
+
     @include b(tablet) {
       display: block;
     }
   }
+
   @include b(tablet) {
     padding-top: 0;
     padding-bottom: 0;
@@ -315,6 +332,7 @@
     border-radius: 0;
     box-shadow: none;
   }
+
   @include b(tablet) {
     .menu__balance {
       padding: 20px 20px;

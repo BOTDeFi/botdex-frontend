@@ -40,8 +40,8 @@ $text-default: #fff;
     background: $accent-gradient;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
-    & > * {
-      color: $text-main-color !important;
+    &>* {
+      color: $text-main-color  !important;
     }
 
     &:hover,
@@ -124,8 +124,8 @@ $text-default: #fff;
     background: $yellow;
     box-shadow: 0 12px 40px rgba(255, 162, 55, 0.25);
 
-    & > * {
-      color: $black !important;
+    &>* {
+      color: $black  !important;
     }
 
     &:hover {
@@ -217,13 +217,13 @@ $text-default: #fff;
       }
 
       &.active {
-        color: $text-main-color !important;
+        color: $text-main-color  !important;
         //background: $accent-gradient;
         //border-color: transparent;
         background-origin: border-box;
 
         span {
-          color: $text-main-color !important;
+          color: $text-main-color  !important;
         }
 
         svg {
@@ -240,11 +240,11 @@ $text-default: #fff;
 
         &:active,
         &.active {
-          color: $yellow !important;
+          color: $yellow  !important;
           background: transparent;
 
           span {
-            color: $yellow !important;
+            color: $yellow  !important;
           }
         }
       }
@@ -272,12 +272,13 @@ $text-default: #fff;
       }
 
       &.noclick {
+
         &:active,
         &.active {
-          color: $green !important;
+          color: $green  !important;
 
           span {
-            color: $green !important;
+            color: $green  !important;
           }
         }
       }
@@ -298,13 +299,13 @@ $text-default: #fff;
     }
 
     &.active {
-      color: $text-main-color !important;
+      color: $text-main-color  !important;
       //background: $accent-gradient;
       //border-color: transparent;
       background-origin: border-box;
 
       span {
-        color: $text-main-color !important;
+        color: $text-main-color  !important;
       }
 
       svg {
@@ -321,11 +322,11 @@ $text-default: #fff;
 
       &:active,
       &.active {
-        color: $yellow !important;
+        color: $yellow  !important;
         background: transparent;
 
         span {
-          color: $yellow !important;
+          color: $yellow  !important;
         }
       }
     }
@@ -350,7 +351,127 @@ $text-default: #fff;
     }
 
     span {
-      color: $text-main-color !important;
+      color: $text-main-color  !important;
+    }
+  }
+
+  &-hover-down {
+    &.btn-sm {
+      padding: 0 !important;
+      background: transparent;
+      border-radius: unset;
+      box-shadow: none;
+
+      >span {
+        &:first-child {
+          padding: 10px 18px;
+          border-radius: 11px;
+        }
+      }
+
+      &:hover {
+        >span {
+          &:first-child {
+            transform: translateY(4px);
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    &.btn-md {
+      padding: 0 !important;
+      background: transparent;
+      border-radius: unset;
+      box-shadow: none;
+
+      >span {
+        &:first-child {
+          padding: 20px !important;
+        }
+      }
+
+      &.btn-pink {
+        >span {
+          &:first-child {
+            box-shadow: 0 5px 0 #6e1989;
+          }
+        }
+
+        &:hover {
+          >span {
+            &:first-child {
+              transform: translateY(5px);
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
+
+    &.btn-blue {
+      >span {
+        &:first-child {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding: 6px;
+          background: $bg-blue;
+          border-radius: 11px;
+          box-shadow: 0 5px 0 $shadow-blue;
+        }
+      }
+
+      &:hover {
+        >span {
+          background-color: #223687;
+        }
+      }
+    }
+
+    &.btn-pink {
+      // padding: 0;
+
+      >span {
+        &:first-child {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          padding: 6px;
+          background: #c630f6;
+          border-radius: 11px;
+          box-shadow: 0 5px 0 #6e1989;
+        }
+      }
+
+      &:hover {
+        >span {
+          background-color: #6e1989;
+        }
+      }
+    }
+
+    &.btn-smd {
+      padding: 0 !important;
+      background: transparent;
+      border-radius: unset;
+      box-shadow: none;
+
+      >span {
+        &:first-child {
+          padding: 15px 20px;
+          border-radius: 11px;
+        }
+      }
+
+      &:hover {
+        >span {
+          &:first-child {
+            transform: translateY(4px);
+            box-shadow: none;
+          }
+        }
+      }
     }
   }
 }

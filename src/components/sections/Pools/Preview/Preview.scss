@@ -2,14 +2,15 @@
 
 .pools-preview {
   padding: 41px 41px 19px;
-
   background-image: url('../../../../assets/img/sections/pools/staking_preview.png');
   background-size: cover;
   border-radius: 12px;
+
   @include b(mobile) {
     background-image: url('../../../../assets/img/sections/pools/staking_preview_sm.png');
     background-size: cover;
   }
+
   @include b(tablet) {
     padding: 40px 10px 10px;
 
@@ -20,14 +21,21 @@
     position: relative;
     z-index: 2;
 
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
 
     color: #fff;
+
     @include b(tablet) {
       margin-bottom: 0;
 
       font-size: 35px !important;
     }
+  }
+
+  &__descr {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 500;
   }
 
   &__subtitle {
@@ -39,6 +47,7 @@
     z-index: 1;
     top: 15px;
     left: -12px;
+
     @include b(tablet) {
       top: 8px;
       left: 8px;
@@ -54,12 +63,11 @@
 
   &__bounty {
     padding: 20px 15px 20px 24px;
-
     display: none;
-
     background: $bg-farms-gradient;
     border-radius: 12px;
     box-shadow: 0 12px 40px rgba(85, 32, 142, 0.25);
+
     //@include b(tablet) {
     //  display: block;
     //}

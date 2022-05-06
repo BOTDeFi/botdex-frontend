@@ -1,6 +1,7 @@
 @import '/src/styles/index';
 
 .features {
+  margin: 0 0 -1px;
   width: 100%;
   min-height: 100vh;
 
@@ -14,8 +15,13 @@
     width: 100%;
     @include m-left(70px);
     @include flex(row, center, flex-start, nowrap);
+
     @include b(mobile) {
-      padding: 50px 0 150px;
+      padding: 50px 22px 150px;
+    }
+
+    @media (min-width: 1921px) {
+      margin: 0;
     }
 
     &_content {
@@ -24,8 +30,25 @@
       width: 100%;
       max-width: 1100px;
       @include flex(column, center, center, nowrap);
+
+      @media (min-width: 1921px) {
+        max-width: 1400px;
+      }
+
+      @media (min-width: 2000px) {
+        max-width: 1500px;
+      }
+
+      @media (min-width: 2100px) {
+        max-width: 1600px;
+      }
+
       @include b(preTablet) {
         max-width: 600px;
+      }
+
+      @include b(tablet) {
+        max-width: 700px;
       }
 
       &_cards {
@@ -36,8 +59,13 @@
         width: 100%;
         grid-template-columns: repeat(3, 1fr);
         gap: 25px;
+
         @include b(preTablet) {
           @include flex(column, center, center, nowrap);
+        }
+
+        @include b(tablet) {
+          @include flex(row, center, center, wrap);
         }
       }
     }
