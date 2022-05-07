@@ -7,6 +7,7 @@ import React from 'react';
 import { ShadowTitle } from '@/components/atoms';
 
 import s from './ComingSoon.module.scss';
+import { mothership } from '@/assets/img/sections';
 
 const ComingSoon: React.FC = () => {
   return (
@@ -16,8 +17,8 @@ const ComingSoon: React.FC = () => {
         <LogoTextMd />
       </div> */}
       <div className={s.coming_soon}>
-        {/* <img src={mothership} alt="" /> */}
         <div className={s.title}>
+          <img src={mothership} alt="" />
           <ShadowTitle type="h1Max">Coming Soon</ShadowTitle>
         </div>
         {/* <div className={s.title}>Coming Soon</div> */}

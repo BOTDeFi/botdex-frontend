@@ -95,6 +95,10 @@
   }
 
   &_apy {
+    @include b(tablet) {
+      margin: 0 40px 0 0;
+    }
+
     &-title {
       @include flex(row, center, flex-start);
 

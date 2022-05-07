@@ -12,6 +12,10 @@ export { default as Bot } from './home/botSymbol.svg';
 export { default as Bsc } from './home/bscSymbol.svg';
 export { default as Lock } from './home/lock.svg';
 
+// TVL
+export { default as TvlLock } from '../icons/tvl-lock.svg';
+export { default as TvlFire } from '../icons/tvl-fire.svg';
+
 // Footer 
 export { default as TgWhite } from '../icons/telegram_white.svg';
 export { default as TgBlue } from '../icons/telegram_blue.svg';
@@ -135,3 +139,6 @@ export { default as Scaner } from './footer/scaner.svg';
 export { default as Pancakeswap } from './footer/pancakeswap.svg';
 export { default as bitget } from '../bitget.svg';
 export { default as bitmart } from '../bitmart.svg';
+
+// Comming soon
+export { default as mothership } from '../mothership.png';

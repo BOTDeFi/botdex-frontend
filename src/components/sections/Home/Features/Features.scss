@@ -22,6 +22,7 @@
 
     @media (min-width: 1921px) {
       margin: 0;
+      min-height: inherit;
     }
 
     &_content {
@@ -33,6 +34,7 @@
 
       @media (min-width: 1921px) {
         max-width: 1400px;
+        margin: -300px auto 0;
       }
 
       @media (min-width: 2000px) {

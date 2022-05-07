@@ -18,6 +18,11 @@
     font-size: 16px;
     font-weight: 700;
     line-height: 20px;
+
+    @media (min-width: 1921px) {
+      font-size: 30px;
+      line-height: 36px;
+    }
   }
 
   &_text {
@@ -25,5 +30,10 @@
     line-height: 17.15px;
 
     color: $c-text-gray;
+
+    @media (min-width: 1921px) {
+      font-size: 24px;
+      line-height: 28px;
+    }
   }
 }

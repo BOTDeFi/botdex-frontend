@@ -20,7 +20,7 @@ import ValueCard from './ValueCard';
 import './Preview.scss';
 import { IBlogType } from '@/types';
 import { getBlogs } from '@/utils/getBlogs';
-import { Comet, Alien, LogoBotPlanet } from '@/assets/img/sections';
+import { Comet, Alien } from '@/assets/img/sections';
 import { PriceBotData } from '@/hooks/useFetchPriceBot';
 
 const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBotData }) => {
@@ -84,17 +84,9 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
         <div className="h-preview_top">
           <div className="h-preview_top-left">
             <div className="h-preview_top-left-title">
-              <div className="h-preview_top-left-title-img">
-                <img src={LogoBotPlanet} alt="Bot Planet’s" />
-              </div>
-              <span className="h-preview_top-left-title-span">
-                <ShadowTitle type="h2">
-                  Profit and Freedom for Crypto World
-                </ShadowTitle>
-              </span>
               <span className="h-preview_top-left-title-span big">
                 <ShadowTitle type="h2">
-                  BOTSWAP: Dive deeper into the Crypto World
+                  Dive deeper into the Crypto World
                 </ShadowTitle>
               </span>
             </div>

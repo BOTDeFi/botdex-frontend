@@ -12,6 +12,7 @@ import { stakingItems } from '../Home.mock';
 import TableCard from '../Preview/TableCard';
 
 import './Tables.scss';
+import Tvl from '@/components/organisms/Tvl';
 
 const Tables: FC = observer(() => {
   const { farms } = useMst();
@@ -78,6 +79,9 @@ const Tables: FC = observer(() => {
             </div>
           </div>
         </div>
+
+        <Tvl />
+
       </div>
     </div>
   );

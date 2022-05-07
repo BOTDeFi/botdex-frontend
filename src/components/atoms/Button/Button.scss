@@ -364,8 +364,16 @@ $text-default: #fff;
 
       >span {
         &:first-child {
-          padding: 10px 18px;
+          padding: 10px 18px !important;
           border-radius: 11px;
+        }
+      }
+
+      &.btn-pink {
+        >span {
+          &:first-child {
+            padding: 6px !important;
+          }
         }
       }
 

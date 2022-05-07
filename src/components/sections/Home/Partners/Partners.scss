@@ -2,6 +2,7 @@
 
 .partners {
   padding-top: 50px;
+  padding-bottom: 350px;
 
   width: 100%;
   min-height: 100vh;
@@ -136,21 +137,79 @@
           max-height: 250px;
         }
 
-        .swiper_btn_left {
-          position: absolute;
-          top: 130px;
+        .swiper-button-prev {
+          top: auto;
+          bottom: 50px;
+          left: 14px;
+        }
+
+        .swiper-button-next {
+          top: auto;
+          bottom: 50px;
+          right: 6px;
 
           @include b(preTablet) {
+            right: 14px;
+          }
+        }
+
+        .swiper_btn_left {
+          // position: absolute;
+          // top: 130px;
+
+          // @include b(preTablet) {
+          //   left: 0;
+          // }
+          position: absolute;
+          top: 36px;
+          left: -10px;
+
+          &:hover {
+            img {
+              opacity: 1;
+            }
+          }
+
+          img {
+            transform: scale(-1) translateY(50%);
+            width: 40px;
+            position: absolute;
+            top: 50%;
             left: 0;
+            opacity: .5;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
           }
         }
 
         .swiper_btn_right {
+          // position: absolute;
+          // top: 130px;
+          // right: 0;
+
+          // width: fit-content;
           position: absolute;
-          top: 130px;
+          top: -32px;
           right: 0;
 
-          width: fit-content;
+          &:hover {
+            img {
+              opacity: 1;
+            }
+          }
+
+          img {
+            transform: translateY(50%);
+            width: 40px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            opacity: .5;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+          }
+
+          @include b(preTablet) {
+            right: -10px;
+          }
         }
       }
     }

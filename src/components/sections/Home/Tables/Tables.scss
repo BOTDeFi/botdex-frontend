@@ -39,6 +39,10 @@
       max-width: 1600px;
     }
 
+    @include b(preTablet) {
+      max-width: 600px;
+    }
+
     &_content {
       gap: 30px;
 
@@ -64,6 +68,7 @@
 
       &_earn-table,
       &_staking-table {
+
         margin-top: 27px;
         padding: 0 20px;
 
@@ -101,6 +106,10 @@
           background: $bg-table;
           border-radius: 12px;
           box-shadow: $bsh-table;
+
+          @media (min-width:1921px) {
+            width: 100%;
+          }
 
           &_item {
             padding: 0 !important;

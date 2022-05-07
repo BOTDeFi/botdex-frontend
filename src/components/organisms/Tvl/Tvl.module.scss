@@ -1,0 +1,206 @@
+@import '/src/styles/index.scss';
+
+.tvl {
+  width: calc(100% - 10px);
+
+  display: flex;
+  flex-direction: column;
+  padding: 77px 100px;
+
+  margin: 100px 0 0;
+
+  transform: translate(70px, 0);
+
+  background: linear-gradient(180deg, #2E1D8F 0%, #1F1080 100%);
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  @media (min-width:1921px) {
+    transform: translate(0);
+    max-width: 1100px;
+    margin: 100px auto 0;
+  }
+
+  @include b(preTablet) {
+    padding: 25px 20px;
+    max-width: 530px;
+    margin: 100px auto 0;
+    transform: translate(0);
+    width: 100%;
+  }
+
+  @include b(mobile) {
+    padding: 20px 15px;
+    margin: 50px auto 0;
+  }
+
+  &Top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include b(preTablet) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__div {
+      width: 1px;
+      height: 90px;
+      background-color: rgba(255, 255, 255, 0.2);
+      font-size: 0;
+
+      @include b(preTablet) {
+        display: none;
+      }
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+
+      @include b(preTablet) {
+        &:not(:first-child) {
+          margin: 20px 0 0;
+        }
+      }
+
+      &Ico {
+        flex: 0 0 auto;
+        margin: 0 24px 0 14px;
+
+        @include b(preTablet) {
+          img {
+            height: 55px;
+          }
+        }
+
+        @include b(mobile) {
+          width: 35px;
+          margin: 0 10px 0 0;
+
+          img {
+            height: 45px;
+          }
+        }
+      }
+
+      &Info {
+        .value {
+          display: block;
+          font-family: 'Gemina';
+          font-weight: 400;
+          font-size: 30px;
+          line-height: 33px;
+
+          @include b(preTablet) {
+            font-size: 24px;
+            line-height: 27px;
+          }
+
+          @include b(mobile) {
+            font-size: 20px;
+            line-height: 23px;
+          }
+        }
+
+        .text {
+          display: block;
+          margin: 9px 0 0;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 19px;
+
+          @include b(preTablet) {
+            font-size: 15px;
+            line-height: 18px;
+            margin: 5px 0 0;
+          }
+
+          @include b(mobile) {
+            font-size: 14px;
+            line-height: 17px;
+            margin: 4px 0 0;
+          }
+        }
+      }
+    }
+  }
+
+  &Bottom {
+    margin: 40px 0 0;
+    padding: 40px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+    display: flex;
+    justify-content: center;
+
+    @include b(preTablet) {
+      margin: 25px 0 0;
+      padding: 25px 0 0;
+      justify-content: space-between;
+    }
+
+    @include b(mobile) {
+      flex-wrap: wrap;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+
+      &:not(:first-child) {
+        margin: 0 0 0 97px;
+
+        @include b(preTablet) {
+          margin: 0 0 0 10px;
+        }
+
+        @include b(mobile) {
+          margin: 15px 0 0 0;
+        }
+      }
+
+      @include b(mobile) {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .value {
+        margin: 0 0 0 26px;
+        font-family: 'Gemina';
+        font-size: 30px;
+        line-height: 33px;
+        color: #FFFFFF;
+
+        @include b(preTablet) {
+          font-size: 18px;
+          line-height: 22px;
+          margin: 0 0 0 10px;
+        }
+
+        @include b(mobile) {
+          font-size: 21px;
+          line-height: 24px;
+        }
+      }
+
+      .text {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #F4F4F4;
+
+        @include b(preTablet) {
+          font-size: 14px;
+          line-height: 17px;
+        }
+
+        @include b(mobile) {
+          font-size: 16px;
+          line-height: 19px;
+        }
+      }
+    }
+  }
+}
