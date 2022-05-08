@@ -34,15 +34,17 @@ const BotBlock: VFC<{ priceBotData: PriceBotData | null }> = ({ priceBotData }) 
       </a>
       <button
         type="button"
-        className={cn(s.btn, { [s.isOpen]: isModalVisible }, 'btnBot')}
+        className={cn(s.btn, s.btnHoverDown, { [s.isOpen]: isModalVisible }, 'btnBot')}
         onClick={handleChangeModalVisible}
       >
-        Buy $BOT
-        <img
-          src={ArrowTopWhite}
-          alt="arrow"
-          className={cn({ [s.rotate]: isModalVisible }, 'btnBotImg')}
-        />
+        <span>
+          Buy $BOT
+          <img
+            src={ArrowTopWhite}
+            alt="arrow"
+            className={cn({ [s.rotate]: isModalVisible }, 'btnBotImg')}
+          />
+        </span>
       </button>
       {isModalVisible && <FooterDropDown onClose={() => setModalVisible(false)} />}
     </div>

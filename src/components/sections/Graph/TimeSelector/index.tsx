@@ -27,9 +27,8 @@ const TimeSelector: VFC<ITimeSelectorProps> = ({ selectors, currentSelector }) =
     <section className="time-selector__body">
       {selectors.map((s: TTimestampSelector, i: number) => (
         <Button
-          className={`time-selector__body-btn ${
-            currentSelector === i || currentSelector === s.key ? 'selected' : ''
-          }`}
+          className={`time-selector__body-btn btn-hover-down ${currentSelector === i || currentSelector === s.key ? 'selected' : ''
+            }`}
           colorScheme="blue"
           key={s.key || s.text}
           onClick={s.onClick}

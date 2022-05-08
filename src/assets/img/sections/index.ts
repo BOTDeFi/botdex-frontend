@@ -2,23 +2,59 @@
 export { default as Logo } from '../icons/logo.svg';
 export { default as Comet } from './home/comet.svg';
 export { default as Alien } from './home/alien.svg';
-export { default as Slide1 } from './home/slide1.png';
-export { default as Slide2 } from './home/slide2.png';
-export { default as Slide3 } from './home/slide3.png';
+export { default as Slide1 } from './home/slide1.webp';
+export { default as Slide2 } from './home/slide2.webp';
+export { default as Slide3 } from './home/slide3.webp';
 export { default as Calc } from './home/calc.svg';
+export { default as CalcWhite } from './home/calc_white.svg';
 export { default as Question } from './home/question.svg';
 export { default as Bot } from './home/botSymbol.svg';
 export { default as Bsc } from './home/bscSymbol.svg';
 export { default as Lock } from './home/lock.svg';
+
+// TVL
+export { default as TvlLock } from '../icons/tvl-lock.svg';
+export { default as TvlFire } from '../icons/tvl-fire.svg';
+
+// Footer 
+export { default as TgWhite } from '../icons/telegram_white.svg';
+export { default as TgBlue } from '../icons/telegram_blue.svg';
+export { default as TwWhite } from '../icons/twitter_white.svg';
+export { default as TwBlue } from '../icons/twitter_blue.svg';
+export { default as DsWhite } from '../icons/discord_white.svg';
+export { default as DsBlue } from '../icons/discord_blue.svg';
+export { default as InstWhite } from '../icons/instagram_white.svg';
+export { default as InstBlue } from '../icons/instagram_blue.svg';
+export { default as GitWhite } from '../icons/github_white.svg';
+export { default as GitBlue } from '../icons/github_blue.svg';
+export { default as MdWhite } from '../icons/medium_white.svg';
+export { default as MdBlue } from '../icons/medium_blue.svg';
+export { default as InWhite } from '../icons/linkedin_white.svg';
+export { default as InBlue } from '../icons/linkedin_blue.svg';
+export { default as BitWhite } from '../icons/bitcointalk_white.webp';
+export { default as BitBlue } from '../icons/bitcointalk_blue.webp';
+export { default as FbWhite } from '../icons/faceebook_white.svg';
+export { default as FbBlue } from '../icons/faceebook_blue.svg';
+export { default as RedWhite } from '../icons/reddit_white.svg';
+export { default as RedBlue } from '../icons/reddit_blue.svg';
+export { default as YtWhite } from '../icons/youtube_white.svg';
+export { default as YtBlue } from '../icons/youtube_blue.svg';
+
+// Swiper
+export { default as SliderArrow } from '../icons/arrow.svg';
+
+// Main
+export { default as LogoBotPlanet } from './home/logo-bot-planet.svg';
+
 // features
-export { default as Feature1 } from './home/feature-1.png';
-export { default as Feature2 } from './home/feature-2.png';
-export { default as Feature3 } from './home/feature-3.png';
-export { default as Feature4 } from './home/feature-4.png';
-export { default as Feature5 } from './home/feature-5.png';
-export { default as Feature6 } from './home/feature-6.png';
+export { default as Feature1 } from './home/feature-1.webp';
+export { default as Feature2 } from './home/feature-2.webp';
+export { default as Feature3 } from './home/feature-3.webp';
+export { default as Feature4 } from './home/feature-4.webp';
+export { default as Feature5 } from './home/feature-5.webp';
+export { default as Feature6 } from './home/feature-6.webp';
 // partners
-export { default as ParntersIcon } from './home/partners-icon.png';
+export { default as ParntersIcon } from './home/partners-icon.webp';
 export { default as ArrowLeft } from './home/arrow-left.svg';
 export { default as ArrowRight } from './home/arrow-right.svg';
 export { default as BusinessTimes } from './home/business-times.svg';
@@ -103,3 +139,6 @@ export { default as Scaner } from './footer/scaner.svg';
 export { default as Pancakeswap } from './footer/pancakeswap.svg';
 export { default as bitget } from '../bitget.svg';
 export { default as bitmart } from '../bitmart.svg';
+
+// Comming soon
+export { default as mothership } from '../mothership.webp';

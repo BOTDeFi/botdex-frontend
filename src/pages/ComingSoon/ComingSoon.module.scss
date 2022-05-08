@@ -5,13 +5,15 @@
   width: 100%;
   height: 100vh;
   @include flex(column, center, center, nowrap);
+
   @include b(tablet) {
     padding: 72px 10px 0;
   }
-  background: url(../../assets/img/mothership.png) center/316px 370px no-repeat,
-    linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
-    url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
-    url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat, #110847 center;
+
+  background: linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
+  url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
+  url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat,
+  #110847 center;
 
   .logo_wrapper {
     margin-top: 20px;
@@ -26,17 +28,25 @@
 
   .coming_soon {
     // position: relative;
-    margin: 260px 220px 0 0;
+    margin: 400px 220px 0 0;
 
     width: 316px;
-    @include b(tablet) {
-      margin: 70px 0 0 0;
-    }
-    @include b(extramobile) {
-      margin: 0;
 
-      width: 70%;
+    @include b(tablet) {
+      margin: 170px 0 0 0;
+      width: 500px;
     }
+
+    @include b(mobile) {
+      width: 80%;
+      margin: 0;
+    }
+
+    // @include b(extramobile) {
+    //   margin: 0;
+
+    //   width: 70%;
+    // }
 
     // img {
     //   max-width: 100%;
@@ -48,8 +58,22 @@
 
       // bottom: -55px;
       font-family: 'Gemina', sans-serif;
-      font-size: 120px;
-      line-height: 100%;
+
+      h1 {
+        font-size: 90px;
+        line-height: 100%;
+
+        @include b(mobile) {
+          font-size: 60px;
+          transform: translate(0, -110px);
+        }
+
+        @media (max-width:450px) {
+          transform: translate(0, -50px);
+          font-size: 50px;
+        }
+      }
+
       text-align: center;
       // @include b(tablet) {
       //   left: 0;
@@ -61,6 +85,26 @@
 
       //   font-size: 60px;
       // }
+      position: relative;
+
+      img {
+        width: 450px;
+        position: absolute;
+        z-index: 0;
+        top: -450px;
+        left: 80%;
+        transform: translate(-50%, 0);
+
+        @include b(tablet) {
+          left: 50%;
+        }
+
+        @include b(mobile) {
+          width: 100%;
+          position: relative;
+          top: auto;
+        }
+      }
     }
   }
 }

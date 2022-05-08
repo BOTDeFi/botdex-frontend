@@ -10,11 +10,17 @@
 
   @include flex(row, center, space-between, nowrap);
 
-  @include b(tablet) {
-    padding: 26px 2px 26px 20px;
+  // @media (min-width: 1921px) {
+  //   max-width: 100%;
+  //   width: 100%;
+  // }
 
-    width: 95%;
+  @include b(tablet) {
+    // padding: 26px 2px 26px 20px;
+
+    // width: 95%;
   }
+
   @include b(mobile) {
     padding: 10px;
 
@@ -25,6 +31,7 @@
 
   &_name {
     @include flex(row, center, space-between, nowrap);
+
     // @include b(tablet) {
     //   padding-left: 20px;
     // }
@@ -88,6 +95,10 @@
   }
 
   &_apy {
+    @include b(tablet) {
+      margin: 0 40px 0 0;
+    }
+
     &-title {
       @include flex(row, center, flex-start);
 
@@ -108,7 +119,7 @@
       font-weight: 700;
       line-height: 22.5px;
 
-      color: $c-text-purple;
+      color: $white;
       @include flex(row, center, flex-start);
     }
 
@@ -120,6 +131,7 @@
   &_btn {
     min-width: 115px;
     max-height: 38px !important;
+
     @include b(tablet) {
       position: absolute;
       right: 3px;

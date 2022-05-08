@@ -26,73 +26,90 @@
   }
 
   img {
-    margin-right: 5px;
+    margin-right: 10px;
   }
 
   &_price {
-    margin-right: 5px;
+    margin-right: 10px;
   }
 
   &_cap {
-    margin-right: 5px;
+    margin-right: 10px;
 
     width: 33px;
     height: 33px;
   }
 
   &_scaner {
-    margin-right: 5px;
+    margin-right: 10px;
 
     width: 29px;
     height: 29px;
   }
 
   .btn {
-    padding: 20px;
-
-    width: fit-content;
-    max-width: 145px;
-    height: fit-content;
-    height: 45px;
-
     font-size: 16px;
 
     font-weight: 400;
-    font-weight: 700;
     line-height: 26px;
     white-space: nowrap;
+    margin: 0 0 0 10px;
 
     cursor: pointer;
 
     color: #fff;
-    background: #c630f6;
-
     border: none;
-    border-radius: 12px;
-    border-radius: 11px;
-    box-shadow: 0 5px 0 #6e1989;
-
     transition: all 0.3s ease-in-out;
-
-    &:hover {
-      color: #fff;
-      background: #c630f6;
-      box-shadow: 0 0 15px 5px #c25ce0;
-    }
-
-    &:active,
-    &:focus {
-      color: #fff;
-      background: #c630f6;
-    }
 
     img {
       margin-left: 5px;
     }
-    @include flex(row, center, center, nowrap);
+
     @include b(tablet) {
-      width: 135px;
-      height: 30px;
+      span {
+        width: 135px !important;
+        height: 30px !important;
+      }
+    }
+
+    &HoverDown {
+      padding: 0;
+      background: transparent;
+
+      &:hover {
+        span {
+          background: #6e1989;
+          transform: translateY(4px);
+          box-shadow: none
+        }
+      }
+
+      &.isOpen {
+        background: transparent !important;
+
+        span {
+          background: #780c8e;
+          box-shadow: 0 5px 0 #780c8e;
+        }
+      }
+
+      span {
+        @include flex(row, center, center, nowrap);
+        padding: 20px;
+
+        width: fit-content;
+        max-width: 145px;
+        height: fit-content;
+        height: 45px;
+
+        transition: all 0.3s ease-in-out;
+
+        border-radius: 12px;
+        border-radius: 11px;
+        box-shadow: 0 5px 0 #6e1989;
+
+        background: #c630f6;
+      }
     }
   }
 

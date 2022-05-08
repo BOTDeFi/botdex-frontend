@@ -10,7 +10,7 @@ class BackendService {
             this.networks = await res.json();
             // this.networks = res;
         });
-        this.netType = config.IS_PRODUCTION ?  "mainnet" : "testnet";
+        this.netType = config.IS_PRODUCTION ? "mainnet" : "testnet";
     }
 
     async getDexList() {
@@ -134,7 +134,8 @@ class BackendService {
             let result = await fetch(`${config.serverDomain()}/swap/`, {
                 method: "POST",
                 mode: 'no-cors',
-                body: { is_testnet, from_tx_hash, from_network_num, to_network_num, from_amount, from_address } });
+                body: { is_testnet, from_tx_hash, from_network_num, to_network_num, from_amount, from_address }
+            });
             result = await result.json();
             return result;
         } catch (e) {

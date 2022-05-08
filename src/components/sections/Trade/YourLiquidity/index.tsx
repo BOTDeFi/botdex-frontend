@@ -134,7 +134,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
         settingsLink="/trade/liquidity/settings"
         recentTxLink="/trade/liquidity/history"
       >
-        <Button className="y-liquidity__btn" colorScheme="pink" link="/trade/liquidity/add">
+        <Button className="y-liquidity__btn btn-hover-down" colorScheme="pink" link="/trade/liquidity/add">
           <span className="text-md text-white text-bold">Add liquidity</span>
         </Button>
         <div className="y-liquidity__title text-md">Your Liquidity</div>

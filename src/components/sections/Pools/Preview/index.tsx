@@ -128,6 +128,7 @@ const Preview: React.FC = observer(() => {
     <div className="pools-preview box-f-ai-c box-f-jc-sb">
       <div className="pools-preview__box">
         <h1 className="pools-preview__title h1-lg text-bold">Staking</h1>
+        <div className="pools-preview__descr">Staking - Fixed Interest Staking APY up to 120%</div>
         <div className="pools-preview__subtitle">
           Simply stake tokens to earn. <br />
           High APR, low risk.

@@ -151,7 +151,7 @@ const ExchangeSettings: React.FC<IExchangeSettings> = React.memo(
             onChange={() => setIsAudio(!isAudio)}
           /> */}
         </div>
-        <Button colorScheme="pink" className="exch-settings__btn" onClick={handleSaveSettings}>
+        <Button colorScheme="pink" className="exch-settings__btn btn-hover-down" onClick={handleSaveSettings}>
           <span className="text-smd text-white">Save and close</span>
         </Button>
       </div>

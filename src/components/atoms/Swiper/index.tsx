@@ -4,7 +4,7 @@ import cn from 'classnames';
 import SwiperCore, { Keyboard, Mousewheel, Navigation, SwiperOptions } from 'swiper';
 import { Swiper as SwiperSlider } from 'swiper/react/swiper-react';
 
-import { ArrowLeft, ArrowRight } from '@/assets/img/sections';
+import { SliderArrow } from '@/assets/img/sections';
 
 import 'swiper/swiper.scss';
 import 'swiper/modules/pagination/pagination.scss';
@@ -36,7 +36,7 @@ const Swiper: FC<ISwiperItems> = ({ children, className, nav = false, ...props }
         <div className="swiper-button-prev">
           <div className="swiper_btn">
             <div className="swiper_btn_left">
-              <img src={ArrowLeft} alt="left" />
+              <img src={SliderArrow} alt="left" />
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@ const Swiper: FC<ISwiperItems> = ({ children, className, nav = false, ...props }
         <div className="swiper-button-next">
           <div className="swiper_btn">
             <div className="swiper_btn_right">
-              <img src={ArrowRight} alt="right" />
+              <img src={SliderArrow} alt="right" />
             </div>
           </div>
         </div>

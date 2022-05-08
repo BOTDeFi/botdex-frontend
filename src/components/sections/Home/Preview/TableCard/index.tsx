@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { Bot, Calc, Lock } from '@/assets/img/sections';
+import { Bot, CalcWhite, Lock } from '@/assets/img/sections';
 import { Button } from '@/components/atoms';
 import { useMst } from '@/store';
 import { handleScrollTop } from '@/utils/scrollTop';
@@ -62,7 +62,7 @@ const TableCard: FC<ITableCard> = ({ token0, token1, apy, content, className, id
         <div className="table-card_apy-title">
           <span>{content ? 'APR' : 'APY'}</span>
           {!content && (
-            <Button colorScheme="icon" icon={Calc} onClick={handleScrollTop} link="/farms/calc" />
+            <Button colorScheme="icon" icon={CalcWhite} onClick={handleScrollTop} link="/farms/calc" />
           )}
         </div>
         <div className="table-card_apy-value">
@@ -73,9 +73,9 @@ const TableCard: FC<ITableCard> = ({ token0, token1, apy, content, className, id
       <Button
         link={content ? '/staking' : '/farms'}
         onClick={handleOpenStakingModal}
-        colorScheme="purple-light"
+        colorScheme="pink"
         size="sm"
-        className="table-card_btn"
+        className="table-card_btn btn-hover-down"
       >
         {content ? 'Start Staking' : 'Start Farm'}
       </Button>

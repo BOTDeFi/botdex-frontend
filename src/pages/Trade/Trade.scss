@@ -6,10 +6,18 @@
   width: 100%;
   min-height: 100vh;
 
-  background: linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px
-      no-repeat,
-    url(../../assets/img/sections/home/features-bg-1.png) center/100% auto no-repeat,
-    url(../../assets/img/sections/home/partners-bg.png) bottom/contain no-repeat, #110847 center;
+  @include b(tablet) {
+    padding: 0 60px;
+  }
+
+  @include b(mobile) {
+    padding: 0;
+  }
+
+  background: linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
+  url(../../assets/img/sections/home/features-bg-1.webp) center/100% auto no-repeat,
+  url(../../assets/img/sections/home/partners-bg.webp) bottom/contain no-repeat,
+  #110847 center;
 }
 
 .trade {
@@ -26,12 +34,33 @@
     padding: 0 10px;
 
     width: 100%;
+
+    @media (min-width: 1921px) {
+      max-width: 1400px;
+    }
+
+    @media (min-width: 2000px) {
+      max-width: 1500px;
+    }
+
+    @media (min-width: 2100px) {
+      max-width: 1600px;
+    }
+
+    @include b(mobile) {
+      padding: 0 22px;
+    }
   }
 
   @include flexbox(center);
 
   &__content {
     width: 420px;
+
+    @media (min-width: 2100px) {
+      width: 610px;
+    }
+
     @include b(tablet) {
       width: 100%;
     }
@@ -42,6 +71,20 @@
 
     max-width: 1100px;
     @include flex(row, flex-start, center, nowrap);
+
+
+    @media (min-width: 1921px) {
+      max-width: 1400px;
+    }
+
+    @media (min-width: 2000px) {
+      max-width: 1500px;
+    }
+
+    @media (min-width: 2100px) {
+      max-width: 1600px;
+    }
+
     @include b(tablet) {
       @include flex(column, center, center, nowrap);
     }
@@ -52,6 +95,11 @@
 
     width: 670px;
     height: fit-content;
+
+    @media (min-width: 2100px) {
+      width: 970px;
+    }
+
     @include b(tablet) {
       margin-top: 10px;
       margin-left: 0;
