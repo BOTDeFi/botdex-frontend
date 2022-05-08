@@ -162,8 +162,9 @@
       @include flex(column, center, space-between);
 
       @media (min-width: 1921px) {
+        flex: 0 0 auto;
         width: 770px;
-        height: 492px;
+        height: 490px;
       }
 
       @include b(preTablet) {
@@ -191,6 +192,10 @@
       .graph-wrapper {
         width: 430px;
 
+        @media (min-width: 1921px) {
+          width: 660px;
+        }
+
         @include b(tablet) {
           width: 100%;
 
@@ -204,6 +209,11 @@
           width: 430px;
           height: 125px;
           min-height: 100px;
+
+          @media (min-width: 1921px) {
+            width: 660px;
+            height: 175px;
+          }
 
           @include b(tablet) {
             width: 300px;
