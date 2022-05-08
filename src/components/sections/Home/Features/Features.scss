@@ -16,6 +16,10 @@
     @include m-left(70px);
     @include flex(row, center, flex-start, nowrap);
 
+    @include b(tablet) {
+      min-height: inherit;
+    }
+
     @include b(mobile) {
       padding: 50px 22px 150px;
     }

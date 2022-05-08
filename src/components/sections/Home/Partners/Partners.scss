@@ -255,12 +255,13 @@
           @include b(preTablet) {
             margin: 0 auto;
 
+            gap: 20px;
             width: 100%;
-            @include flex(row, center, center, wrap);
+            @include flex(row, center, flex-start, wrap);
           }
 
           @include b(mobile) {
-            padding: 0 5px;
+            padding: 0;
 
             display: grid;
             grid-template-columns: repeat(3, 1fr);
