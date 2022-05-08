@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useState } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
@@ -11,26 +11,33 @@ import { MetamaskErrModal, RoiModal } from './components/molecules';
 import { CookiesWarn } from './components/organisms';
 import BotBlock from './components/sections/Footer/BotBlock';
 import { useSmoothTopScroll } from './hooks/useSmoothTopScroll';
-import {
-  ComingSoonPage,
-  // CollectiblesPage,
-  // DaoListPage,
-  // DaoPage,
-  // DaoProposalPage,
-  FarmsPage,
-  HomePage,
-  // LotteryPage,
-  PoolsPage,
-  // TeamPage,
-  // TeamsPage,
-  TradePage,
-  BridgePage
-} from './pages';
+// import {
+//   ComingSoonPage,
+//   // CollectiblesPage,
+//   // DaoListPage,
+//   // DaoPage,
+//   // DaoProposalPage,
+//   FarmsPage,
+//   HomePage,
+//   // LotteryPage,
+//   PoolsPage,
+//   // TeamPage,
+//   // TeamsPage,
+//   TradePage,
+//   BridgePage
+// } from './pages';
+import HomePage from './pages/Home';
 import { useMst } from './store';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
 import { useFetchPriceBot } from './hooks/useFetchPriceBot';
+
+const ComingSoonPage: any = lazy((): any => import('./pages/ComingSoon'));
+const FarmsPage: any = lazy((): any => import('./pages/Farms'));
+const PoolsPage: any = lazy((): any => import('./pages/Pools'));
+const TradePage: any = lazy((): any => import('./pages/Trade'));
+const BridgePage: any = lazy((): any => import('./pages/Bridge'));
 
 const progressPoints = [
   {
@@ -96,46 +103,48 @@ const App: React.FC = observer(() => {
         {isLoadingApp && <ProgressLoader progress={progressLoading} />}
         <div className="bg" />
         <Header />
-        <Switch>
-          <Route exact path="/" render={() => <HomePage priceBotData={priceBotData} />} />
-          <Route
-            exact
-            path={[
-              '/trade',
-              '/trade/swap',
-              '/trade/liquidity',
-              '/trade/swap/settings',
-              '/trade/swap/history',
-              '/trade/liquidity/settings',
-              '/trade/liquidity/history',
-              '/trade/liquidity/find',
-              '/trade/liquidity/add',
-              '/trade/liquidity/add/:currencyIdA/:currencyIdB',
-              '/trade/liquidity/remove',
-              '/trade/liquidity/receive',
-            ]}
-            component={TradePage}
-          />
-          {/* <Route exact path={['/lottery/:id', '/lottery']} component={LotteryPage} /> */}
-          <Route exact path="/farms" component={FarmsPage} />
-          <Route exact path="/farms/calc" component={FarmsPage} />
-          <Route exact path="/staking" component={PoolsPage} />
-          <Route exact path="/coming-soon/:page" component={ComingSoonPage} />
-          <Route exact path="/trade/bridge" component={BridgePage}/>
-          {/* <Route exact path="/collectibles" component={CollectiblesPage} /> */}
-          {/* <Route exact path="/teams" component={TeamsPage} /> */}
-          {/* <Route exact path="/team/:id" component={TeamPage} /> */}
-          {/* <Route exact path="/dao" component={DaoListPage} /> */}
-          {/* <Route strict exact path="/dao/:id" component={DaoPage} /> */}
-          {/* <Route exact path="/dao/proposal/create" component={DaoProposalPage} /> */}
-        </Switch>
+        <Suspense fallback="">
+          <Switch>
+            <Route exact path="/" render={() => <HomePage priceBotData={priceBotData} />} />
+            <Route
+              exact
+              path={[
+                '/trade',
+                '/trade/swap',
+                '/trade/liquidity',
+                '/trade/swap/settings',
+                '/trade/swap/history',
+                '/trade/liquidity/settings',
+                '/trade/liquidity/history',
+                '/trade/liquidity/find',
+                '/trade/liquidity/add',
+                '/trade/liquidity/add/:currencyIdA/:currencyIdB',
+                '/trade/liquidity/remove',
+                '/trade/liquidity/receive',
+              ]}
+              component={TradePage}
+            />
+            {/* <Route exact path={['/lottery/:id', '/lottery']} component={LotteryPage} /> */}
+            <Route exact path="/farms" component={FarmsPage} />
+            <Route exact path="/farms/calc" component={FarmsPage} />
+            <Route exact path="/staking" component={PoolsPage} />
+            <Route exact path="/coming-soon/:page" component={ComingSoonPage} />
+            <Route exact path="/trade/bridge" component={BridgePage} />
+            {/* <Route exact path="/collectibles" component={CollectiblesPage} /> */}
+            {/* <Route exact path="/teams" component={TeamsPage} /> */}
+            {/* <Route exact path="/team/:id" component={TeamPage} /> */}
+            {/* <Route exact path="/dao" component={DaoListPage} /> */}
+            {/* <Route strict exact path="/dao/:id" component={DaoPage} /> */}
+            {/* <Route exact path="/dao/proposal/create" component={DaoProposalPage} /> */}
+          </Switch>
+        </Suspense>
         <MetamaskErrModal />
         <RoiModal />
         {!isCookiesAccepted && <CookiesWarn onAccept={handleAcceptCookies} />}
-        <BotBlock priceBotData={priceBotData}  />
+        <BotBlock priceBotData={priceBotData} />
         <ToastContainer position="top-right" theme="dark" />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 });

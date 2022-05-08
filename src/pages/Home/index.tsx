@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 
 import { Features, InfoTables, Partners, Preview } from '@/components/sections/Home';
 
@@ -6,12 +6,26 @@ import './Home.scss';
 import { PriceBotData } from '@/hooks/useFetchPriceBot';
 
 const Home: VFC<{ priceBotData: PriceBotData | null }> = ({ priceBotData }) => {
+
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    const loadContent = setTimeout(() => {
+      setIsReady(true);
+    }, 1000);
+    return () => clearTimeout(loadContent);
+  }, []);
+
   return (
     <div className="home-wrapper">
       <Preview priceBotData={priceBotData} />
-      <InfoTables />
-      <Features />
-      <Partners />
+      {isReady ?
+        <>
+          <InfoTables />
+          <Features />
+          <Partners />
+        </>
+        : ''}
     </div>
   );
 };
