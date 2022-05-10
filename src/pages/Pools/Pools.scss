@@ -6,6 +6,21 @@ $desktop-menu-width: 240px;
 $default-horizontal-padding: 48px;
 $default-vertical-padding: 22px;
 
+.divCenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.breakFlex {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.subTitleDescription {
+    margin: 2rem 0 2rem 0;
+}
+
 .spinner {
   @include flex(row, center, center);
 }
