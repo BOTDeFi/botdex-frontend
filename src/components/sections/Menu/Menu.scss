@@ -139,7 +139,11 @@
       span {
         transition: 0.2s ease;
         opacity: 0;
+
         // font-size: 0;
+        @include b(tablet) {
+          opacity: 1;
+        }
       }
 
       &-box {
@@ -176,6 +180,9 @@
 
             font-size: 9px;
             line-height: 11px;
+
+            opacity: 1;
+            transform: scale(1);
           }
         }
 
