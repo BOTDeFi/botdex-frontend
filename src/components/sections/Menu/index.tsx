@@ -28,6 +28,7 @@ import { useMst } from '@/store';
 
 // import { addressWithDots } from '@/utils/formatters';
 import './Menu.scss';
+import { LogoHeaderMin } from '@/assets/img/sections';
 
 interface IMenuProps {
   onClick?: () => void;
@@ -130,6 +131,7 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     <>
       <div className="menu box-f-fd-c">
         <div className="menu__header">
+          <img src={LogoHeaderMin} alt="" />
           <Logo />
           {/* <LogoText /> */}
         </div>
@@ -163,7 +165,7 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
             </NavLink>
           ))}
           <div
-            onKeyDown={() => {}}
+            onKeyDown={() => { }}
             role="button"
             tabIndex={0}
             className="menu__nav-item"

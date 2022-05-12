@@ -14,16 +14,45 @@
   overflow-y: scroll;
 
   width: 100%;
-  max-width: 240px;
+  max-width: 64px;
   height: 100vh;
 
-  background: rgba(10, 0, 44, 0.9);
+  background: rgba(10, 0, 44, 0.7);
 
   transition: 0.4s ease;
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+
+  &:hover {
+    max-width: 240px;
+
+    .menu__header {
+      img {
+        // width: 0;
+        display: none;
+      }
+
+      svg {
+        display: block;
+        // width: auto;
+      }
+    }
+
+    .menu__nav-item {
+      &-box__soon {
+        transform: scale(1);
+        opacity: 1;
+        transition: 0s ease 0;
+      }
+
+      span {
+        opacity: 1;
+        // font-size: 16px;
+      }
+    }
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -33,10 +62,22 @@
     margin-bottom: 12px;
     margin-left: 20px;
 
-    :nth-child(2) {
-      margin-top: 9px;
-      margin-left: 1px;
+    img {
+      display: block;
+      width: 178px;
     }
+
+    svg {
+      display: none;
+      width: 178px;
+      flex: 0 0 auto;
+      // opacity: 0;
+    }
+
+    // :nth-child(2) {
+    //   margin-top: 9px;
+    //   margin-left: 1px;
+    // }
 
     &__logo {
       margin-right: 9px;
@@ -95,6 +136,12 @@
         margin-top: 12px;
       }
 
+      span {
+        transition: 0.2s ease;
+        opacity: 0;
+        // font-size: 0;
+      }
+
       &-box {
         position: relative;
 
@@ -119,6 +166,10 @@
 
           background: linear-gradient(132.83deg, #d715ff 0%, #1a26ff 75.95%);
           border-radius: 12px;
+
+          transition: .2s ease .2s;
+          opacity: 0;
+          transform: scale(0);
 
           @include b(tablet) {
             padding: 4px;

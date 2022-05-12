@@ -1,5 +1,7 @@
 // header
 export { default as Logo } from '../icons/logo.svg';
+export { default as LogoMd } from '../icons/logo_md.svg';
+export { default as LogoHeaderMin } from '../icons/logo_header-min.svg';
 export { default as Comet } from './home/comet.svg';
 export { default as Alien } from './home/alien.svg';
 export { default as Slide1 } from './home/slide1.webp';
