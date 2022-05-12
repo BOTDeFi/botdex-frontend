@@ -13,7 +13,7 @@
     padding-top: 50px;
 
     width: 100%;
-    @include m-left(70px);
+    // @include m-left(70px);
     @include flex(row, center, flex-start, nowrap);
 
     @include b(tablet) {

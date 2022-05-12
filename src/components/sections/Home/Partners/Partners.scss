@@ -48,7 +48,7 @@
       margin-bottom: 205px;
 
       max-width: 1100px;
-      @include m-left(70px);
+      // @include m-left(70px);
       @include flex(row, flex-start, space-between, nowrap);
       gap: 65px;
 
@@ -225,7 +225,7 @@
       }
 
       &_content {
-        @include m-left(70px);
+        // @include m-left(70px);
         @include flex(column, flex-start, center);
 
         @media (min-width: 1921px) {

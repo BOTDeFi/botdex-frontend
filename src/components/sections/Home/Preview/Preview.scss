@@ -236,7 +236,7 @@
       }
     }
 
-    @include m-left(70px);
+    // @include m-left(70px);
     @include flex(row, center, space-between, nowrap);
 
     @media (min-width: 1921px) {
@@ -284,7 +284,7 @@
       max-width: 1100px;
       height: auto;
       padding: 0 0 26px;
-      @include m-left(70px);
+      // @include m-left(70px);
       @include flex(row, center, flex-start, nowrap);
 
       @media (min-width: 1921px) {
@@ -331,6 +331,10 @@
       .swiper-button-next {
         top: auto;
         bottom: 2px;
+
+        @media (min-width:1921px) {
+          right: 0;
+        }
       }
 
       .swiper_btn_left {
