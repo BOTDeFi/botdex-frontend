@@ -88,6 +88,12 @@
             text-align: left;
           }
         }
+
+        @media (max-width:450px) {
+          h2 {
+            text-align: center;
+          }
+        }
       }
 
       &_subtitle {
@@ -101,6 +107,10 @@
 
         @include b(mobile) {
           padding: 0;
+        }
+
+        @media (max-width:450px) {
+          text-align: center;
         }
       }
 
@@ -130,6 +140,10 @@
       }
 
       &_btn {
+        @media (max-width:450px) {
+          margin: 0 auto;
+        }
+
         span {
           font-weight: 400;
         }
