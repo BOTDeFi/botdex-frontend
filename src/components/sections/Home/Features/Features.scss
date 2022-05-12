@@ -9,6 +9,8 @@
     url(../../../../assets/img/sections/home/features-bg-2.webp) bottom/100% auto no-repeat,
     #110847 center;
 
+  display: flex;
+
   &_body {
     padding-top: 50px;
 
@@ -30,7 +32,7 @@
     }
 
     &_content {
-      margin: 0 auto;
+      margin: -300px auto 0;
 
       width: 100%;
       max-width: 1100px;
@@ -51,6 +53,7 @@
 
       @include b(preTablet) {
         max-width: 600px;
+        margin: 0 auto;
       }
 
       @include b(tablet) {

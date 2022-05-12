@@ -46,7 +46,7 @@
 
     &_row {
       margin-bottom: 205px;
-
+      width: 100%;
       max-width: 1100px;
       // @include m-left(70px);
       @include flex(row, flex-start, space-between, nowrap);
@@ -112,6 +112,10 @@
 
         @include b(mobile) {
           max-width: 300px;
+        }
+
+        &.swiper {
+          margin: 0;
         }
 
         .swiper-wrapper {
