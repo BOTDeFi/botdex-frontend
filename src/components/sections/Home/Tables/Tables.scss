@@ -7,6 +7,14 @@
   width: 100%;
   min-height: 100vh;
 
+  @media (min-width:1921px) {
+    padding-bottom: 550px;
+  }
+
+  @media (min-width:2200px) {
+    padding-bottom: 650px;
+  }
+
   @media (max-width:1300px) {
     padding-bottom: 300px;
   }

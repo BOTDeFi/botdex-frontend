@@ -14,6 +14,10 @@
     width: 100%;
   }
 
+  @media (min-width: 2200px) {
+    padding: 53px 28px 55px 175px;
+  }
+
   &_title {
     font-size: 16px;
     font-weight: 700;
@@ -25,8 +29,8 @@
     }
 
     @media (min-width: 2200px) {
-      font-size: 30px;
-      line-height: 36px;
+      font-size: 24px;
+      line-height: 30px;
     }
   }
 
@@ -37,8 +41,13 @@
     color: $c-text-gray;
 
     @media (min-width: 1921px) {
-      font-size: 24px;
-      line-height: 28px;
+      font-size: 16px;
+      line-height: 18px;
+    }
+
+    @media (min-width: 2200px) {
+      font-size: 20px;
+      line-height: 22px;
     }
   }
 }

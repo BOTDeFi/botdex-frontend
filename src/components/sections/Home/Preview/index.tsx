@@ -95,11 +95,13 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
             </div>
             <Button
               link="/trade/swap"
-              className="h-preview_top-left_btn"
+              className="h-preview_top-left_btn btn-hover-down"
               colorScheme="pink"
               size="smd"
             >
-              Trade Now
+              <span>
+                Trade Now
+              </span>
             </Button>
             <div className="h-preview_top-left_info">
               <ValueCard

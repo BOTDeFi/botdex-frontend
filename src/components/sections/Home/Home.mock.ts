@@ -70,9 +70,17 @@ import {
   P36,
   P37,
   P38,
+  P39,
+  P40,
+  P41,
+  P42,
+  P43,
   Slide1,
   Slide2,
   Slide3,
+  P23Backers,
+  P24Backers,
+  P25Backers,
 } from '@/assets/img/sections';
 
 export const slides = [{ img: Slide1 }, { img: Slide2 }, { img: Slide3 }, { img: Slide1 }];
@@ -226,6 +234,11 @@ export const partnersCardItems = [
   { img: P36 },
   { img: P37 },
   { img: P38 },
+  { img: P39 },
+  { img: P40 },
+  { img: P41 },
+  { img: P42 },
+  { img: P43 },
 ];
 
 export const backersItems = [
@@ -251,6 +264,9 @@ export const backersItems = [
   { img: P20Backers },
   { img: P21Backers },
   { img: P22Backers },
+  { img: P23Backers },
+  { img: P24Backers },
+  { img: P25Backers },
 ];
 
 export const partnersSwiperItems = [

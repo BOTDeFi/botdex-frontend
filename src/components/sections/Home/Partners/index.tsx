@@ -46,9 +46,24 @@ const Partners: FC = () => {
           <div className="partners_body_grid_content">
             <ShadowTitle type="h1">Bot planet Partners</ShadowTitle>
             <div className="partners_body_grid_content_cards">
-              {partnersCardItems.map(({ img }) => (
-                <PartnersCard key={img} img={img} />
-              ))}
+              {isUltraWide ? <Swiper
+                spaceBetween={10}
+                slidesPerView={6}
+                keyboard
+                nav
+                loop
+                className="partners_body_grid_content_cards_slider"
+              >
+                {partnersCardItems.map(({ img }, index) => (
+                  <SwiperSlide key={index}>
+                    <PartnersCard img={img} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+                : partnersCardItems.map(({ img }) => (
+                  <PartnersCard key={img} img={img} />
+                ))
+              }
             </div>
           </div>
         </div>
@@ -57,9 +72,26 @@ const Partners: FC = () => {
           <div className="partners_body_grid_content">
             <ShadowTitle type="h1">Backers</ShadowTitle>
             <div className="partners_body_grid_content_cards">
-              {backersItems.map(({ img }) => (
-                <PartnersCard key={img} img={img} />
-              ))}
+
+              {
+                isUltraWide ? <Swiper
+                  spaceBetween={10}
+                  slidesPerView={6}
+                  keyboard
+                  nav
+                  loop
+                  className="partners_body_grid_content_cards_slider"
+                >
+                  {backersItems.map(({ img }, index) => (
+                    <SwiperSlide key={index}>
+                      <PartnersCard img={img} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                  : backersItems.map(({ img }) => (
+                    <PartnersCard key={img} img={img} />
+                  ))
+              }
             </div>
           </div>
         </div>

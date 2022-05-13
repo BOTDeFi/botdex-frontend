@@ -52,6 +52,15 @@
         // font-size: 16px;
       }
     }
+
+    .menu__nav {
+      .show-more-wrapper {
+        a {
+          opacity: 1;
+          white-space: normal;
+        }
+      }
+    }
   }
 
   &::-webkit-scrollbar {
@@ -251,6 +260,10 @@
 
       a {
         margin-bottom: 21px;
+
+        opacity: 0;
+        transition: all .2s;
+        white-space: nowrap;
 
         &:last-of-type {
           margin-bottom: 0;

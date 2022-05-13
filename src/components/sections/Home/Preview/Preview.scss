@@ -77,6 +77,11 @@
             h2 {
               font-size: 37px !important;
               line-height: 40.2856px !important;
+
+              @media (min-width:2200px) {
+                font-size: 60px !important;
+                line-height: 66px !important;
+              }
             }
           }
         }
@@ -100,6 +105,11 @@
         margin: 20px 0 26px;
 
         width: 100%;
+
+        @media (min-width:2200px) {
+          font-size: 27px;
+          line-height: 30px;
+        }
 
         @include b(preTablet) {
           padding: 0 5px;
@@ -179,6 +189,7 @@
         flex: 0 0 auto;
         width: 770px;
         height: 490px;
+        @include flex(column, flex-start, space-between);
       }
 
       @include b(preTablet) {
@@ -208,6 +219,7 @@
 
         @media (min-width: 1921px) {
           width: 660px;
+          padding-left: 55px;
         }
 
         @include b(tablet) {
