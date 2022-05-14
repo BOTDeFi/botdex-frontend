@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { ReactComponent as Bsc } from '@/assets/img/icons/bsc.svg';
 import { Logo, TgWhite, TgBlue, TwWhite, TwBlue, DsWhite, DsBlue, InstWhite, InstBlue, GitWhite, GitBlue, MdWhite, MdBlue, InWhite, InBlue, BitWhite, BitBlue, FbWhite, FbBlue, RedWhite, RedBlue, YtWhite, YtBlue } from '@/assets/img/sections';
@@ -8,14 +8,14 @@ import { Logo, TgWhite, TgBlue, TwWhite, TwBlue, DsWhite, DsBlue, InstWhite, Ins
 import { links } from './mock';
 
 import s from './Footer.module.scss';
+import { Button, Input } from '@/components/atoms';
 
 const Footer: React.FC = () => {
-  // const [email, setEmail] = useState('');
-
-  // const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-  //   const { value } = event.target;
-  //   setEmail(value);
-  // };
+  const [email, setEmail] = useState('');
+  const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setEmail(value);
+  };
   return (
     <div className={s.footer_wrapper}>
       <div className={s.footer}>
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
           ))}
         </div>
         <div className={s.join_wrapper}>
-          {/* <div className={s.join_left}>
+          <div className={s.join_left}>
             <div className={s.title}>Sign up for Bot Planet newsletter</div>
             <div className={s.subtitle}>
               Join the BOT Planet community and be at the forefront of all updates!
@@ -56,11 +56,17 @@ const Footer: React.FC = () => {
                 className={s.input}
                 placeholder="Enter your Email"
               />
-              <Button colorScheme="blue" className={s.joinBtn}>
-                Join Us
+              <Button
+                colorScheme="blue"
+                className={`btn-hover-down ${s.joinBtn}`}
+                size="sm"
+              >
+                <span>
+                  Join Us
+                </span>
               </Button>
             </div>
-          </div> */}
+          </div>
           <div className={s.join_right}>
             <div className={s.title}>Join our community</div>
             <div className={s.subtitle}>We will keep you posted!</div>
@@ -85,7 +91,7 @@ const Footer: React.FC = () => {
                 <img src={GitWhite} alt="icon" />
                 <img src={GitBlue} alt="icon" />
               </a>
-              <a href="https://botplanet.medium.com/" target="_blank" rel="noreferrer">
+              <a href="https://botplanet.medium.com/" target="_blank" rel="noreferrer" className={s.smallerMobile}>
                 <img src={MdWhite} alt="icon" />
                 <img src={MdBlue} alt="icon" />
               </a>

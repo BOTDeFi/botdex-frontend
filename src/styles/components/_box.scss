@@ -110,7 +110,8 @@
 
   &-none {
     @include b(tablet) {
-      display: none;
+      // display: none;
+      display: none !important;
     }
   }
 }

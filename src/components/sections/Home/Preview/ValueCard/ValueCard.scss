@@ -26,7 +26,8 @@
 
   @media (max-width: 450px) {
     @include flex(row, center, flex-start, nowrap);
-    min-width: 97%;
+    min-width: auto;
+    max-width: 260px;
     height: 80px;
   }
 

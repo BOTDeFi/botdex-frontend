@@ -77,6 +77,11 @@
             h2 {
               font-size: 37px !important;
               line-height: 40.2856px !important;
+
+              @media (min-width:2200px) {
+                font-size: 60px !important;
+                line-height: 66px !important;
+              }
             }
           }
         }
@@ -88,6 +93,12 @@
             text-align: left;
           }
         }
+
+        @media (max-width:450px) {
+          h2 {
+            text-align: center;
+          }
+        }
       }
 
       &_subtitle {
@@ -95,12 +106,21 @@
 
         width: 100%;
 
+        @media (min-width:2200px) {
+          font-size: 27px;
+          line-height: 30px;
+        }
+
         @include b(preTablet) {
           padding: 0 5px;
         }
 
         @include b(mobile) {
           padding: 0;
+        }
+
+        @media (max-width:450px) {
+          text-align: center;
         }
       }
 
@@ -130,6 +150,10 @@
       }
 
       &_btn {
+        @media (max-width:450px) {
+          margin: 0 auto;
+        }
+
         span {
           font-weight: 400;
         }
@@ -165,6 +189,7 @@
         flex: 0 0 auto;
         width: 770px;
         height: 490px;
+        @include flex(column, flex-start, space-between);
       }
 
       @include b(preTablet) {
@@ -194,6 +219,7 @@
 
         @media (min-width: 1921px) {
           width: 660px;
+          padding-left: 55px;
         }
 
         @include b(tablet) {
@@ -222,7 +248,7 @@
       }
     }
 
-    @include m-left(70px);
+    // @include m-left(70px);
     @include flex(row, center, space-between, nowrap);
 
     @media (min-width: 1921px) {
@@ -270,7 +296,7 @@
       max-width: 1100px;
       height: auto;
       padding: 0 0 26px;
-      @include m-left(70px);
+      // @include m-left(70px);
       @include flex(row, center, flex-start, nowrap);
 
       @media (min-width: 1921px) {
@@ -317,6 +343,10 @@
       .swiper-button-next {
         top: auto;
         bottom: 2px;
+
+        @media (min-width:1921px) {
+          right: 0;
+        }
       }
 
       .swiper_btn_left {

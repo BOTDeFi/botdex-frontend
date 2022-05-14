@@ -13,7 +13,7 @@ body {
   height: max-content;
   min-height: 100vh;
 
-  font-family: 'Gilroy', sans-serif;
+  font-family: 'Gilroy', sans-serif !important;
   font-weight: 400;
 
   color: $text-main-color;

@@ -2,18 +2,35 @@
 
 .preview-tables {
   padding-top: 50px;
+  padding-bottom: 450px;
 
   width: 100%;
   min-height: 100vh;
 
+  @media (min-width:1921px) {
+    padding-bottom: 550px;
+  }
+
+  @media (min-width:2200px) {
+    padding-bottom: 650px;
+  }
+
+  @media (max-width:1300px) {
+    padding-bottom: 300px;
+  }
+
   @include b(tablet) {
-    padding: 50px 0 130px;
+    padding: 50px 0 250px;
 
     min-height: auto;
   }
 
   @include b(mobile) {
-    padding: 50px 22px 130px;
+    padding: 50px 22px 200px;
+  }
+
+  @media (max-width:475px) {
+    padding: 50px 22px 150px;
   }
 
   background: linear-gradient(0deg, #110847 0%, rgba(17, 8, 71, 0) 89.36%) bottom/100% 148px no-repeat,
@@ -46,7 +63,7 @@
     &_content {
       gap: 30px;
 
-      @include m-left(70px);
+      // @include m-left(70px);
 
       @include flex(row, flex-start, space-between, nowrap);
 
