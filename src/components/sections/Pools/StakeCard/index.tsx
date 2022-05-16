@@ -97,6 +97,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
         <div className="stake-card__percent-wrapper">
           <div className="percent">{stake.APY}%</div>
           <span className="percent-token text-smd text-500">in BOT</span>
+          <div className="percent-token percent-year text-smd text-500">Per year</div>
         </div>
         <div className="text-smd text-500">Start staking</div>
         {user.address === '' && (

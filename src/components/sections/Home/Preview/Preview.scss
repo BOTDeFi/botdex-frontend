@@ -51,6 +51,10 @@
         padding: 0;
       }
 
+      @media (max-width: 450px) {
+        @include flex(column, center)
+      }
+
       &-title {
         max-width: 500px;
         @include flex(row, center, space-between, wrap);
@@ -150,10 +154,6 @@
       }
 
       &_btn {
-        @media (max-width:450px) {
-          margin: 0 auto;
-        }
-
         span {
           font-weight: 400;
         }
@@ -204,6 +204,7 @@
 
         background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
         box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.1);
+        @include flex(column, flex-start, space-between);
       }
 
       @include b(mobile) {

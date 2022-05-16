@@ -292,7 +292,7 @@
 
         @include b(tablet) {
           @include flex(row, center, center, nowrap);
-          gap: 2px;
+          gap: 10px;
         }
 
         @include b(mobile) {
@@ -308,7 +308,7 @@
           @include b(mobile) {
             // width: fit-content;
             width: 120px;
-            margin: 0 0 0 10px;
+            // margin: 0 0 0 10px;
             flex: 0 0 auto;
           }
         }
@@ -413,10 +413,8 @@
       margin-right: 24px;
     }
 
-    @media (min-width:1921px) {
-      font-size: 20px;
-      line-height: 24px;
-    }
+    font-size: 16px;
+    line-height: 1.3;
 
     @include b(mobile) {
       margin-top: 40px;
@@ -429,11 +427,6 @@
     margin-top: 20px;
 
     color: rgba(244, 244, 244, 0.5);
-
-    @media (min-width:1921px) {
-      font-size: 20px;
-      line-height: 24px;
-    }
 
     @include b(mobile) {
       font-size: 14px;

@@ -53,12 +53,17 @@
 
       @include b(preTablet) {
         max-width: 600px;
-        margin: 0 auto;
+        margin: -160px auto 0;
       }
 
       @include b(tablet) {
         max-width: 700px;
       }
+
+      @include b(mobile) {
+        margin: 0 auto;
+      }
+
 
       &_cards {
         margin-top: 20px;

@@ -13,6 +13,14 @@
     url(../../../../assets/img/sections/home/partners-bg.webp) bottom/contain no-repeat,
     #110847 center;
 
+  @include b(preTablet) {
+    padding-bottom: 200px
+  }
+
+  @include b(tablet) {
+    padding-bottom: 150px
+  }
+
   @include b(mobile) {
     padding-left: 22px;
     padding-right: 22px;
@@ -45,11 +53,9 @@
     }
 
     &_row {
-      // margin-bottom: 205px;
       margin: 0;
       width: 100%;
       max-width: 1100px;
-      // @include m-left(70px);
       @include flex(row, flex-start, space-between, nowrap);
       gap: 65px;
 
@@ -160,12 +166,7 @@
         }
 
         .swiper_btn_left {
-          // position: absolute;
-          // top: 130px;
 
-          // @include b(preTablet) {
-          //   left: 0;
-          // }
           position: absolute;
           top: 36px;
           left: -10px;
@@ -188,11 +189,6 @@
         }
 
         .swiper_btn_right {
-          // position: absolute;
-          // top: 130px;
-          // right: 0;
-
-          // width: fit-content;
           position: absolute;
           top: -32px;
           right: 0;
@@ -230,7 +226,6 @@
       }
 
       &_content {
-        // @include m-left(70px);
         @include flex(column, flex-start, center);
 
         @media (min-width: 1921px) {
@@ -250,9 +245,8 @@
         &_cards {
           margin: 0 auto;
 
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 10px;
+          display: block;
+          width: 100%;
 
           @media (min-width: 2100px) {
             display: block;
@@ -265,35 +259,41 @@
           @include b(preTablet) {
             margin: 0 auto;
 
-            gap: 20px;
             width: 100%;
-            @include flex(row, center, flex-start, wrap);
           }
 
           @include b(mobile) {
             padding: 0;
-
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
           }
 
           &_slider {
             height: 130px;
             width: 100%;
 
-            // min-width: 100%;
-            // max-width: 100%;
+            .partners-card {
+              width: auto;
+              height: 100%;
+            }
+
+            .swiper-slide {
+              height: auto;
+              min-height: 100%;
+            }
+
             @media (min-width:2100px) {
               .partners-card {
                 width: auto;
-                height: auto;
-                min-height: 100%;
+                height: 100%;
               }
 
               .swiper-slide {
                 height: auto;
                 min-height: 100%;
               }
+            }
+
+            @media (max-width:1920px) {
+              height: 90px;
             }
 
             .swiper-wrapper {

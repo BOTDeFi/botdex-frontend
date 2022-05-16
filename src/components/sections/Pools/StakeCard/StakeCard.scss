@@ -14,11 +14,17 @@ $bg-m12: linear-gradient(180deg, #7649fe 0%, #3d2094 100%);
   width: 260px;
 
   border-radius: 20px;
+
+  .percent-year {
+    margin: 10px 0 0;
+  }
+
   @include b(tablet) {
     justify-content: space-between;
 
     width: calc(100% / 2 - 20px);
   }
+
   @include b(mobile) {
     padding-bottom: 30px;
 
@@ -27,9 +33,11 @@ $bg-m12: linear-gradient(180deg, #7649fe 0%, #3d2094 100%);
 
   &:nth-of-type(1) {
     margin-top: 60px;
+
     @include b(tablet) {
       margin-top: 0;
     }
+
     background: $bg-m1;
 
     .stake-card__percent-wrapper {
@@ -50,9 +58,11 @@ $bg-m12: linear-gradient(180deg, #7649fe 0%, #3d2094 100%);
 
   &:nth-of-type(2) {
     margin-top: 40px;
+
     @include b(tablet) {
       margin-top: 0;
     }
+
     background: $bg-m3;
 
     .stake-card__percent-wrapper {
@@ -73,9 +83,11 @@ $bg-m12: linear-gradient(180deg, #7649fe 0%, #3d2094 100%);
 
   &:nth-of-type(3n) {
     margin-top: 20px;
+
     @include b(tablet) {
       margin-top: 0;
     }
+
     background: $bg-m6;
 
     .stake-card__percent-wrapper {
@@ -130,6 +142,7 @@ $bg-m12: linear-gradient(180deg, #7649fe 0%, #3d2094 100%);
 
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
     @include b(mobile) {
       padding: 20px 0 20px !important;
     }
