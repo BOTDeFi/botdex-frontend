@@ -2,10 +2,12 @@
 
 .partners {
   padding-top: 50px;
-  padding-bottom: 350px;
+  // padding-bottom: 350px;
+  padding-bottom: 150px;
 
   width: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
+  min-height: auto;
 
   background: url(../../../../assets/img/sections/home/moon.png) 450px 630px no-repeat,
     linear-gradient(180deg, #060338 -6.71%, rgba(6, 3, 56, 0) 80.09%) top/100% 148px no-repeat,
@@ -14,11 +16,13 @@
     #110847 center;
 
   @include b(preTablet) {
-    padding-bottom: 200px
+    // padding-bottom: 200px
+    padding-top: 0;
+    padding-bottom: 50px;
   }
 
   @include b(tablet) {
-    padding-bottom: 150px
+    // padding-bottom: 150px;
   }
 
   @include b(mobile) {
