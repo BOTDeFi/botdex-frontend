@@ -145,19 +145,19 @@ export const slides = [{ img: Slide1 }, { img: Slide2 }, { img: Slide3 }, { img:
 
 export const stakingItems = [
   {
-    content: 'Lock for a 10 min',
-    apy: '5',
+    content: 'Lock for a 1 month',
+    apy: '70',
   },
   {
-    content: 'Lock for 30 min',
-    apy: '20',
+    content: 'Lock for a 3 month',
+    apy: '75',
   },
   {
-    content: 'Lock for a 1 hours',
-    apy: '50',
+    content: 'Lock for a 6 month',
+    apy: '90',
   },
   {
-    content: 'Lock for a 2 hours',
+    content: 'Lock for a year',
     apy: '120',
   },
 ];

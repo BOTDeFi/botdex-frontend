@@ -13,7 +13,6 @@ import './TradeBox.scss';
 
 interface ITradeBox {
   title: string;
-  descr?: string;
   subtitle?: string;
   settingsLink?: string;
   recentTxLink?: string;
@@ -23,10 +22,9 @@ interface ITradeBox {
 }
 
 const TradeBox: React.FC<ITradeBox> = observer(
-  ({ title, descr, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, info }) => {
+  ({ title, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, info }) => {
     return (
       <div className={cn('trade-box', className)}>
-        {descr ? <div className='trade-box__descr'>Cross-chain swaps between any arbitrary assets in one transaction</div> : ''}
         <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">
           <div className="">
             {titleBackLink ? (

@@ -92,6 +92,12 @@ $bg-blue: #0a42ea;
           border: 1px solid #402b99;
         }
 
+        >span {
+          &:first-child {
+            box-shadow: 0 5px 0 #223687;
+          }
+        }
+
         &:hover {
           >span {
             &:first-child {

@@ -13,6 +13,7 @@ import './Partners.scss';
 
 const Partners: FC = () => {
   const isMomile = useMedia({ minWidth: '769px' });
+  const isPreTablet = useMedia({ minWidth: '1414px' });
   const isUltraWide = useMedia({ minWidth: '2100px' });
 
   return (
@@ -44,15 +45,20 @@ const Partners: FC = () => {
 
         <div className="partners_body_grid mt-first-grid">
           <div className="partners_body_grid_content">
-            <ShadowTitle type="h1">Bot planet Partners</ShadowTitle>
+            <ShadowTitle type="h1">Partners</ShadowTitle>
             <div className="partners_body_grid_content_cards">
-              {isUltraWide ? <Swiper
+              <Swiper
                 spaceBetween={10}
-                slidesPerView={6}
+                slidesPerView={isPreTablet ? 6 : 3}
                 keyboard
                 nav
                 loop
                 className="partners_body_grid_content_cards_slider"
+                autoplay={{
+                  delay: 1500,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
               >
                 {partnersCardItems.map(({ img }, index) => (
                   <SwiperSlide key={index}>
@@ -60,10 +66,6 @@ const Partners: FC = () => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-                : partnersCardItems.map(({ img }) => (
-                  <PartnersCard key={img} img={img} />
-                ))
-              }
             </div>
           </div>
         </div>
@@ -72,26 +74,25 @@ const Partners: FC = () => {
           <div className="partners_body_grid_content">
             <ShadowTitle type="h1">Backers</ShadowTitle>
             <div className="partners_body_grid_content_cards">
-
-              {
-                isUltraWide ? <Swiper
-                  spaceBetween={10}
-                  slidesPerView={6}
-                  keyboard
-                  nav
-                  loop
-                  className="partners_body_grid_content_cards_slider"
-                >
-                  {backersItems.map(({ img }, index) => (
-                    <SwiperSlide key={index}>
-                      <PartnersCard img={img} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-                  : backersItems.map(({ img }) => (
-                    <PartnersCard key={img} img={img} />
-                  ))
-              }
+              <Swiper
+                spaceBetween={10}
+                slidesPerView={isPreTablet ? 6 : 3}
+                keyboard
+                nav
+                loop
+                className="partners_body_grid_content_cards_slider"
+                autoplay={{
+                  delay: 1500,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
+              >
+                {backersItems.map(({ img }, index) => (
+                  <SwiperSlide key={index}>
+                    <PartnersCard img={img} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           </div>
         </div>

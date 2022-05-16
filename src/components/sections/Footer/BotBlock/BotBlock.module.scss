@@ -53,7 +53,7 @@
     font-weight: 400;
     line-height: 26px;
     white-space: nowrap;
-    margin: 0 0 0 10px;
+    margin: 0 0 -10px 10px;
 
     cursor: pointer;
 
@@ -73,7 +73,7 @@
     }
 
     &HoverDown {
-      padding: 0;
+      padding: 0 0 10px;
       background: transparent;
 
       &:hover {

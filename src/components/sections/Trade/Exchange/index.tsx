@@ -231,7 +231,6 @@ const Exchange: React.FC<IExchange> = observer(
     return (
       <>
         <TradeBox
-          descr="Cross-chain swaps between any arbitrary assets in one transaction"
           title="Exchange"
           subtitle="Trade tokens in an instant"
           settingsLink="/trade/swap/settings"

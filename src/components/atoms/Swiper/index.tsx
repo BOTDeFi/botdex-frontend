@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { FC, ReactNode } from 'react';
 import cn from 'classnames';
-import SwiperCore, { Keyboard, Mousewheel, Navigation, SwiperOptions } from 'swiper';
+import SwiperCore, { Autoplay, Keyboard, Mousewheel, Navigation, SwiperOptions } from 'swiper';
 import { Swiper as SwiperSlider } from 'swiper/react/swiper-react';
 
 import { SliderArrow } from '@/assets/img/sections';
@@ -18,7 +18,7 @@ interface ISwiperItems extends SwiperOptions {
 }
 
 const Swiper: FC<ISwiperItems> = ({ children, className, nav = false, ...props }) => {
-  SwiperCore.use([Navigation, Keyboard, Mousewheel]);
+  SwiperCore.use([Navigation, Keyboard, Mousewheel, Autoplay]);
 
   const navigation = {
     nextEl: '.swiper-button-next',

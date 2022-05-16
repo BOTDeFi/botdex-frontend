@@ -3,7 +3,8 @@
 .h-preview {
   padding-top: 153px;
   width: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
+  min-height: auto;
   @include flex(column, flex-start, center, nowrap);
 
   @include b(tablet) {
@@ -49,6 +50,10 @@
 
       @include b(mobile) {
         padding: 0;
+      }
+
+      @media (max-width: 450px) {
+        @include flex(column, center)
       }
 
       &-title {
@@ -150,10 +155,6 @@
       }
 
       &_btn {
-        @media (max-width:450px) {
-          margin: 0 auto;
-        }
-
         span {
           font-weight: 400;
         }
@@ -204,6 +205,7 @@
 
         background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
         box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.1);
+        @include flex(column, flex-start, space-between);
       }
 
       @include b(mobile) {

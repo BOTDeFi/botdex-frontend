@@ -42,7 +42,8 @@
   }
 
   &.inSwiper {
-    width: 290px;
+    // width: 290px;
+    width: auto;
     height: 220px;
 
     background: $bg-table;
