@@ -30,7 +30,7 @@ const Tvl: React.FC = () => {
       // window.console.debug('Blockchain data (TVL, burned, etc)', data);
       const roundedTVL: number = Math.round((data.tvl + Number.EPSILON) * 100) / 100;
       setValueTVL(numberWithCommas(roundedTVL));
-      const roundedBurned: number = Math.round((data.burned + Number.EPSILON) * 1000) / 1000;
+      const roundedBurned: number = Math.round((data.burned + Number.EPSILON));
       setValueBurned(numberWithCommas(roundedBurned));
       const millTotalSupply: number = data.totalSupply / 1000000000000000000 / 1000000;
       const roundedTotalSupply: number = Math.round((millTotalSupply + Number.EPSILON) * 1) / 1;
