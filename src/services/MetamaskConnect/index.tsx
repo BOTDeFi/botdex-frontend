@@ -60,8 +60,12 @@ class Connector extends React.Component<any, any> {
     });
 
     this.state.provider.accountChangedObs.subscribe({
-      next() {
-        self.disconnect();
+      next(newAddress: string) {
+        if(newAddress !== null && newAddress !== '' && newAddress.length > 0) {
+          rootStore.user.setAddress(newAddress);
+        } else {
+          self.disconnect();
+        }
       },
     });
   }

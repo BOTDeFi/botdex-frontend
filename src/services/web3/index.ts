@@ -10,6 +10,7 @@ import { clog } from '@/utils/logger';
 declare global {
   interface Window {
     ethereum: any;
+    web3: any;
   }
 }
 interface INetworks {
@@ -105,26 +106,35 @@ const networks: INetworks = {
 
 export default class MetamaskService {
   public wallet;
-
   public web3Provider;
-
   private readonly testnet: string;
-
   private readonly isProduction: boolean;
-
   public walletAddress = '';
-
   public chainChangedObs: any;
-
   public accountChangedObs: any;
-
   public usedNetwork: string;
-
   public usedChain: string[];
-
   public contracts: any = {};
 
+  public self: MetamaskService;
+  public networkToUse: number;
+  public loading: boolean;
+  public errorMessage: string;
+  public accounts: any;
+  public account: string;
+  public hasWeb3Account: boolean;
+  public currentNetworkId: number;
+
   constructor({ testnet, isProduction = false }: IMetamaskService) {
+    this.networkToUse = 56;
+    this.self = this;
+    this.loading = false;
+    this.errorMessage = '';
+    this.accounts = [];
+    this.account = '';
+    this.hasWeb3Account = false;
+    this.currentNetworkId = 0;
+
     this.wallet = window.ethereum;
     this.web3Provider = new Web3(this.wallet);
     this.testnet = testnet;
@@ -139,14 +149,29 @@ export default class MetamaskService {
       }
 
       this.wallet.on('chainChanged', () => {
-        const currentChain: string = this.wallet.chainId;
+        const currentChain: string = this.currentNetworkId.toString(); // this.wallet.chainId;
         if (!this.usedChain.includes(currentChain)) {
-          subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
+          this.changeNetwork(subscriber)
+            .then((isChanged) => {
+              if(isChanged) {
+                console.debug("Is network changed: ", isChanged);
+                if(window.web3.eth) {
+                  window.web3.eth.net.getId()
+                    .then((network: any) => {
+                      let netID = network.toString()
+                      console.debug("Is network id (netID): ", netID);
+                    });
+                }
+              }    
+            });
+
+          // subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
+          this.changeNetworkIfWeNeedIt(subscriber);
         } else {
           rootStore.modals.metamaskErr.close();
         }
         if (this.usedChain.includes(currentChain)) {
-          this.connect();
+          this.connect(subscriber);
         }
       });
     });
@@ -156,8 +181,22 @@ export default class MetamaskService {
         return;
       }
 
-      this.wallet.on('accountsChanged', () => {
-        subscriber.next();
+      this.wallet.on('accountsChanged', (accounts: any) => {
+        // Time to reload your interface with accounts[0]!
+        if(accounts && accounts.length > 0) {
+          this.accounts = accounts;
+          this.account = accounts[0];
+          [this.walletAddress] = [accounts[0]];
+          this.hasWeb3Account = true;
+        } else {
+          this.accounts = null;
+          this.account = '';
+          this.walletAddress = '';
+          this.hasWeb3Account = false;
+        }
+          
+        console.debug("Wallet on Account changed. accounts: ", this.account)
+        subscriber.next(this.account);
       });
     });
   }
@@ -196,7 +235,325 @@ export default class MetamaskService {
     return false;
   }
 
-  public connect(): Promise<any> {
+  async loadWeb3(subscriber: any) {
+    console.debug("loadWeb3");
+    if (window.ethereum) {
+        console.debug("window.ethereum");
+        window.web3 = new Web3(window.ethereum);
+        try {
+            console.debug("try eth_requestAccounts");
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+                .catch((error: any) => {
+                    if (error.code === 4001) {
+                        // EIP-1193 userRejectedRequest error
+                        console.log('Please connect to Web3 Wallet.');
+                    } else {
+                        console.error(error);
+                    }
+                });
+            console.debug("accounts: " + accounts);
+            if(accounts && accounts.length > 0) {
+              this.accounts = accounts;
+              this.account = accounts[0];
+              [this.walletAddress] = [accounts[0]];
+              this.hasWeb3Account = true;
+            }
+        } catch (err: any) {
+            this.showError(subscriber, err, "loadWeb3");
+        }
+    }
+    else if (window.web3) {
+        console.debug("window.web3");
+        window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+        this.showWarning(subscriber, 'Not detected any wallet. You will try any wallet with web3 support like Metamask!');
+    }
+    return window.web3;
+  }
+
+  async changeNetwork(subscriber: any) {
+    console.debug("changeNetwork");
+    let isChanged = false;
+    // Check if MetaMask is installed
+    // MetaMask injects the global API into window.ethereum
+    let networkToUseHex = '';
+    if (window.ethereum) {
+        try {
+            // check if the chain to connect to is installed
+            networkToUseHex = "0x" + this.networkToUse.toString(16);
+
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: networkToUseHex }], // '0x61' chainId must be in hexadecimal numbers
+            });
+
+            isChanged = true;
+        } catch (error: any) {
+            // This error code indicates that the chain has not been added to MetaMask
+            // if it is not, then install it into the user MetaMask
+            if (error.code === 4902) {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [
+                            {
+                                chainId: networkToUseHex, // '0x61'
+                                rpcUrl: 'https://bsc-dataseed.binance.org/', // 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+                            },
+                        ],
+                    });
+                    isChanged = true;
+                } catch (addError) {
+                    console.error(addError);
+                }
+            }
+            console.error(error);
+        }
+    } else {
+        // if no window.ethereum then MetaMask is not installed
+        this.showError(subscriber, 'Web3 wallet is not installed. Please consider installing it: https://metamask.io/download.html', "changeNetwork");
+    } 
+    return isChanged;
+  }
+
+  changeNetworkIfWeNeedIt = async(subscriber: any) => {
+    // Please connect your Web3 to Polygon PoS Chain mumbai testnet network
+    let isAlerted = false;
+    try {
+        let isGoodConnectedNetwork = false;
+
+        // Check connection
+        let web3 = window.web3;
+
+        if (typeof web3.eth !== 'undefined') {
+            let network = await web3.eth.net.getId();
+            let netID = network.toString();
+
+            console.debug("Network : " + netID);
+            switch (netID) {
+                case "56":
+                    network = "bsc-mainnet";
+                    if(this.networkToUse == 56) {
+                        isGoodConnectedNetwork = true;
+                    } else {
+                        isGoodConnectedNetwork = false;    
+                    }
+                    break;
+                default:
+                    network = 'unknown'
+                    console.error('This is an unknown network.');
+                    isGoodConnectedNetwork = false;
+                    console.debug("netID: " + netID);
+            }
+
+            // If is not correct network, try to change it
+            if (!isGoodConnectedNetwork) {
+              let isChanged = await this.changeNetwork(subscriber);
+              console.debug("Is network changed: ", isChanged);
+              isGoodConnectedNetwork = isChanged;
+              network = await web3.eth.net.getId();
+              netID = network.toString();
+            }
+            this.currentNetworkId = network;
+
+            if (!isGoodConnectedNetwork) {
+              console.log("Please connect your 1...subscriber=", subscriber)
+              this.showWarning(subscriber, "Please connect your Wallet Web3 to Binance Smart Chain network.");
+              return { isOk: false, isAlerted: true };
+            } else {
+              if (netID !== "56") {
+                console.log("Please connect your 2...subscriber=", subscriber)
+                this.showWarning(subscriber, "Please connect your Web3 to Binance Smart Chain Mainnet network. Current id is:" + netID.toString());
+                return { isOk: false, isAlerted: true };
+              } else {
+                // Carga de datos de Blockchain
+                // ANTON: await this.loadBlockchainData(contractType_);
+
+                // Close error message if we have opened any
+                rootStore.modals.metamaskErr.close();
+              }
+            }
+        } else {
+            console.error("ERROR (connectWallet): web3.eth is not defined!");
+            return { isOk: false, isAlerted: true };
+        }
+    } catch (err: any) {
+        const code = err.code;
+        const message = err.message;
+        let detail = "";
+        if(err.data) {
+            detail = err.data.message;
+        }
+        let errMessage = "ERROR: code(" + code + "), message (" + message + "). Detail: " + detail;
+        this.showError(subscriber, errMessage, "connectWallet");
+        return { isOk: false, isAlerted: true };
+    } finally {
+        this.loading = false;
+    }
+    return { isOk: true, isAlerted: isAlerted };    
+  }
+
+  connectWallet = async (subscriber: any, message_: string) => {
+    console.log("connect wallet. subscriber = ", subscriber);
+    // Please connect your Web3 to Polygon PoS Chain mumbai testnet network
+    let isAlerted = false;
+    console.debug(message_);
+    try {
+        //let isGoodConnectedNetwork = false;
+
+        // Carga de Web3
+        await this.loadWeb3(subscriber);
+        await this.changeNetworkIfWeNeedIt(subscriber);
+        /*
+        // Check connection
+        let browserWindow: any = window;
+        let web3 = browserWindow.web3; // window.web3;
+
+        if (typeof web3.eth !== 'undefined') {
+            let network = await web3.eth.net.getId();
+            let netID = network.toString();
+
+            console.debug("Network : " + netID);
+            switch (netID) {
+                case "56":
+                    network = "bsc-mainnet";
+                    if(this.networkToUse == 56) {
+                        isGoodConnectedNetwork = true;
+                    } else {
+                        isGoodConnectedNetwork = false;    
+                    }
+                    break;
+                default:
+                    network = 'unknown'
+                    console.error('This is an unknown network.');
+                    isGoodConnectedNetwork = false;
+                    console.debug("netID: " + netID);
+            }
+
+            // If is not correct network, try to change it
+            if (!isGoodConnectedNetwork) {
+              let isChanged = await this.changeNetwork();
+              console.debug("Is network changed: ", isChanged);
+              isGoodConnectedNetwork = isChanged;
+              network = await web3.eth.net.getId();
+              netID = network.toString();
+            }
+            this.currentNetworkId = network;
+
+            if (!isGoodConnectedNetwork) {
+                this.showWarning("Please connect your Wallet Web3 to Binance Smart Chain network.");
+                return { isOk: false, isAlerted: true };
+            } else {
+                if (netID !== "56") {
+                    this.showWarning("Please connect your Web3 to Binance Smart Chain Mainnet network. Current id is:" + netID.toString());
+                    return { isOk: false, isAlerted: true };
+                } else {
+                    // Carga de datos de Blockchain
+                    // ANTON: await this.loadBlockchainData(contractType_);
+                }
+            }
+        } else {
+            console.error("ERROR (connectWallet): web3.eth is not defined!");
+            return { isOk: false, isAlerted: true };
+        }
+        */
+    } catch (err: any) {
+        const code = err.code;
+        const message = err.message;
+        let detail = "";
+        if(err.data) {
+            detail = err.data.message;
+        }
+        let errMessage = "ERROR: code(" + code + "), message (" + message + "). Detail: " + detail;
+        this.showError(subscriber, errMessage, "connectWallet");
+        return { isOk: false, isAlerted: true };
+    } finally {
+        this.loading = false;
+    }
+    return { isOk: true, isAlerted: isAlerted };
+  }
+
+  showInfo(subscriber: any, message: string) {
+    this.showMessage(subscriber, message, "INFORMATION");
+  }
+
+  showWarning(subscriber: any, message: string) {
+      this.showMessage(subscriber, message, "WARNING");
+  }
+
+  showError(subscriber: any, err_: string, method_: string, title_ = "ERROR") {
+    let msg = "";
+    if(method_.length > 0) {
+        msg = "ERROR (" + method_ + "): " + err_;
+    } else {
+        msg = err_;
+    }
+    this.showMessage(subscriber, msg, title_);
+    console.error(msg);
+    this.errorMessage = msg;
+  }
+
+  showMessage(subscriber: any, message: string, title: string) {
+    // Show new info div
+    const elemPopup = document.getElementById('popupInfo');
+    if(elemPopup) {
+      console.log('elemPopup in...');
+      // Set info
+      // Title
+      const popupTitleText = document.getElementById('popupTitleText');
+      if(popupTitleText) {
+        popupTitleText.innerHTML = title;
+      }
+      // Title shadow
+      const popupTitleShadow = document.getElementById('popupTitleShadow');
+      if(popupTitleShadow) {
+        popupTitleShadow.innerHTML = title;
+      }
+      // Description
+      const popupDescription = document.getElementById('popupDescription');
+      if(popupDescription) {
+        popupDescription.innerHTML = message;
+      }
+      // Image
+      const popupImg = document.getElementById('popupImg');
+      if(popupImg) {
+        const elImg = <HTMLImageElement>popupImg;
+        elImg.alt = title;
+      }
+
+      // Show div
+      elemPopup.style.position = 'absolute';
+      elemPopup.style.left = '-0.0185px';
+      elemPopup.style.top = '-0.0185px';
+      elemPopup.style.display = 'block';
+    } else if(subscriber) {
+      // Show design window
+      console.log('alert show by suscriber:', message);
+      subscriber.next(message);
+    } else if(rootStore && rootStore.modals && rootStore.modals.metamaskErr) {
+      console.log('alert show by rootStore', message);
+      rootStore.modals.metamaskErr.setErr(message);
+    } else {
+      console.log('alert show (last option):', message);      
+      // Show normal window
+      window.alert(message);
+    }
+  }
+
+  public async connect(subscriber: any): Promise<any> {
+    console.log("connect suscriber=", subscriber);
+    await this.connectWallet(subscriber, 'connect()');
+
+    return new Promise((resolve, reject) => {
+      resolve({
+        address: this.account,
+        network: this.currentNetworkId,
+      });
+    });
+  }
+
+  /*
+  public connect2(): Promise<any> {
     if (!this.wallet) {
       return Promise.reject(
         new Error(`Couldn't find Metamask extension, check if it's installed and enabled.`),
@@ -249,6 +606,7 @@ export default class MetamaskService {
       }
     });
   }
+  */
 
   createContract(contractName: string, tokenAddress: string, abi: Array<any>): void {
     if (!this.contracts[contractName]) {
