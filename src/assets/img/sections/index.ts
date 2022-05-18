@@ -62,7 +62,7 @@ export { default as ArrowRight } from './home/arrow-right.svg';
 export { default as BusinessTimes } from './home/business-times.svg';
 
 export { default as Inter } from './home/partners/international.svg';
-export { default as Investing } from './home/partners/investing.svg';
+export { default as Investing } from './home/partners/investing.png';
 export { default as CointQuora } from './home/partners/coinquora.svg';
 export { default as Marketwatch } from './home/partners/marketwatch.svg';
 export { default as Benzinga } from './home/partners/benzinga.svg';
