@@ -26,7 +26,7 @@ const Modal: React.FC<IModal> = ({
   width = 'fit-content',
   className,
   destroyOnClose = false,
-  closeIcon = false,
+  closeIcon = true,
   maskStyle,
   wrapClassName,
 }) => {
