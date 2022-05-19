@@ -4,11 +4,16 @@ import { SwitchClickEventHandler } from 'antd/lib/switch';
 import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
+import { ReactComponent as WalletImg } from '@/assets/img/icons/wallet.svg';
+import { ShadowTitle } from '@/components/atoms';
+import Button from '@/components/atoms/Button';
 import { ItemsController } from '@/components/organisms';
 import FarmsStakeUnstakeModal from '@/components/organisms/FarmsStakeUnstakeModal';
 import { FarmsPreview, FarmsTable } from '@/components/sections/Farms';
 import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
+import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { getAddress } from '@/services/web3/contractHelpers';
+import { useMst } from '@/store';
 import { useFarms, usePollFarmsData } from '@/store/farms/hooks';
 import { Farm, FarmWithStakedValue } from '@/types';
 import { toBigNumber } from '@/utils';
@@ -53,6 +58,8 @@ const FarmsContent: React.FC<IFarmsContent> = ({ content }) => {
 
 const Farms: React.FC = observer(() => {
   // const { farms: farmsStore } = useMst();
+  const { user } = useMst();
+  const { connect } = useWalletConnectorContext();
   const { tokenUsdPrice: refineryPrice } = useRefineryUsdPrice();
   const { farms: rawFarms } = useFarms();
   const [, ...farmsWithoutFirstLpFarm] = rawFarms;
@@ -84,6 +91,7 @@ const Farms: React.FC = observer(() => {
     if (!isStaked) return true; // show all
     return !Number.isNaN(value.toNumber()) && value.gt(0);
   };
+
   const filterBySearch = (whereToFind: string[], toBeFound: string) => {
     return whereToFind.some((value) => {
       return value.toUpperCase().startsWith(toBeFound.toUpperCase());
@@ -98,6 +106,7 @@ const Farms: React.FC = observer(() => {
       },
     ];
   };
+
   const getFilterByStakedOnly = useCallback((isStaked: boolean): [IFilterBy, IFilterFunc] => {
     return [
       FilterBy.stakedOnly,
@@ -214,36 +223,70 @@ const Farms: React.FC = observer(() => {
   };
 
   return (
-    <main className="farms">
-      <div className="row">
-        <FarmsPreview />
-        <ItemsController
-          radioGroupOptions={[
-            {
-              text: 'Live',
-              value: FarmsType.live,
-            },
-            {
-              text: 'Finished',
-              value: FarmsType.finished,
-            },
-            // {
-            //   text: 'Discontinued',
-            //   value: FarmsType.discontinued,
-            // },
-          ]}
-          radioGroupClassName="farms__i-contr"
-          searchPlaceholder="Search Farms"
-          searchDelay={300}
-          onSearchChange={handleSearch}
-          onStakedSwitchChange={handleStakedSwitchChange}
-          onRadioGroupChange={handleRadioGroupChange}
-          onSortSelectChange={handleSortSelectChange}
-        />
-        <FarmsContent content={filteredFarms} />
-      </div>
-      <FarmsStakeUnstakeModal />
-    </main>
+    <>
+      {user.address ? (
+        <main className="farms">
+          <div className="row">
+            <FarmsPreview />
+            <ItemsController
+              radioGroupOptions={[
+                {
+                  text: 'Live',
+                  value: FarmsType.live,
+                },
+                {
+                  text: 'Finished',
+                  value: FarmsType.finished,
+                },
+                // {
+                //   text: 'Discontinued',
+                //   value: FarmsType.discontinued,
+                // },
+              ]}
+              radioGroupClassName="farms__i-contr"
+              searchPlaceholder="Search Farms"
+              searchDelay={300}
+              onSearchChange={handleSearch}
+              onStakedSwitchChange={handleStakedSwitchChange}
+              onRadioGroupChange={handleRadioGroupChange}
+              onSortSelectChange={handleSortSelectChange}
+            />
+            <FarmsContent content={filteredFarms} />
+          </div>
+          <FarmsStakeUnstakeModal />
+        </main>
+      ) : (
+        <>
+          <div className="spinner">
+            <main className="farms">
+              <div className="row">
+                <FarmsPreview />
+              </div>
+              <div className="row title-farms-no-wallet">
+                <ShadowTitle type="h2">Wallet not connected</ShadowTitle>
+              </div>
+              <div className="row description-farms-no-wallet">
+                <div>
+                  For staking, you need to connect a wallet compatible with web3 (for example
+                  MetaMask) used Binance Smart Chain (BSC) network
+                </div>
+              </div>
+              <div className="row btn-connect-farms-no-wallet">
+                <Button
+                  className="connect btn-hover-down"
+                  colorScheme="blue"
+                  size="sm"
+                  onClick={connect}
+                >
+                  <WalletImg />
+                  <span className="text-500">Connect Wallet</span>
+                </Button>
+              </div>
+            </main>
+          </div>
+        </>
+      )}
+    </>
   );
 });
 
