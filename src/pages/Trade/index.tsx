@@ -15,8 +15,6 @@ import './Trade.scss';
 
 const Trade: React.FC = observer(() => {
   const { pairs } = useMst();
-  console.log(pairs)
-
   const [data, setData] = React.useState(pairs.getFormattedPoints());
   const [reversed, setReversed] = React.useState(false);
   const [currentStamp, setCurrentStamp] = React.useState<number>(0);

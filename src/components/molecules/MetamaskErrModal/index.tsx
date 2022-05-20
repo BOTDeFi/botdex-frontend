@@ -10,9 +10,9 @@ import './MetamaskErrModal.scss';
 
 const MetamaskErrModal: React.FC = observer(() => {
   const { modals } = useMst();
-  const handleClose = () => {
+  const handleClose = React.useCallback(() => {
     modals.metamaskErr.close();
-  }
+  }, [modals]);
   return (
     <Modal
       isVisible={!!modals.metamaskErr.errMsg}
