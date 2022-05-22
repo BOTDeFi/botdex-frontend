@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useCallback, useEffect, useState, VFC } from 'react';
+import React, { useCallback, useEffect, useState, VFC } from 'react';
 import { observer } from 'mobx-react-lite';
 import { SwiperSlide } from 'swiper/react/swiper-react';
 import useMedia from 'use-media';
@@ -7,12 +7,8 @@ import { v1 as uuid } from 'uuid';
 
 import { Button, ShadowTitle, Swiper } from '@/components/atoms';
 import { Graph } from '@/components/molecules';
-import { BOT_BNB_ADDRESS } from '@/config';
-import useGetOptions from '@/hooks/home/useGetOptions';
-import { useGetHoursPairs, useGetPair } from '@/services/api/refinery-finance-pairs';
-import { useMst } from '@/store';
 
-import { CurrencyInfo } from '../../Graph';
+import { CurrencyInfo, TimeSelector } from '../../Graph';
 import { slides } from '../Home.mock';
 
 import ValueCard from './ValueCard';
@@ -21,47 +17,234 @@ import './Preview.scss';
 import { IBlogType } from '@/types';
 import { getBlogs } from '@/utils/getBlogs';
 import { Comet, Alien } from '@/assets/img/sections';
+
+import { TTimestampSelector } from '@/components/sections/Graph/TimeSelector';
+import PriceBotDataInfo from '@/store/PriceBot/';
+import moment from 'moment';
 import { PriceBotData } from '@/hooks/useFetchPriceBot';
 
 const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBotData }) => {
-  const { pairs } = useMst();
   const isWide = useMedia({ minWidth: '1412px' });
   const isMobile = useMedia({ minWidth: '769px' });
   const isUltraWide = useMedia({ minWidth: '2100px' });
 
-  const [data, setData] = useState(pairs.getFormattedPoints());
-  const [reversed, setReversed] = useState(false);
-  const [currentStamp] = useState<number>(0);
-  const [currencyData, setCurrencyData] = useState<any>(null);
   const [blogs, setBlogs] = useState<IBlogType[]>([]);
+  const [currentStamp, setCurrentStamp] = React.useState<number>(0);
+  const [currencyData, setCurrencyData] = React.useState<any>(null);
 
-  const options = useGetOptions(currentStamp);
+  const options = React.useMemo(
+    () => ({
+      chart: {
+        width: '100%',
+      },
+      colors: ['rgba(255, 255, 255, 0.1)'], // color of the border
+      markers: {
+        size: [0],
+        colors: ['#F4F4F4'], // color of the marker
+        strokeWidth: 3,
+        hover: {
+          size: 4,
+          sizeOffset: 6,
+        },
+      },
+      legend: {
+        show: false,
+      },
+      fill: {
+        type: 'solid',
+        colors: ['#000000'],
+        opacity: 0.3,
+      },
+      tooltip: {
+        marker: {
+          show: false,
+        },
+        x: {
+          show: true,
+          formatter: function (value: any) {
+            let format = 'MMM DD hh:mm a';
+            switch (currentStamp) {
+              case 0: {
+                format = 'MMM DD hh:mm a';
+                break;
+              }
+              case 1: {
+                format = 'MMM DD hh:mm a';
+                break;
+              }
+              case 2: {
+                format = 'MMM DD';
+                break;
+              }
+              case 3: {
+                format = 'MMM DD';
+                break;
+              }
+              default: {
+                format = 'MMM DD hh:mm a';
+                break;
+              }
+            }
+            return ` ${moment(value * 1000).format(format)} `;
+          },
+        },
+        y: {
+          show: true,
+          formatter: function (value: any) {
+            return `${value.toFixed(5)} BUSD`;
+          },
+        },
+      },
+      xaxis: {
+        type: 'datetime',
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
 
-  const onGraphHovered = useCallback(
-    (events: any, chartContext: any, config: any) => {
-      if (pairs.currentPairData.points.length !== 0 && config.dataPointIndex !== -1) {
-        setCurrencyData(pairs.getFormattedCurrentPair(config.dataPointIndex, reversed));
-      }
-    },
-    [pairs, reversed],
+        tooltip: {
+          enabled: false,
+        },
+
+        labels: {
+          rotate: 0,
+          hideOverlappingLabels: true,
+          style: {
+            fontFamily: 'Poppins',
+            cssClass: 'xaxis-label',
+            colors: '#f4f4f4',
+          },
+          // eslint-disable-next-line func-names
+          formatter: function (value: any, timestamp: number) {
+            let format = 'HH:mm';
+            switch (currentStamp) {
+              case 0: {
+                format = 'mm';
+                break;
+              }
+              case 1: {
+                format = 'hh a';
+                break;
+              }
+              case 2: {
+                format = 'DD';
+                break;
+              }
+              case 3: {
+                format = 'MMM';
+                break;
+              }
+              default: {
+                format = 'HH:mm';
+                break;
+              }
+            }
+            return ` ${moment(timestamp * 1000).format(format)} `;
+          },
+        },
+
+      },
+      yaxis: {
+        show: false,
+      },
+      grid: {
+        show: false,
+        padding: {
+          right: -26,
+          top: -20,
+          left: 0,
+          bottom: 0,
+        },
+      },
+    }),
+    [currentStamp],
   );
 
-  const onReverseClick = useCallback(() => {
-    setReversed(!reversed);
-  }, [reversed]);
 
-  const handleGetPairData = useCallback(async () => {
-    const getPair = useGetPair();
-    const getPairData = useGetHoursPairs();
+  const [data, setData] = useState({})
+  const [isReversed, setIsReversed] = useState(false)
 
-    const response = await getPair(BOT_BNB_ADDRESS);
-    const pairData = (await getPairData(24, BOT_BNB_ADDRESS)).pairHourDatas;
-    if (response.pairs.length > 0) {
-      pairs.setPair(response.pairs[0]);
-      pairs.setCurrentPairData(BOT_BNB_ADDRESS, pairData);
-      setData(pairs.getFormattedPoints());
+  const setPriceInfo = async (opt: string) => {
+    await PriceBotDataInfo.setPriceData(opt)
+    setData({})
+    switch (opt) {
+      case 'minuts':
+        setCurrentStamp(0)
+        break;
+      case 'hours':
+        setCurrentStamp(1)
+        break;
+      case 'days':
+        setCurrentStamp(2)
+        break;
+      case 'months':
+        setCurrentStamp(3)
+        break;
+
+      default:
+        setCurrentStamp(2)
+        break;
     }
-  }, [pairs]);
+    setData(PriceBotDataInfo.getPriceByMin())
+  }
+
+  const selectors: TTimestampSelector[] = React.useMemo(
+    () => [
+      {
+        text: '1H',
+        onClick: async () => {
+          setPriceInfo('minuts')
+        },
+      },
+      {
+        text: '1D',
+        onClick: async () => {
+          setPriceInfo('hours')
+        },
+      },
+      {
+        text: '1M',
+        onClick: async () => {
+          setPriceInfo('days')
+        },
+      },
+      {
+        text: '1Y',
+        onClick: async () => {
+          setPriceInfo('months')
+        },
+      },
+    ],
+    [],
+  );
+
+  const setCurrentPriceInfo = async (reversed: boolean) => {
+    await PriceBotDataInfo.setCurrentPrice()
+    await PriceBotDataInfo.setCurrencyShift()
+    if (reversed) {
+      setCurrencyData({
+        icons: ['321', '123'],
+        names: ['BUSD', 'BOT'],
+        price: 1 / PriceBotDataInfo.getCurrentPrice(),
+        currency: 'BOT',
+        shift: PriceBotDataInfo.getCurrencyShiftReversed(),
+        percentShift: PriceBotDataInfo.getCurrencyShiftPercentReversed(),
+        date: moment(new Date).format('ddd MMM DD YYYY'),
+      })
+    } else {
+      setCurrencyData({
+        icons: ['123', '321'],
+        names: ['BOT', 'BUSD'],
+        price: PriceBotDataInfo.getCurrentPrice(),
+        currency: 'BUSD',
+        shift: PriceBotDataInfo.getCurrencyShift(),
+        percentShift: PriceBotDataInfo.getCurrencyShiftPercent(),
+        date: moment(new Date).format('ddd MMM DD YYYY'),
+      })
+    }
+  }
 
   const handleRequestBlogs = useCallback(() => {
     getBlogs().then((data) => {
@@ -70,13 +253,17 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
   }, []);
 
   useEffect(() => {
-    handleGetPairData();
     handleRequestBlogs();
-    setData(pairs.getFormattedPoints());
-    if (pairs.currentPairData.points.length !== 0) {
-      setCurrencyData(pairs.getFormattedCurrentPair(0, reversed));
-    }
-  }, [currentStamp, pairs.currentPairData.points.length, pairs, reversed, handleGetPairData]);
+  }, [currentStamp]);
+
+  useEffect(() => {
+    setPriceInfo('days')
+    setCurrentPriceInfo(isReversed)
+  }, [isReversed])
+
+  const onReverseClick = () => {
+    setIsReversed(!isReversed)
+  }
 
   return (
     <div className="h-preview">
@@ -120,14 +307,15 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
           </div>
           <div className="h-preview_top-right">
             <div className="trade__graph-body__info-main">
-              {currencyData && <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />}
+              {currencyData && (
+                <CurrencyInfo {...currencyData} onSwapClick={onReverseClick} />
+              )}
+              <TimeSelector currentSelector={currentStamp} selectors={selectors} />
             </div>
             <Graph
-              className="home-graph"
               id="exchange-graph"
               series={data}
               options={options}
-              onHovered={onGraphHovered}
             />
           </div>
         </div>

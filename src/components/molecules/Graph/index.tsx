@@ -16,6 +16,9 @@ const initOptions = {
   chart: {
     height: '100%',
     type: 'area',
+    zoom: {
+      enabled: false,
+    },
     toolbar: {
       show: false,
     },
@@ -70,11 +73,12 @@ const Graph: VFC<IGraphProps> = ({ id, series, options, onHovered, className }) 
     if (chart.current) {
       chart.current.updateSeries([
         {
-          name: 'main',
-          data: series,
+          name: 'Price',
+          data: series[0],
         },
       ]);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [series.length]);
 

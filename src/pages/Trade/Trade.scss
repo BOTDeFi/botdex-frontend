@@ -112,6 +112,22 @@
       border-radius: 12px;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 
+      .graph-wrapper__body {
+        cursor: crosshair;
+
+        .apexcharts-tooltip {
+          background: linear-gradient(180deg, #2e1d8f 0%, #1f1080 100%);
+          border: 1px solid rgba(0, 0, 0, 0.5) !important;
+          box-shadow: 2px 2px 6px -4px #000 !important;
+
+          &-title {
+            background: transparent !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.5) !important;
+            margin-bottom: 0;
+          }
+        }
+      }
+
       &__info {
         position: relative;
 

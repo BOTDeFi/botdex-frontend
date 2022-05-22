@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Jest Tests" tests="3" failures="0" errors="0" time="3.141">
-  <testsuite name="Utils" errors="0" failures="0" skipped="0" timestamp="2022-05-17T20:49:32" time="2.004" tests="3">
+<testsuites name="Jest Tests" tests="3" failures="0" errors="0" time="11.138">
+  <testsuite name="Utils" errors="0" failures="0" skipped="0" timestamp="2022-05-20T08:37:49" time="5.037" tests="3">
     <testcase classname="Utils toBigNumber should return null if value = null &amp; nullable = true" name="Utils toBigNumber should return null if value = null &amp; nullable = true" time="0.002">
     </testcase>
     <testcase classname="Utils toBigNumber should return BigNumber if value is not null &amp; nullable = true" name="Utils toBigNumber should return BigNumber if value is not null &amp; nullable = true" time="0.001">

@@ -6,6 +6,11 @@ const client: AxiosInstance = axios.create({
   baseURL: BASE_API_URL,
 });
 
+const priceBotApiKey = '260eff46-df25-4824-a47a-7d66a5c81dd3'
+const priceBotInstance: AxiosInstance = axios.create({
+  baseURL: 'https://apibotplanet.com/api/',
+});
+
 export default async function ajax(requestConfig: AxiosRequestConfig): Promise<any> {
   try {
     return await client(requestConfig);
@@ -38,3 +43,14 @@ export const baseApi = {
     });
   },
 };
+
+export const priceBotApi = {
+  getPriceByOption(option: string) {
+    return priceBotInstance.get(`prices/${option}/${priceBotApiKey}`)
+      .then(response => response.data)
+  },
+  getCurrentBotPrice() {
+    return priceBotInstance.get(`staking/botprice/${priceBotApiKey}`)
+      .then(response => response.data)
+  }
+}
