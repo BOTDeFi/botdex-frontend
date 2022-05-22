@@ -32,6 +32,8 @@
     @include flex(row, center, center, nowrap);
 
     img {
+      pointer-events: none;
+      user-select: none;
       width: 460px;
       transform: perspective(750px) translate3d(0, 0, -250px) rotateX(27deg) scale(0.9, 0.9);
       animation: mooving 5s ease-in-out infinite;

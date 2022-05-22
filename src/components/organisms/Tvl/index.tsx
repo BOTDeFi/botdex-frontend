@@ -19,7 +19,7 @@ const Tvl: React.FC = () => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  fetch('http://apibotplanet.com:5000/api/dashboards/screen1/702635ce-85e4-4ea6-9124-043117eb15e5')
+  fetch('https://apibotplanet.com/api/dashboards/screen1/702635ce-85e4-4ea6-9124-043117eb15e5')
     .then((response3) => {
       // The response is a Response instance.
       // You parse the data into a useable format using `.json()`

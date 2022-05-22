@@ -7,14 +7,14 @@ import { ReactComponent as SwapSVG } from '@/assets/img/icons/swap-currency.svg'
 import './CurrencyInfo.scss';
 
 export interface ICurrencyInfoProps {
-  icons: [string, string] | [ReactElement, ReactElement];
-  names: [string, string];
-  date: string;
-  price: number;
-  currency: string;
-  shift: number;
-  percentShift: number;
-  onSwapClick: () => void;
+  icons?: [string, string] | [ReactElement, ReactElement];
+  names?: [string, string];
+  date?: string;
+  price?: number;
+  currency?: string;
+  shift?: number;
+  percentShift?: number;
+  onSwapClick?: () => void;
 }
 
 /**
@@ -43,26 +43,30 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
     <section className="currency-info__body">
       <div className="currency-info__body-currencies">
         <div className="currency-info__body-currencies-icon">
-          {typeof icons[0] === 'string' ? (
+          {icons ?
             <>
-              {icons.map((e: any, i: number) => {
-                return e ? (
-                  <img key={e} src={e} alt={names[i]} />
-                ) : (
-                  <img key={names[i]} src={UnknownImg} alt={names[i]} />
-                );
-              })}
+              {typeof icons[0] === 'string' ? (
+                <>
+                  {icons.map((e: any, i: number) => {
+                    if (names) {
+                      return <img key={names[i]} src={UnknownImg} alt={names[i]} />
+                    }
+                    return ''
+                  })}
+                </>
+              ) : (
+                <>
+                  {icons.map((e: any) => {
+                    return e || '';
+                  })}
+                </>
+              )
+              }
             </>
-          ) : (
-            <>
-              {icons.map((e: any) => {
-                return e || '';
-              })}
-            </>
-          )}
+            : ''}
         </div>
         <div className="currency-info__body-currencies-names">
-          {names.map((t: string, i: number) => (
+          {names?.map((t: string, i: number) => (
             <span
               key={t}
               className="currency-info__body-currencies-names__text text-smd text-upper"
@@ -82,19 +86,21 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
       </div>
       <div className="currency-info__body-currencies-statistic">
         <div className="currency-info__body-currencies-statistic__price h2-lg text-bold">
-          {price.toFixed(price < 10 ? 5 : 2)}
+          {price?.toFixed(price < 10 ? 5 : 2)}
         </div>
         <span className="currency-info__body-currencies-statistic__price-symbols text-smd">
           {currency}
         </span>
-        <span
-          className={`currency-info__body-currencies-statistic__price-shift text-sm text-500 ${
-            shift >= 0 ? 'green' : 'red'
-          }`}
-          title={`${shift} (${percentShift}%)`}
-        >
-          {shift.toFixed(4)} ({percentShift.toFixed(3)}%)
-        </span>
+        {
+          shift ?
+            <span
+              className={`currency-info__body-currencies-statistic__price-shift text-sm text-500 ${shift >= 0 ? 'green' : 'red'}`}
+              title={`${shift} (${percentShift}%)`}
+            >
+              {shift?.toFixed(4)} ({percentShift?.toFixed(3)}%)
+            </span>
+            : ''
+        }
       </div>
       <div className="currency-info__body-currencies-statistic__date">
         <span className="currency-info__body-currencies-statistic__date">{date}</span>
