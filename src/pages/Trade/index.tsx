@@ -12,8 +12,10 @@ import { Liquidity, Swap } from '@/components/sections/Trade';
 
 import './Trade.scss';
 import PriceBotData from '@/store/PriceBot/';
+import useMedia from 'use-media';
 
 const Trade: React.FC = observer(() => {
+  const isChartMobile = useMedia({ maxWidth: '500px' });
   const [currentStamp, setCurrentStamp] = React.useState<number>(0);
   const [currencyData, setCurrencyData] = React.useState<any>(null);
   const [isGraphVisible, setGraphVisible] = React.useState(true);
@@ -117,6 +119,9 @@ const Trade: React.FC = observer(() => {
       },
       xaxis: {
         type: 'datetime',
+        tickPlacement: 'on',
+        tickAmount: isChartMobile ? 4 : 6,
+        offsetX: 40,
         axisTicks: {
           show: false,
         },
@@ -148,7 +153,7 @@ const Trade: React.FC = observer(() => {
                 break;
               }
               case 2: {
-                format = 'DD';
+                format = 'DD MMM';
                 break;
               }
               case 3: {
@@ -178,7 +183,7 @@ const Trade: React.FC = observer(() => {
         },
       },
     }),
-    [currentStamp],
+    [currentStamp, isChartMobile],
   );
 
   const setPriceInfo = async (opt: string) => {
