@@ -26,6 +26,7 @@ import { PriceBotData } from '@/hooks/useFetchPriceBot';
 const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBotData }) => {
   const isWide = useMedia({ minWidth: '1412px' });
   const isMobile = useMedia({ minWidth: '769px' });
+  const isChartMobile = useMedia({ maxWidth: '500px' });
   const isUltraWide = useMedia({ minWidth: '2100px' });
 
   const [blogs, setBlogs] = useState<IBlogType[]>([]);
@@ -97,6 +98,9 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
       },
       xaxis: {
         type: 'datetime',
+        tickPlacement: 'on',
+        tickAmount: isChartMobile ? 4 : 6,
+        offsetX: 40,
         axisTicks: {
           show: false,
         },
@@ -129,7 +133,7 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
                 break;
               }
               case 2: {
-                format = 'DD';
+                format = 'DD MMM';
                 break;
               }
               case 3: {
@@ -159,7 +163,7 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
         },
       },
     }),
-    [currentStamp],
+    [currentStamp, isChartMobile],
   );
 
 
