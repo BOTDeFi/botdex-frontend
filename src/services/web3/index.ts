@@ -117,7 +117,8 @@ export default class MetamaskService {
   public contracts: any = {};
 
   public self: MetamaskService;
-  public networkToUse: number;
+  public networksToUse: number[];
+  public networkToUseNow: number;
   public loading: boolean;
   public errorMessage: string;
   public accounts: any;
@@ -126,7 +127,6 @@ export default class MetamaskService {
   public currentNetworkId: number;
 
   constructor({ testnet, isProduction = false }: IMetamaskService) {
-    this.networkToUse = 56;
     this.self = this;
     this.loading = false;
     this.errorMessage = '';
@@ -142,6 +142,16 @@ export default class MetamaskService {
 
     this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
     this.usedChain = this.isProduction ? [networks.mainnet, networks.mainnet2] : [networks.bsct, networks.polygont];
+    console.log("current url pathname = window.location.pathname = ", window.location.pathname);
+    if(window.location.pathname.includes("bridge")) {
+      // Bridge page use polygon #137 or BSC #56
+      this.networksToUse = [56, 137];
+    } else {
+      // Use only BSC network
+      this.networksToUse = [56];
+    }
+    console.log("this.networksToUse = ", this.networksToUse);
+    this.networkToUseNow = 56;
 
     this.chainChangedObs = new Observable((subscriber) => {
       if (!this.wallet) {
@@ -149,7 +159,7 @@ export default class MetamaskService {
       }
 
       this.wallet.on('chainChanged', () => {
-        const currentChain: string = this.currentNetworkId.toString(); // this.wallet.chainId;
+        const currentChain: string = this.currentNetworkId.toString();
         if (!this.usedChain.includes(currentChain)) {
           this.changeNetwork(subscriber)
             .then((isChanged) => {
@@ -165,7 +175,6 @@ export default class MetamaskService {
               }    
             });
 
-          // subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
           this.changeNetworkIfWeNeedIt(subscriber);
         } else {
           rootStore.modals.metamaskErr.close();
@@ -272,6 +281,15 @@ export default class MetamaskService {
   }
 
   async changeNetwork(subscriber: any) {
+    if(window.location.pathname.includes("bridge")) {
+      let web3 = window.web3;
+      if (typeof web3.eth !== 'undefined') {
+        let network = await web3.eth.net.getId();
+        if(this.networksToUse.includes(network)) {
+          return false;
+        }
+      }
+    }
     console.debug("changeNetwork");
     let isChanged = false;
     // Check if MetaMask is installed
@@ -280,7 +298,7 @@ export default class MetamaskService {
     if (window.ethereum) {
         try {
             // check if the chain to connect to is installed
-            networkToUseHex = "0x" + this.networkToUse.toString(16);
+            networkToUseHex = "0x" + this.networkToUseNow.toString(16);
 
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
@@ -329,30 +347,42 @@ export default class MetamaskService {
             let network = await web3.eth.net.getId();
             let netID = network.toString();
 
-            console.debug("Network : " + netID);
+            console.debug("Network #: " + netID);
             switch (netID) {
                 case "56":
-                    network = "bsc-mainnet";
-                    if(this.networkToUse == 56) {
-                        isGoodConnectedNetwork = true;
-                    } else {
-                        isGoodConnectedNetwork = false;    
-                    }
-                    break;
+                  network = "bsc-mainnet";
+                  if(this.networksToUse.includes(56)) {
+                      this.networkToUseNow = 56;
+                      isGoodConnectedNetwork = true;
+                  } else {
+                      isGoodConnectedNetwork = false;    
+                  }
+                  break;
+                case "137":
+                  network = "polygon-mainnet";
+                  if(this.networksToUse.includes(137)) {
+                      this.networkToUseNow = 137;
+                      isGoodConnectedNetwork = true;
+                  } else {
+                      isGoodConnectedNetwork = false;    
+                  }
+                  break;
                 default:
-                    network = 'unknown'
-                    console.error('This is an unknown network.');
-                    isGoodConnectedNetwork = false;
-                    console.debug("netID: " + netID);
+                  network = 'unknown'
+                  console.error('This is an unknown network.');
+                  isGoodConnectedNetwork = false;
+                  console.debug("netID: " + netID);
             }
-
             // If is not correct network, try to change it
             if (!isGoodConnectedNetwork) {
+              console.debug("isGoodConnectedNetwork == false");
               let isChanged = await this.changeNetwork(subscriber);
               console.debug("Is network changed: ", isChanged);
               isGoodConnectedNetwork = isChanged;
               network = await web3.eth.net.getId();
               netID = network.toString();
+            } else {
+              console.debug("isGoodConnectedNetwork == true");
             }
             this.currentNetworkId = network;
 
@@ -361,14 +391,12 @@ export default class MetamaskService {
               this.showWarning(subscriber, "Please connect your Wallet Web3 to Binance Smart Chain network.");
               return { isOk: false, isAlerted: true };
             } else {
-              if (netID !== "56") {
+              console.debug("isGoodConnectedNetwork #2 == true");
+              if (netID !== "56" && netID !== "137") {
                 console.log("Please connect your 2...subscriber=", subscriber)
-                this.showWarning(subscriber, "Please connect your Web3 to Binance Smart Chain Mainnet network. Current id is:" + netID.toString());
+                this.showWarning(subscriber, "Please connect your Web3 to Binance Smart Chain / Polygon Mainnet network. Current id is:" + netID.toString());
                 return { isOk: false, isAlerted: true };
               } else {
-                // Carga de datos de Blockchain
-                // ANTON: await this.loadBlockchainData(contractType_);
-
                 // Close error message if we have opened any
                 rootStore.modals.metamaskErr.close();
               }
@@ -399,64 +427,9 @@ export default class MetamaskService {
     let isAlerted = false;
     console.debug(message_);
     try {
-        //let isGoodConnectedNetwork = false;
-
         // Carga de Web3
         await this.loadWeb3(subscriber);
         await this.changeNetworkIfWeNeedIt(subscriber);
-        /*
-        // Check connection
-        let browserWindow: any = window;
-        let web3 = browserWindow.web3; // window.web3;
-
-        if (typeof web3.eth !== 'undefined') {
-            let network = await web3.eth.net.getId();
-            let netID = network.toString();
-
-            console.debug("Network : " + netID);
-            switch (netID) {
-                case "56":
-                    network = "bsc-mainnet";
-                    if(this.networkToUse == 56) {
-                        isGoodConnectedNetwork = true;
-                    } else {
-                        isGoodConnectedNetwork = false;    
-                    }
-                    break;
-                default:
-                    network = 'unknown'
-                    console.error('This is an unknown network.');
-                    isGoodConnectedNetwork = false;
-                    console.debug("netID: " + netID);
-            }
-
-            // If is not correct network, try to change it
-            if (!isGoodConnectedNetwork) {
-              let isChanged = await this.changeNetwork();
-              console.debug("Is network changed: ", isChanged);
-              isGoodConnectedNetwork = isChanged;
-              network = await web3.eth.net.getId();
-              netID = network.toString();
-            }
-            this.currentNetworkId = network;
-
-            if (!isGoodConnectedNetwork) {
-                this.showWarning("Please connect your Wallet Web3 to Binance Smart Chain network.");
-                return { isOk: false, isAlerted: true };
-            } else {
-                if (netID !== "56") {
-                    this.showWarning("Please connect your Web3 to Binance Smart Chain Mainnet network. Current id is:" + netID.toString());
-                    return { isOk: false, isAlerted: true };
-                } else {
-                    // Carga de datos de Blockchain
-                    // ANTON: await this.loadBlockchainData(contractType_);
-                }
-            }
-        } else {
-            console.error("ERROR (connectWallet): web3.eth is not defined!");
-            return { isOk: false, isAlerted: true };
-        }
-        */
     } catch (err: any) {
         const code = err.code;
         const message = err.message;
@@ -551,62 +524,6 @@ export default class MetamaskService {
       });
     });
   }
-
-  /*
-  public connect2(): Promise<any> {
-    if (!this.wallet) {
-      return Promise.reject(
-        new Error(`Couldn't find Metamask extension, check if it's installed and enabled.`),
-      );
-    }
-    const currentChain = this.wallet.chainId;
-
-    return new Promise((resolve, reject) => {
-      if (!this.wallet) {
-        reject(new Error(`metamask wallet is not injected`));
-      }
-
-      if (!currentChain) {
-        this.wallet
-          .request({ method: 'eth_chainId' })
-          .then((resChain: any) => {
-            this.checkNets(resChain).then((required) => {
-              if (required) {
-                this.ethRequestAccounts()
-                  .then((account: any) => {
-                    [this.walletAddress] = account;
-                    resolve({
-                      address: account[0],
-                      network: resChain,
-                    });
-                  })
-                  .catch(() => reject(new Error('Not authorized')));
-              } else {
-                reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
-              }
-            });
-          })
-          .catch(() => reject(new Error('Not authorized')));
-      } else {
-        this.checkNets().then((required) => {
-          if (required) {
-            this.ethRequestAccounts()
-              .then((account: any) => {
-                [this.walletAddress] = account;
-                resolve({
-                  address: account[0],
-                  network: currentChain,
-                });
-              })
-              .catch(() => reject(new Error('Not authorized')));
-          } else {
-            reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
-          }
-        });
-      }
-    });
-  }
-  */
 
   createContract(contractName: string, tokenAddress: string, abi: Array<any>): void {
     if (!this.contracts[contractName]) {

@@ -55,7 +55,20 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
     // @ts-ignore
     const timeGap = millisecondsToSeconds(Date.now()) - stake.userData?.start;
     if (timeGap < stake.timeLockUp) {
-      setCollectTime(format(Date.now() + stake.timeLockUp, 'yyyy.dd.MM'));
+      // Check if user already staked
+      const startStaking: number = stake.userData?.start ?? 0;
+      window.console.log(
+        'collectTime Date.now(), stake.timeLockUp, startStaking',
+        Date.now(),
+        stake.timeLockUp,
+        startStaking,
+      );
+      if (startStaking > 0) {
+        setCollectTime(format(startStaking * 1000 + stake.timeLockUp * 1000, 'yyyy.dd.MM'));
+      } else {
+        // Date.now() milliseconds + (stake.timeLockUp seconds * 1000) milliseconds
+        setCollectTime(format(Date.now() + stake.timeLockUp * 1000, 'yyyy.dd.MM'));
+      }
     }
   }, [stake.timeLockUp, stake.userData?.start]);
 
