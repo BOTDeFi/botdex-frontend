@@ -12,7 +12,8 @@ import GamefiImg from '@/assets/img/icons/gamefi.svg';
 import HomeImg from '@/assets/img/icons/home.svg';
 import LiquidityImg from '@/assets/img/icons/liquidity.svg';
 // import { ReactComponent as LogoText } from '@/assets/img/icons/logo_text.svg';
-import { ReactComponent as Logo } from '@/assets/img/icons/logo.svg';
+// import { ReactComponent as Logo } from '@/assets/img/icons/logo.svg';
+// import { ReactComponent as Logo } from '@/assets/img/icons/logo_sm.svg';
 import LotteryImg from '@/assets/img/icons/lottery_menu.svg';
 import MarketplaceImg from '@/assets/img/icons/marketplace.svg';
 import MessengerImg from '@/assets/img/icons/messenger.svg';
@@ -28,7 +29,7 @@ import { useMst } from '@/store';
 
 // import { addressWithDots } from '@/utils/formatters';
 import './Menu.scss';
-import { LogoHeaderMin } from '@/assets/img/sections';
+import { LogoHeaderMin, Logo } from '@/assets/img/sections';
 
 interface IMenuProps {
   onClick?: () => void;
@@ -132,7 +133,9 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       <div className="menu box-f-fd-c">
         <div className="menu__header">
           <img src={LogoHeaderMin} alt="" />
-          <Logo />
+          <img src={Logo} alt="" />
+          {/* <Logo /> */}
+
           {/* <LogoText /> */}
         </div>
         <div className="menu__nav">

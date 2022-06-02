@@ -30,14 +30,22 @@
 
     .menu__header {
       img {
+
         // width: 0;
-        display: none;
+        // display: none;
+        &:nth-child(1) {
+          display: none;
+        }
+
+        &:nth-child(2) {
+          display: block;
+        }
       }
 
-      svg {
-        display: block;
-        // width: auto;
-      }
+      // svg {
+      //   display: block;
+      //   // width: auto;
+      // }
     }
 
     .menu__nav-item {
@@ -72,8 +80,17 @@
     margin-left: 20px;
 
     img {
-      display: block;
+      // display: block;
       width: 178px;
+
+      &:nth-child(1) {
+        display: block;
+      }
+
+      &:nth-child(2) {
+        display: none;
+        flex: 0 0 auto;
+      }
     }
 
     svg {
