@@ -15,7 +15,6 @@ import Menu from '@/components/sections/Menu';
 import { useWalletConnectorContext } from '@/services/MetamaskConnect';
 import { useMst } from '@/store';
 import { addressWithDots } from '@/utils/formatters';
-
 import './Header.scss';
 
 const Header: React.FC = observer(() => {
