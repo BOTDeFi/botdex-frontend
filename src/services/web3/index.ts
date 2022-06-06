@@ -172,7 +172,7 @@ export default class MetamaskService {
                       console.debug("Is network id (netID): ", netID);
                     });
                 }
-              }    
+              }
             });
 
           this.changeNetworkIfWeNeedIt(subscriber);
@@ -203,7 +203,7 @@ export default class MetamaskService {
           this.walletAddress = '';
           this.hasWeb3Account = false;
         }
-          
+
         console.debug("Wallet on Account changed. accounts: ", this.account)
         subscriber.next(this.account);
       });
@@ -330,7 +330,7 @@ export default class MetamaskService {
     } else {
         // if no window.ethereum then MetaMask is not installed
         this.showError(subscriber, 'Web3 wallet is not installed. Please consider installing it: https://metamask.io/download.html', "changeNetwork");
-    } 
+    }
     return isChanged;
   }
 
@@ -355,7 +355,7 @@ export default class MetamaskService {
                       this.networkToUseNow = 56;
                       isGoodConnectedNetwork = true;
                   } else {
-                      isGoodConnectedNetwork = false;    
+                      isGoodConnectedNetwork = false;
                   }
                   break;
                 case "137":
@@ -364,7 +364,7 @@ export default class MetamaskService {
                       this.networkToUseNow = 137;
                       isGoodConnectedNetwork = true;
                   } else {
-                      isGoodConnectedNetwork = false;    
+                      isGoodConnectedNetwork = false;
                   }
                   break;
                 default:
@@ -418,7 +418,7 @@ export default class MetamaskService {
     } finally {
         this.loading = false;
     }
-    return { isOk: true, isAlerted: isAlerted };    
+    return { isOk: true, isAlerted: isAlerted };
   }
 
   connectWallet = async (subscriber: any, message_: string) => {
@@ -507,7 +507,7 @@ export default class MetamaskService {
       console.log('alert show by rootStore', message);
       rootStore.modals.metamaskErr.setErr(message);
     } else {
-      console.log('alert show (last option):', message);      
+      console.log('alert show (last option):', message);
       // Show normal window
       window.alert(message);
     }
@@ -535,7 +535,7 @@ export default class MetamaskService {
     }
   }
 
-  getContract(tokenAddress: string, abi: Array<any>): Contract {
+  public getContract(tokenAddress: string, abi: Array<any>): Contract {
     return new this.web3Provider.eth.Contract(abi, tokenAddress);
   }
 

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import { Button } from '@/components/atoms';
 import { ChooseTokens, TradeBox } from '@/components/sections/Trade';
-import { tokens } from '@/config';
+import { contracts, tokens } from '@/config';
 import {
   useGetAllPairs,
   useGetHoursPairs,
@@ -201,25 +201,48 @@ const Exchange: React.FC<IExchange> = observer(
             ];
           }
 
-          await metamaskService.createTransaction({
-            method,
-            contractName: 'ROUTER',
-            data,
-            value: value ?? '0',
-          });
-          delete localStorage['refinery-finance-getAmountOut'];
-          setTokensData({
-            from: {
-              token: undefined,
-              amount: NaN,
-            },
-            to: {
-              token: undefined,
-              amount: NaN,
-            },
-          });
-          toast.success('Successfully swapped tokens!');
-          setIsLoading(false);
+          try {
+            const contract = contracts.ROUTER;
+            const { ABI, ADDRESS } = contract;
+            const routerContract = metamaskService.getContract(ADDRESS, ABI);
+            await routerContract.methods.swapExactTokensForTokens(...data).estimateGas();
+          } catch (err) {
+            console.log(err);
+            if (method === 'swapExactTokensForTokens') {
+              method = 'swapExactTokensForTokensSupportingFeeOnTransferTokens';
+            }
+            if (method === 'swapExactTokensForETH') {
+              method = 'swapExactTokensForETHSupportingFeeOnTransferTokens';
+            }
+            if (+settings.slippage.value < 10) {
+              const newSlippage = +settings.slippage.value + (10 - +settings.slippage.value);
+              data[1] = (+MetamaskService.calcTransactionAmount(
+                new BigNumber(tokensData.to.amount)
+                  .minus(new BigNumber(tokensData.to.amount).times(newSlippage / 100))
+                  .toString(10),
+                +tokensData.to.token?.decimals,
+              )).toFixed(0);
+            }
+            await metamaskService.createTransaction({
+              method,
+              contractName: 'ROUTER',
+              data,
+              value: value ?? '0',
+            });
+            delete localStorage['refinery-finance-getAmountOut'];
+            setTokensData({
+              from: {
+                token: undefined,
+                amount: NaN,
+              },
+              to: {
+                token: undefined,
+                amount: NaN,
+              },
+            });
+            toast.success('Successfully swapped tokens!');
+            setIsLoading(false);
+          }
         } catch (err) {
           clogError('swap err', err);
           toast.error('Something went wrong');
@@ -247,12 +270,12 @@ const Exchange: React.FC<IExchange> = observer(
             maxTo={maxTo}
           />
           {isAllowanceFrom &&
-            tokensData.from.token &&
-            tokensData.to.token &&
-            tokensData.to.amount &&
-            tokensData.from.amount &&
-            user.address &&
-            tokensReserves !== null ? (
+          tokensData.from.token &&
+          tokensData.to.token &&
+          tokensData.to.amount &&
+          tokensData.from.amount &&
+          user.address &&
+          tokensReserves !== null ? (
             <Button
               className="exchange__btn"
               colorScheme="pink"
@@ -282,10 +305,10 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {tokensData.from.token &&
-            tokensData.to.token &&
-            (!tokensData.to.amount || !tokensData.from.amount) &&
-            tokensReserves !== null &&
-            user.address ? (
+          tokensData.to.token &&
+          (!tokensData.to.amount || !tokensData.from.amount) &&
+          tokensReserves !== null &&
+          user.address ? (
             <Button
               className="exchange__btn"
               disabled={!tokensData.from.amount || !tokensData.to.amount}
@@ -297,10 +320,10 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {!isAllowanceFrom &&
-            tokensData.to.amount &&
-            tokensData.from.amount &&
-            tokensReserves !== null &&
-            user.address ? (
+          tokensData.to.amount &&
+          tokensData.from.amount &&
+          tokensReserves !== null &&
+          user.address ? (
             <Button
               className="exchange__btn btn-hover-down"
               colorScheme="pink"
@@ -316,8 +339,8 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {(!tokensData.from.token || !tokensData.to.token) &&
-            tokensReserves !== null &&
-            user.address ? (
+          tokensReserves !== null &&
+          user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">Select Tokens</span>
             </Button>
@@ -325,9 +348,9 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {tokensData.from.token &&
-            tokensData.to.token &&
-            tokensReserves === null &&
-            user.address ? (
+          tokensData.to.token &&
+          tokensReserves === null &&
+          user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">
                 This pair haven&lsquo;t been created
