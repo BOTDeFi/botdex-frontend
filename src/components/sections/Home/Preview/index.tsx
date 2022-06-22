@@ -227,9 +227,10 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
   const setCurrentPriceInfo = async (reversed: boolean) => {
     await PriceBotDataInfo.setCurrentPrice()
     await PriceBotDataInfo.setCurrencyShift()
+    await PriceBotDataInfo.setIcons();
     if (reversed) {
       setCurrencyData({
-        icons: ['321', '123'],
+        icons: [PriceBotDataInfo.busdIcon, PriceBotDataInfo.botIcon],
         names: ['BUSD', 'BOT'],
         price: 1 / PriceBotDataInfo.getCurrentPrice(),
         currency: 'BOT',
@@ -239,7 +240,7 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
       })
     } else {
       setCurrencyData({
-        icons: ['123', '321'],
+        icons: [PriceBotDataInfo.botIcon, PriceBotDataInfo.busdIcon],
         names: ['BOT', 'BUSD'],
         price: PriceBotDataInfo.getCurrentPrice(),
         currency: 'BUSD',

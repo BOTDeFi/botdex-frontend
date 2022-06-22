@@ -109,7 +109,7 @@ export const Store = RootModel.create({
 const rootStore = Store;
 
 onSnapshot(rootStore, (snapshot) => {
-  if (!IS_PRODUCTION) {
+  if (IS_PRODUCTION) {
     clogData('Snapshot: ', snapshot);
   }
 });

@@ -59,6 +59,7 @@ const FarmsModel = types
     async fetchFarmsPublicDataAsync(pids: number[]) {
       const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid));
 
+      console.log(farmsToFetch);
       // Add price helper farms
       // concat(priceHelperLpsConfig )
       // const farmsWithPriceHelpers = farmsToFetch; // .concat(priceHelperLpsConfig);
@@ -69,6 +70,7 @@ const FarmsModel = types
       const farmsWithoutHelperLps = farmsWithPrices.filter((farm: FarmWithoutUserData) => {
         return farm.pid >= 0;
       });
+      console.log(farmsWithoutHelperLps);
 
       this.fetchFarmsPublicDataAsyncSuccess(farmsWithoutHelperLps);
     },
