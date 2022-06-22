@@ -1,6 +1,6 @@
 const IS_PRODUCTION = true;
 const IS_USING_DEV_SERVER = false;
-const bridgeLinkApi = `https://bridge.botpla.net/api/v1`;
+const bridgeLinkApi = `https://bridge.botswap.app/api/v1`;
 
 export const netType = IS_PRODUCTION ? "mainnet" : "testnet";
 
