@@ -6,6 +6,7 @@ import { Farm, FarmConfig, SerializedBigNumber } from '@/types';
 import { toBigNumber } from '@/utils';
 import { BIG_ONE, BIG_TEN, BIG_ZERO } from '@/utils/constants';
 import { multicall } from '@/utils/multicall';
+import {baseApi} from "@/store/api";
 
 export const getTokenPricesFromFarms = (): Record<string, number> => {
   const farms = rootStore.farms.data.slice() as Farm[];
@@ -342,4 +343,28 @@ export const fetchFarmUserEarnings = async (
   return rawEarnings.map((earnings: any) => {
     return new BigNumber(earnings).toJSON();
   });
+};
+
+export const setFarmsIcons = (farms: any) => {
+  return Promise.all(
+    farms.map((farm: any) => {
+      return setFarmIcons(farm);
+    }),
+  );
+}
+export const setFarmIcons = async (farm: any) => {
+  const farmWithIcons = farm;
+
+  const tokenAddress = getAddress(farmWithIcons.token.address).toLocaleLowerCase();
+  const quoteTokenAddress = getAddress(farmWithIcons.quoteToken.address).toLocaleLowerCase();
+  const tokenIcon = await baseApi.getTokenSingleLogo(tokenAddress);
+  const quoteTokenIcon = await baseApi.getTokenSingleLogo(quoteTokenAddress);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  farmWithIcons.token.logoURI = tokenIcon.data.logo_link;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  farmWithIcons.quoteToken.logoURI = quoteTokenIcon.data.logo_link;
+
+  return farmWithIcons;
 };

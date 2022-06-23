@@ -10,7 +10,7 @@ import {
   fetchFarmUserAllowances,
   fetchFarmUserEarnings,
   fetchFarmUserStakedBalances,
-  fetchFarmUserTokenBalances,
+  fetchFarmUserTokenBalances, setFarmsIcons,
 } from '../farms';
 
 import AddressModel from './Address';
@@ -70,7 +70,9 @@ const FarmsModel = types
         return farm.pid >= 0;
       });
 
-      this.fetchFarmsPublicDataAsyncSuccess(farmsWithoutHelperLps);
+      const farmsWithIcons = await setFarmsIcons(farmsWithoutHelperLps);
+
+      this.fetchFarmsPublicDataAsyncSuccess(farmsWithIcons);
     },
     fetchFarmsPublicDataAsyncSuccess(newData: FarmWithoutUserData[]) {
       self.data.forEach((farm) => {
@@ -87,11 +89,13 @@ const FarmsModel = types
         farm.pid = liveFarmData.pid;
         farm.poolWeight = liveFarmData.poolWeight;
 
+        farm.quoteToken.logoURI = liveFarmData.quoteToken.logoURI || '';
         farm.quoteToken.busdPrice = liveFarmData.quoteToken.busdPrice || '';
 
         farm.quoteTokenAmountMc = liveFarmData.quoteTokenAmountMc;
         farm.quoteTokenAmountTotal = liveFarmData.quoteTokenAmountTotal;
 
+        farm.token.logoURI = liveFarmData.token.logoURI || '';
         farm.token.busdPrice = liveFarmData.token.busdPrice || '';
 
         farm.tokenAmountMc = liveFarmData.tokenAmountMc;

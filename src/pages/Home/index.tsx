@@ -1,13 +1,12 @@
 import { useEffect, useState, VFC } from 'react';
 
 import { Features, InfoTables, Partners, Preview } from '@/components/sections/Home';
-
-import './Home.scss';
 import { PriceBotData } from '@/hooks/useFetchPriceBot';
 
-const Home: VFC<{ priceBotData: PriceBotData | null }> = ({ priceBotData }) => {
+import './Home.scss';
 
-  const [isReady, setIsReady] = useState(false)
+const Home: VFC<{ priceBotData: PriceBotData | null }> = ({ priceBotData }) => {
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const loadContent = setTimeout(() => {
@@ -19,13 +18,15 @@ const Home: VFC<{ priceBotData: PriceBotData | null }> = ({ priceBotData }) => {
   return (
     <div className="home-wrapper">
       <Preview priceBotData={priceBotData} />
-      {isReady ?
+      {isReady ? (
         <>
           <InfoTables />
           <Features />
           <Partners />
         </>
-        : ''}
+      ) : (
+        ''
+      )}
     </div>
   );
 };

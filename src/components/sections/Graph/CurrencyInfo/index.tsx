@@ -1,7 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { FC, ReactElement } from 'react';
 
-import UnknownImg from '@/assets/img/currency/unknown.svg';
 import { ReactComponent as SwapSVG } from '@/assets/img/icons/swap-currency.svg';
 
 import './CurrencyInfo.scss';
@@ -43,15 +42,15 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
     <section className="currency-info__body">
       <div className="currency-info__body-currencies">
         <div className="currency-info__body-currencies-icon">
-          {icons ?
+          {icons ? (
             <>
               {typeof icons[0] === 'string' ? (
                 <>
                   {icons.map((e: any, i: number) => {
                     if (names) {
-                      return <img key={names[i]} src={UnknownImg} alt={names[i]} />
+                      return <img key={names[i]} src={e} alt={names[i]} />;
                     }
-                    return ''
+                    return '';
                   })}
                 </>
               ) : (
@@ -60,10 +59,11 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
                     return e || '';
                   })}
                 </>
-              )
-              }
+              )}
             </>
-            : ''}
+          ) : (
+            ''
+          )}
         </div>
         <div className="currency-info__body-currencies-names">
           {names?.map((t: string, i: number) => (
@@ -91,16 +91,18 @@ const CurrencyInfo: FC<ICurrencyInfoProps> = ({
         <span className="currency-info__body-currencies-statistic__price-symbols text-smd">
           {currency}
         </span>
-        {
-          shift ?
-            <span
-              className={`currency-info__body-currencies-statistic__price-shift text-sm text-500 ${shift >= 0 ? 'green' : 'red'}`}
-              title={`${shift} (${percentShift}%)`}
-            >
-              {shift?.toFixed(4)} ({percentShift?.toFixed(3)}%)
-            </span>
-            : ''
-        }
+        {shift ? (
+          <span
+            className={`currency-info__body-currencies-statistic__price-shift text-sm text-500 ${
+              shift >= 0 ? 'green' : 'red'
+            }`}
+            title={`${shift} (${percentShift}%)`}
+          >
+            {shift?.toFixed(4)} ({percentShift?.toFixed(3)}%)
+          </span>
+        ) : (
+          ''
+        )}
       </div>
       <div className="currency-info__body-currencies-statistic__date">
         <span className="currency-info__body-currencies-statistic__date">{date}</span>
