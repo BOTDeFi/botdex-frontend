@@ -6,7 +6,12 @@ import config from '../../config/config_back';
 class BackendService {
     constructor() {
         // this.networks = null;
-        this.networks = fetch(`${config.serverDomain()}/networks/`).then(async res => {
+        this.networks = fetch(`${config.serverDomain()}/networks/`, {
+            mode: 'no-cors'
+        }).then(async res => {
+            const res2 = await res.json();
+            console.log(res2);
+            
             this.networks = await res.json();
             // this.networks = res;
         });
@@ -15,7 +20,9 @@ class BackendService {
 
     async getDexList() {
         try {
-            return fetch(config.serverDomain());
+            return fetch(config.serverDomain(), {
+                mode: 'no-cors'
+            });
         } catch (e) {
             console.error(e);
         }
@@ -34,7 +41,9 @@ class BackendService {
 
     async getGas({ network }) {
         try {
-            const gas = await fetch(`${config.serverDomain()}/gas/${network}/`);
+            const gas = await fetch(`${config.serverDomain()}/gas/${network}/`, {
+                mode: 'no-cors'
+            });
             return gas.json();
         } catch (e) {
             console.error(e);
@@ -43,7 +52,9 @@ class BackendService {
 
     async updateNetworks() {
         try {
-            let result = await fetch(`${config.serverDomain()}/networks/`);
+            let result = await fetch(`${config.serverDomain()}/networks/`, {
+                mode: 'no-cors'
+            });
             result = await result.json();
             this.networks = result;
         } catch (e) {
@@ -94,7 +105,9 @@ class BackendService {
     async getSwapHistory(address) {
         try {
             await this.networks;
-            let result = await fetch(`${config.serverDomain()}/swap_history/${address}/`);
+            let result = await fetch(`${config.serverDomain()}/swap_history/${address}/`, {
+                mode: 'no-cors'
+            });
             result = await result.json();
             // console.log('BackendService getSwapHistory:', result);
             return result;
