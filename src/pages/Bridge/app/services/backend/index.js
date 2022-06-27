@@ -6,10 +6,7 @@ import config from '../../config/config_back';
 class BackendService {
     constructor() {
         // this.networks = null;
-        this.networks = fetch(`${config.serverDomain()}/networks/`).then(async res => {
-            const res2 = await res.json();
-            console.log(res2);
-            
+        this.networks = fetch(`${config.serverDomain()}/networks/`).then(async res => {            
             this.networks = await res.json();
             // this.networks = res;
         });
