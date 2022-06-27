@@ -18,7 +18,9 @@ class BackendService {
 
     async getDexList() {
         try {
-            return fetch(config.serverDomain());
+            return fetch(config.serverDomain(), {
+                mode: 'no-cors'
+            });
         } catch (e) {
             console.error(e);
         }
@@ -37,7 +39,9 @@ class BackendService {
 
     async getGas({ network }) {
         try {
-            const gas = await fetch(`${config.serverDomain()}/gas/${network}/`);
+            const gas = await fetch(`${config.serverDomain()}/gas/${network}/`, {
+                mode: 'no-cors'
+            });
             return gas.json();
         } catch (e) {
             console.error(e);
@@ -46,7 +50,9 @@ class BackendService {
 
     async updateNetworks() {
         try {
-            let result = await fetch(`${config.serverDomain()}/networks/`);
+            let result = await fetch(`${config.serverDomain()}/networks/`, {
+                mode: 'no-cors'
+            });
             result = await result.json();
             this.networks = result;
         } catch (e) {
@@ -97,7 +103,9 @@ class BackendService {
     async getSwapHistory(address) {
         try {
             await this.networks;
-            let result = await fetch(`${config.serverDomain()}/swap_history/${address}/`);
+            let result = await fetch(`${config.serverDomain()}/swap_history/${address}/`, {
+                mode: 'no-cors'
+            });
             result = await result.json();
             // console.log('BackendService getSwapHistory:', result);
             return result;
@@ -135,7 +143,6 @@ class BackendService {
         try {
             let result = await fetch(`${config.serverDomain()}/swap/`, {
                 method: "POST",
-                body: { is_testnet, from_tx_hash, from_network_num, to_network_num, from_amount, from_address }
             });
             result = await result.json();
             return result;

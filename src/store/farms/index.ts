@@ -2,11 +2,11 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { getAddress, getContractAddress, getContractData } from '@/services/web3/contractHelpers';
 import rootStore from '@/store';
+import { baseApi } from '@/store/api';
 import { Farm, FarmConfig, SerializedBigNumber } from '@/types';
 import { toBigNumber } from '@/utils';
 import { BIG_ONE, BIG_TEN, BIG_ZERO } from '@/utils/constants';
 import { multicall } from '@/utils/multicall';
-import {baseApi} from "@/store/api";
 
 export const getTokenPricesFromFarms = (): Record<string, number> => {
   const farms = rootStore.farms.data.slice() as Farm[];
@@ -351,7 +351,7 @@ export const setFarmsIcons = (farms: any) => {
       return setFarmIcons(farm);
     }),
   );
-}
+};
 export const setFarmIcons = async (farm: any) => {
   const farmWithIcons = farm;
 
@@ -359,9 +359,15 @@ export const setFarmIcons = async (farm: any) => {
   const quoteTokenAddress = getAddress(farmWithIcons.quoteToken.address).toLocaleLowerCase();
   const tokenIcon = await baseApi.getTokenSingleLogo(tokenAddress);
   const quoteTokenIcon = await baseApi.getTokenSingleLogo(quoteTokenAddress);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  farmWithIcons.token.logoURI = tokenIcon.data.logo_link;
+
+  if (farmWithIcons.token.symbol === 'BUSD') {
+    farmWithIcons.token.logoURI =
+      'https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766';
+  } else {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    farmWithIcons.token.logoURI = tokenIcon.data.logo_link;
+  }
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   farmWithIcons.quoteToken.logoURI = quoteTokenIcon.data.logo_link;
