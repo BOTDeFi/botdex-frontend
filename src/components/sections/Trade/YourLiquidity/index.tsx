@@ -14,6 +14,7 @@ import { clogError } from '@/utils/logger';
 import { LiquidityInfoModal, TradeBox } from '..';
 
 import './YourLiquidity.scss';
+import {baseApi} from "@/store/api";
 
 const USER_PAIRS = gql`
   query User($address: String!) {
@@ -59,8 +60,23 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
   };
 
   const handleOpenLiquidityInfoModal = (info: ILiquidityInfo): void => {
+    console.log('info', info);
     setLiquidityInfo(info);
   };
+
+  const getTokenIcon = async (token0Address: string, token1Address: string) => {
+    const token0IconData = await baseApi.getTokenSingleLogo(token0Address);
+    const token1IconData = await baseApi.getTokenSingleLogo(token1Address);
+
+    return {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      token0Icon: token0IconData.data.logo_link,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      token1Icon: token1IconData.data.logo_link,
+    };
+  }
 
   const handleCheckLiquidity = React.useCallback(
     (data: any) => {
@@ -73,9 +89,17 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
               'balanceOf',
               [user.address],
             )
-            .then((res: any) => {
+            .then(async (res: any) => {
               if (+res > 0) {
-                setLiquidities((arr: any) => [...arr, data.user.liquidityPositions[i]]);
+                const icons = await getTokenIcon(data.user.liquidityPositions[i].pair.token0.id, data.user.liquidityPositions[i].pair.token1.id);
+                const currentPair = data.user.liquidityPositions[i].pair;
+                const pairWithIcons = { pair: {
+                    ...currentPair,
+                    token0: {...currentPair.token0, logo: icons.token0Icon },
+                    token1: {...currentPair.token1, logo: icons.token1Icon },
+                  },
+                }
+                setLiquidities((arr: any) => [...arr, pairWithIcons]);
               }
             })
             .catch((err) => {
@@ -163,6 +187,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         rate: liquidity.pair.token0Price,
                         decimals: liquidity.pair.token0.decimals,
                         reserve: reserves[index].reserve0,
+                        logo: liquidity.pair.token0.logo,
                       },
                       token1: {
                         address: liquidity.pair.token1.id,
@@ -171,6 +196,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
                         reserve: reserves[index].reserve1,
+                        logo: liquidity.pair.token1.logo,
                       },
                       settings,
                     })
@@ -185,6 +211,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         rate: liquidity.pair.token0Price,
                         decimals: liquidity.pair.token0.decimals,
                         reserve: reserves[index],
+                        logo: liquidity.pair.token0.logo,
                       },
                       token1: {
                         address: liquidity.pair.token1.id,
@@ -193,6 +220,7 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                         rate: liquidity.pair.token1Price,
                         decimals: liquidity.pair.token1.decimals,
                         reserve: reserves,
+                        logo: liquidity.pair.token1.logo,
                       },
                       settings,
                     })
@@ -200,8 +228,8 @@ const YourLiquidity: React.FC<{ settings: ISettings }> = observer(({ settings })
                   role="button"
                   tabIndex={0}
                 >
-                  <img src={UnknownImg} alt="" />
-                  <img src={UnknownImg} alt="" />
+                  <img src={liquidity.pair.token0.logo || UnknownImg} alt="" />
+                  <img src={liquidity.pair.token1.logo || UnknownImg} alt="" />
                   <span className="text-smd">{`${liquidity.pair.token0.symbol}/${liquidity.pair.token1.symbol}`}</span>
                 </div>
               ))}

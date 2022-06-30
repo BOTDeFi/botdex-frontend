@@ -71,6 +71,7 @@ export interface ILiquidityInfo {
     deposited?: number | string;
     receive?: number | string;
     reserve: number | string;
+    logo?: string;
   };
   token1: {
     address: string;
@@ -81,6 +82,7 @@ export interface ILiquidityInfo {
     deposited?: number | string;
     receive?: number | string;
     reserve: number | string;
+    logo?: string;
   };
   settings: ISettings;
 }

@@ -125,14 +125,14 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
         <div className="liquidity-info__content">
           <div className="text-smd text-bold">Your Liquidity</div>
           <div className="liquidity-info__title box-f-ai-c">
-            <img src={UnknownImg} alt={info.token0.symbol} />
-            <img src={UnknownImg} alt={info.token1.symbol} />
+            <img src={info.token0.logo || UnknownImg} alt={info.token0.symbol} />
+            <img src={info.token1.logo || UnknownImg} alt={info.token1.symbol} />
             <span className="text-smd">{`${info.token0.symbol}/${info.token1.symbol}`}</span>
           </div>
           <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-smd">
             <span>{`${info.token0.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
-              <img src={UnknownImg} alt={info.token0.symbol} />
+              <img src={info.token0.logo || UnknownImg} alt={info.token0.symbol} />
               <Popover
                 content={(+MetamaskService.amountFromGwei(
                   deposit0,
@@ -148,7 +148,7 @@ const LiquidityInfoModal: React.FC<ILiquidityInfoModal> = observer(({ info, hand
           <div className="liquidity-info__row box-f-ai-c box-f-jc-sb text-smd">
             <span>{`${info.token1.symbol} Deposited`}</span>
             <div className="box-f-ai-c">
-              <img src={UnknownImg} alt={info.token1.symbol} />
+              <img src={info.token1.logo || UnknownImg} alt={info.token1.symbol} />
               <Popover
                 content={(+MetamaskService.amountFromGwei(
                   deposit1,
