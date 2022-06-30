@@ -22,7 +22,7 @@ export const tokens: Record<'rp1' | 'bot' | 'fuel' | 'dai' | 'wbnb' | 'usdt' | '
     },
     decimals: 18,
     projectLink: 'https://www.example.com/',
-    logoURI: NO_LOGO,
+    logoURI: 'https://assets.coingecko.com/coins/images/24650/small/McLc4iA.png?1648612075',
   },
   fuel: {
     symbol: 'FUEL',
@@ -52,7 +52,7 @@ export const tokens: Record<'rp1' | 'bot' | 'fuel' | 'dai' | 'wbnb' | 'usdt' | '
     },
     decimals: 18,
     projectLink: 'https://www.example.com/',
-    logoURI: NO_LOGO,
+    logoURI: 'https://assets.coingecko.com/coins/images/12591/small/binance-coin-logo.png?1600947313',
   },
   usdt: {
     symbol: 'USDT',
@@ -72,6 +72,6 @@ export const tokens: Record<'rp1' | 'bot' | 'fuel' | 'dai' | 'wbnb' | 'usdt' | '
     },
     decimals: 18,
     projectLink: 'https://www.example.com/',
-    logoURI: NO_LOGO,
+    logoURI: 'https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766',
   },
 };

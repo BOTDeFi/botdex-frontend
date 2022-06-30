@@ -3,24 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
+import useMedia from 'use-media';
 
 import { Graph } from '@/components/molecules';
 import { CurrencyInfo, TimeSelector } from '@/components/sections/Graph';
 import { TTimestampSelector } from '@/components/sections/Graph/TimeSelector';
 import { Liquidity, Swap } from '@/components/sections/Trade';
-
+import PriceBotData from '@/store/PriceBot/';
 
 import './Trade.scss';
-import PriceBotData from '@/store/PriceBot/';
-import useMedia from 'use-media';
 
 const Trade: React.FC = observer(() => {
   const isChartMobile = useMedia({ maxWidth: '500px' });
   const [currentStamp, setCurrentStamp] = React.useState<number>(0);
   const [currencyData, setCurrencyData] = React.useState<any>(null);
   const [isGraphVisible, setGraphVisible] = React.useState(true);
-  const [data, setData] = useState({})
-  const [isReversed, setIsReversed] = useState(false)
+  const [data, setData] = useState({});
+  const [isReversed, setIsReversed] = useState(false);
 
   const location = useLocation();
 
@@ -29,25 +28,25 @@ const Trade: React.FC = observer(() => {
       {
         text: '1H',
         onClick: async () => {
-          setPriceInfo('minuts')
+          setPriceInfo('minuts');
         },
       },
       {
         text: '1D',
         onClick: async () => {
-          setPriceInfo('hours')
+          setPriceInfo('hours');
         },
       },
       {
         text: '1M',
         onClick: async () => {
-          setPriceInfo('days')
+          setPriceInfo('days');
         },
       },
       {
         text: '1Y',
         onClick: async () => {
-          setPriceInfo('months')
+          setPriceInfo('months');
         },
       },
     ],
@@ -168,7 +167,6 @@ const Trade: React.FC = observer(() => {
             return ` ${moment(timestamp * 1000).format(format)} `;
           },
         },
-
       },
       yaxis: {
         show: false,
@@ -187,62 +185,63 @@ const Trade: React.FC = observer(() => {
   );
 
   const setPriceInfo = async (opt: string) => {
-    await PriceBotData.setPriceData(opt)
-    setData({})
+    await PriceBotData.setPriceData(opt);
+    setData({});
     switch (opt) {
       case 'minuts':
-        setCurrentStamp(0)
+        setCurrentStamp(0);
         break;
       case 'hours':
-        setCurrentStamp(1)
+        setCurrentStamp(1);
         break;
       case 'days':
-        setCurrentStamp(2)
+        setCurrentStamp(2);
         break;
       case 'months':
-        setCurrentStamp(3)
+        setCurrentStamp(3);
         break;
 
       default:
-        setCurrentStamp(2)
+        setCurrentStamp(2);
         break;
     }
-    setData(PriceBotData.getPriceByMin())
-  }
+    setData(PriceBotData.getPriceByMin());
+  };
 
   const setCurrentPriceInfo = async (reversed: boolean) => {
-    await PriceBotData.setCurrentPrice()
-    await PriceBotData.setCurrencyShift()
+    await PriceBotData.setCurrentPrice();
+    await PriceBotData.setCurrencyShift();
+    await PriceBotData.setIcons();
     if (reversed) {
       setCurrencyData({
-        icons: ['321', '123'],
+        icons: [PriceBotData.busdIcon, PriceBotData.botIcon],
         names: ['BUSD', 'BOT'],
         price: 1 / PriceBotData.getCurrentPrice(),
         currency: 'BOT',
         shift: PriceBotData.getCurrencyShiftReversed(),
         percentShift: PriceBotData.getCurrencyShiftPercentReversed(),
-        date: moment(new Date).format('ddd MMM DD YYYY'),
-      })
+        date: moment(new Date()).format('ddd MMM DD YYYY'),
+      });
     } else {
       setCurrencyData({
-        icons: ['123', '321'],
+        icons: [PriceBotData.botIcon, PriceBotData.busdIcon],
         names: ['BOT', 'BUSD'],
         price: PriceBotData.getCurrentPrice(),
         currency: 'BUSD',
         shift: PriceBotData.getCurrencyShift(),
         percentShift: PriceBotData.getCurrencyShiftPercent(),
-        date: moment(new Date).format('ddd MMM DD YYYY'),
-      })
+        date: moment(new Date()).format('ddd MMM DD YYYY'),
+      });
     }
-  }
+  };
 
   const onReverseClick = () => {
-    setIsReversed(!isReversed)
-  }
+    setIsReversed(!isReversed);
+  };
 
   useEffect(() => {
-    setPriceInfo('days')
-  }, [])
+    setPriceInfo('days');
+  }, []);
 
   useEffect(() => {
     if (
@@ -261,8 +260,8 @@ const Trade: React.FC = observer(() => {
   }, [location]);
 
   useEffect(() => {
-    setCurrentPriceInfo(isReversed)
-  }, [isReversed])
+    setCurrentPriceInfo(isReversed);
+  }, [isReversed]);
 
   return (
     <div className="trade-wrapper">
@@ -283,18 +282,14 @@ const Trade: React.FC = observer(() => {
                     )}
                     <TimeSelector currentSelector={currentStamp} selectors={selectors} />
                   </div>
-                  <Graph
-                    id="exchange-graph"
-                    series={data}
-                    options={options}
-                  />
+                  <Graph id="exchange-graph" series={data} options={options} />
                 </div>
               </div>
             )}
           </div>
         </div>
-      </main >
-    </div >
+      </main>
+    </div>
   );
 });
 
