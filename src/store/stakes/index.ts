@@ -70,7 +70,7 @@ export const getUserBalance = async (address: string): Promise<any> => {
 export const enterStaking = async (id: number, amount: string, address: string): Promise<any> => {
   const stakingContract = getContract('BOTDEX_STAKING');
   await stakingContract.methods
-    .enterStaking(id, new BigNumber(amount).times(BIG_TEN.pow(18)).toString())
+    .enterStaking(id, new BigNumber(amount).times(BIG_TEN.pow(18)).toFixed(0, 1))
     .send({ from: address });
 };
 
