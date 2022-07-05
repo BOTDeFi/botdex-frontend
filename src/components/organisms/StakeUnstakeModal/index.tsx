@@ -11,7 +11,7 @@ import { useRefineryUsdPrice } from '@/hooks/useTokenUsdPrice';
 import { useMst } from '@/store';
 import { enterStaking } from '@/store/stakes';
 import { getTokenUsdPrice } from '@/utils';
-import { BIG_TEN, BIG_ZERO, DEFAULT_TOKEN_POWER } from '@/utils/constants';
+import { BIG_TEN, BIG_ZERO } from '@/utils/constants';
 
 import './StakeUnstakeModal.scss';
 
@@ -65,7 +65,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
   const modal = modals.stakeUnstake;
   const {
     // maxStakingValue: maxStakingValueRaw,
-    stakingToken,
+    // stakingToken,
     poolId,
     // isAutoVault,
     // isStaking,
@@ -79,14 +79,9 @@ const StakeUnstakeModal: React.FC = observer(() => {
   const calculatePercentByValue = (newValue: BigNumber) =>
     newValue.times(MAX_PERCENTAGE).dividedBy(maxStakingValueBN).toNumber();
 
-  const validateInputValue = useCallback(
-    (value: string | number | BigNumber) => {
-      return new BigNumber(
-        new BigNumber(value).toFixed(stakingToken ? stakingToken.decimals : DEFAULT_TOKEN_POWER),
-      );
-    },
-    [stakingToken],
-  );
+  const validateInputValue = useCallback((value: string | number | BigNumber) => {
+    return new BigNumber(new BigNumber(value).toFixed(0, 1));
+  }, []);
 
   const updateInputValue = useCallback(
     (newValue: string | number | BigNumber) => {
@@ -180,21 +175,23 @@ const StakeUnstakeModal: React.FC = observer(() => {
           }
           prefixPosition="button"
           min={0}
-          max={maxStakingValueBN.toFixed()}
+          max={maxStakingValueBN.toFixed(0, 1)}
           stringMode // to support high precision decimals
           onChange={handleValueChange}
         />
         <div className="stake-unstake-modal__balance text-right">Balance: {user.balance}</div>
         <Slider value={percent} onChange={handlePercentChange} />
         <div className="box-f-ai-c box-f-jc-sb stake-unstake-modal__btns">
-          {percentBoundariesButtons.map(({ value, name = value }) => {
-            const percentChangeHandler = () => handlePercentChange(value);
-            return (
-              <Button key={name} colorScheme="pink" size="smd" onClick={percentChangeHandler}>
-                <span className="text-ssmd">{name}</span>
-              </Button>
-            );
-          })}
+          {percentBoundariesButtons.map(({ value, name = value }) => (
+            <Button
+              key={name}
+              colorScheme="pink"
+              size="smd"
+              onClick={() => handlePercentChange(value)}
+            >
+              <span className="text-ssmd">{name}</span>
+            </Button>
+          ))}
         </div>
         {!isApproved && (
           <Button
