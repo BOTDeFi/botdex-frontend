@@ -27,7 +27,7 @@
   {
     "address": "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
     "decimals": "18",
-    "name": "Xrp",
+    "name": "Ripple",
     "symbol": "XRP"
   },
   {
@@ -39,7 +39,7 @@
   {
     "address": "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
     "decimals": "18",
-    "name": "Ada",
+    "name": "Cardano",
     "symbol": "ADA"
   },
   {
