@@ -12,7 +12,7 @@ import useUnstakeFarms from '@/hooks/farms/useUnstakeFarms';
 import { useMst } from '@/store';
 import { Precisions } from '@/types';
 import { getTokenUsdPrice } from '@/utils';
-import { BIG_ZERO, DEFAULT_TOKEN_POWER } from '@/utils/constants';
+import { BIG_ZERO } from '@/utils/constants';
 import { getBalanceAmountBN } from '@/utils/formatters';
 import { clog, clogError } from '@/utils/logger';
 
@@ -68,7 +68,7 @@ const FarmsStakeUnstakeModal: React.FC = observer(() => {
     newValue.times(MAX_PERCENTAGE).dividedBy(maxStakeUnstakeValueBN).toNumber();
 
   const validateInputValue = useCallback((value: string | number | BigNumber) => {
-    return new BigNumber(new BigNumber(value).toFixed(DEFAULT_TOKEN_POWER));
+    return new BigNumber(new BigNumber(value).toFixed(0, 1));
   }, []);
 
   const updateInputValue = useCallback(
