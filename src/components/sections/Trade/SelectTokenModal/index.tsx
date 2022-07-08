@@ -3,6 +3,7 @@ import { Scrollbar } from 'react-scrollbars-custom';
 import { observer } from 'mobx-react-lite';
 
 import UnknownImg from '@/assets/img/currency/unknown.svg';
+import BnbIcon from '@/assets/img/icons/bnb-icon.svg';
 import Search from '@/components/atoms/Search';
 import { Modal } from '@/components/molecules';
 import { useMst } from '@/store';
@@ -125,22 +126,29 @@ const SelectTokenModal: React.FC<ISelectTokenModal> = observer(
                   height: tokens.length > 5 ? '55vh' : `${tokens.length * 65 - 25}px`,
                 }}
               >
-                {[...tokens].map((token: IToken) => (
-                  <div
-                    className="m-select-token__item box-f-ai-c"
-                    key={token.address}
-                    onClick={() => handleTokenClick(token)}
-                    onKeyDown={() => handleTokenClick(token)}
-                    role="button"
-                    tabIndex={-2}
-                  >
-                    <img src={token.logoURI || UnknownImg} alt="" />
-                    <div>
-                      <div className="text">{token.name}</div>
-                      <div className="text-ssm text-gray-2 text-inter">{token.symbol}</div>
+                {[...tokens].map((token: IToken) => {
+                  let tokenIcon = token.logoURI || UnknownImg;
+                  if (token.symbol.toLowerCase().includes('bnb')) {
+                    tokenIcon = BnbIcon;
+                  }
+
+                  return (
+                    <div
+                      className="m-select-token__item box-f-ai-c"
+                      key={token.address}
+                      onClick={() => handleTokenClick(token)}
+                      onKeyDown={() => handleTokenClick(token)}
+                      role="button"
+                      tabIndex={-2}
+                    >
+                      <img src={tokenIcon} alt="token icon" />
+                      <div>
+                        <div className="text">{token.name}</div>
+                        <div className="text-ssm text-gray-2 text-inter">{token.symbol}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </Scrollbar>
             ) : (
               <span className="text">Not found</span>
