@@ -6,7 +6,7 @@ const client: AxiosInstance = axios.create({
   baseURL: BASE_API_URL,
 });
 
-const priceBotApiKey = '260eff46-df25-4824-a47a-7d66a5c81dd3'
+const priceBotApiKey = '260eff46-df25-4824-a47a-7d66a5c81dd3';
 const priceBotInstance: AxiosInstance = axios.create({
   baseURL: 'https://apibotplanet.com/api/',
 });
@@ -15,6 +15,7 @@ export default async function ajax(requestConfig: AxiosRequestConfig): Promise<a
   try {
     return await client(requestConfig);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
     throw err;
   }
@@ -36,7 +37,7 @@ export const baseApi = {
       },
     });
   },
-  getPriceBot() {
+  getPriceBot(): Promise<any> {
     return ajax({
       method: 'get',
       url: URL.priceBot,
@@ -44,13 +45,13 @@ export const baseApi = {
   },
 };
 
-export const priceBotApi = {
+export const priceBotApi: any = {
   getPriceByOption(option: string) {
     return priceBotInstance.get(`prices/${option}/${priceBotApiKey}`)
-      .then(response => response.data)
+      .then((response: any) => response.data);
   },
-  getCurrentBotPrice() {
+  getCurrentBotPrice(): any {
     return priceBotInstance.get(`staking/botprice/${priceBotApiKey}`)
-      .then(response => response.data)
-  }
-}
+      .then((response: any) => response.data);
+  },
+};

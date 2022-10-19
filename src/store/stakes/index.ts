@@ -5,13 +5,13 @@ import { Stake } from '@/types';
 import { BIG_TEN } from '@/utils/constants';
 import { getBalanceAmount, getBalanceAmountBN } from '@/utils/formatters';
 
-export const getStakesLength = async (): Promise<number> => {
-  const stakingContract = getContract('BOTDEX_STAKING');
+export const getStakesLength = async (old: boolean): Promise<number> => {
+  const stakingContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   return stakingContract.methods.getPoolLength().call();
 };
 
-export const getStakesData = async (stakesLength: number): Promise<Stake[]> => {
-  const stakingContract = getContract('BOTDEX_STAKING');
+export const getStakesData = async (stakesLength: number, old: boolean): Promise<Stake[]> => {
+  const stakingContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   const result = [];
   for (let i = 0; i < stakesLength; i += 1) {
     // eslint-disable-next-line no-await-in-loop
@@ -28,8 +28,12 @@ export const getStakesData = async (stakesLength: number): Promise<Stake[]> => {
   return result;
 };
 
-export const getUserData = async (id: number, accountAddress: string): Promise<any> => {
-  const stakingContract = getContract('BOTDEX_STAKING');
+export const getUserData = async (
+  id: number,
+  accountAddress: string,
+  old: boolean,
+): Promise<any> => {
+  const stakingContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   const userData = await stakingContract.methods.userAtPoolInfo(accountAddress, id).call();
   return {
     amount: parseInt(userData.amount, 10),
@@ -61,24 +65,29 @@ export const convertSeconds = (time: number): string => {
   return `${result} min`;
 };
 
-export const getUserBalance = async (address: string): Promise<any> => {
-  const tokenContract = getContract('BOT');
+export const getUserBalance = async (address: string, old: boolean): Promise<any> => {
+  const tokenContract = getContract(old ? 'BOT_OLD' : 'BOT');
   const balance = await tokenContract.methods.balanceOf(address).call();
   return getBalanceAmountBN(balance, 18);
 };
 
-export const enterStaking = async (id: number, amount: string, address: string): Promise<any> => {
-  const stakingContract = getContract('BOTDEX_STAKING');
+export const enterStaking = async (
+  id: number,
+  amount: string,
+  address: string,
+  old: boolean,
+): Promise<any> => {
+  const stakingContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   await stakingContract.methods
     .enterStaking(id, new BigNumber(amount).times(BIG_TEN.pow(18)).toFixed(0, 1))
     .send({ from: address });
 };
 
-export const updateStakeData = async (id: number, address: string): Promise<any> => {
-  const stakingContract = getContract('BOTDEX_STAKING');
+export const updateStakeData = async (id: number, address: string, old: boolean): Promise<any> => {
+  const stakingContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   const stakeData = await stakingContract.methods.pools(id).call();
   const userData = await stakingContract.methods.userAtPoolInfo(address, id).call();
-  const reward = await calculateReward(id, address);
+  const reward = await calculateReward(id, address, old);
   return {
     amountStaked: parseInt(stakeData.amountStaked, 10),
     userData: {
@@ -89,14 +98,14 @@ export const updateStakeData = async (id: number, address: string): Promise<any>
   };
 };
 
-export const calculateReward = async (id: number, address: string): Promise<any> => {
-  const tokenContract = getContract('BOTDEX_STAKING');
+export const calculateReward = async (id: number, address: string, old: boolean): Promise<any> => {
+  const tokenContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   const reward = await tokenContract.methods.calculateReward(id, address).call();
   // return getBalanceAmountBN(reward, 18);
   return reward;
 };
 
-export const collectReward = async (id: number, address: string): Promise<any> => {
-  const stakingContract = getContract('BOTDEX_STAKING');
+export const collectReward = async (id: number, address: string, old: boolean): Promise<any> => {
+  const stakingContract = getContract(old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING');
   await stakingContract.methods.withdrawReward(id).send({ from: address });
 };

@@ -19,7 +19,7 @@ import './Header.scss';
 
 const Header: React.FC = observer(() => {
   const { pathname } = useLocation();
-  const headerCondition = (pathname === '/farms' || pathname === '/staking') && 'hide';
+  const headerCondition = (pathname === '/farms' || pathname === '/staking' || pathname === '/oldstaking') && 'hide';
 
   const [isBurger, setIsBurger] = useState(false);
   const [isWalletModalVisible, setWalletModalVisible] = useState(false);

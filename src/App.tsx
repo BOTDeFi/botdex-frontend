@@ -36,6 +36,7 @@ import { useFetchPriceBot } from './hooks/useFetchPriceBot';
 const ComingSoonPage: any = lazy((): any => import('./pages/ComingSoon'));
 const FarmsPage: any = lazy((): any => import('./pages/Farms'));
 const PoolsPage: any = lazy((): any => import('./pages/Pools'));
+const PoolsV1Page: any = lazy((): any => import('./pages/PoolsV1'));
 const TradePage: any = lazy((): any => import('./pages/Trade'));
 const BridgePage: any = lazy((): any => import('./pages/Bridge'));
 
@@ -128,6 +129,7 @@ const App: React.FC = observer(() => {
             <Route exact path="/farms" component={FarmsPage} />
             <Route exact path="/farms/calc" component={FarmsPage} />
             <Route exact path="/staking" component={PoolsPage} />
+            <Route exact path="/oldstaking" component={PoolsV1Page} />
             <Route exact path="/coming-soon/:page" component={ComingSoonPage} />
             <Route exact path="/trade/bridge" component={BridgePage} />
             {/* <Route exact path="/collectibles" component={CollectiblesPage} /> */}

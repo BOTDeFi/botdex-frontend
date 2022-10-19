@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-
-import {baseApi, priceBotApi} from '../api';
-import {tokensApi} from "@/services/api";
+import { baseApi, priceBotApi } from '../api';
+import { tokensApi } from '@/services/api';
 
 class PriceBotData {
   currentPrice = 0;
@@ -93,8 +92,8 @@ class PriceBotData {
   async setIcons() {
     const response = await tokensApi.getDefaultTokens();
 
-    const botToken = response.data.find((token: any) => (token.name === 'Bot'));
-    const busdToken = response.data.find((token: any) => (token.name === 'Busd'));
+    const botToken = response.data.find((token: any) => token.name === 'Bot');
+    const busdToken = response.data.find((token: any) => token.name === 'Busd');
 
     const botIconData = await baseApi.getTokenSingleLogo(botToken.address);
     const busdIconData = await baseApi.getTokenSingleLogo(busdToken.address);

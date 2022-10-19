@@ -587,7 +587,7 @@ export default class MetamaskService {
     walletAddress,
     amount,
   }: {
-    contractName: 'BOT' | 'BOTDEX_STAKING';
+    contractName: 'BOT' | 'BOTDEX_STAKING' | 'BOT_OLD' | 'BOTDEX_OLD_STAKING';
     approvedAddress?: string;
     walletAddress?: string;
     amount?: string | number;
@@ -623,7 +623,7 @@ export default class MetamaskService {
     tokenAddress,
     approveSum,
   }: {
-    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOT' | 'BOTDEX_STAKING';
+    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOT' | 'BOTDEX_STAKING' | 'BOT_OLD' | 'BOTDEX_OLD_STAKING';
     tokenDecimals?: number;
     approvedAddress?: string;
     walletAddress?: string;
@@ -661,7 +661,7 @@ export default class MetamaskService {
     walletAddress,
     tokenAddress,
   }: {
-    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOTDEX_STAKING' | 'BOT';
+    contractName: 'ROUTER' | 'ERC20' | 'PAIR' | 'BOTDEX_STAKING' | 'BOT' | 'BOTDEX_OLD_STAKING' | 'BOT_OLD';
     approvedAddress?: string;
     walletAddress?: string;
     tokenAddress: string;
