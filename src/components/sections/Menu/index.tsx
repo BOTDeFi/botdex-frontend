@@ -71,8 +71,13 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
       img: FarmsImg,
     },
     {
-      text: 'Staking',
+      text: 'Staking V2',
       link: '/staking',
+      img: PoolsImg,
+    },
+    {
+      text: 'Staking V1',
+      link: '/oldstaking',
       img: PoolsImg,
     },
     {

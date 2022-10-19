@@ -15,8 +15,9 @@ import './StakeCard.scss';
 
 interface IStakeCardProps {
   stake: Stake;
+  old: boolean;
 }
-const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
+const StakeCard: React.FC<IStakeCardProps> = observer(({ stake, old }) => {
   const { user, stakes: stakeStore, modals } = useMst();
   const { connect } = useWalletConnectorContext();
   const [isOpenDetails, setOpenDetails] = React.useState<boolean>(false);
@@ -34,15 +35,15 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
   }, [modals.stakeUnstake, stake.id]);
   const handleCollectReward = React.useCallback(async () => {
     setCollecting(true);
-    await collectReward(stake.id, user.address);
-    updateStakeData(stake.id, user.address).then((res) => {
+    await collectReward(stake.id, user.address, old);
+    updateStakeData(stake.id, user.address, old).then((res) => {
       stakeStore.setUserData(stake.id, res.userData);
       stakeStore.setAmountStaked(stake.id, res.amountStaked);
       setReward(res.reward);
     });
     setCollecting(false);
     toast.success('Successfuly unstake!');
-  }, [stake.id, stakeStore, user.address]);
+  }, [stake.id, stakeStore, user.address, old]);
 
   const calculateCollectTime = React.useCallback(() => {
     // if (stake.userData?.start === 0) {
@@ -74,7 +75,7 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
 
   useEffect(() => {
     async function getUserData() {
-      const data = await stakeStore.fetchUserData(stake.id, user.address);
+      const data = await stakeStore.fetchUserData(stake.id, user.address, old);
       stakeStore.setUserData(stake.id, data);
     }
     if (user.address !== '') {
@@ -82,19 +83,19 @@ const StakeCard: React.FC<IStakeCardProps> = observer(({ stake }) => {
         // eslint-disable-next-line no-console
         console.log(err);
       });
-      getUserBalance(user.address).then((res) => user.setBalance(res.toNumber()));
+      getUserBalance(user.address, old).then((res) => user.setBalance(res.toNumber()));
     }
-  }, [stake.id, stakeStore, user]);
+  }, [stake.id, stakeStore, user, old]);
 
   useEffect(() => {
     if (modals.stakeUnstake.isOpen === false) {
-      updateStakeData(stake.id, user.address).then((res) => {
+      updateStakeData(stake.id, user.address, old).then((res) => {
         stakeStore.setUserData(stake.id, res.userData);
         stakeStore.setAmountStaked(stake.id, res.amountStaked);
         setReward(res.reward);
       });
     }
-  }, [modals.stakeUnstake.isOpen, stake.id, stakeStore, user.address]);
+  }, [modals.stakeUnstake.isOpen, stake.id, stakeStore, user.address, old]);
 
   useEffect(() => {
     calculateCollectTime();

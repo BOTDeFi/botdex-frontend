@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { baseApi } from '@/store/api';
 
 export interface PriceBotData {
-  price: number,
-  daily_volume: number,
-  market_cap: number,
-  updated_at: string,
+  price: number;
+  daily_volume: number;
+  market_cap: number;
+  updated_at: string;
 }
 
 export const useFetchPriceBot = (): [boolean, PriceBotData | null] => {
@@ -19,6 +19,7 @@ export const useFetchPriceBot = (): [boolean, PriceBotData | null] => {
       const { data } = await baseApi.getPriceBot();
       setPrice(data);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     } finally {
       setLoading(false);

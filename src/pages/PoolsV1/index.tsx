@@ -15,8 +15,8 @@ import { addressWithDots } from '@/utils/formatters';
 
 import './Pools.scss';
 
-const Pools: React.FC = observer(() => {
-  const old = false;
+const PoolsV1: React.FC = observer(() => {
+  const old = true;
   const { connect } = useWalletConnectorContext();
   const [isWalletModalVisible, setWalletModalVisible] = useState(false);
 
@@ -40,7 +40,7 @@ const Pools: React.FC = observer(() => {
     <div className="spinner">
       {!user.address ? (
         <>
-          <ShadowTitle type="h2">Wallet not connected (V2)</ShadowTitle>
+          <ShadowTitle type="h2">Wallet not connected (V1)</ShadowTitle>
           <div className="subTitleDescription">
             For staking, you need to connect a wallet compatible with web3 (for example MetaMask)
             used Binance Smart Chain (BSC) network
@@ -103,4 +103,4 @@ const Pools: React.FC = observer(() => {
   );
 });
 
-export default Pools;
+export default PoolsV1;

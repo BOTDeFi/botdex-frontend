@@ -9,11 +9,13 @@ export const useApprove = ({
   approvedContractName,
   amount,
   walletAddress,
+  old,
 }: {
-  tokenName: 'BOT' | 'BOTDEX_STAKING';
+  tokenName: 'BOT' | 'BOTDEX_STAKING' | 'BOT_OLD' | 'BOTDEX_OLD_STAKING';
   approvedContractName: string;
   amount?: string | number;
   walletAddress: TNullable<string>;
+  old: boolean;
 }): [boolean, boolean, () => void] => {
   const { metamaskService } = useWalletConnectorContext();
 
@@ -24,7 +26,7 @@ export const useApprove = ({
     setApproving(true);
     metamaskService
       .approveToken({
-        contractName: 'BOT',
+        contractName: old ? 'BOT_OLD' : 'BOT',
         approvedAddress: contracts.BOTDEX_STAKING.ADDRESS,
         tokenAddress: contracts.BOT.ADDRESS,
       })
@@ -39,7 +41,7 @@ export const useApprove = ({
       .finally(() => {
         setApproving(false);
       });
-  }, [metamaskService]);
+  }, [metamaskService, old]);
 
   React.useEffect(() => {
     if (walletAddress) {

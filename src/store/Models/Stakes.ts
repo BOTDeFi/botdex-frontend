@@ -23,7 +23,7 @@ const StakesModel = types
   .model({
     data: types.array(StakeModel),
   })
-  .actions((self) => ({
+  .actions((self: any) => ({
     setData(data: any) {
       self.data = data;
     },
@@ -33,13 +33,13 @@ const StakesModel = types
     setAmountStaked(i: number, amount: number) {
       self.data[i].amountStaked = amount;
     },
-    async fetchStakesData() {
-      const stakesLength = await getStakesLength();
-      const data = await getStakesData(stakesLength);
+    async fetchStakesData(old: boolean) {
+      const stakesLength = await getStakesLength(old);
+      const data = await getStakesData(stakesLength, old);
       this.setData(data);
     },
-    async fetchUserData(id: number, address: string) {
-      const data = await getUserData(id, address);
+    async fetchUserData(id: number, address: string, old: boolean) {
+      const data = await getUserData(id, address, old);
       this.setUserData(id, data);
     },
   }));

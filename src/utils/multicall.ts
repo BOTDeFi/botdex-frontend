@@ -55,6 +55,7 @@ export const multicall = async <T = any>(
       });
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('multicall error', e);
     return [];
   }

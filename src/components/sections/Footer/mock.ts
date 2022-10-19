@@ -35,8 +35,12 @@ export const links = [
       path: 'https://www.botpla.net/dex/',
     },
     {
-      name: 'Staking',
+      name: 'Staking V2',
       path: 'https://www.botpla.net/staking/',
+    },
+    {
+      name: 'Staking V1',
+      path: 'https://www.botpla.net/oldstaking/',
     },
     {
       name: 'Farming',

@@ -55,7 +55,7 @@ const FarmsModel = types
     data: types.optional(types.array(FarmModel), farmsConfig),
     userDataLoaded: false,
   })
-  .actions((self) => ({
+  .actions((self: any) => ({
     async fetchFarmsPublicDataAsync(pids: number[]) {
       const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid));
 
@@ -75,7 +75,7 @@ const FarmsModel = types
       this.fetchFarmsPublicDataAsyncSuccess(farmsWithIcons);
     },
     fetchFarmsPublicDataAsyncSuccess(newData: FarmWithoutUserData[]) {
-      self.data.forEach((farm) => {
+      self.data.forEach((farm: any) => {
         const liveFarmData = newData.find(({ pid }: { pid: number }) => pid === farm.pid);
 
         if (!liveFarmData) return;
@@ -126,7 +126,7 @@ const FarmsModel = types
     ) {
       newData.forEach((userData) => {
         const { pid } = userData;
-        const index = self.data.findIndex((farm) => farm.pid === pid);
+        const index = self.data.findIndex((farm: any) => farm.pid === pid);
         self.data[index].userData = userData;
       });
       self.userDataLoaded = true;

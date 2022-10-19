@@ -22,7 +22,7 @@ interface ITradeBox {
 }
 
 const TradeBox: React.FC<ITradeBox> = observer(
-  ({ title, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, info }) => {
+  ({ title, subtitle, settingsLink, recentTxLink, children, className, titleBackLink, }) => {
     return (
       <div className={cn('trade-box', className)}>
         <div className="trade-box__box-top box-f box-f-jc-sb box-f-ai-s">

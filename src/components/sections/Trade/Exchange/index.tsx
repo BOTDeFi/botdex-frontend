@@ -207,6 +207,7 @@ const Exchange: React.FC<IExchange> = observer(
             const routerContract = metamaskService.getContract(ADDRESS, ABI);
             await routerContract.methods.swapExactTokensForTokens(...data).estimateGas();
           } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
             if (method === 'swapExactTokensForTokens') {
               method = 'swapExactTokensForTokensSupportingFeeOnTransferTokens';
@@ -270,12 +271,12 @@ const Exchange: React.FC<IExchange> = observer(
             maxTo={maxTo}
           />
           {isAllowanceFrom &&
-          tokensData.from.token &&
-          tokensData.to.token &&
-          tokensData.to.amount &&
-          tokensData.from.amount &&
-          user.address &&
-          tokensReserves !== null ? (
+            tokensData.from.token &&
+            tokensData.to.token &&
+            tokensData.to.amount &&
+            tokensData.from.amount &&
+            user.address &&
+            tokensReserves !== null ? (
             <Button
               className="exchange__btn"
               colorScheme="pink"
@@ -305,10 +306,10 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {tokensData.from.token &&
-          tokensData.to.token &&
-          (!tokensData.to.amount || !tokensData.from.amount) &&
-          tokensReserves !== null &&
-          user.address ? (
+            tokensData.to.token &&
+            (!tokensData.to.amount || !tokensData.from.amount) &&
+            tokensReserves !== null &&
+            user.address ? (
             <Button
               className="exchange__btn"
               disabled={!tokensData.from.amount || !tokensData.to.amount}
@@ -320,10 +321,10 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {!isAllowanceFrom &&
-          tokensData.to.amount &&
-          tokensData.from.amount &&
-          tokensReserves !== null &&
-          user.address ? (
+            tokensData.to.amount &&
+            tokensData.from.amount &&
+            tokensReserves !== null &&
+            user.address ? (
             <Button
               className="exchange__btn btn-hover-down"
               colorScheme="pink"
@@ -339,8 +340,8 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {(!tokensData.from.token || !tokensData.to.token) &&
-          tokensReserves !== null &&
-          user.address ? (
+            tokensReserves !== null &&
+            user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">Select Tokens</span>
             </Button>
@@ -348,9 +349,9 @@ const Exchange: React.FC<IExchange> = observer(
             ''
           )}
           {tokensData.from.token &&
-          tokensData.to.token &&
-          tokensReserves === null &&
-          user.address ? (
+            tokensData.to.token &&
+            tokensReserves === null &&
+            user.address ? (
             <Button disabled className="exchange__btn">
               <span className="text-white text-bold text-smd">
                 This pair haven&lsquo;t been created

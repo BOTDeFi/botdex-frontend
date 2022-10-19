@@ -39,7 +39,11 @@ const percentBoundariesButtons = [
   },
 ];
 
-const StakeUnstakeModal: React.FC = observer(() => {
+interface IStakeUnstakeModalProps {
+  old: boolean;
+}
+
+const StakeUnstakeModal: React.FC<IStakeUnstakeModalProps> = observer(({ old }) => {
   const [pendingTx, setPendingTx] = useState(false);
   const [percent, setPercent] = useState(MAX_PERCENTAGE / 4);
   const [inputValue, setInputValue] = useState(BIG_ZERO);
@@ -57,9 +61,10 @@ const StakeUnstakeModal: React.FC = observer(() => {
 
   const [isApproved, isApproving, handleApprove] = useApprove({
     tokenName: 'BOT',
-    approvedContractName: 'BOTDEX_STAKING',
+    approvedContractName: old ? 'BOTDEX_OLD_STAKING' : 'BOTDEX_STAKING',
     amount: new BigNumber(inputValueAsString).times(BIG_TEN.pow(18)).toString(),
     walletAddress: user.address,
+    old
   });
 
   const modal = modals.stakeUnstake;
@@ -122,7 +127,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
 
   const handleStake = useCallback(async () => {
     try {
-      await enterStaking(poolId, inputValueAsString, user.address);
+      await enterStaking(poolId, inputValueAsString, user.address, old);
       toast.success(`Staked! Your funds have been staked!`);
     } catch (err) {
       // console.log(err);
@@ -130,7 +135,7 @@ const StakeUnstakeModal: React.FC = observer(() => {
         `Error! Please try again. Confirm the transaction and make sure you are paying enough gas!`,
       );
     }
-  }, [inputValueAsString, poolId, user.address]);
+  }, [inputValueAsString, poolId, user.address, old]);
 
   const handleConfirm = async () => {
     setPendingTx(true);
