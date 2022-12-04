@@ -46,9 +46,8 @@ const Menu: React.FC<IMenuProps> = observer(({ onClick }) => {
     },
     {
       text: 'Swap',
-      // link: '/trade/swap',
-      link: '/coming-soon/swap',
-      // activePaths: ['/trade/swap', '/trade/swap/settings', '/trade/swap/history'],
+      link: '/trade/swap',
+      activePaths: ['/trade/swap', '/trade/swap/settings', '/trade/swap/history'],
       img: TradeImg,
     },
     {
