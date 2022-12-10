@@ -380,6 +380,8 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
       };
     }, [handleGetBalance, balanceInterval]);
 
+    const bnbIcon = 'https://assets.coingecko.com/coins/images/12591/small/binance-coin-logo.png?1600947313';
+
     return (
       <>
         <div className="choose-tokens">
@@ -398,7 +400,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   role="button"
                 >
                   <img
-                    src={tokenFrom.logoURI || UnknownImg}
+                    src={tokenFrom.logoURI || (tokenFrom.symbol === 'BNB' ? bnbIcon : UnknownImg)}
                     alt=""
                     className="choose-tokens__currency-img"
                   />
@@ -475,7 +477,7 @@ const ChooseTokens: React.FC<IChooseTokens> = observer(
                   role="button"
                 >
                   <img
-                    src={tokenTo.logoURI || UnknownImg}
+                    src={tokenTo.logoURI || (tokenTo.symbol === 'BNB' ? bnbIcon : UnknownImg)}
                     alt=""
                     className="choose-tokens__currency-img"
                   />

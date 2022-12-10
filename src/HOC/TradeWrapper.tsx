@@ -177,42 +177,47 @@ const TradeWrapper = (
         });
         const isFromBnb = tokens.from.token.symbol.toLowerCase() === 'bnb';
         const isToBnb = tokens.to.token.symbol.toLowerCase() === 'bnb';
+        console.debug({ isFromBnb }, { isToBnb });
 
+        const chainId = this.context.metamaskService.networkToUseNow.toString();
         const pairAddress = await this.context.metamaskService.callContractMethod(
           'FACTORY',
           'getPair',
           [
-            isFromBnb ? configTokens.wbnb.address['97'] : tokens.from.token?.address,
-            isToBnb ? configTokens.wbnb.address['97'] : tokens.to.token?.address,
+            isFromBnb ? configTokens.wbnb.address[chainId] : tokens.from.token?.address,
+            isToBnb ? configTokens.wbnb.address[chainId] : tokens.to.token?.address,
           ],
           contracts.FACTORY.ADDRESS,
           contracts.FACTORY.ABI,
         );
+        console.debug("contracts.FACTORY.ADDRESS", contracts.FACTORY.ADDRESS);
+        console.debug("pairAddress", pairAddress);
 
         if (pairAddress === '0x0000000000000000000000000000000000000000') {
+          console.debug("pair ZERO");
           this.setState((prev) => {
             const tokensData =
               type === 'from'
                 ? {
-                    to: tokens.to,
-                    from: {
-                      token: tokens.from.token,
-                      amount:
-                        prev.tokensData.from.token?.symbol !== tokens.from.token?.symbol
-                          ? NaN
-                          : tokens.from.amount,
-                    },
-                  }
+                  to: tokens.to,
+                  from: {
+                    token: tokens.from.token,
+                    amount:
+                      prev.tokensData.from.token?.symbol !== tokens.from.token?.symbol
+                        ? NaN
+                        : tokens.from.amount,
+                  },
+                }
                 : {
-                    from: tokens.from,
-                    to: {
-                      token: tokens.to.token,
-                      amount:
-                        prev.tokensData.to.token?.symbol !== tokens.to.token?.symbol
-                          ? NaN
-                          : tokens.to.amount,
-                    },
-                  };
+                  from: tokens.from,
+                  to: {
+                    token: tokens.to.token,
+                    amount:
+                      prev.tokensData.to.token?.symbol !== tokens.to.token?.symbol
+                        ? NaN
+                        : tokens.to.amount,
+                  },
+                };
             return {
               tokensReserves: null,
               pairAddress: '',
@@ -256,7 +261,7 @@ const TradeWrapper = (
 
           if (
             (tokens.from.token.address.toLowerCase() ||
-              configTokens.wbnb.address['97'].toLowerCase()) === token0.toLowerCase()
+              configTokens.wbnb.address[chainId].toLowerCase()) === token0.toLowerCase()
           ) {
             reserve1 = reserves['0'];
             reserve2 = reserves['1'];
@@ -319,9 +324,9 @@ const TradeWrapper = (
                   ).isGreaterThanOrEqualTo(reserve2)
                     ? new BigNumber(reserve2).minus(1).toString()
                     : MetamaskService.calcTransactionAmount(
-                        tokens.to.amount,
-                        +tokens.to.token.decimals,
-                      ),
+                      tokens.to.amount,
+                      +tokens.to.token.decimals,
+                    ),
                   reserve1,
                   reserve2,
                 ],
@@ -346,13 +351,13 @@ const TradeWrapper = (
             }
           } else {
             const firstBalance = await metamaskService.callContractMethodFromNewContract(
-              tokens.from.token.address || configTokens.wbnb.address['97'],
+              tokens.from.token.address || configTokens.wbnb.address[chainId],
               contracts.ERC20.ABI,
               'balanceOf',
               [rootStore.user.address],
             );
             const secondBalance = await metamaskService.callContractMethodFromNewContract(
-              tokens.to.token.address || configTokens.wbnb.address['97'],
+              tokens.to.token.address || configTokens.wbnb.address[chainId],
               contracts.ERC20.ABI,
               'balanceOf',
               [rootStore.user.address],
@@ -417,6 +422,7 @@ const TradeWrapper = (
     }
 
     handleChangeTokensData(tokensData: ITokens, type?: 'from' | 'to') {
+      console.debug("handleChangeTokensData(...)", { tokensData }, { type });
       if (tokensData.from.amount === 0 || tokensData.to.amount === 0) {
         this.handleGetExchange(
           {
