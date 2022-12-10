@@ -97,62 +97,138 @@ const Exchange: React.FC<IExchange> = observer(
       }
     }, [fetchPair, metamaskService, pairAddress, pairs]);
 
+    const swap = React.useCallback(async (sourceMethod: string, data: any[], value: string | undefined) => {
+      console.debug("swap", { sourceMethod }, { data }, { value });
+      try {
+        const contract = contracts.ROUTER;
+        const { ABI, ADDRESS } = contract;
+        console.debug("Router ADDRESS", ADDRESS);
+        const routerContract = metamaskService.getContract(ADDRESS, ABI);
+        if (sourceMethod === 'swapExactTokensForTokens') {
+          await routerContract.methods.swapExactTokensForTokens(...data).estimateGas();
+          await routerContract.methods.swapExactTokensForTokens(...data).send({ from: user.address });
+        } else if (sourceMethod === 'swapExactTokensForETH') {
+          await routerContract.methods.swapExactTokensForETH(...data).estimateGas();
+          await routerContract.methods.swapExactTokensForETH(...data).send({ from: user.address });
+        } else if (sourceMethod === 'swapExactETHForTokens') {
+          await routerContract.methods.swapExactETHForTokens(...data).send({ from: user.address, value });
+        } else if (sourceMethod === 'swapTokensForExactTokens') {
+          await routerContract.methods.swapTokensForExactTokens(...data).send({ from: user.address });
+        } else if (sourceMethod === 'swapETHForExactTokens') {
+          await routerContract.methods.swapETHForExactTokens(...data).send({ from: user.address, value });
+        } else if (sourceMethod === 'swapTokensForExactETH') {
+          await routerContract.methods.swapTokensForExactETH(...data).send({ from: user.address });
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.debug("BBB.err.swap", err);
+        let method = sourceMethod;
+        if (method === 'swapExactTokensForTokens') {
+          method = 'swapExactTokensForTokensSupportingFeeOnTransferTokens';
+        } else if (method === 'swapExactTokensForETH') {
+          method = 'swapExactTokensForETHSupportingFeeOnTransferTokens';
+        } else if (method === 'swapExactETHForTokens') {
+          method = 'swapExactETHForTokensSupportingFeeOnTransferTokens';
+        } else {
+          throw err;
+        }
+        console.debug("BBB.err.swap.method", method);
+        if (+settings.slippage.value < 10) {
+          const newSlippage = +settings.slippage.value + (10 - +settings.slippage.value);
+          data[1] = (+MetamaskService.calcTransactionAmount(
+            new BigNumber(tokensData.to.amount)
+              .minus(new BigNumber(tokensData.to.amount).times(newSlippage / 100))
+              .toString(10),
+            +(tokensData.to.token?.decimals ?? 0),
+          )).toFixed(0);
+        }
+        await metamaskService.createTransaction({
+          method,
+          contractName: 'ROUTER',
+          data,
+          value: value ?? '0',
+        });
+        delete localStorage['refinery-finance-getAmountOut'];
+        setTokensData({
+          from: {
+            token: undefined,
+            amount: NaN,
+          },
+          to: {
+            token: undefined,
+            amount: NaN,
+          },
+        });
+      }
+      toast.success('Successfully swapped tokens!');
+      setIsLoading(false);
+    }, [setTokensData, setIsLoading, metamaskService, settings.slippage.value, tokensData.to.amount, tokensData.to.token?.decimals,
+      user.address]);
+
     const handleSwap = React.useCallback(async () => {
+      console.debug("handleSwap()");
       if (tokensData.to.token && tokensData.from.token) {
         setIsLoading(true);
         let path;
         if (!settings.isAudio) {
+          const chainId = metamaskService.networkToUseNow.toString();
           path = [
-            tokensData.from.token.address || tokens.wbnb.address['97'],
-            tokensData.to.token.address || tokens.wbnb.address['97'],
+            tokensData.from.token.address || tokens.wbnb.address[chainId],
+            tokensData.to.token.address || tokens.wbnb.address[chainId],
           ];
         } else {
           path = findPath(tokensData, allPairs);
         }
         let method;
-        if (tokensData.to.token.address && tokensData.from.token.address) {
+        // Check if token from address is token or is native crypto (BNB)
+        const fromIsToken = tokensData.from.token.address?.length > 0 ?? false;
+        // Check if token to address is token or is native crypto (BNB)
+        const toIsToken = tokensData.to.token.address?.length > 0 ?? false;
+        console.debug("AAA.user.type", user.type);
+        if (toIsToken && fromIsToken) {
           method = user.type === 'from' ? 'swapExactTokensForTokens' : 'swapTokensForExactTokens';
-        } else if (tokensData.to.token.address) {
+        } else if (toIsToken && !fromIsToken) {
           method = user.type === 'from' ? 'swapExactETHForTokens' : 'swapETHForExactTokens';
         } else {
+          // Case !toIsToken && fromIsToken
           method = user.type === 'from' ? 'swapExactTokensForETH' : 'swapTokensForExactETH';
         }
+        console.debug("AAA.method", method);
         try {
           let data: any[];
           let value;
+          console.debug(`AAA.data preparation for ${method}`);
+          const to = user.address;
+          const deadline = settings.txDeadlineUtc;
           if (method === 'swapETHForExactTokens') {
+            const amountOut = MetamaskService.calcTransactionAmount(
+              tokensData.to.amount,
+              +tokensData.to.token?.decimals,
+            );
+            console.debug("AAA.amounts", { amountOut });
             data = [
-              MetamaskService.calcTransactionAmount(
-                tokensData.to.amount,
-                +tokensData.to.token?.decimals,
-              ),
+              amountOut,
               path,
-              // [
-              //   tokensData.from.token.address || tokens.wbnb.address['97'],
-              //   tokensData.to.token.address || tokens.wbnb.address['97'],
-              // ],
-              user.address,
-              settings.txDeadlineUtc,
+              to,
+              deadline,
             ];
             value = MetamaskService.calcTransactionAmount(
               tokensData.from.amount,
               +tokensData.from.token?.decimals,
             );
           } else if (method === 'swapExactETHForTokens') {
+            const amountOutMin = (+MetamaskService.calcTransactionAmount(
+              new BigNumber(tokensData.to.amount)
+                .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
+                .toString(10),
+              +tokensData.to.token?.decimals,
+            )).toFixed(0);
+            console.debug("AAA.amounts", { amountOutMin });
             data = [
-              (+MetamaskService.calcTransactionAmount(
-                new BigNumber(tokensData.to.amount)
-                  .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
-                  .toString(10),
-                +tokensData.to.token?.decimals,
-              )).toFixed(0),
+              amountOutMin,
               path,
-              // [
-              //   tokensData.from.token.address || tokens.wbnb.address['97'],
-              //   tokensData.to.token.address || tokens.wbnb.address['97'],
-              // ],
-              user.address,
-              settings.txDeadlineUtc,
+              to,
+              deadline,
             ];
             value = MetamaskService.calcTransactionAmount(
               tokensData.from.amount,
@@ -160,97 +236,59 @@ const Exchange: React.FC<IExchange> = observer(
             );
           } else if (method === 'swapExactTokensForETH' || method === 'swapExactTokensForTokens') {
             // MAIN SWAP
+            const amountIn = MetamaskService.calcTransactionAmount(
+              tokensData.from.amount,
+              +tokensData.from.token?.decimals,
+            );
+            const amountOutMin = (+MetamaskService.calcTransactionAmount(
+              new BigNumber(tokensData.to.amount)
+                .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
+                .toString(10),
+              +tokensData.to.token?.decimals,
+            )).toFixed(0);
+            console.debug("AAA.amounts", { amountIn }, { amountOutMin });
             data = [
-              MetamaskService.calcTransactionAmount(
-                tokensData.from.amount,
-                +tokensData.from.token?.decimals,
-              ),
-              (+MetamaskService.calcTransactionAmount(
-                new BigNumber(tokensData.to.amount)
-                  .minus(new BigNumber(tokensData.to.amount).times(settings.slippage.value / 100))
-                  .toString(10),
-                +tokensData.to.token?.decimals,
-              )).toFixed(0),
+              amountIn,
+              amountOutMin,
               path,
-              // [
-              //   tokensData.from.token.address || tokens.wbnb.address['97'],
-              //   tokensData.to.token.address || tokens.wbnb.address['97'],
-              // ],
-              user.address,
-              settings.txDeadlineUtc,
+              to,
+              deadline,
             ];
+            value = undefined;
           } else {
+            // Case: swapTokensForExactTokens || swapTokensForExactETH 
+            const amountOut = MetamaskService.calcTransactionAmount(
+              tokensData.to.amount,
+              +tokensData.to.token?.decimals,
+            );
+            const amountInMax = (+MetamaskService.calcTransactionAmount(
+              new BigNumber(tokensData.from.amount)
+                .plus(new BigNumber(tokensData.from.amount).times(settings.slippage.value / 100))
+                .toString(10),
+              +tokensData.from.token?.decimals,
+            )).toFixed(0);
+            console.debug("AAA.amounts", { amountOut }, { amountInMax });
             data = [
-              MetamaskService.calcTransactionAmount(
-                tokensData.to.amount,
-                +tokensData.to.token?.decimals,
-              ),
-              (+MetamaskService.calcTransactionAmount(
-                new BigNumber(tokensData.from.amount)
-                  .plus(new BigNumber(tokensData.from.amount).times(settings.slippage.value / 100))
-                  .toString(10),
-                +tokensData.from.token?.decimals,
-              )).toFixed(0),
+              amountOut,
+              amountInMax,
               path,
-              // [
-              //   tokensData.from.token.address || tokens.wbnb.address['97'],
-              //   tokensData.to.token.address || tokens.wbnb.address['97'],
-              // ],
-              user.address,
-              settings.txDeadlineUtc,
+              to,
+              deadline,
             ];
+            value = undefined;
           }
+          console.debug("AAA.data and value result", { data }, { value });
 
-          try {
-            const contract = contracts.ROUTER;
-            const { ABI, ADDRESS } = contract;
-            const routerContract = metamaskService.getContract(ADDRESS, ABI);
-            await routerContract.methods.swapExactTokensForTokens(...data).estimateGas();
-          } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            if (method === 'swapExactTokensForTokens') {
-              method = 'swapExactTokensForTokensSupportingFeeOnTransferTokens';
-            }
-            if (method === 'swapExactTokensForETH') {
-              method = 'swapExactTokensForETHSupportingFeeOnTransferTokens';
-            }
-            if (+settings.slippage.value < 10) {
-              const newSlippage = +settings.slippage.value + (10 - +settings.slippage.value);
-              data[1] = (+MetamaskService.calcTransactionAmount(
-                new BigNumber(tokensData.to.amount)
-                  .minus(new BigNumber(tokensData.to.amount).times(newSlippage / 100))
-                  .toString(10),
-                +tokensData.to.token?.decimals,
-              )).toFixed(0);
-            }
-            await metamaskService.createTransaction({
-              method,
-              contractName: 'ROUTER',
-              data,
-              value: value ?? '0',
-            });
-            delete localStorage['refinery-finance-getAmountOut'];
-            setTokensData({
-              from: {
-                token: undefined,
-                amount: NaN,
-              },
-              to: {
-                token: undefined,
-                amount: NaN,
-              },
-            });
-            toast.success('Successfully swapped tokens!');
-            setIsLoading(false);
-          }
+          // Check if we swap tokens to tokens
+          console.debug(`Check type of swap. fromIsToken(${fromIsToken}) && toIsToken(${toIsToken})`)
+          await swap(method, data, value);
         } catch (err) {
           clogError('swap err', err);
           toast.error('Something went wrong');
           setIsLoading(false);
         }
       }
-    }, [allPairs, metamaskService, setTokensData, settings, tokensData, user.address, user.type]);
+    }, [allPairs, metamaskService, settings, tokensData, user.address, user.type, swap]);
 
     return (
       <>

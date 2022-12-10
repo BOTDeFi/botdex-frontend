@@ -172,7 +172,8 @@ const AddLiquidity: React.FC<IAddLiquidity> = observer(
             contracts.PAIR.ABI,
             'token0',
           );
-          if (token0 === (tokensData.from.token.address || tokens.wbnb.address['97'])) {
+          const chainId = metamaskService.networkToUseNow.toString();
+          if (token0 === (tokensData.from.token.address || tokens.wbnb.address[chainId])) {
             reserve1 = tokensReserves['0'];
             reserve2 = tokensReserves['1'];
           } else {

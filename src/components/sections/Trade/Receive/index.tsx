@@ -35,7 +35,8 @@ const Receive: React.FC = observer(() => {
     try {
       if (liquidityInfo && liquidityInfo?.token0.receive && liquidityInfo?.token1.receive) {
         setIsActiveTx(true);
-        const wbnb = tokens.wbnb.address['97'].toLowerCase();
+        const chainId = metamaskService.networkToUseNow.toString();
+        const wbnb = tokens.wbnb.address[chainId].toLowerCase();
         let method: string;
         if (
           liquidityInfo.token0.address.toLowerCase() === wbnb ||

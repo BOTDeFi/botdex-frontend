@@ -142,7 +142,7 @@ export default class MetamaskService {
 
     this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
     this.usedChain = this.isProduction ? [networks.mainnet, networks.mainnet2] : [networks.bsct, networks.polygont];
-    console.log("current url pathname = window.location.pathname = ", window.location.pathname);
+
     if(window.location.pathname.includes("bridge")) {
       // Bridge page use polygon #137 or BSC #56
       this.networksToUse = [56, 137];
@@ -150,7 +150,7 @@ export default class MetamaskService {
       // Use only BSC network
       this.networksToUse = [56];
     }
-    console.log("this.networksToUse = ", this.networksToUse);
+    
     this.networkToUseNow = 56;
 
     this.chainChangedObs = new Observable((subscriber) => {
@@ -422,7 +422,6 @@ export default class MetamaskService {
   }
 
   connectWallet = async (subscriber: any, message_: string) => {
-    console.log("connect wallet. subscriber = ", subscriber);
     // Please connect your Web3 to Polygon PoS Chain mumbai testnet network
     let isAlerted = false;
     console.debug(message_);
@@ -514,7 +513,6 @@ export default class MetamaskService {
   }
 
   public async connect(subscriber: any): Promise<any> {
-    console.log("connect suscriber=", subscriber);
     await this.connectWallet(subscriber, 'connect()');
 
     return new Promise((resolve, reject) => {
