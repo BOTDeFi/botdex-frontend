@@ -29,6 +29,16 @@ const TableCard: FC<ITableCard> = ({ token0, token1, apy, content, className, id
     handleScrollTop();
   };
 
+  let token0img = token0?.img;
+  if (token0 !== undefined && token0.symbol === 'BOT' && (token0.img === undefined || token0.img === null || token0.img.length === 0)) {
+    token0img = "https://assets.coingecko.com/coins/images/24650/small/McLc4iA.png?1648612075";
+  }
+
+  let token1img = token1?.img;
+  if (token1 !== undefined && token1.symbol === 'BOT' && (token1.img === undefined || token1.img === null || token1.img.length === 0)) {
+    token1img = "https://assets.coingecko.com/coins/images/24650/small/McLc4iA.png?1648612075";
+  }
+
   return (
     <div className={cn('table-card', className)}>
       <div className="table-card_name">
@@ -40,8 +50,8 @@ const TableCard: FC<ITableCard> = ({ token0, token1, apy, content, className, id
             </>
           ) : (
             <>
-              <img src={token0?.img} alt="icon" />
-              <img src={token1?.img} alt="icon" />
+              <img src={token0img} alt="icon" />
+              <img src={token1img} alt="icon" />
             </>
           )}
         </div>

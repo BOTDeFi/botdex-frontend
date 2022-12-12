@@ -28,3 +28,5 @@ yarn-error.log*
 
 # IDE
 /.idea
+reports/junit.xml
+reports/test-report.html
