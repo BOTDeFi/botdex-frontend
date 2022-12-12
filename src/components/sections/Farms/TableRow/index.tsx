@@ -36,15 +36,24 @@ interface ITokensPairProps {
 }
 
 const TokensPair: React.FC<ITokensPairProps> = ({ lpSymbol, token, quoteToken }) => {
+  let tokenLogoURI: string | undefined = token.logoURI;
+  if (token.symbol === 'BOT' && (tokenLogoURI === undefined || tokenLogoURI === null || tokenLogoURI.length === 0)) {
+    tokenLogoURI = "https://assets.coingecko.com/coins/images/24650/small/McLc4iA.png?1648612075";
+  }
+  let quoteTokenLogoURI: string | undefined = quoteToken.logoURI;
+  if (quoteToken.symbol === 'BOT' && (quoteTokenLogoURI === undefined || quoteTokenLogoURI === null || quoteTokenLogoURI.length === 0)) {
+    quoteTokenLogoURI = "https://assets.coingecko.com/coins/images/24650/small/McLc4iA.png?1648612075";
+  }
+  console.debug(`token pair logos '${tokenLogoURI}', '${quoteTokenLogoURI}'`, token.logoURI, token.symbol);
   return (
     <div className="farms-table-row__currencies box-f-ai-c t-box-b">
       <div className="farms-table-row__currencies-pair box-f">
         <img
           className="farms-table-row__currencies-pair-item"
-          src={quoteToken.logoURI}
+          src={quoteTokenLogoURI}
           alt="currency"
         />
-        <img className="farms-table-row__currencies-pair-item" src={token.logoURI} alt="currency" />
+        <img className="farms-table-row__currencies-pair-item" src={tokenLogoURI} alt="currency" />
       </div>
       <div className="text-upper text-smd">{lpSymbol}</div>
     </div>
