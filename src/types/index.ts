@@ -218,4 +218,5 @@ export type TNullable<T> = T | null;
 export type IBlogType = {
   post_link: string;
   image_link: string;
+  title: string;
 };

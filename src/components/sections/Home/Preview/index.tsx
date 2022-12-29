@@ -336,15 +336,15 @@ const Preview: VFC<{ priceBotData: PriceBotData | null }> = observer(({ priceBot
             nav
           >
             {blogs.length
-              ? blogs.map(({ post_link, image_link }) => (
+              ? blogs.map(({ post_link, image_link, title }) => (
                 <SwiperSlide key={uuid()}>
                   <div className="h-preview_slides_top_item">
                     <a href={post_link} target="_blank" rel="noreferrer">
                       <span>
                         <img src={image_link} alt="slide" />
                       </span>
-                      <span>
-                        Benefits of using Binance Smart Chain over Ethereum for Bot Planet NFT.
+                      <span style={{ display: 'block' }}>
+                        {title}
                       </span>
                       <span>
                         Read more
